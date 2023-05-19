@@ -1,0 +1,29 @@
+.image-container {
+    position: relative;
+    width: 100%;
+  }
+  
+  .background-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .content-overlay {
+    position: absolute;
+
+    text-align: center;
+    color: #fff;
+  }
+  .clearfix{
+    position: absolute;
+  }
+  .intro-img {
+    width: 25%;
+    margin-top: 15%;
+  
+  }
+.move_logo{
+    width: 100%;
+    animation: 'rotation 100s infinite linear',
+}
+  
