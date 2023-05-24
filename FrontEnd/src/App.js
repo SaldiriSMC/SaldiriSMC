@@ -20,7 +20,7 @@ function App() {
   <AboutUs/>
   <Portfolio/>
   <br></br>
-  {/* <Clients/> */}
+  <Clients/>
     </div>
     </ThemeProvider>
   );

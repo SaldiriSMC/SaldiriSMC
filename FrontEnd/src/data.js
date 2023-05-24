@@ -171,3 +171,73 @@ export const Portfolio =[
       ],
     },
   ];
+
+export const Client =[
+  {id:1,name:'Afaq S. | Program/Project Management | Service Delivery | Te',
+  comment:'Saldiri team is a capable engineering team with exceptional skills in multiple technology stacks. Commands in newtechnologies and quickly becomes productive by designing and implementing solutions. Well satisfied with the services provided on time. "',
+  img:'/assets/download1.svg'},
+  {id:2,name:'Sadaf k. | Business Support Manager',
+  comment:'Very reliable and efficient services. CEO is highly customer focused with professional attitude. Highly recommended!!"',
+  img:'/assets/download1.svg'},
+  {id:3,name:'Arsalan N. | Corporate Finance Specialist | Deals Modelling | Social Media and travel',
+  comment:'"It is great working with Saldiri SMC PVT LTD. Looking forward to work on more projects. I must say Saldiri team is truly professional and deliver tasks right on time."',
+  img:'/assets/download1.svg'},
+];
+
+export const Services=[
+  {
+  id:1,
+  title:'Amazon Web Services',
+  description:'We use DevOps to accelerate your team’s performance by operationalizing and automating SDLC. Our expertise in the DevOps space has earned us a partnership with AWS. With CI/CD pipeline, continuous monitoring & testing, container orchestration, cloud optimization, and other key areas, we can significantly reduce time-to-market, ensure faster release deployments and optimize cloud costs with the AWS DevOps tool.',
+  img:'/assets/Services/Service1.png'
+},
+  {
+  id:2,
+  title:'Amazon Marketing Services',
+  description:`Amazon is the leading marketplace for eCommerce, where one can establish a business
+  and sell their goods to millions of customers around the world. Saldiri is a great digital marketing
+  agency that offers services to any person in the world. We have the happiest global clients who have
+  enjoyed our offerings and selected us to satisfy all their requirements. For those who have begun to
+  sell their products on Amazon, we are giving Amazon marketing and they require more advice and support
+  to compete with all rivals. All these facilities are delivered at a very affordable price that you may
+  never have heard of elsewhere. `,
+  img:'/assets/Services/Service2.png'
+},
+  {
+  id:1,
+  title:'Mobile App Development',
+  description:`We know how to craft a mobile technology strategy that helps you grow and scale
+  through native and cross-platform mobile applications. We are also a top company for the production of
+  android/IOS applications, which helps to develop both online and mobile apps for a product. Instead of
+  going for some random technologies, we recommend the most relevant development language which will fit
+  better for your project.`,
+  img:'/assets/Services/Services3.png'
+},
+  {
+  id:1,
+  title:'Web Development and Design',
+  description:`We build well-designed and interactive web applications, tailored to solving your
+  business needs. Charts, visualizations, forms, and wizards in our web apps are custom-built and
+  highly-scalable. These apps are optimized to run faster and engage with the users, resulting in a web
+  experience that is both delightful and intuitive.`,
+  img:'/assets/Services/Servicess4.png'
+},
+  {
+  id:1,
+  title:'Amazon Web Services',
+  description:'We use DevOps to accelerate your team’s performance by operationalizing and automating SDLC. Our expertise in the DevOps space has earned us a partnership with AWS. With CI/CD pipeline, continuous monitoring & testing, container orchestration, cloud optimization, and other key areas, we can significantly reduce time-to-market, ensure faster release deployments and optimize cloud costs with the AWS DevOps tool.',
+  img:'/assets/Services/Service1.png'
+},
+  {
+  id:1,
+  title:'Amazon Web Services',
+  description:'We use DevOps to accelerate your team’s performance by operationalizing and automating SDLC. Our expertise in the DevOps space has earned us a partnership with AWS. With CI/CD pipeline, continuous monitoring & testing, container orchestration, cloud optimization, and other key areas, we can significantly reduce time-to-market, ensure faster release deployments and optimize cloud costs with the AWS DevOps tool.',
+  img:'/assets/Services/Service1.png'
+},
+  {
+  id:1,
+  title:'Amazon Web Services',
+  description:'We use DevOps to accelerate your team’s performance by operationalizing and automating SDLC. Our expertise in the DevOps space has earned us a partnership with AWS. With CI/CD pipeline, continuous monitoring & testing, container orchestration, cloud optimization, and other key areas, we can significantly reduce time-to-market, ensure faster release deployments and optimize cloud costs with the AWS DevOps tool.',
+  img:'/assets/Services/Service1.png'
+},
+]
