@@ -1,5 +1,5 @@
 
-export const Portfolio =[
+export const portfolio =[
     {
         id: 1,
         title: "Auction Project",
@@ -204,7 +204,7 @@ export const Services=[
   img:'/assets/Services/Service2.png'
 },
   {
-  id:1,
+  id:3,
   title:'Mobile App Development',
   description:`We know how to craft a mobile technology strategy that helps you grow and scale
   through native and cross-platform mobile applications. We are also a top company for the production of
@@ -214,30 +214,184 @@ export const Services=[
   img:'/assets/Services/Services3.png'
 },
   {
-  id:1,
+  id:4,
   title:'Web Development and Design',
   description:`We build well-designed and interactive web applications, tailored to solving your
   business needs. Charts, visualizations, forms, and wizards in our web apps are custom-built and
   highly-scalable. These apps are optimized to run faster and engage with the users, resulting in a web
   experience that is both delightful and intuitive.`,
-  img:'/assets/Services/Servicess4.png'
+  img:'/assets/Services/Services4.png'
 },
   {
-  id:1,
-  title:'Amazon Web Services',
-  description:'We use DevOps to accelerate your team’s performance by operationalizing and automating SDLC. Our expertise in the DevOps space has earned us a partnership with AWS. With CI/CD pipeline, continuous monitoring & testing, container orchestration, cloud optimization, and other key areas, we can significantly reduce time-to-market, ensure faster release deployments and optimize cloud costs with the AWS DevOps tool.',
-  img:'/assets/Services/Service1.png'
+  id:5,
+  title:'SEO',
+  description:`Each campaign is tailored to suit the specific needs of our customers. We carry out
+                a detailed analysis of the website and the competitive nature of the market and devise a plan
+                accordingly. In online marketing, there is no one-size-fits-all approach, so we'll develop a special
+                plan for your current scenario. Our main mission is to help our consumers obtain the best outcomes
+                possible. Our main mission is to help our stakeholders achieve the best outcomes possible, adopting
+                methodologies. Rather than a stream of random visitors, we provide the highest-value, highest-converting
+                web traffic. We are strongly focused and ready to buy the leads we produce.`,
+  img:'/assets/Services/Services5.png'
 },
   {
-  id:1,
-  title:'Amazon Web Services',
-  description:'We use DevOps to accelerate your team’s performance by operationalizing and automating SDLC. Our expertise in the DevOps space has earned us a partnership with AWS. With CI/CD pipeline, continuous monitoring & testing, container orchestration, cloud optimization, and other key areas, we can significantly reduce time-to-market, ensure faster release deployments and optimize cloud costs with the AWS DevOps tool.',
-  img:'/assets/Services/Service1.png'
+  id:6,
+  title:'Data Analytics',
+  description:`Where there’s data, there’s analytics. We help businesses convert their real-time
+                    and historical data into actionable insights. Our cognitive dashboards arrange information based on
+                    importance and visualize predictive and prescriptive analytics. With our anomaly detection solution, you
+                    can identify unusual patterns in usage trends so you can make informed and data-driven business
+                    decisions for the future.`,
+  img:'/assets/Services/Services6.png'
 },
   {
-  id:1,
-  title:'Amazon Web Services',
-  description:'We use DevOps to accelerate your team’s performance by operationalizing and automating SDLC. Our expertise in the DevOps space has earned us a partnership with AWS. With CI/CD pipeline, continuous monitoring & testing, container orchestration, cloud optimization, and other key areas, we can significantly reduce time-to-market, ensure faster release deployments and optimize cloud costs with the AWS DevOps tool.',
-  img:'/assets/Services/Service1.png'
+  id:7,
+  title:'UI/UX',
+  description:`Making details memorable with pixel-perfect designs and smooth UX is very important
+                to us. We understand user needs and create experiences that solve design challenges and also make people
+                happy. What makes our service unique is the mix of design, technology, and human-centred approach to
+                producing custom visualizations, dashboards, input-intensive applications, and videos.`,
+  img:'/assets/Services/Services7.png'
 },
+  {
+  id:8,
+  title:'Python Programming',
+  description:`Python is a wonderful programming language, and we at Saldiri are proud to provide
+                    the best of the best facilities for creating Python applications. Saldiri is a software development firm
+                    that provides the best python development services for the development of python applications. With
+                    Python, our team of experts has evolved to gain impeccable competence in one of the greatest languages
+                    of programming. Both famous Python web development frameworks are avidly mastered by our team of
+                    specialist Python developers. Our top Python developers have completely mastered the development of
+                    applications based on Python. Our Python platform experience would allow all of the functionality to be
+                    used in your project. We are also a top company for the production of android/IOS applications, which
+                    helps to develop both online and mobile apps for a product. Instead of going for some random
+                    technologies, we recommend the most relevant development language which will fit better for your
+                    project.`,
+  img:'/assets/Services/Services8.png'
+},
+  {
+  id:9,
+  title:'Digital Marketing',
+  description:`Digital marketing is the act of promoting products and services through digital channels, such as social media, SEO,
+                    email, and mobile apps. Any form of marketing that involves electronic devices is considered digital marketing.hat’s
+                    because Google and Facebook generate more revenue than any traditional media company. After all, they control more
+                    eyeballs. That’s why digital marketing matters; it’s where the attention is.`,
+  img:'/assets/Services/Services7.png'
+},
+];
+
+export const TechnologiesList=[
+  {
+  id:1,
+  title:'DevOps',
+  description:`Our dedicated DevOps teams have accumulated impressive expertise in uniting development
+  and operations using advanced DevOps technologies: Gradle, Git, Jenkins, Docker, Nagios,
+  JUnit etc. DevOps services. With our services, we allow businesses to enjoy the
+  stability of operating environments, cut the development time, and get faster feature
+  delivery with CI/CD.`,
+  img:'/assets/Technologies/tech1.svg'
+},
+  {
+  id:2,
+  title:'Digital Marketing',
+  description:`We are offering tons of digital marketing services like Social Media Marketing, Search
+  Engine Optimization, Google AdWords, Facebook & Instagram Ads, Email Marketing, etc. so
+  that your business could take off in a very professional way. We are offering Amazon
+  marketing and (FBA) management for those who have started selling their products on
+  Amazon and they need further guidance and help to compete with all the competitors.`,
+  img:'/assets/Technologies/tech2.png'
+},
+  {
+  id:3,
+  title:'Application Development',
+  description:`iOS was created by Apple and exists within the development environment of an IDE called
+  Xcode. Apple also created their own language, called Swift. With around 2.2 million apps
+  on the Apple App Store. We are well equipped with the technology to produce enterprise
+  level applications with iOS.`,
+  img:'/assets/Technologies/tech3.svg'
+},
+  {
+  id:4,
+  title:'Microsoft .NET',
+  description:`.NET is a free, cross-platform, open-source developer platform for building many
+  different types of applications. With .NET, you can use multiple languages, editors, and
+  libraries to build for web, mobile, desktop, games, and IoT. We are utilizing the
+  technology to facilitate our clients with different problems and building complex
+  software solutions.`,
+  img:'/assets/Technologies/tech4.png'
+},
+  {
+  id:5,
+  title:'Android',
+  description:`We offer end-to-end mobile application development services, from design to
+  implementation to testing and maintenance, to assist you in developing a new Android
+  app. Despite the Android ecosystem's complexities and fragmentation problems, our
+  process enables us to easily build and test Android applications. When you appoint us to
+  create an Android app, you'll get a high-performing, crash-free, cyber-secure, and
+  Material Design-compliant app. We develop applications that work on all Android devices,
+  regardless of their size and shape. For a variety of use cases, we have Android mobile
+  app design and development services.`,
+  img:'/assets/Technologies/tech5.png'
+},
+  {
+  id:6,
+  title:'AI',
+  description:`By implanting AI into the businesses, you can automate digital encounters, shape the
+  future, engage individuals to do more inventive work, and drive strategic business
+  esteem. Saldiri’s expert AI specialists assist you to create AI solutions that saddle
+  critical techniques of artificial intelligence, such as natural language processing,
+  self-learning algorithms, computer vision, and more to construct tailored customer
+  experiences that serve a variety of use cases. At Saldiri, we offer assistance to
+  companies to illuminate complex business problems by executing AI to a variety of use
+  cases and client behaviour patterns. Our artificial intelligence experts plan each AI
+  solution after a thorough analysis of your business needs.`,
+  img:'/assets/Technologies/tech6.png'
+},
+  {
+  id:7,
+  title:'Python',
+  description:`Python is a wonderful programming language, and we at Saldiri are proud to provide the best of the best facilities for creating Python applications. 
+  Saldiri is a software development firm that provides the best python development services for the development of python
+   applications. With Python, our team of experts has evolved to gain impeccable competence in one of the greatest languages of programming. 
+   Both famous Python web development frameworks are avidly mastered by our team of specialist Python developers.
+    Our top Python developers have completely mastered the development of applications based on Python. 
+    Our Python platform experience would allow all of the functionality to be used in your project.
+     We are also a top company for the production of android/IOS applications, which helps to develop both online and mobile apps for a product. 
+     Instead of going for some random technologies, we recommend the most relevant development language which will fit better for your project.`,
+  img:'/assets/Technologies/python-5.svg'
+},
+  {
+  id:8,
+  title:'NodeJs',
+  description:`Node.js is a dynamic and powerful platform that’s the best solution for heavy I/O operations, data flow, or multiple connection requests. This is why products like Linkedin, Netflix, Uber, PayPal, and even NASA use Node.js.
+  Using NodeJS, We provide our services in the area of Web Development, RestAPI's, BlockChain and Microservecis. The Framework work we follow are ExpressJS, NodeServer,NestJS, ReactJS, Etherium etc.`,
+  img:'/assets/Technologies/nodejs-ar21.svg'
+},
+  {
+  id:9,
+  title:'React',
+  description:`React is a framework of NodeJS and one of the stack in MERN, which features a modular architecture and the ability to integrate open source APIs, third-party libraries and also the RESTfulAPI's developed in any language. It also helps and provide easy ways to develop realtime applcations using web sockets.`,
+  img:'/assets/Technologies/reactjs-icon.svg'
+},
+  {
+  id:10,
+  title:'Laravel',
+  description:`Laravel is an open-source PHP framework, which is robust and easy to understand. It follows a model-view-controller design pattern. Laravel reuses the existing components of different frameworks which helps in creating a web application. The web application thus designed is more structured and pragmatic.`,
+  img:'/assets/Technologies/laravel-wordmark-1.svg'
+},
+  {
+  id:11,
+  title:'React Native',
+  description:`React Native is a JavaScript framework for writing real, natively rendering mobile applications for iOS and Android. It's based on React, Facebook's JavaScript library for building user interfaces, but instead of targeting the browser, it targets mobile platforms.
+  React Native has big community which helps providing very usefull tools and packages which make mobile applications attractive and reliable.`,
+  img:'/assets/Technologies/react-native-1.svg'
+},
+  {
+  id:12,
+  title:'php',
+  description:`PHP is a server side scripting language that is embedded in HTML. It is used to manage dynamic content, databases, session tracking, even build entire e-commerce sites.
+  It is integrated with a number of popular databases, including MySQL, PostgreSQL, Oracle, Sybase, Informix, and Microsoft SQL Server.
+  PHP supports a large number of major protocols such as POP3, IMAP, and LDAP. PHP4 added support for Java and distributed object architectures (COM and CORBA), making n-tier development a possibility for the first time.`,
+  img:'/assets/Technologies/php-1.svg'
+}
 ]

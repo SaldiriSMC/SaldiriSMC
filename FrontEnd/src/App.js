@@ -7,20 +7,27 @@ import BannerSlider from './components/BannerSlider'
 import AboutUs from './components/abousUs'
 import Portfolio from './components/portfolio'
 import Clients from './components/clients'
-import Baner from './components/baner'
+import Services from './components/services'
+import Technologies from './components/technologies'
+import ContactUs from './components/contactUs'
+import Careers from './components/career'
+import Footer from './components/footer'
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../src/theme';
 function App() {
   return (
     <ThemeProvider theme={theme}>
     <div className="App">
-  <Header/>
-  {/* <Baner/> */}
-  <BannerSlider/>
-  <AboutUs/>
-  <Portfolio/>
-  <br></br>
-  <Clients/>
+      <Header/>
+      <BannerSlider/>
+      <AboutUs/>
+      <Portfolio/>
+      <Clients/>
+      <Services/>
+      <Technologies/>
+      <ContactUs/>
+      <Careers/>
+      <Footer/>
     </div>
     </ThemeProvider>
   );

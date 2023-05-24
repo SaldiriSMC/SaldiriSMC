@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button'
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Slider from 'react-slick';
 import Grid from '@mui/material/Grid'
@@ -73,6 +74,10 @@ const useStyles = makeStyles()((theme) => {
         },
         crosWrap:{
           display:'flex',
+          justifyContent:'space-between'
+        },
+        crosWrap2:{
+          display:'flex',
           justifyContent:'flex-end'
         }
     };
@@ -87,10 +92,12 @@ const MainModal = (props) => {
       handleCancel,
       setOpen,
       title,
-      modelData
+      modelData,
+      services
     } = props
     const { classes } = useStyles();
-     console.log("modelData-------------",modelData)
+
+
     var settings = {
       dots: false,
       infinite: true,
@@ -107,24 +114,52 @@ const MainModal = (props) => {
         aria-describedby="modal-modal-description"
       >
         <Box className={classes.mainContainer}>
-          <div className={classes.crosWrap}>
-          <IconButton  aria-label="upload picture" component="label" onClick={()=> setOpen(false)}>
-                  <CancelIcon />      
-                </IconButton>
-          </div>
-          <Slider {...settings}>
+        
+  {
+    modelData && (
+               <div className={classes.crosWrap2}>
+              <IconButton  aria-label="upload picture" component="label" onClick={()=> setOpen(false)}>
+              <CancelIcon />      
+            </IconButton>
+      </div>
+  
+
+    )
+  }
+          {services&& (
+            <>
+            
+            <div className={classes.crosWrap}>
+              <h4 className="title"> {services.title}</h4>
+              <IconButton  aria-label="upload picture" component="label" onClick={()=> setOpen(false)}>
+              <CancelIcon />      
+            </IconButton>
+      </div>
+      <hr />
+      <div>
+
+        <img class="tech-model text-center" src={services.img}></img>
+      </div>
+         </>
+            )}
+      
+          {modelData && (
+            <>
+              <Slider {...settings}>
             {modelData?.images.map((item)=>{
               return <>
               <div style={{height:'50vh'}}>
-      <img className={classes.imgFullWidth} src={item.imagePath}></img>
-      </div>
+              <img className={classes.imgFullWidth} src={item.imagePath}></img>
+              </div>
               </>
             })}
-      
-    </Slider>
+         </Slider>
           <Typography variant='h3' sx={{ mt: 2 }}>
             {title}
           </Typography>
+            </>
+          )}
+        
           <Typography sx={{ mt: 2 }}>
             {description}
           </Typography>

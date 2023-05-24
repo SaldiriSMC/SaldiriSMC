@@ -4,7 +4,7 @@ import Baner from './baner';
 import { makeStyles } from 'tss-react/mui';
 import PortfolioModel from './modal'
 import './comaon.css';
-import {Portfolio} from '../data'
+import {portfolio} from '../data'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { Grid } from '@mui/material';
 const useStyles = makeStyles()((theme) => {
@@ -22,7 +22,7 @@ const useStyles = makeStyles()((theme) => {
       }
   };
 });
-function MainSlider() {
+function Portfolio() {
   const { classes } = useStyles();
   const [modelData, setModelData]=useState({images:[]})
   const [open, setOpen]=useState(false)
@@ -44,7 +44,7 @@ function MainSlider() {
           <h3 className="section-title">Our Portfolio</h3>
         </header>
         <div className="row portfolio-container" style={{ position: 'relative' }}>
-            {Portfolio.map((item)=>{
+            {portfolio.map((item)=>{
                 return <>
                    <div className="col-lg-4 col-md-6 portfolio-item filter-card mb-2">
             <div className="portfolio-wrap">
@@ -80,5 +80,5 @@ function MainSlider() {
   );
 }
 
-export default MainSlider;
+export default Portfolio;
 

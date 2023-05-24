@@ -21,7 +21,7 @@ const useStyles = makeStyles()((theme) => {
       }
   };
 });
-function MainSlider() {
+function Clients() {
   const { classes } = useStyles();
 
   var settings = {
@@ -70,5 +70,5 @@ function MainSlider() {
   );
 }
 
-export default MainSlider;
+export default Clients;
 
