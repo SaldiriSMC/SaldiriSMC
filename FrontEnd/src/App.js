@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Header from './components/navBar'
-import BannerSlider from './components/BannerSlider'
+import Baner from './components/baner'
 import AboutUs from './components/abousUs'
 import Portfolio from './components/portfolio'
 import Clients from './components/clients'
@@ -19,7 +19,7 @@ function App() {
     <ThemeProvider theme={theme}>
     <div className="App">
       <Header/>
-      <BannerSlider/>
+      <Baner/>
       <AboutUs/>
       <Portfolio/>
       <Clients/>

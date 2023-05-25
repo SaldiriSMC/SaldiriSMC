@@ -39,12 +39,12 @@ function ResponsiveAppBar() {
     <AppBar color='transparent' position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-                            <img
-                                src="/assets/logo.png"
-                                alt="logo"
-                                style={{width:300}}                              
-                            />
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <img
+                src="/assets/logo.png"
+                alt="logo"
+                style={{width:300}}                              
+            />
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' ,justifyContent:'flex-end'} }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -80,7 +80,7 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          <Box sx={{ flexGrow: 3, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 3, display: { xs: 'none', md: 'flex',justifyContent:'center' } }}>
             {pages.map((page) => (
               <Button
                 key={page}

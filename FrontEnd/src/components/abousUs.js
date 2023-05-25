@@ -8,7 +8,7 @@ const useStyles = makeStyles()((theme) => {
         padding: "40px 20px 20px 20px",
         borderRadius: 10,
         position: "relative",
-        margin: "20px 0",
+        // margin: "20px 0",
       },
       aboutImgs:{
         display:'flex',

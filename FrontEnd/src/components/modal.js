@@ -79,7 +79,12 @@ const useStyles = makeStyles()((theme) => {
         crosWrap2:{
           display:'flex',
           justifyContent:'flex-end'
-        }
+        },
+        innerContainer: {
+          padding: '0px 30px 70px 30px',
+          maxHeight: 'calc(100vh - 100px)',
+          overflow: 'auto'
+        },
     };
 });
 
@@ -114,7 +119,7 @@ const MainModal = (props) => {
         aria-describedby="modal-modal-description"
       >
         <Box className={classes.mainContainer}>
-        
+        <div className={classes.innerContainer}>    
   {
     modelData && (
                <div className={classes.crosWrap2}>
@@ -144,11 +149,11 @@ const MainModal = (props) => {
             )}
       
           {modelData && (
-            <>
+            <div className='portfolio-wrap'>
               <Slider {...settings}>
             {modelData?.images.map((item)=>{
               return <>
-              <div style={{height:'50vh'}}>
+              <div >
               <img className={classes.imgFullWidth} src={item.imagePath}></img>
               </div>
               </>
@@ -157,13 +162,13 @@ const MainModal = (props) => {
           <Typography variant='h3' sx={{ mt: 2 }}>
             {title}
           </Typography>
-            </>
+            </div>
           )}
         
           <Typography sx={{ mt: 2 }}>
             {description}
           </Typography>
-          
+          </div>
         </Box>
       </Modal>
     </div>

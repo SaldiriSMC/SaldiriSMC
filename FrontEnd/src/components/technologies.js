@@ -36,7 +36,7 @@ function Technologies() {
      {TechnologiesList.map((item)=>{
         return (
             <>
-            <div className="col-lg-4 col-md-4 col-xs-6">
+            <div className=" my-2 col-lg-4 col-md-4 col-xs-6">
         <div className="client-logo" onClick={()=>{setModelData(item);setOpen(true)}}>
           <img
             src={item.img}
