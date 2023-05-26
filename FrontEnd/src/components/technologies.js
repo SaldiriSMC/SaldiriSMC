@@ -33,7 +33,7 @@ function Technologies() {
     </div>
     <div className="row no-gutters technologies-wrap clearfix wow fadeInUp">
      
-     {TechnologiesList.map((item)=>{
+     {React.Children.toArray(TechnologiesList.map((item)=>{
         return (
             <>
             <div className=" my-2 col-lg-4 col-md-4 col-xs-6">
@@ -50,7 +50,7 @@ function Technologies() {
       </div>
             </>
         )
-     })}
+     }))}
       
      
    

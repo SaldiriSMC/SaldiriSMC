@@ -64,7 +64,7 @@ function ContactUs() {
           <form
             action="#0"
             id="myForm2"
-            onsubmit="return callCaptchaAndSendEmail(1)"
+
             method="post"
             role="form"
             className="contactForm"

@@ -32,7 +32,7 @@ function Service() {
       <h3>Services</h3>
     </header>
     <div className="row">
-        {Services.map((item,index)=>{
+        {React.Children.toArray(Services.map((item,index)=>{
             return<>
             <div
         className=" wow zoom my_class"
@@ -88,7 +88,7 @@ function Service() {
         </div>
       </div>
             </>
-        })}
+        }))}
       
     </div>
     

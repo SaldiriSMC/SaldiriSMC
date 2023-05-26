@@ -11,12 +11,23 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-
-
-const pages = ['Home', 'About Us', 'Portfolio','Clients', 'Services', 'Technologies','Contact Us','Careers'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import { NavHashLink } from 'react-router-hash-link';
+import { matchRoutes, useLocation } from "react-router-dom"
+import './comaon.css';
+const pages = [
+  {title:'Home',path:'#carouselExampleControls'},
+  {title:'About Us',path:'#about'},
+  {title:'Portfolio',path:'#portfolio'},
+  {title:'Clients',path:'#clients'},
+  {title:'Services',path:'#services'},
+  {title:'Technologies',path:'#technologies'},
+  {title:'Contact Us',path:'#contact'},
+  {title:'Careers',path:'#career'},
+];
+// const pages = ['Home', 'About Us', 'Portfolio','Clients', 'Services', 'Technologies','Contact Us','Careers'];
 
 function ResponsiveAppBar() {
+  const location = useLocation();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -34,6 +45,7 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  console.log(`${location.pathname}------${location.hash}`);
 
   return (
     <AppBar color='transparent' position="static">
@@ -75,20 +87,30 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography color='black'  textAlign="center">{page}</Typography>
+                <NavHashLink
+              style={{ marginRight:10 , marginLeft:10, display: 'block', textDecoration:'none'}}
+              to= {`${page.path}`}
+              className={`${location.hash}` === page.path ? "activeUrl" : ""}
+              // etc...
+            >
+              {page.title}
+          </NavHashLink>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
           <Box sx={{ flexGrow: 3, display: { xs: 'none', md: 'flex',justifyContent:'center' } }}>
             {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'black', display: 'block' }}
-              >
-                {page}
-              </Button>
+             <>
+             <NavHashLink
+              style={{ marginRight:10 , marginLeft:10, display: 'block', textDecoration:'none'}}
+              to= {`${page.path}`}
+              className={`${location.hash}` === page.path ? "activeUrl" : ""}
+              // etc...
+            >
+              {page.title}
+          </NavHashLink>
+          </>
             ))}
           </Box>
 

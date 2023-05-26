@@ -74,11 +74,11 @@ const useStyles = makeStyles()((theme) => {
         },
         crosWrap:{
           display:'flex',
-          justifyContent:'space-between'
+          justifyContent:'flex-end'
         },
         crosWrap2:{
           display:'flex',
-          justifyContent:'flex-end'
+          justifyContent:'flex-start'
         },
         innerContainer: {
           padding: '0px 30px 70px 30px',
@@ -119,26 +119,21 @@ const MainModal = (props) => {
         aria-describedby="modal-modal-description"
       >
         <Box className={classes.mainContainer}>
-        <div className={classes.innerContainer}>    
-  {
-    modelData && (
-               <div className={classes.crosWrap2}>
-              <IconButton  aria-label="upload picture" component="label" onClick={()=> setOpen(false)}>
+        <div className={classes.crosWrap}>
+        <IconButton  aria-label="upload picture" component="label" onClick={()=> setOpen(false)}>
               <CancelIcon />      
             </IconButton>
-      </div>
-  
+            </div>
+        <div className={classes.innerContainer}>    
 
-    )
-  }
           {services&& (
             <>
             
-            <div className={classes.crosWrap}>
+            <div className={classes.crosWrap2}>
               <h4 className="title"> {services.title}</h4>
-              <IconButton  aria-label="upload picture" component="label" onClick={()=> setOpen(false)}>
+              {/* <IconButton  aria-label="upload picture" component="label" onClick={()=> setOpen(false)}>
               <CancelIcon />      
-            </IconButton>
+            </IconButton> */}
       </div>
       <hr />
       <div>

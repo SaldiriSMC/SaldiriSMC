@@ -1,4 +1,9 @@
-
+.activeUrl{
+  color: #0d6efd !important;
+}
+.active{
+  color:  black;
+}
 .carousel-indicators {
   display: none;
 }

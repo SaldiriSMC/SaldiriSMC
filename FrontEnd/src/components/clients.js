@@ -46,7 +46,7 @@ function Clients() {
         
             <div className="carousel-inner">
             <Slider {...settings}>
-              {Client.map((item)=>{
+              {React.Children.toArray(Client.map((item)=>{
                 return <>
                     <div className="carousel-item active">
                 <div className="carousel-caption">
@@ -56,7 +56,7 @@ function Clients() {
                 </div>
               </div>
                 </>
-              })}
+              }))}
               </Slider>
             </div>
       

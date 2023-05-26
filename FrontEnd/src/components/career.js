@@ -49,7 +49,6 @@ function Careers() {
           <form
             id="myForm"
             action="#0"
-            onsubmit="return callCaptchaAndSendEmail(2)"
             method="post"
             role="form"
             className="contactForm"
@@ -80,9 +79,9 @@ function Careers() {
                 required=""
               >
                 <option
-                  value=" "
+                  defaultValue=" "
                   disabled=""
-                  selected=""
+
                   hidden=""
                   className="hidden-text"
                 >

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
+import { HashLink } from 'react-router-hash-link';
 import { makeStyles } from 'tss-react/mui';
 import './comaon.css';
-import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
-import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import { Link } from "react-router-dom";
 const useStyles = makeStyles()((theme) => {
   return {
     sectionContainer: {
@@ -82,44 +82,30 @@ function Footer() {
       <div className="col-2"></div>
       <div className="col-3">
         <div className="footer-menu">
+          <span> 
+          <HashLink to="#clients">Home</HashLink>
+           </span> 
           <span>
-            <a onclick="ScrollInto('carouselExampleControls')" href="#0">
-              Home
-            </a>
+          <HashLink to="#about">About Us</HashLink>
+          </span> 
+          <span>
+          <HashLink to="#portfolio">Portfolio</HashLink>
           </span>
           <span>
-            <a onclick="ScrollInto('about')" href="#0">
-              About Us
-            </a>
-          </span>
-          <span>
-            <a onclick="ScrollInto('portfolio')" href="#0">
-              Portfolio
-            </a>
-          </span>
-          <span>
-            <a onclick="ScrollInto('services')" href="#0">
-              Services
-            </a>
+          <HashLink to="#services">Services</HashLink>
           </span>
         </div>
       </div>
       <div className="col-3">
         <div className="footer-menu">
           <span>
-            <a onclick="ScrollInto('technologies')" href="#0">
-              Technologies
-            </a>
+          <HashLink to="#technologies">Technologies</HashLink>
           </span>
           <span>
-            <a onclick="ScrollInto('contact')" href="#0">
-              Contact Us
-            </a>
+          <HashLink to="#contact">Contact Us</HashLink>
           </span>
           <span>
-            <a onclick="ScrollInto('career')" href="#0">
-              Careers
-            </a>
+          <HashLink to="#career">Careers</HashLink>
           </span>
         </div>
       </div>

@@ -44,7 +44,7 @@ function Portfolio() {
           <h3 className="section-title">Our Portfolio</h3>
         </header>
         <div className="row portfolio-container" style={{ position: 'relative' }}>
-            {portfolio.map((item)=>{
+               {React.Children.toArray(portfolio.map((item,index)=>{
                 return <>
                    <div className="col-lg-4 col-md-6 portfolio-item filter-card mb-2">
             <div className="portfolio-wrap">
@@ -58,7 +58,7 @@ function Portfolio() {
             </div>
           </div>
                 </>
-            })}
+            }))}
        
           
           {/* Add the remaining portfolio items here */}
