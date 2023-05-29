@@ -1,13 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 
 function ControlledCarousel() {
-  const [index, setIndex] = useState(0);
-
-  const handleSelect = (selectedIndex, e) => {
-    setIndex(selectedIndex);
-  };
-
+ 
   return (
     <section className="courel-section" id="home">
     <Carousel id="carouselExampleControls" >

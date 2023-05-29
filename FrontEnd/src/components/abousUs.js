@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from 'tss-react/mui';
 import './comaon.css';
+import {aboutUs} from '../data'
 const useStyles = makeStyles()((theme) => {
   return {
     sectionContainer: {
@@ -26,17 +27,12 @@ return (
     <section id="about"  className={classes.sectionContainer}>
         <div className="container">
           <header className="section-header">
-            <h3>About Us</h3>
+            <h3>{aboutUs.title}</h3>
             <p className="about-para">
-              We are highly skilled with the latest technologies to empower your business and needs. We provide innovative
-              ideas and solutions to give you better insights and help you make decisions for your company. We have vast
-              experience in developing and marketing products in multiple domains like Telecommunications, Finance, and
-              E-commerce. We also deal in cloud infrastructure and provide DevOps services and fulfillment Amazon services
-              to the clients.
+              {aboutUs.description1}
             </p>
             <p className="about-para">
-              We would like to talk and listen to our clients and understand their concerns to polish them into ideas and
-              then build them into a reality that satisfies and addresses their problems. Come Grow With Us.
+            {aboutUs.description2}
             </p>
           </header>
           <div className={classes.aboutImgs}>

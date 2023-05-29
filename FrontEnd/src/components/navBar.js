@@ -3,16 +3,14 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
+
+
 import MenuItem from '@mui/material/MenuItem';
-import { NavHashLink } from 'react-router-hash-link';
-import { matchRoutes, useLocation } from "react-router-dom"
+import {HashLink, NavHashLink } from 'react-router-hash-link';
+import {  useLocation } from "react-router-dom"
 import './comaon.css';
 const pages = [
   {title:'Home',path:'#carouselExampleControls'},
@@ -29,33 +27,26 @@ const pages = [
 function ResponsiveAppBar() {
   const location = useLocation();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-  console.log(`${location.pathname}------${location.hash}`);
 
   return (
-    <AppBar color='transparent' position="static">
+    <AppBar color='white' position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-            <img
+           <HashLink to="#home">  <img
                 src="/assets/logo.png"
                 alt="logo"
                 style={{width:300}}                              
-            />
+            /></HashLink>
+          
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' ,justifyContent:'flex-end'} }}>
             <IconButton
               size="large"

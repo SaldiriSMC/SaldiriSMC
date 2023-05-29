@@ -395,3 +395,14 @@ export const TechnologiesList=[
   img:'/assets/Technologies/php-1.svg'
 }
 ]
+
+export const aboutUs = {
+title:'About Us',
+description1:`We are highly skilled with the latest technologies to empower your business and needs. We provide innovative
+ideas and solutions to give you better insights and help you make decisions for your company. We have vast
+experience in developing and marketing products in multiple domains like Telecommunications, Finance, and
+E-commerce. We also deal in cloud infrastructure and provide DevOps services and fulfillment Amazon services
+to the clients.`,
+description2:`We would like to talk and listen to our clients and understand their concerns to polish them into ideas and
+then build them into a reality that satisfies and addresses their problems. Come Grow With Us.`
+}

@@ -1,27 +1,11 @@
 import React, {useState} from 'react';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
-import { makeStyles } from 'tss-react/mui';
 import './comaon.css';
 import {Services} from '../data'
-import { Grid } from '@mui/material';
 import PortfolioModel from './modal'
-const useStyles = makeStyles()((theme) => {
-  return {
-    sectionContainer: {
-        background: theme.palette.white?.main,
-        padding: "40px 20px 20px 20px",
-        borderRadius: 10,
-        position: "relative",
-        margin: "20px 0",
-      },
-      aboutImgs:{
-        display:'flex',
-        justifyContent:'center'
-      }
-  };
-});
+
 function Service() {
-  const { classes } = useStyles();
+
   const [open, setOpen]=useState(false)
   const [modelData, setModelData]=useState({})
   return (
@@ -43,7 +27,7 @@ function Service() {
           <h4 className="title">{item.title}</h4>
           <div className="d-flex">
 
-            {index % 2 == 0 ?
+            {index % 2 === 0 ?
         (
             <>
              <div className="icon">
@@ -82,7 +66,7 @@ function Service() {
           className='text-end'
           >
             {" "}
-            <ReadMoreIcon onClick={()=>{setModelData(item);setOpen(true)}} className='more-logo'/>{" "}
+            <ReadMoreIcon sx={{cursor:'pointer'}} onClick={()=>{setModelData(item);setOpen(true)}} className='more-logo'/>{" "}
             
           </div>
         </div>

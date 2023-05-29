@@ -1,23 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { HashLink } from 'react-router-hash-link';
-import { makeStyles } from 'tss-react/mui';
 import './comaon.css';
-import { Link } from "react-router-dom";
-const useStyles = makeStyles()((theme) => {
-  return {
-    sectionContainer: {
-        background: theme.palette.white?.main,
-        padding: "40px 20px 20px 20px",
-        borderRadius: 10,
-        position: "relative",
-        margin: "20px 0",
-      },
-      aboutImgs:{
-        display:'flex',
-        justifyContent:'center'
-      }
-  };
-});
+
 function Footer() {
 
   return (
@@ -83,7 +67,7 @@ function Footer() {
       <div className="col-3">
         <div className="footer-menu">
           <span> 
-          <HashLink to="#clients">Home</HashLink>
+          <HashLink to="#carouselExampleControls">Home</HashLink>
            </span> 
           <span>
           <HashLink to="#about">About Us</HashLink>

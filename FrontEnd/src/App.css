@@ -1,3 +1,11 @@
+
+
+@import url(//cdn.rawgit.com/rtaibah/dubai-font-cdn/master/dubai-font.css);
+body {
+  /* font-family: "Open Sans", sans-serif; */
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
 .App {
   text-align: center;
 }
