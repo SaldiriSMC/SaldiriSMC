@@ -17,7 +17,7 @@ const createUser = async (userBody,res) => {
     }
   }
   catch(err){
-    console.log(err)
+    console.log("err----->>>>>>>",err)
   }
 };
 
@@ -31,17 +31,17 @@ const createUser = async (userBody,res) => {
  * @returns {Promise<QueryResult>}
  */
 const queryUsers = async (filter, options) => {
-  const users = await User.paginate(filter, options);
+  const users = await User.findAll();
+  //const users = await User.paginate(filter, options);
   return users;
 };
-
 /**
  * Get user by id
  * @param {ObjectId} id
  * @returns {Promise<User>}
  */
 const getUserById = async (id) => {
-  return User.findOne({where:id});
+  return User.findOne({where:{id:id}});
 };
 
 /**
@@ -50,7 +50,7 @@ const getUserById = async (id) => {
  * @returns {Promise<User>}
  */
 const getUserByEmail = async (email) => {
-  return User.findOne({where:{ email }});
+  return User.findOne({where:{ email:email }});
 };
 
 /**
@@ -64,7 +64,8 @@ const updateUserById = async (userId, updateBody) => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  const emialTaken = User.findOne({where:{email:updateBody.email}})
+  const emialTaken = await getUserByEmail(updateBody.email)
+  console.log("taken email----->>>>>",emialTaken)
   if (updateBody.email && emialTaken) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
