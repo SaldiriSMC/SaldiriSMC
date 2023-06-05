@@ -27,7 +27,7 @@ const envVarsSchema = Joi.object()
   .unknown();
 
 const { value: envVars, error } = envVarsSchema.prefs({ errors: { label: 'key' } }).validate(process.env);
-console.log("jwt secrect",envVars.JWT_SECRET)
+console.log('jwt secrect', envVars.JWT_SECRET);
 
 if (error) {
   throw new Error(`Config validation error: ${error.message}`);
@@ -55,10 +55,17 @@ module.exports = {
     smtp: {
       host: envVars.SMTP_HOST,
       port: envVars.SMTP_PORT,
+      secure: true,
+      logger: true,
+      debug: true,
+      secureConnection: true,
       auth: {
         user: envVars.SMTP_USERNAME,
         pass: envVars.SMTP_PASSWORD,
       },
+      tls: {
+        rejectUnAuthorized:true
+        }
     },
     from: envVars.EMAIL_FROM,
   },

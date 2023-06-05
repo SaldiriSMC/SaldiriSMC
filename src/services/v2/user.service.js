@@ -41,7 +41,7 @@ const queryUsers = async (filter, options) => {
  * @returns {Promise<User>}
  */
 const getUserById = async (id) => {
-  return User.findOne({where:{id:id}});
+  return User.findByPk(id);
 };
 
 /**
@@ -59,7 +59,7 @@ const getUserByEmail = async (email) => {
  * @param {Object} updateBody
  * @returns {Promise<User>}
  */
-const updateUserById = async (userId, updateBody) => {
+const updateUserById = async (updateBody,userId) => {
   const user = await getUserById(userId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
@@ -69,8 +69,8 @@ const updateUserById = async (userId, updateBody) => {
   if (updateBody.email && emialTaken) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
-  Object.assign(user, updateBody);
-  return user;
+  const user_ = await User.update(updateBody,{where:{id:userId}})
+  return {message:"user updated successfully"};
 };
 
 /**
@@ -79,12 +79,12 @@ const updateUserById = async (userId, updateBody) => {
  * @returns {Promise<User>}
  */
 const deleteUserById = async (userId) => {
-  const user = await findByPk(userId);
+  const user = await User.findByPk(userId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
   await user.destroy();
-  return user;
+  return {message:"user deleted successfully"};
 };
 
 module.exports = {

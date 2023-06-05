@@ -2,6 +2,7 @@
 const { roles } = require('../../config/roles');
 const { DataTypes } = require('sequelize');
 const {sequelize} = require('../../config/mySqlConnection')
+const token = require('./token.model')
 const User = sequelize.define('users', {
   name: {
     type: DataTypes.STRING,
@@ -36,7 +37,7 @@ const User = sequelize.define('users', {
   },
 },
 );
-
+module.exports = User;
 // `sequelize.define` also returns the model
 
 // add plugin that converts mongoose to json
@@ -76,4 +77,3 @@ const User = sequelize.define('users', {
  * @typedef User
  */
 
-module.exports = User;

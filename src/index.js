@@ -26,15 +26,15 @@ const mySqlConnection = async() =>{
   // db.sequelize = Sequelize
   // db.sequelize = sequelize
   user.sync({ alter: { drop: false } }).then(()=>{
-    console.log("yes re sync is done")
+    console.log("yes re sync of users is done")
   })
   token.sync({ alter: { drop: false } }).then(()=>{
-    console.log("yes re sync is done")
+    console.log("yes re sync of tokens is done")
   })
   sequelize.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync is done")
   })
-}
+} 
 mySqlConnection()
 const exitHandler = () => {
   if (server) {

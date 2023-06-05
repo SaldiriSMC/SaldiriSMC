@@ -2,16 +2,20 @@ const { Sequelize, DataTypes } = require('sequelize');
 const {sequelize} = require('../../config/mySqlConnection')
 const { toJSON } = require('../plugins');
 const { tokenTypes } = require('../../config/tokens');
+const User = require("./user.model")
 const Token = sequelize.define('tokens', {
         token: {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        // user: {
-        //   type: DataTypes.STRING,
-        //   primaryKey:true,
-        //   allowNull: false,
-        // },
+        user: {
+          type: DataTypes.STRING,
+          references:{
+            model:"users",
+            key:"id"
+          },
+          allowNull: false,
+        },
         type: {
           type: DataTypes.ENUM(tokenTypes.REFRESH, tokenTypes.RESET_PASSWORD, tokenTypes.VERIFY_EMAIL),
           allowNull: false,
@@ -35,4 +39,5 @@ console.log(Token === sequelize.models.Token); // true
 /**
  * @typedef Token
  */
+User.hasOne(Token)
 module.exports = Token;
