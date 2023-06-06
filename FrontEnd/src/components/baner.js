@@ -5,7 +5,7 @@ function ControlledCarousel() {
  
   return (
     <section className="courel-section" id="home">
-    <Carousel id="carouselExampleControls" >
+    <Carousel id="carouselExampleControls " interval={null} >
       <Carousel.Item className="slide-a">
         <img className="d-block slider_img w-100 img-fluid" src="/assets/baner1.jpg" alt="Third slide" />
         <div className="clearfix">

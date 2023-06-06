@@ -19,7 +19,7 @@ function Service() {
         {React.Children.toArray(Services.map((item,index)=>{
             return<>
             <div
-        className=" wow zoom my_class"
+        className={`wow zoom my_class col-5 ${index % 2 === 0 ? 'offset-lg-1' : '' }`}
         data-wow-duration="0.9s"
         style={{ animationName: "zoom" }}
       >
