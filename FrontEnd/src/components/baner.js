@@ -7,7 +7,7 @@ function ControlledCarousel() {
     <section className="courel-section" id="home">
     <Carousel id="carouselExampleControls" >
       <Carousel.Item className="slide-a">
-        <img className="d-block slider_img w-100 img-fluid" src="/assets/intro-bg2.png" alt="Third slide" />
+        <img className="d-block slider_img w-100 img-fluid" src="/assets/baner1.jpg" alt="Third slide" />
         <div className="clearfix">
           <div className="slide-a-in" id="intro">
             <div className="intro-img">
@@ -26,20 +26,20 @@ function ControlledCarousel() {
       </Carousel.Item>
       <Carousel.Item>
         <div className="clearfix">
-          <img className="d-block slider_img w-100 img-fluid" src="./assets/slider/image-banner-1.png" alt="Third slide" />
+          <img className="d-block slider_img w-100 img-fluid" src="./assets/baner2.jpg" alt="Third slide" />
         </div>
       </Carousel.Item>
       <Carousel.Item>
         <div className="">
-          <img className="d-block slider_img w-100" src="/assets/slider/image-banner-2.png" alt="Third slide" />
+          <img className="d-block slider_img w-100" src="/assets/baner3.jpg" alt="Third slide" />
         </div>
       </Carousel.Item>
       <Carousel.Item>
         <div className="">
-          <img className="d-block slider_img w-100" src="/assets/slider/image-banner-3.jpg" alt="Third slide" />
+          <img className="d-block slider_img w-100" src="/assets/baner4.jpg" alt="Third slide" />
         </div>
       </Carousel.Item>
-      <Carousel.Item>
+      {/* <Carousel.Item>
         <div className="">
           <img className="d-block slider_img w-100" src="/assets/slider/image-banner-4.jpg" alt="Third slide" />
         </div>
@@ -53,7 +53,7 @@ function ControlledCarousel() {
         <div className="">
           <img className="d-block slider_img w-100" src="/assets/slider/image-banner-0.png" alt="Third slide" />
         </div>
-      </Carousel.Item>
+      </Carousel.Item> */}
     </Carousel>
   </section>
   );

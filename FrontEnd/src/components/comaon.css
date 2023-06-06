@@ -1,3 +1,10 @@
+
+.about_img_2{
+  position: absolute;
+  top: 30%;
+  left: 30%;
+}
+
 .carousel-control-prev, .carousel-control-next{
   display: grid;
 }

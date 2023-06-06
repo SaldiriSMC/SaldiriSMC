@@ -26,7 +26,17 @@ return (
   <>
     <section id="about"  className={classes.sectionContainer}>
         <div className="container">
-          <header className="section-header">
+          <div className='row'>
+            <div className='col-lg-6 col-md-6 col-sm-12'>
+            <div className={classes.aboutImgs}>
+            <div>
+              <img className="about-img w-100" src="/assets/about.jpg" alt="software-development" />
+            </div>
+            <img className="about_img_2 d-sm-none d-xs-none d-lg-block" src="/assets/about2.jpg" alt="software-development" />
+          </div>
+            </div>
+            <div className='col-lg-6 col-md-6 col-sm-12'>
+            <header className="section-header">
             <h3>{aboutUs.title}</h3>
             <p className="about-para">
               {aboutUs.description1}
@@ -35,20 +45,10 @@ return (
             {aboutUs.description2}
             </p>
           </header>
-          <div className={classes.aboutImgs}>
-            <div>
-              <img className="about-img" src="/assets/Card4.png" alt="software-development" />
-            </div>
-            <div>
-              <img className="about-img" src="/assets/Card3.png" alt="software-menagement" />
-            </div>
-            <div>
-              <img className="about-img" src="/assets/Card1.png" alt="dev-ops" />
-            </div>
-            <div>
-              <img className="about-img" src="/assets/Card2.png" alt="Amazon-fullfilaments" />
             </div>
           </div>
+        
+          
         </div>
       </section>
   </>
