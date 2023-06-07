@@ -4,7 +4,7 @@ const config = require('../config/config');
 const swaggerDef = {
   openapi: '3.0.0',
   info: {
-    title: 'node-express-boilerplate API documentation',
+    title: 'Saldir SMC Backend',
     version,
     license: {
       name: 'MIT',
@@ -14,6 +14,9 @@ const swaggerDef = {
   servers: [
     {
       url: `http://localhost:${config.port}/v1`,
+    },
+    {
+      url: `http://localhost:${config.port}/v2`,
     },
   ],
 };

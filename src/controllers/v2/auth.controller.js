@@ -1,13 +1,27 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../../utils/catchAsync');
-const { authService, userService, tokenService, emailService } = require('../../services/v2');
+const { User } = require('../../models/v2/index');
+const { authService, userService, tokenService, emailService, tenantService } = require('../../services/v2');
 
 const register = catchAsync(async (req, res) => {
-  const user = await userService.createUser(req.body,res);
-  console.log('user-------->>>>>', user)
-  if(user){
-    const tokens = await tokenService.generateAuthTokens(user);
-    res.status(httpStatus.CREATED).send({ user, tokens });
+  try{
+    const isEmail = await User.findOne({ where: { email: req.body.email } })
+    if(isEmail === null){
+      const tenant = await tenantService.createTenant(req.body,res);
+      if(tenant){
+        const user = await userService.createUser(req.body,tenant.id);
+        if(user){
+          const tokens = await tokenService.generateAuthTokens(user);
+          res.status(httpStatus.CREATED).send({ user, tokens });
+        }
+      }
+    }else{
+      res.status(httpStatus.BAD_REQUEST).send({message:'Email already taken'});
+    }
+  }
+  catch(err){
+    console.log(err)
+    res.send(err)
   }
 });
 
@@ -35,8 +49,8 @@ const forgotPassword = catchAsync(async (req, res) => {
 });
 
 const resetPassword = catchAsync(async (req, res) => {
-  await authService.resetPassword(req.query.token, req.body.password);
-  res.status(httpStatus.NO_CONTENT).send();
+  const resetPass = await authService.resetPassword(req.query.token, req.body.password);
+  res.send(resetPass);
 });
 
 const sendVerificationEmail = catchAsync(async (req, res) => {
@@ -46,8 +60,8 @@ const sendVerificationEmail = catchAsync(async (req, res) => {
 });
 
 const verifyEmail = catchAsync(async (req, res) => {
-  await authService.verifyEmail(req.query.token);
-  res.status(httpStatus.NO_CONTENT).send();
+  const verify_email = await authService.verifyEmail(req.query.token);
+  res.send(verify_email);
 });
 
 module.exports = {

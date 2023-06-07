@@ -5,6 +5,7 @@ const config = require('./config/config');
 const logger = require('./config/logger');
 const user = require('./models/v2/user.model');
 const token = require('./models/v2/token.model')
+const tenant = require('./models/v2/tenant.model')
 let server;
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
@@ -30,6 +31,9 @@ const mySqlConnection = async() =>{
   })
   token.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync of tokens is done")
+  })
+  tenant.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re sync of tenant is done")
   })
   sequelize.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync is done")

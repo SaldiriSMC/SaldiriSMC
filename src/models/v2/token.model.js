@@ -1,8 +1,6 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const {sequelize} = require('../../config/mySqlConnection')
-const { toJSON } = require('../plugins');
 const { tokenTypes } = require('../../config/tokens');
-const User = require("./user.model")
 const Token = sequelize.define('tokens', {
         token: {
           type: DataTypes.STRING,
@@ -32,12 +30,7 @@ const Token = sequelize.define('tokens', {
         timestamps: true,
       }
 );
-// `sequelize.define` also returns the model
-console.log(Token === sequelize.models.Token); // true
-// add plugin that converts mongoose to json
-// Token.plugin(toJSON);
 /**
  * @typedef Token
  */
-User.hasOne(Token)
 module.exports = Token;

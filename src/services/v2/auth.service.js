@@ -4,7 +4,7 @@ const userService = require('./user.service');
 const Token = require('../../models/v2/token.model');
 const ApiError = require('../../utils/ApiError');
 const { tokenTypes } = require('../../config/tokens');
-const { where } = require('../../models/v1/token.model');
+const User = require('../../models/v2/user.model')
 
 /**
  * Login with username and password
@@ -26,7 +26,7 @@ const loginUserWithEmailAndPassword = async (email, password) => {
  * @returns {Promise}
  */
 const logout = async (refreshToken) => {
-  const refreshTokenDoc = await Token.findOne({ token: refreshToken, type: tokenTypes.REFRESH, blacklisted: false });
+  const refreshTokenDoc = await Token.findOne({where:{ token: refreshToken, type: tokenTypes.REFRESH, blacklisted: false }});
   if (!refreshTokenDoc) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Not found');
   }
@@ -45,7 +45,7 @@ const refreshAuth = async (refreshToken) => {
     if (!user) {
       throw new Error();
     }
-    await refreshTokenDoc.remove();
+    await refreshTokenDoc.destroy();
     return tokenService.generateAuthTokens(user);
   } catch (error) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate');
@@ -61,13 +61,15 @@ const refreshAuth = async (refreshToken) => {
 const resetPassword = async (resetPasswordToken, newPassword) => {
   try {
     const resetPasswordTokenDoc = await tokenService.verifyToken(resetPasswordToken, tokenTypes.RESET_PASSWORD);
-    console.log("",resetPasswordTokenDoc)
     const user = await userService.getUserById(resetPasswordTokenDoc.user);
     if (!user) {
       throw new Error();
     }
-    await userService.updateUserById({ password: newPassword },user.id);
-    await Token.destroy({where:{ id: user.id, type:tokenTypes.RESET_PASSWORD}});
+    await User.update({password:newPassword},{where:{id:user.id}})
+    const update = await Token.destroy({where:{ user: user.id, type:tokenTypes.RESET_PASSWORD}});
+    if(update){
+      return {message:"Password reset successfully"}
+    }
   } catch (error) {
     console.log(error)
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Password reset failed');
@@ -80,16 +82,21 @@ const resetPassword = async (resetPasswordToken, newPassword) => {
  * @returns {Promise}
  */
 const verifyEmail = async (verifyEmailToken) => {
-  try {
+  try{
     const verifyEmailTokenDoc = await tokenService.verifyToken(verifyEmailToken, tokenTypes.VERIFY_EMAIL);
+    console.log("verifyEmailTokenDoc",verifyEmailTokenDoc.user)
     const user = await userService.getUserById(verifyEmailTokenDoc.user);
     if (!user) {
       throw new Error();
     }
-    await Token.deleteMany({ user: user.id, type: tokenTypes.VERIFY_EMAIL });
-    await userService.updateUserById(user.id, { isEmailVerified: true });
-  } catch (error) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'Email verification failed');
+    await Token.destroy({where:{ user: user.id, type: tokenTypes.VERIFY_EMAIL }});
+    const update = await User.update({ isEmailVerified: true },{where:{id:user.id}})
+    if(update){
+      return {message: "email verified successfully"}
+    }
+  }catch (error) {
+    console.log(error)
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'email verification failed');
   }
 };
 

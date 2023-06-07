@@ -1,8 +1,6 @@
-
-const { roles } = require('../../config/roles');
 const { DataTypes } = require('sequelize');
 const {sequelize} = require('../../config/mySqlConnection')
-const token = require('./token.model')
+const tenant = require("./tenant.model")
 const User = sequelize.define('users', {
   name: {
     type: DataTypes.STRING,
@@ -35,14 +33,16 @@ const User = sequelize.define('users', {
     type: DataTypes.BOOLEAN,
     default: false,
   },
+  tenantId:{
+    type: DataTypes.STRING,
+    references:{
+      model:"tenant",
+      key:"id"
+    },
+  },
 },
 );
 module.exports = User;
-// `sequelize.define` also returns the model
-
-// add plugin that converts mongoose to json
-// User.plugin(toJSON);
-// User.plugin(paginate);
 
 /**
  * Check if email is taken
@@ -50,29 +50,11 @@ module.exports = User;
  * @param {ObjectId} [excludeUserId] - The id of the user to be excluded
  * @returns {Promise<boolean>}
  */
-// userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
-//   const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
-//   return !!user;
-// };
-
 /**
  * Check if password matches the user's password
  * @param {string} password
  * @returns {Promise<boolean>}
  */
-// User.methods.isPasswordMatch = async function (password) {
-//   const user = this;
-//   return bcrypt.compare(password, user.password);
-// };
-
-// User.pre('save', async function (next) {
-//   const user = this;
-//   if (user.isModified('password')) {
-//     user.password = await bcrypt.hash(user.password, 8);
-//   }
-//   next();
-// });
-
 /**
  * @typedef User
  */

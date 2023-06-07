@@ -7,18 +7,8 @@ const ApiError = require('../../utils/ApiError');
  * @param {Object} userBody
  * @returns {Promise<User>}
  */
-const createUser = async (userBody,res) => {
-  try{
-    const user = await User.findOne({ where: { email: userBody.email } });
-    if (user === null) {
-      return User.create(userBody);
-    }else{
-      res.status(httpStatus.BAD_REQUEST).send({message:'Email already taken'});
-    }
-  }
-  catch(err){
-    console.log("err----->>>>>>>",err)
-  }
+const createUser = async (userBody,tenantId) => {
+    return User.create({name:userBody.name, email:userBody.email, password:userBody.password, tenantId: tenantId});
 };
 
 /**
@@ -64,7 +54,7 @@ const updateUserById = async (updateBody,userId) => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  const emialTaken = await getUserByEmail(updateBody.email)
+  const emialTaken = await getUserByEmail(updateBody?.email)
   console.log("taken email----->>>>>",emialTaken)
   if (updateBody.email && emialTaken) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
