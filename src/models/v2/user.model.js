@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const {sequelize} = require('../../config/mySqlConnection')
-const tenant = require("./tenant.model")
 const User = sequelize.define('users', {
   name: {
     type: DataTypes.STRING,
@@ -27,11 +26,12 @@ const User = sequelize.define('users', {
     },
   },
   role: {
-    type:DataTypes.ENUM('admin','user')
+    type:DataTypes.ENUM('admin','user'),
+    defaultValue:"user"
   },
   isEmailVerified: {
     type: DataTypes.BOOLEAN,
-    default: false,
+    defaultValue: false,
   },
   tenantId:{
     type: DataTypes.STRING,

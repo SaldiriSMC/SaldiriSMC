@@ -1,6 +1,6 @@
 const express = require('express');
 const auth = require('../../middlewares/auth');
-const tenant = require("../../middlewares/tenant")
+const tenant = require("../../middlewares/v2/tenant")
 const validate = require('../../middlewares/validate');
 const userValidation = require('../../validations/user.validation');
 const userController = require('../../controllers/v2/user.controller');
@@ -9,14 +9,14 @@ const router = express.Router();
 
 router
   .route('/')
-  .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)
+  .post(auth('manageUsers'), tenant(), validate(userValidation.createUser), userController.createUser)
   .get(auth('getUsers'), tenant(), validate(userValidation.getUsers), userController.getUsers);
 
 router
   .route('/:userId')
-  .get(auth('getUsers'), userController.getUser)
-  .patch(auth('manageUsers'), userController.updateUser)
-  .delete(auth('manageUsers'), userController.deleteUser);
+  .get(auth('getUsers'), tenant(), userController.getUser)
+  .patch(auth('manageUsers'), tenant(), userController.updateUser)
+  .delete(auth('manageUsers'), tenant(), userController.deleteUser);
 
 module.exports = router;
 

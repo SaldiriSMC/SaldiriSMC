@@ -14,6 +14,10 @@ const Tenant = sequelize.define('tenant', {
     allowNull: false,
     unique: true
   },
+  isActive: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 },
 );
 /**

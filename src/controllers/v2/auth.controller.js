@@ -12,7 +12,7 @@ const register = catchAsync(async (req, res) => {
         const user = await userService.createUser(req.body,tenant.id);
         if(user){
           const tokens = await tokenService.generateAuthTokens(user);
-          res.status(httpStatus.CREATED).send({ user, tokens });
+          res.status(httpStatus.CREATED).send({ tenant, user, tokens });
         }
       }
     }else{
