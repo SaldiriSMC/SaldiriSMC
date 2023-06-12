@@ -4,13 +4,14 @@ const tenant = require("../../middlewares/v2/tenant")
 const validate = require('../../middlewares/validate');
 const userValidation = require('../../validations/user.validation');
 const userController = require('../../controllers/v2/user.controller');
+const checkRoles = require('../../middlewares/v2/checkRole')
 
 const router = express.Router();
 
 router
   .route('/')
-  .post(auth('manageUsers'), tenant(), validate(userValidation.createUser), userController.createUser)
-  .get(auth('getUsers'), tenant(), validate(userValidation.getUsers), userController.getUsers);
+  .post(auth('manageUsers'), tenant(), checkRoles(["admin",]), validate(userValidation.createUser), userController.createUser)
+  .get(auth('getUsers'), tenant(), checkRoles(["admin","hr"]), validate(userValidation.getUsers), userController.getUsers);
 
 router
   .route('/:userId')

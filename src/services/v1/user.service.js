@@ -2,6 +2,7 @@ const httpStatus = require('http-status');
 const { User } = require('../../models/v1');
 const ApiError = require('../../utils/ApiError');
 
+
 /**
  * Create a user
  * @param {Object} userBody

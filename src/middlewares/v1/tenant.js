@@ -4,10 +4,11 @@ const ApiError = require('../../utils/ApiError');
 
 const tenant = () => async (req, res, next) => {
   return new Promise(async (resolve, reject) => {
+
     const key = req.get('X-Tenent-Key');
     if (key) {
       const tenantKey = await Tenant.findOne({ key: key });
-      console.log('tenantKey----->>>>>',tenantKey)
+
       if (tenantKey) {
         if(tenantKey.isActive){
           resolve();

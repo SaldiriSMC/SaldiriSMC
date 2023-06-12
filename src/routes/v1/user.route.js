@@ -5,12 +5,13 @@ const userValidation = require('../../validations/user.validation');
 const userController = require('../../controllers/v1/user.controller');
 const tenant = require("../../middlewares/v1/tenant")
 
+
 const router = express.Router();
 
 router
   .route('/')
   .post(auth('manageUsers'), tenant(), validate(userValidation.createUser), userController.createUser)
-  .get(auth('getUsers'), tenant(), validate(userValidation.getUsers), userController.getUsers);
+  .get(auth('getUsers'), tenant(),  validate(userValidation.getUsers), userController.getUsers);
 
 router
   .route('/:userId')

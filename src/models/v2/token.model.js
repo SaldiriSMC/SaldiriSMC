@@ -15,7 +15,7 @@ const Token = sequelize.define('tokens', {
           allowNull: false,
         },
         type: {
-          type: DataTypes.ENUM(tokenTypes.REFRESH, tokenTypes.RESET_PASSWORD, tokenTypes.VERIFY_EMAIL),
+          type: DataTypes.ENUM(tokenTypes.REFRESH, tokenTypes.ACCESS, tokenTypes.RESET_PASSWORD, tokenTypes.VERIFY_EMAIL),
           allowNull: false,
         },
         expires: {

@@ -39,7 +39,7 @@ const saveToken = async (token, userId, expires, type, blacklisted = false) => {
     token,
     user: userId,
     expires: expires.toDate(),
-    type,
+    type:type,
     blacklisted,
   });
   return tokenDoc;
@@ -72,6 +72,7 @@ const generateAuthTokens = async (user) => {
   const refreshTokenExpires = moment().add(config.jwt.refreshExpirationDays, 'days');
   const refreshToken = generateToken(user.id, refreshTokenExpires, tokenTypes.REFRESH);
   await saveToken(refreshToken, user.id, refreshTokenExpires, tokenTypes.REFRESH);
+  await saveToken(accessToken, user.id, accessTokenExpires, tokenTypes.ACCESS);
 
   return {
     access: {

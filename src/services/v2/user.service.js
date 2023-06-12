@@ -8,7 +8,7 @@ const ApiError = require('../../utils/ApiError');
  * @returns {Promise<User>}
  */
 const createUser = async (userBody,tenantId) => {
-    return User.create({name:userBody.name, email:userBody.email, password:userBody.password, tenantId: tenantId});
+    return User.create({...userBody, tenantId: tenantId});
 };
 
 /**

@@ -1,8 +1,5 @@
 const httpStatus = require('http-status');
 const { Tenant } = require('../../models/v1/index');
-const ApiError = require('../../utils/ApiError');
-const { response } = require('../../app');
-
 const createTenant = async (userBody,res) => {
     try{
       const tenant = await Tenant.findOne({ domain: userBody.domain });

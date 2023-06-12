@@ -1,4 +1,4 @@
-const { Tenant } = require('../../models/v2/index');
+const { Tenant, Token, User } = require('../../models/v2/index');
 const httpStatus = require('http-status');
 const ApiError = require('../../utils/ApiError');
 
@@ -7,7 +7,6 @@ const tenant = () => async (req, res, next) => {
     const key = req.get('X-Tenent-Key');
     if (key) {
       const tenantKey = await Tenant.findOne({ where: { key: key } });
-      console.log('tenantKey----->>>>>',tenantKey)
       if (tenantKey) {
         if(tenantKey.isActive){
           resolve();

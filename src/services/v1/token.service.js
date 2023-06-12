@@ -35,6 +35,7 @@ const generateToken = (userId, expires, type, secret = config.jwt.secret) => {
  * @returns {Promise<Token>}
  */
 const saveToken = async (token, userId, expires, type, blacklisted = false) => {
+  console.log("token------->>>>>>>",token)
   const tokenDoc = await Token.create({
     token,
     user: userId,
@@ -72,7 +73,7 @@ const generateAuthTokens = async (user) => {
   const refreshTokenExpires = moment().add(config.jwt.refreshExpirationDays, 'days');
   const refreshToken = generateToken(user.id, refreshTokenExpires, tokenTypes.REFRESH);
   await saveToken(refreshToken, user.id, refreshTokenExpires, tokenTypes.REFRESH);
-
+  await saveToken(accessToken, user.id, accessTokenExpires, tokenTypes.ACCESS);
   return {
     access: {
       token: accessToken,

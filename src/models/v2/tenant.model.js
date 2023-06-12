@@ -16,7 +16,7 @@ const Tenant = sequelize.define('tenant', {
   },
   isActive: {
     type: DataTypes.BOOLEAN,
-    defaultValue: false,
+    defaultValue: true,
   },
 },
 );
