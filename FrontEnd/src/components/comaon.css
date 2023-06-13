@@ -3,10 +3,76 @@
   position: absolute;
   top: 30%;
   left: 30%;
+  height: 30vh;
 }
+.services_icon{
+  background: #D8E4FF;
+  border-radius: 8px;
+  width: 60px;
+  /* display: flex; */
+  padding: 12px 0px 0px 0px;
+  justify-content: center;
+  height: 60px;
+}
+.services_img_text{
+  position: absolute;
+  border-radius: 15px;
+  background-color: white;
+  width: 300px;
+  left: 15%;
+  height: 270px;
+  bottom: -20%;
+  padding: 5px 5px 0px 5px;
+}
+.services_text_title{
+  /* font-family: 'Poppins'; */
+/* font-style: normal; */
+font-weight: 500;
+font-size: 24px;
+}
+.services_text_desp{
+  padding: 0px 2px 0px 2px;
+    overflow: hidden;
+    /* white-space: nowrap; */
 
+    /* line-height: 24px; */
+    text-align: justify;
+    text-overflow: ellipsis;
+    /* height: 39px; */
+    max-lines: 2;
+    -webkit-line-clamp: 3 !important;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+}
+.services_card{
+  margin-bottom: 10%;
+}
+.blue_circule{
+  cursor: pointer;
+width: 80px;
+font-size: large;
+padding: 5px 5px 0px 5px;
+margin: auto;
+height: 40px;
+/* left: 290px; */
+position: sticky;
+top: 1984px;
+border-radius: 100% 100% 0 0;
+color: white;
+background: #004EFF;
+}
+.nav-logo{
+  width: 300px;
+}
 .carousel-control-prev, .carousel-control-next{
   display: grid;
+}
+.about-para{
+  text-align: justify;
 }
 .activeUrl{
   color: #0d6efd !important;
@@ -405,7 +471,9 @@ right: 25px;
   width: 80%;
   margin: auto;
 }
-
+.nav-logo{
+  width: 150px;
+}
 }
 
 .section-bg {
@@ -500,7 +568,7 @@ justify-content: center;}
       padding: 0;
     overflow: hidden;
     /* white-space: nowrap; */
-    margin-left: 62px;
+
     /* line-height: 24px; */
     text-align: justify;
     text-overflow: ellipsis;
@@ -510,7 +578,9 @@ justify-content: center;}
     display: -webkit-box;
     -webkit-box-orient: vertical;
 }
-
+#services .descp-left {
+  margin-left: 62px !important;
+}
 
 
 /* Technologies Section
@@ -1186,9 +1256,10 @@ margin-top: 2%;
 
 
   #intro .intro-img {
-width: 30%;
+    display: none;
+width: 20%;
     float: none;
-    margin: 50px auto 25px auto;
+    margin: 10px auto 15px auto;
   }
 
   #intro .intro-info {
@@ -1214,6 +1285,7 @@ width: 30%;
 @media (max-width: 767px) {
   #intro .intro-info {
     width: 100%;
+    margin-top: 10%;
   }
 
   #intro .intro-info h2 {
@@ -1437,8 +1509,12 @@ font-size: 1.5rem;
 .modal-content_ {
   width: 90%;
 }
-
-
+.about_img_2{
+  display: none;
+}
+.nav-logo{
+  width: 140px;
+}
 
 }
 

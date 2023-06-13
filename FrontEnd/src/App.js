@@ -7,11 +7,12 @@ import Baner from './components/baner'
 import AboutUs from './components/abousUs'
 import Portfolio from './components/portfolio'
 import Clients from './components/clients'
-import Services from './components/services'
+import Services from './components/servicesNew'
 import Technologies from './components/technologies'
 import ContactUs from './components/contactUs'
 import Careers from './components/career'
 import Footer from './components/footer'
+import SignUp from './components/SignUp'
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../src/theme';
 function App() {
@@ -22,6 +23,7 @@ function App() {
       <Baner/>
       <AboutUs/>
       <Portfolio/>
+      <SignUp/>
       <Clients/>
       <Services/>
       <Technologies/>

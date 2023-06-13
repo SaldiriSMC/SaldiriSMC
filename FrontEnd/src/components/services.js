@@ -44,7 +44,7 @@ function Service() {
         ):
         (
 <>
-            <p className="description">
+      <p className={`description`}>
               {item.description}
             </p>
             <div className="icon my_iocn">

@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from 'tss-react/mui';
 import './comaon.css';
 import {aboutUs} from '../data'
+import Button from '@mui/material/Button';
 const useStyles = makeStyles()((theme) => {
   return {
     sectionContainer: {
@@ -10,6 +11,13 @@ const useStyles = makeStyles()((theme) => {
         borderRadius: 10,
         position: "relative",
         // margin: "20px 0",
+      },
+      btn: {
+        display:'flex',
+        borderRadius: 20,
+        height:50,
+        width:170,
+        fontWeight: 600,
       },
       aboutImgs:{
         display:'flex',
@@ -44,7 +52,16 @@ return (
             <p className="about-para">
             {aboutUs.description2}
             </p>
+          
           </header>
+          <Button
+                  className={classes.btn}
+                 variant="contained"
+                 color="primary"
+                //  style={{ marginTop: '20px' }}
+               >
+               Read More
+               </Button>
             </div>
           </div>
         
