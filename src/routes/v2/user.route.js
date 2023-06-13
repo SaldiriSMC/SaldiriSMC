@@ -10,7 +10,7 @@ const router = express.Router();
 
 router
   .route('/')
-  .post(auth('manageUsers'), tenant(), checkRoles(["admin",]), validate(userValidation.createUser), userController.createUser)
+  .post(auth('manageUsers'), tenant(), checkRoles(["admin"]), validate(userValidation.createUser), userController.createUser)
   .get(auth('getUsers'), tenant(), checkRoles(["admin","hr"]), validate(userValidation.getUsers), userController.getUsers);
 
 router
@@ -35,6 +35,13 @@ module.exports = router;
  *   post:
  *     summary: Create a user
  *     description: Only admins can create other users.
+ *     parameters:
+ *         - name: X-Tenent-Key
+ *           in: header
+ *           description: X-Tenent-Key
+ *           required: true
+ *           schema:
+ *             type: string
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
@@ -90,6 +97,12 @@ module.exports = router;
  *     security:
  *       - bearerAuth: []
  *     parameters:
+ *       - name: X-Tenent-Key
+ *         in: header
+ *         description: X-Tenent-Key
+ *         required: true
+ *         schema:
+ *           type: string
  *       - in: query
  *         name: name
  *         schema:
@@ -159,6 +172,12 @@ module.exports = router;
  *     security:
  *       - bearerAuth: []
  *     parameters:
+ *       - name: X-Tenent-Key
+ *         in: header
+ *         description: X-Tenent-Key
+ *         required: true
+ *         schema:
+ *           type: string
  *       - in: path
  *         name: id
  *         required: true
@@ -186,6 +205,12 @@ module.exports = router;
  *     security:
  *       - bearerAuth: []
  *     parameters:
+ *       - name: X-Tenent-Key
+ *         in: header
+ *         description: X-Tenent-Key
+ *         required: true
+ *         schema:
+ *           type: string
  *       - in: path
  *         name: id
  *         required: true
@@ -237,6 +262,12 @@ module.exports = router;
  *     security:
  *       - bearerAuth: []
  *     parameters:
+ *       - name: X-Tenent-Key
+ *         in: header
+ *         description: X-Tenent-Key
+ *         required: true
+ *         schema:
+ *           type: string
  *       - in: path
  *         name: id
  *         required: true

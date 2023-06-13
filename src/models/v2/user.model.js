@@ -34,7 +34,7 @@ const User = sequelize.define('users', {
     defaultValue: false,
   },
   tenantId:{
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     references:{
       model:"tenant",
       key:"id"
@@ -43,19 +43,4 @@ const User = sequelize.define('users', {
 },
 );
 module.exports = User;
-
-/**
- * Check if email is taken
- * @param {string} email - The user's email
- * @param {ObjectId} [excludeUserId] - The id of the user to be excluded
- * @returns {Promise<boolean>}
- */
-/**
- * Check if password matches the user's password
- * @param {string} password
- * @returns {Promise<boolean>}
- */
-/**
- * @typedef User
- */
 

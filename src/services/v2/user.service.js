@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 const { User } = require('../../models/v2/index');
 const ApiError = require('../../utils/ApiError');
-
+const paginate = require("../../models/plugins/v2/paginate.plugin")
 /**
  * Create a user
  * @param {Object} userBody
@@ -20,10 +20,20 @@ const createUser = async (userBody,tenantId) => {
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
+
 const queryUsers = async (filter, options) => {
-  const users = await User.findAll();
-  //const users = await User.paginate(filter, options);
-  return users;
+  const get_Pagination = await paginate(filter,options)
+  console.log("pagination------->>>>>>>>", get_Pagination)
+  // console.log('options------>>>>>>',options, filter)
+  // const limit = filter.limit ? +filter.limit : 3;
+  // const offset = filter.page ? filter.page * limit : 0;
+  // const users = await User.findAndCountAll({limit:limit, offset:offset});
+  // const totalResults = users.rows.length
+  // const totalPages = Math.ceil(totalResults / filter.limit);
+  // if(filter.sortBy === "desc"){
+  //   return {results:users.rows.reverse(), page:offset, limit:limit, totalPages: totalPages, totalResults:totalResults};
+  // }
+  // return {results:users.rows, page:offset, limit:limit, totalPages: totalPages, totalResults:totalResults};
 };
 /**
  * Get user by id

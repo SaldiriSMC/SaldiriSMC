@@ -22,22 +22,5 @@ const checkRoles = (roles) => async (req, res, next) => {
         next(err);
       });
   };
-
-//   async function checkRoles(roles = []) {
-//     const authToken = req.headers.authorization.split(' ')[1];
-//     const token = await Token.findOne({ where: { token: authToken } });
-//     const user = await User.findOne({ where: { id: token.user } });
-//     if (typeof roles === 'string') {
-//         roles = [roles];
-//     }
-//     return [
-//         (req, res, next) => {
-//             if (roles.length && !roles.includes(user.role)) {
-//               return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Sorry you do not have access to this route.'));
-//             }
-//             next();
-//         }
-//     ];
-// }
-
+  
 module.exports = checkRoles

@@ -28,7 +28,7 @@ module.exports = router;
  * @swagger
  * /auth/register:
  *   post:
- *     summary: Register as user
+ *     summary: Register as admin
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -40,6 +40,8 @@ module.exports = router;
  *               - name
  *               - email
  *               - password
+ *               - tanantName
+ *               - domain
  *             properties:
  *               name:
  *                 type: string
@@ -52,10 +54,18 @@ module.exports = router;
  *                 format: password
  *                 minLength: 8
  *                 description: At least one number and one letter
+ *               tanantName:
+ *                 type: string
+ *                 description: must be unique
+ *               domain:
+ *                 type: string
+ *                 description: must be unique
  *             example:
  *               name: fake name
  *               email: fake@example.com
  *               password: password1
+ *               tanantName: fake tenant name
+ *               domain: www.example.com
  *     responses:
  *       "201":
  *         description: Created
@@ -70,6 +80,7 @@ module.exports = router;
  *                   $ref: '#/components/schemas/AuthTokens'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
+ *          
  */
 
 /**

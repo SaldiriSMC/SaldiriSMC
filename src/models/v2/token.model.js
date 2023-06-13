@@ -7,7 +7,7 @@ const Token = sequelize.define('tokens', {
           allowNull: false,
         },
         user: {
-          type: DataTypes.STRING,
+          type: DataTypes.INTEGER,
           references:{
             model:"users",
             key:"id"

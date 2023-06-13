@@ -57,6 +57,8 @@ const userSchema = mongoose.Schema(
 
 // add plugin that converts mongoose to json
 userSchema.plugin(toJSON);
+
+
 userSchema.plugin(paginate);
 
 /**

@@ -6,6 +6,7 @@ const logger = require('./config/logger');
 const user = require('./models/v2/user.model');
 const token = require('./models/v2/token.model')
 const tenant = require('./models/v2/tenant.model')
+
 let server;
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
@@ -13,9 +14,6 @@ mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
     logger.info(`Listening to port ${config.port}`);
   });
 });
-// const sequelize = new Sequelize('firstdb', 'techteam', '123456Aa@', {
-  
-// });
 const mySqlConnection = async() =>{
   try {
     await sequelize.authenticate();
@@ -28,15 +26,23 @@ const mySqlConnection = async() =>{
   // db.sequelize = sequelize
   user.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync of users is done")
+  }).catch((err)=>{
+    console.log(err)
   })
   token.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync of tokens is done")
+  }).catch((err)=>{
+    console.log(err)
   })
   tenant.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync of tenant is done")
+  }).catch((err)=>{
+    console.log(err)
   })
   sequelize.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync is done")
+  }).catch((err)=>{
+    console.log(err)
   })
 } 
 mySqlConnection()
