@@ -128,7 +128,7 @@ right: 25px;
 }
 .carousel {
   /* top: 7vh; */
-  margin-top: 35px;
+  /* margin-top: 35px; */
 
 }
 @keyframes rotation{
@@ -1543,7 +1543,7 @@ font-size: 1.5rem;
 
 }
 .carousel {
-    top: 7vh;
+    /* top: 7vh; */
  
 }
 #about {

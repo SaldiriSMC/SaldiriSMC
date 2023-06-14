@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
-import ReadMoreIcon from '@mui/icons-material/ReadMore';
+import { useFormik } from "formik";
 import { makeStyles } from 'tss-react/mui';
+import { Link, useNavigate } from "react-router-dom";
 import './comaon.css';
 import MUITextField from "../sharedComponents/textField";
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField'
+import { signupSchema } from "../Yup Schema";
+import { useDispatch } from "react-redux";
+import { signUp } from "../actions/Auth";
 const useStyles = makeStyles()((theme) => {
   return {
     sectionContainer: {
@@ -33,84 +35,158 @@ const useStyles = makeStyles()((theme) => {
 function Technologies() {
   const { classes } = useStyles();
 
-
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    country: "",
+    password: "",
+    confirmPassword: "",
+  };
+  const { values, errors, handleBlur, handleSubmit, touched, setFieldValue, handleChange } =
+    useFormik({
+      initialValues: initialValues,
+      validationSchema: signupSchema,
+      validate: () => {
+        let errors = {};
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+        if (!values.email) {
+          errors.email = "Please enter your email";
+        } else if (!regex.test(values.email)) {
+          errors.email = "Email must be a valid email";
+        }
+        return errors;
+      },
+      onSubmit: async (values, action) => {
+        dispatch(
+          signUp({
+            credentials:{first_name: values.firstName,
+            last_name: values.lastName,
+            email: values.email,
+            country: values.country,
+            phone: values.phone,
+            password: values.password,
+            password2: values.confirmPassword,
+            user_type: values.profession},
+          })
+        );
+        action.resetForm()
+      },
+    });
+console.log("errors",errors)
   return (
 <>
 <section >
+  <form onSubmit={handleSubmit}>
 <Grid container flexDirection='row' display='flex' justifyContent='flex-end' spacing={2} sx={{p:1}}>
      
-     <Grid item sm={6} sx={{backgroundColor:'#3B5999'}}>
+     <Grid display='flex' justifyContent='center' alignItems='center' item sm={6} sx={{backgroundColor:'#3B5999'}}>
    <img src="/assets/Background.png" className='w-50 p-4 img-fluid' ></img>
      </Grid>
-     {/* <Typography variant="body" className={classes.title} >
-         Start, Run and Grow Your Business
-          </Typography>  */}
      <Grid item spacing={2} padding={10} container sm={6}>
     <Grid item sm={12} sx={{textAlign:'start'}}>
     <Typography variant="body" >
     Start, Run and Grow Your Business
             </Typography> 
     </Grid>
-     <MUITextField
-         noTitle
+          <MUITextField
+               noTitle
+               placeholder='Company Name'
               sm={6}
               xs={6}
-              id="surgicalProcedure"
-              name="surgicalProcedure"
-              placeholder='Company Name'
-              label=""
-              value=''
+              id="firstName"
+              name="firstName"
+              value={values.firstName}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              errors={errors.firstName}
+              touched={touched.firstName}
             /> 
             <MUITextField
-            noTitle
+               noTitle
               sm={6}
               xs={6}
-              id="surgicalProcedure"
-              name="surgicalProcedure"
-              label=""
+              name="lastName"
+              value={values.lastName}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              id="lastName"
               placeholder='Last Name'
-              value=''
+              errors={errors.lastName}
+              touched={touched.lastName}
             /> 
-     <MUITextField
-     noTitle
+            <MUITextField
+              noTitle
               sm={12}
               xs={12}
-              id="surgicalProcedure"
-              name="surgicalProcedure"
+              id="email"
+              name="email"
               placeholder='Email'
-              value=''
+              value={values.email}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              errors={errors.email}
+              touched={touched.email}
             /> 
             <MUITextField
             noTitle
               sm={6}
               xs={6}
-              id="surgicalProcedure"
-              name="surgicalProcedure"
+              id="password"
+              name="password"
               placeholder='Password '
-              value=''
+              value={values.password}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              errors={errors.password}
+              touched={touched.password}
             /> 
           <MUITextField
-          noTitle
+              noTitle
               sm={6}
               xs={6}
-              id="surgicalProcedure"
-              name="surgicalProcedure"
+              id="confirmPassword"
+              name="confirmPassword"
               placeholder='Confirm Password'
-              value=''
+              value={values.confirmPassword}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              errors={errors.confirmPassword}
+              touched={touched.confirmPassword}
+            /> 
+            <MUITextField
+               noTitle
+              sm={12}
+              xs={12}
+              id="phone"
+              name="phone"
+              placeholder='Phone Number'
+              value={values.phone}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              errors={errors.phone}
+              touched={touched.phone}
             /> 
             <MUITextField
               sm={12}
               xs={12}
-              id="surgicalProcedure"
-              name="surgicalProcedure"
-               placeholder='Confirm Password'
-              value=''
+              id="country"
+              name="country"
+              placeholder='Country'
+              value={values.country}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              errors={errors.country}
+              touched={touched.country}
             /> 
             <Grid item sx={{display:'flex', alignItems:'center'}}>
             <Button
                   className={classes.btn}
                  variant="contained"
+                 type='submit'
                  color="primary"
                 //  style={{ marginTop: '20px' }}
                >
@@ -126,6 +202,7 @@ function Technologies() {
   
                      
       </Grid>
+      </form>
 </section>
 
 
