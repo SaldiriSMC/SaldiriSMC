@@ -7,8 +7,19 @@ const paginate = require("../../models/plugins/v2/paginate.plugin")
  * @param {Object} userBody
  * @returns {Promise<User>}
  */
-const createUser = async (userBody,tenantId) => {
-    return User.create({...userBody, tenantId: tenantId});
+const createUser = async (userBody,tenantId, user) => {
+  if(user){
+    if( userBody.designation === "hr"){
+      return User.create({...userBody, tenantId: tenantId, role:"hr"});
+    }else{
+      return User.create({...userBody, tenantId: tenantId, role:"employee"});
+    }
+  }else{
+    return User.create({...userBody, tenantId: tenantId
+    });
+  }
+  
+   
 };
 
 /**
@@ -22,18 +33,13 @@ const createUser = async (userBody,tenantId) => {
  */
 
 const queryUsers = async (filter, options) => {
-  // const get_Pagination = await paginate(filter,options)
-  // console.log("pagination------->>>>>>>>", get_Pagination)
-  console.log('options------>>>>>>',options, filter)
-  const limit = filter.limit ? +filter.limit : 3;
-  const offset = filter.page ? filter.page * limit : 0;
-  const users = await User.findAndCountAll({limit:limit, offset:offset});
-  const totalResults = users.rows.length
+  const users = await User.findAndCountAll({limit:filter.limit, offset:((filter.page - 1 ) * filter.limit)});
+  const totalResults = users.count
   const totalPages = Math.ceil(totalResults / filter.limit);
   if(filter.sortBy === "desc"){
-    return {results:users.rows.reverse(), page:offset, limit:limit, totalPages: totalPages, totalResults:totalResults};
+    return {results:users.rows.reverse(), page:filter.page, limit:filter.limit, totalPages: totalPages, totalResults:totalResults};
   }
-  return {results:users.rows, page:offset, limit:limit, totalPages: totalPages, totalResults:totalResults};
+  return {results:users.rows, page:filter.page, limit:filter.limit, totalPages: totalPages, totalResults:totalResults};
 };
 /**
  * Get user by id

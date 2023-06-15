@@ -7,7 +7,7 @@ const createTenant = async (userBody,res) => {
     try{
       const tenant = await Tenant.findOne({ where: { domain: userBody.domain } });
       if (tenant === null) {
-        return Tenant.create({tanantName:userBody.tanantName, domain:userBody.domain});
+        return Tenant.create({tanantName:userBody.tanantName, domain:userBody.domain, alias:userBody.alias});
       }else{
         res.status(httpStatus.BAD_REQUEST).send({message:'Domain already taken'});
       }

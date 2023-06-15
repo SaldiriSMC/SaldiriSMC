@@ -9,7 +9,7 @@ const createUser = catchAsync(async (req, res) => {
     const isEmail = await User.findOne({ where: { email: req.body.email } })
     if(isEmail === null){
       const key = req.get('X-Tenent-Key');
-      const tenant = await Tenant.findOne({ key: key });
+      const tenant = await Tenant.findOne({where:{ key: key }});
         const user = await userService.createUser(req.body,tenant.id);
         if(user){
           res.status(httpStatus.CREATED).send({ user });

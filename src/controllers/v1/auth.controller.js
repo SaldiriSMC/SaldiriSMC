@@ -1,27 +1,35 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../../utils/catchAsync');
 const { authService, userService, tokenService, emailService, tenantService } = require('../../services/v1');
-const {User} = require("../../models/v1/index")
+const { User, Tenant } = require('../../models/v1/index');
 
 const register = catchAsync(async (req, res) => {
-  try{
-    const isEmail = await User.isEmailTaken(req.body.email)
-    if(!isEmail){
-      const tenant = await tenantService.createTenant(req.body,res);
-      if(tenant){
-        const user = await userService.createUser(req.body,tenant.id);
-        if(user){
+  try {
+    const alias = await Tenant.findOne({ alias: req.body.alias });
+    const isEmail = await User.isEmailTaken(req.body.email);
+    if (!isEmail) {
+      if (!alias) {
+        const tenant = await tenantService.createTenant(req.body, res);
+        if (tenant) {
+          const user = await userService.createUser(req.body, tenant.id);
+          if (user) {
+            const tokens = await tokenService.generateAuthTokens(user);
+            res.status(httpStatus.CREATED).send({ tenant, user, tokens });
+          }
+        }
+      } else {
+        const user = await userService.createUser(req.body, alias.id, 'user');
+        if (user) {
           const tokens = await tokenService.generateAuthTokens(user);
-          res.status(httpStatus.CREATED).send({ tenant, user, tokens });
+          res.status(httpStatus.CREATED).send({ user, tokens });
         }
       }
-    }else{
-      res.status(httpStatus.BAD_REQUEST).send({message:'Email already taken'});
+    } else {
+      res.status(httpStatus.BAD_REQUEST).send({ message: 'Email already taken' });
     }
-  }
-  catch(err){
-    console.log(err)
-    res.send(err)
+  } catch (err) {
+    console.log(err);
+    res.send(err);
   }
 });
 

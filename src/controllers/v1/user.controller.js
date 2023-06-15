@@ -3,10 +3,25 @@ const pick = require('../../utils/pick');
 const ApiError = require('../../utils/ApiError');
 const catchAsync = require('../../utils/catchAsync');
 const { userService } = require('../../services/v1');
-
+const {Tenant, User} = require("../../models/v1/index")
 const createUser = catchAsync(async (req, res) => {
-  const user = await userService.createUser(req.body);
-  res.status(httpStatus.CREATED).send(user);
+  try{
+    const isEmail = await User.findOne({ email: req.body.email })
+    if(isEmail === null){
+      const key = req.get('X-Tenent-Key');
+      const tenant = await Tenant.findOne({ key: key });
+        const user = await userService.createUser(req.body,tenant.id);
+        if(user){
+          res.status(httpStatus.CREATED).send({ user });
+        }
+      }else{
+      res.status(httpStatus.BAD_REQUEST).send({message:'Email already taken'});
+    }
+  }
+  catch(err){
+    console.log(err)
+    res.send(err)
+  }
 });
 
 const getUsers = catchAsync(async (req, res) => {

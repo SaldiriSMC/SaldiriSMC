@@ -29,6 +29,12 @@ const User = sequelize.define('users', {
     type:DataTypes.ENUM('admin','hr', 'employee'),
     defaultValue:"admin"
   },
+  phoneNumber:{
+    type: DataTypes.STRING,
+  },
+  designation:{
+    type: DataTypes.STRING,
+  },
   isEmailVerified: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,

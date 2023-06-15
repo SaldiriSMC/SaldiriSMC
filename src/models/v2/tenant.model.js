@@ -18,6 +18,10 @@ const Tenant = sequelize.define('tenant', {
     type: DataTypes.BOOLEAN,
     defaultValue: true,
   },
+  alias:{
+    type: DataTypes.STRING,
+    allowNull: false,
+  }
 },
 );
 /**

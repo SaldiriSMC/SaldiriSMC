@@ -8,8 +8,16 @@ const ApiError = require('../../utils/ApiError');
  * @param {Object} userBody
  * @returns {Promise<User>}
  */
-const createUser = async (userBody, tenantId) => {
-  return User.create({name:userBody.name, email:userBody.email, password:userBody.password, tenantId: tenantId});
+const createUser = async (userBody, tenantId, user) => {
+  if(user){
+    if( userBody.designation === "hr"){
+      return User.create({...userBody, tenantId: tenantId, role:"hr"});
+    }else{
+      return User.create({...userBody, tenantId: tenantId, role:"employee"});
+    }
+  }else{
+    return User.create({...userBody, tenantId: tenantId});
+  }
 };
 
 /**
