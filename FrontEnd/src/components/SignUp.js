@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useFormik } from "formik";
 import { makeStyles } from 'tss-react/mui';
 import { Link, useNavigate } from "react-router-dom";
@@ -6,8 +6,10 @@ import './comaon.css';
 import MUITextField from "../sharedComponents/textField";
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography'
+import RadioButtonsGroup from "../sharedComponents/radioButton";
+import BasicPhoneInput from "../sharedComponents/phoneInput";
 import Button from '@mui/material/Button';
-import { signupSchema } from "../Yup Schema";
+import { signupSchemaCompany, signupSchemaUser } from "../Yup Schema";
 import { useDispatch } from "react-redux";
 import { signUp } from "../actions/Auth";
 const useStyles = makeStyles()((theme) => {
@@ -37,19 +39,22 @@ function Technologies() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [userType, setUserType]=useState('')
   const initialValues = {
-    firstName: "",
-    lastName: "",
+    tanantName: "",
+    fullName: "",
     phone: "",
+    designation: "",
     email: "",
-    country: "",
+    allies: "",
+    type: "Company",
+    domain: "",
     password: "",
-    confirmPassword: "",
   };
   const { values, errors, handleBlur, handleSubmit, touched, setFieldValue, handleChange } =
     useFormik({
       initialValues: initialValues,
-      validationSchema: signupSchema,
+      validationSchema: userType == 'User' ? signupSchemaUser : signupSchemaCompany,
       validate: () => {
         let errors = {};
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -61,22 +66,42 @@ function Technologies() {
         return errors;
       },
       onSubmit: async (values, action) => {
-        dispatch(
-          signUp({
-            credentials:{first_name: values.firstName,
-            last_name: values.lastName,
-            email: values.email,
-            country: values.country,
-            phone: values.phone,
-            password: values.password,
-            password2: values.confirmPassword,
-            user_type: values.profession},
-          })
-        );
-        action.resetForm()
+        if (values.type == 'User'){
+          dispatch(
+            signUp({
+              credentials:{
+              name: values.fullName,
+              email: values.email,
+              alias: values.allies,
+              designation: values.designation,
+              // phone: values.phone,
+              password: values.password,},
+            })
+          );
+        } else{
+          dispatch(
+            signUp({
+              credentials:{
+              name: values.fullName,
+              tanantName: values.tanantName,
+              email: values.email,
+              alias: values.allies,
+              designation: values.designation,
+              domain: values.domain,
+              // phone: values.phone,
+              password: values.password,},
+            })
+          );
+        }
+
       },
     });
-console.log("errors",errors)
+useEffect(()=>{
+  if (values.type == 'User'){
+    setUserType('User')
+  }
+
+},[values.type])
   return (
 <>
 <section >
@@ -92,31 +117,48 @@ console.log("errors",errors)
     Start, Run and Grow Your Business
             </Typography> 
     </Grid>
-          <MUITextField
+            <RadioButtonsGroup
+                 directionRow
+                  sm={12}
+                  xs={12}
+                  id="type"
+                  name="type"
+                  label="Type"
+                  value={values.type}
+                  setFieldValue={setFieldValue}
+                  options={[
+                    { value: "Company", label: "Company" },
+                    { value: "User", label: "User" },
+                  ]}
+                />
+
+                {values.type == 'Company' ? (
+                <>
+                  <MUITextField
                noTitle
                placeholder='Company Name'
               sm={6}
               xs={6}
-              id="firstName"
-              name="firstName"
-              value={values.firstName}
+              id="tanantName"
+              name="tanantName"
+              value={values.tanantName}
               handleChange={handleChange}
               onBlur={handleBlur}
-              errors={errors.firstName}
-              touched={touched.firstName}
+              errors={errors.tanantName}
+              touched={touched.tanantName}
             /> 
             <MUITextField
                noTitle
               sm={6}
               xs={6}
-              name="lastName"
-              value={values.lastName}
+              name="fullName"
+              value={values.fullName}
               handleChange={handleChange}
               onBlur={handleBlur}
-              id="lastName"
-              placeholder='Last Name'
-              errors={errors.lastName}
-              touched={touched.lastName}
+              id="fullName"
+              placeholder='Full Name'
+              errors={errors.fullName}
+              touched={touched.fullName}
             /> 
             <MUITextField
               noTitle
@@ -131,10 +173,49 @@ console.log("errors",errors)
               errors={errors.email}
               touched={touched.email}
             /> 
+               <MUITextField
+               noTitle
+              sm={12}
+              xs={12}
+              id="domain"
+              name="domain"
+              placeholder='Domain Name'
+              value={values.domain}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              errors={errors.domain}
+              touched={touched.domain}
+            />
             <MUITextField
-            noTitle
+              noTitle
+              sm={6}
+              xs={12}
+              id="allies"
+              name="allies"
+              placeholder='Allies'
+              value={values.allies}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              errors={errors.allies}
+              touched={touched.allies}
+            /> 
+               <MUITextField
+              noTitle
               sm={6}
               xs={6}
+              id="designation"
+              name="designation"
+              placeholder='Designation'
+              value={values.designation}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              errors={errors.designation}
+              touched={touched.designation}
+            /> 
+            <MUITextField
+              sm={6}
+              xs={6}
+              type="password"
               id="password"
               name="password"
               placeholder='Password '
@@ -144,10 +225,10 @@ console.log("errors",errors)
               errors={errors.password}
               touched={touched.password}
             /> 
-          <MUITextField
-              noTitle
+           <MUITextField
               sm={6}
               xs={6}
+              type="password"
               id="confirmPassword"
               name="confirmPassword"
               placeholder='Confirm Password'
@@ -157,10 +238,39 @@ console.log("errors",errors)
               errors={errors.confirmPassword}
               touched={touched.confirmPassword}
             /> 
+                </>): (
+                <>
+     
             <MUITextField
                noTitle
               sm={12}
               xs={12}
+              name="fullName"
+              value={values.fullName}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              id="fullName"
+              placeholder='Full Name'
+              errors={errors.fullName}
+              touched={touched.fullName}
+            /> 
+            <MUITextField
+              noTitle
+              sm={6}
+              xs={12}
+              id="email"
+              name="email"
+              placeholder='Email'
+              value={values.email}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              errors={errors.email}
+              touched={touched.email}
+            /> 
+            <MUITextField
+              noTitle
+              sm={6}
+              xs={6}
               id="phone"
               name="phone"
               placeholder='Phone Number'
@@ -171,17 +281,59 @@ console.log("errors",errors)
               touched={touched.phone}
             /> 
             <MUITextField
-              sm={12}
-              xs={12}
-              id="country"
-              name="country"
-              placeholder='Country'
-              value={values.country}
+              noTitle
+              sm={6}
+              xs={6}
+              id="allies"
+              name="allies"
+              placeholder='Allies'
+              value={values.allies}
               handleChange={handleChange}
               onBlur={handleBlur}
-              errors={errors.country}
-              touched={touched.country}
+              errors={errors.allies}
+              touched={touched.allies}
             /> 
+            <MUITextField
+              noTitle
+              sm={6}
+              xs={6}
+              id="designation"
+              name="designation"
+              placeholder='Designation'
+              value={values.designation}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              errors={errors.designation}
+              touched={touched.designation}
+            /> 
+            <MUITextField
+              sm={6}
+              xs={6}
+              type="password"
+              id="password"
+              name="password"
+              placeholder='Password '
+              value={values.password}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              errors={errors.password}
+              touched={touched.password}
+            /> 
+           <MUITextField
+              sm={6}
+              xs={6}
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder='Confirm Password'
+              value={values.confirmPassword}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              errors={errors.confirmPassword}
+              touched={touched.confirmPassword}
+            /> 
+                </>)}
+            
             <Grid item sx={{display:'flex', alignItems:'center'}}>
             <Button
                   className={classes.btn}
@@ -193,7 +345,7 @@ console.log("errors",errors)
                SIGN UP
                </Button> 
                <Typography variant="body" sx={{ml:3}} >
-               Have an account? <span className='text-blue'>Sign In </span>
+               Have an account? <span > <Link to="/">Sign In</Link></span>
             </Typography> 
             </Grid>
                      

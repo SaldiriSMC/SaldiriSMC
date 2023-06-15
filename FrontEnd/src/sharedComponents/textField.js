@@ -186,7 +186,7 @@ const MUITextField = (props) => {
             name={name}
             onChange={handleChange}
             onBlur={handleBlur}
-            type={type === 'number' ? 'number' : 'text'}
+            type={type === 'number' ?  'number' : type === 'password'? 'password' :'text'}
             multiline={multiline}
             rows={multiline && rows}
             helperText={

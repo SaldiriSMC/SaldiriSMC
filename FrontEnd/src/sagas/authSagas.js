@@ -12,19 +12,14 @@ import URls from "../constants/urls";
 
 
 function* signInCall(action) {
-  // console.log("actionaction", action);
+  console.log("actionaction", action);
   try {
     const response = yield call(postRequest, URls.loginurl, action?.payload?.credentials);
     console.log(response)
-    if (response?.data?.message?.success) {
-      if(response?.data?.data?.user_type === "TEACHER" || response?.data?.data?.user_type === "PHYSICIAN" || response?.data?.data?.user_type === "DENTIST" || response?.data?.data?.user_type === "MHP" || response?.data?.data?.user_type === "AHP" || response?.data?.data?.user_type === "OTHER" ){
-        window.location.href = `${URls.baseUrl}api/v1/users/authenticateuser/${response?.data?.data?.access}`
-      }else{
-        localStorage.setItem("accessToken", JSON.stringify(response?.data?.data?.access))
-        action.payload.navigate("/MyCourses")
+    if (response?.status == '200') {
+        localStorage.setItem("accessToken", JSON.stringify(response?.data?.user))
         yield put(logInSuccess(response.data));
         window.location.reload()
-      }
       
     } else {
       pushNotification(
@@ -34,7 +29,8 @@ function* signInCall(action) {
     }
 
   } catch (error) {
-    // pushNotification('Get data failure', 'error', 'TOP_CENTER', 1000);
+    console.log("error-------",error)
+    pushNotification('Get data failure', 'error', 'TOP_CENTER', 1000);
     yield put(logInFailure());
   }
 }

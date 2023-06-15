@@ -1,7 +1,7 @@
 const URLs = {
   // Auth API's
-  loginurl: "api/v1/users/login/",
-  signupUrl: "api/v1/users/register/",
+  loginurl: "/auth/login",
+  signupUrl: "/auth/register",
   emailVerificationUrl: "api/v1/users/password-reset/send-email/",
   resetPassword: "api/v1/users/password-reset/",
   emailStatus: "api/v1/users/email/verify/",

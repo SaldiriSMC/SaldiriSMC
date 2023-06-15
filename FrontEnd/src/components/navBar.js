@@ -3,6 +3,7 @@ import { makeStyles } from "tss-react/mui";
 import Typography from '@mui/material/Typography'
 import { loginSchema } from "../Yup Schema";
 import MUITextField from "../sharedComponents/textField";
+import LogoutIcon from '@mui/icons-material/Logout';
 import Grid from '@mui/material/Grid';
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
@@ -35,6 +36,9 @@ function NavScrollExample() {
   const location = useLocation();
   const { classes } = useStyles();
   const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("accessToken"))
+
+  console.log("user-----------",user)
   const initialValues = {
     email: "",
     password: "",
@@ -56,8 +60,10 @@ function NavScrollExample() {
       onSubmit: async (data) => {
         dispatch(
           logIn({
-            credentials:{email: data.email,
-            password: data.password},
+            credentials:{
+              email: data.email,
+            password: data.password
+          },
           })
         );
       }
@@ -95,6 +101,13 @@ function NavScrollExample() {
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
+          {user ? <>
+            <Grid container flexDirection='row' display='flex' justifyContent='flex-end'sx={{p:1}}>
+          <Button variant="contained" endIcon={<LogoutIcon />} onClick={()=>{localStorage.removeItem("accessToken"); window.location.reload()}}>
+            Log Out
+           </Button></Grid>
+          </> : <>
+          <form onSubmit={handleSubmit}>
           <Grid container flexDirection='row' display='flex' justifyContent='flex-end'sx={{p:1}}>
     
      <Grid container spacing={2} item lg={10} md={12} sm={12}>
@@ -107,8 +120,9 @@ function NavScrollExample() {
               name="email"
               id="email"
               value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              handleChange={handleChange}
+              errors={errors.email}
+              touched={touched.email}
             /> 
             <MUITextField
             noTitle
@@ -120,8 +134,9 @@ function NavScrollExample() {
               name="password"
               id="password"
               value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              handleChange={handleChange}
+              errors={errors.password}
+              touched={touched.password}
             /> 
              <Grid  sm={2}
               xs={12} item sx={{display:'flex',alignItems:'center'}}> 
@@ -130,6 +145,7 @@ function NavScrollExample() {
                 className={classes.btn}
                variant="outlined"
                color="primary"
+               type='submit'
               //  style={{ marginTop: '20px' }}
              >
               Go
@@ -145,6 +161,9 @@ function NavScrollExample() {
 
                      
          </Grid>
+         </form>
+          </>}
+       
         </Navbar.Collapse>
       </Container>
     </Navbar>
