@@ -21,6 +21,7 @@ const Tenant = sequelize.define('tenant', {
   alias:{
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
   }
 },
 );

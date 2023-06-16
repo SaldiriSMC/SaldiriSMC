@@ -9,6 +9,9 @@ const register = catchAsync(async (req, res) => {
     const isEmail = await User.isEmailTaken(req.body.email);
     if (!isEmail) {
       if (!alias) {
+        if(req.body.type === "user"){
+          res.status(httpStatus.BAD_REQUEST).send({ message: 'No tenant found agaist this alias' });
+        }
         const tenant = await tenantService.createTenant(req.body, res);
         if (tenant) {
           const user = await userService.createUser(req.body, tenant.id);
@@ -18,6 +21,9 @@ const register = catchAsync(async (req, res) => {
           }
         }
       } else {
+        if(req.body.type === "company"){
+          res.status(httpStatus.BAD_REQUEST).send({ message: 'Alias already taken' });
+        }
         const user = await userService.createUser(req.body, alias.id, 'user');
         if (user) {
           const tokens = await tokenService.generateAuthTokens(user);

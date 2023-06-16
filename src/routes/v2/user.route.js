@@ -10,7 +10,7 @@ const router = express.Router();
 
 router
   .route('/')
-  .post(auth('manageUsers'), tenant(), checkRoles(["admin"]), validate(userValidation.createUser), userController.createUser)
+  .post(auth('manageUsers'), tenant(),  validate(userValidation.createUser), userController.createUser)
   .get(auth('getUsers'), tenant(), checkRoles(["admin","hr"]), validate(userValidation.getUsers), userController.getUsers);
 
 router
