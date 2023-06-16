@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useFormik } from "formik";
 import { makeStyles } from 'tss-react/mui';
+import TextField from '@mui/material/TextField'
 import { Link, useNavigate } from "react-router-dom";
 import './comaon.css';
 import MUITextField from "../sharedComponents/textField";
@@ -12,6 +13,12 @@ import Button from '@mui/material/Button';
 import { signupSchemaCompany, signupSchemaUser } from "../Yup Schema";
 import { useDispatch } from "react-redux";
 import { signUp } from "../actions/Auth";
+import InputAdornment from '@mui/material/InputAdornment'
+import IconButton from '@mui/material/IconButton'
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
 const useStyles = makeStyles()((theme) => {
   return {
     sectionContainer: {
@@ -40,6 +47,12 @@ function Technologies() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [userType, setUserType]=useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const handleClickShowPassword = () => setShowPassword(!showPassword)
+  const handleMouseDownPassword = () => setShowPassword(!showPassword)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword)
+  const handleMouseDownConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword)
   const initialValues = {
     tanantName: "",
     fullName: "",
@@ -162,8 +175,8 @@ useEffect(()=>{
             /> 
             <MUITextField
               noTitle
-              sm={12}
-              xs={12}
+              sm={6}
+              xs={6}
               id="email"
               name="email"
               placeholder='Email'
@@ -173,10 +186,23 @@ useEffect(()=>{
               errors={errors.email}
               touched={touched.email}
             /> 
+             <BasicPhoneInput
+                 noTitle
+                     sm={6}
+                     xs={6}
+                     laceholder='Phone Number'
+                      id="phone"
+                    value={values.phone}
+                    setFieldValue={setFieldValue}
+                    touched={touched.phone}
+                    errors={errors.phone}
+                    selectedCountry="pk"
+                    
+                  />
                <MUITextField
                noTitle
-              sm={12}
-              xs={12}
+               sm={12}
+               xs={12}
               id="domain"
               name="domain"
               placeholder='Domain Name'
@@ -186,6 +212,7 @@ useEffect(()=>{
               errors={errors.domain}
               touched={touched.domain}
             />
+            
             <MUITextField
               noTitle
               sm={6}
@@ -211,36 +238,95 @@ useEffect(()=>{
               onBlur={handleBlur}
               errors={errors.designation}
               touched={touched.designation}
+              
             /> 
-            <MUITextField
-              sm={6}
-              xs={6}
-              type="password"
-              id="password"
-              name="password"
-              placeholder='Password '
-              value={values.password}
-              handleChange={handleChange}
-              onBlur={handleBlur}
-              errors={errors.password}
-              touched={touched.password}
-            /> 
-           <MUITextField
-              sm={6}
-              xs={6}
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder='Confirm Password'
-              value={values.confirmPassword}
-              handleChange={handleChange}
-              onBlur={handleBlur}
-              errors={errors.confirmPassword}
-              touched={touched.confirmPassword}
-            /> 
+             <Grid
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    item
+                    sm={6}
+                    xs={6}
+                  >
+
+                  <TextField
+                      id="password"
+                      value={values?.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      type={showPassword ? "text" : "password"}
+                      helperText={touched?.password ? errors?.password : ""}
+                      error={touched?.password && Boolean(errors?.password)}
+                      placeholder="Enter your password"
+                      fullWidth
+                      margin="normal"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleMouseDownPassword}
+                              onMouseDown={handleClickShowPassword}
+                            >
+                              {showPassword ? (
+                                <Visibility className={classes.iconColor} />
+                              ) : (
+                                <VisibilityOff className={classes.iconColor} />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid>
+                   <Grid
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    item
+                    sm={6}
+                    xs={6}
+                  >
+                  <TextField
+                      id="confirmPassword"
+                      value={values?.confirmPassword}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      type={showConfirmPassword ? "text" : "password"}
+                      helperText={touched?.confirmPassword ? errors?.confirmPassword : ""}
+                      error={touched?.confirmPassword && Boolean(errors?.confirmPassword)}
+                      placeholder="Enter your password"
+                      fullWidth
+                      margin="normal"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowConfirmPassword}
+                              onMouseDown={handleMouseDownConfirmPassword}
+                            >
+                              {showConfirmPassword ? (
+                                <Visibility className={classes.iconColor} />
+                              ) : (
+                                <VisibilityOff className={classes.iconColor} />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid> 
                 </>): (
                 <>
-     
             <MUITextField
                noTitle
               sm={12}
@@ -267,19 +353,19 @@ useEffect(()=>{
               errors={errors.email}
               touched={touched.email}
             /> 
-            <MUITextField
-              noTitle
-              sm={6}
-              xs={6}
-              id="phone"
-              name="phone"
-              placeholder='Phone Number'
-              value={values.phone}
-              handleChange={handleChange}
-              onBlur={handleBlur}
-              errors={errors.phone}
-              touched={touched.phone}
-            /> 
+            <BasicPhoneInput
+                 noTitle
+                     sm={6}
+                     xs={6}
+                     laceholder='Phone Number'
+                      id="phone"
+                    value={values.phone}
+                    setFieldValue={setFieldValue}
+                    touched={touched.phone}
+                    errors={errors.phone}
+                    selectedCountry="pk"
+                    
+                  /> 
             <MUITextField
               noTitle
               sm={6}

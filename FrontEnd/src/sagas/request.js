@@ -11,6 +11,11 @@ export const getRequestWithOutToken = async (requestUrl) =>
     .then((resp) => resp)
     .catch((error) => error.response);
 
+export const postRequestWithTenat = async (requestUrl, data) =>
+  api
+    .post(requestUrl, data)
+    .then((resp) => resp)
+    .catch((error) => error.response);
 export const postRequest = async (requestUrl, data) =>
   api
     .post(requestUrl, data)

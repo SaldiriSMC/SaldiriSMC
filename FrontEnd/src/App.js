@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Home from './pages/home'
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import SignUp from './components/SignUp'
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../src/theme';
@@ -11,6 +13,7 @@ import configureStore from "./store";
 import { Provider } from "react-redux";
 function App() {
   const store = configureStore();
+  
   return (
     <ThemeProvider theme={theme}>
     <div className="App">
@@ -23,6 +26,7 @@ function App() {
     </BrowserRouter>
     </Provider>
     </div>
+    <ToastContainer />
     </ThemeProvider>
   );
 }

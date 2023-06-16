@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 export function pushNotification(msg, type, position, duration) {
   if (type === "info") {

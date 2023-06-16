@@ -17,13 +17,17 @@ function* signInCall(action) {
     const response = yield call(postRequest, URls.loginurl, action?.payload?.credentials);
     console.log(response)
     if (response?.status == '200') {
-        localStorage.setItem("accessToken", JSON.stringify(response?.data?.user))
+        localStorage.setItem("accessToken", JSON.stringify(response?.data))
+        pushNotification(
+          `${response?.data?.message}`,
+          "success",
+        );
         yield put(logInSuccess(response.data));
         window.location.reload()
       
     } else {
       pushNotification(
-        `${response?.data?.message?.description}`,
+        `${response?.data?.message}`,
         "error",
       );
     }

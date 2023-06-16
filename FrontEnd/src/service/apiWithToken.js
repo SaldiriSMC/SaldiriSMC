@@ -1,5 +1,5 @@
 import axios from "axios";
-const token = JSON.parse(localStorage.getItem("accessToken"))
+const token = JSON.parse(localStorage.getItem("tenant"))
 console.log(token)
 export default  axios.create({
  baseURL: "http://ec2-18-191-81-48.us-east-2.compute.amazonaws.com:8000/",
@@ -12,6 +12,7 @@ export default  axios.create({
   headers: {
     "Authorization": `Bearer ${token}`,
     "Content-Type": "application/json",
+     'X-CSRFToken': `${token.key}`
    
   },
 });

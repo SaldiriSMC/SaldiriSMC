@@ -7,9 +7,10 @@ import 'react-phone-input-2/lib/style.css'
 const useStyles = makeStyles()((theme) => {
   return {
     phoneInput: {
-      marginTop: -22,
+      // marginTop: -22,
       '& .special-label': {
           display: 'block !important',
+          visibility: 'hidden',
           position: 'relative !important',
           top: '0px !important',
           left: '0px !important',
@@ -35,7 +36,10 @@ const useStyles = makeStyles()((theme) => {
           '& .selected-flag': {
               backgroundColor: 'transparent !important',
               '& .flag': {
-                  top: '70%'
+                  top: '70%',
+                  '& .arrow': {
+                    padding:0,
+                }
               }
           }
       }
