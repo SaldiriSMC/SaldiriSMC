@@ -12,7 +12,7 @@ export default  axios.create({
   headers: {
     "Authorization": `Bearer ${token}`,
     "Content-Type": "application/json",
-     'X-CSRFToken': `${token.key}`
+     'X-CSRFToken': `${token?.key}`
    
   },
 });

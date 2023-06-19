@@ -298,7 +298,8 @@ export const TechnologiesList=[
   JUnit etc. DevOps services. With our services, we allow businesses to enjoy the
   stability of operating environments, cut the development time, and get faster feature
   delivery with CI/CD.`,
-  img:'/assets/Technologies/tech1.svg'
+  img:'/assets/Technologies/tech1.svg',
+  logo:'/assets/TechnologyNew/1.png'
 },
   {
   id:2,
@@ -308,7 +309,8 @@ export const TechnologiesList=[
   that your business could take off in a very professional way. We are offering Amazon
   marketing and (FBA) management for those who have started selling their products on
   Amazon and they need further guidance and help to compete with all the competitors.`,
-  img:'/assets/Technologies/tech2.png'
+  img:'/assets/Technologies/tech2.png',
+  logo:'/assets/TechnologyNew/2.png'
 },
   {
   id:3,
@@ -317,7 +319,8 @@ export const TechnologiesList=[
   Xcode. Apple also created their own language, called Swift. With around 2.2 million apps
   on the Apple App Store. We are well equipped with the technology to produce enterprise
   level applications with iOS.`,
-  img:'/assets/Technologies/tech3.svg'
+  img:'/assets/Technologies/tech3.svg',
+  logo:'/assets/TechnologyNew/3.png'
 },
   {
   id:4,
@@ -327,7 +330,8 @@ export const TechnologiesList=[
   libraries to build for web, mobile, desktop, games, and IoT. We are utilizing the
   technology to facilitate our clients with different problems and building complex
   software solutions.`,
-  img:'/assets/Technologies/tech4.png'
+  img:'/assets/Technologies/tech4.png',
+  logo:'/assets/TechnologyNew/4.png'
 },
   {
   id:5,
@@ -340,7 +344,8 @@ export const TechnologiesList=[
   Material Design-compliant app. We develop applications that work on all Android devices,
   regardless of their size and shape. For a variety of use cases, we have Android mobile
   app design and development services.`,
-  img:'/assets/Technologies/tech5.png'
+  img:'/assets/Technologies/tech5.png',
+  logo:'/assets/TechnologyNew/5.png'
 },
   {
   id:6,
@@ -354,7 +359,8 @@ export const TechnologiesList=[
   companies to illuminate complex business problems by executing AI to a variety of use
   cases and client behaviour patterns. Our artificial intelligence experts plan each AI
   solution after a thorough analysis of your business needs.`,
-  img:'/assets/Technologies/tech6.png'
+  img:'/assets/Technologies/tech6.png',
+  logo:'/assets/TechnologyNew/6.png'
 },
   {
   id:7,
@@ -367,33 +373,38 @@ export const TechnologiesList=[
     Our Python platform experience would allow all of the functionality to be used in your project.
      We are also a top company for the production of android/IOS applications, which helps to develop both online and mobile apps for a product. 
      Instead of going for some random technologies, we recommend the most relevant development language which will fit better for your project.`,
-  img:'/assets/Technologies/python-5.svg'
+  img:'/assets/Technologies/python-5.svg',
+  logo:'/assets/TechnologyNew/7.png'
 },
   {
   id:8,
   title:'NodeJs',
   description:`Node.js is a dynamic and powerful platform that’s the best solution for heavy I/O operations, data flow, or multiple connection requests. This is why products like Linkedin, Netflix, Uber, PayPal, and even NASA use Node.js.
   Using NodeJS, We provide our services in the area of Web Development, RestAPI's, BlockChain and Microservecis. The Framework work we follow are ExpressJS, NodeServer,NestJS, ReactJS, Etherium etc.`,
-  img:'/assets/Technologies/nodejs-ar21.svg'
+  img:'/assets/Technologies/nodejs-ar21.svg',
+  logo:'/assets/TechnologyNew/8.png'
 },
   {
   id:9,
   title:'React',
   description:`React is a framework of NodeJS and one of the stack in MERN, which features a modular architecture and the ability to integrate open source APIs, third-party libraries and also the RESTfulAPI's developed in any language. It also helps and provide easy ways to develop realtime applcations using web sockets.`,
-  img:'/assets/Technologies/reactjs-icon.svg'
+  img:'/assets/Technologies/reactjs-icon.svg',
+  logo:'/assets/TechnologyNew/9.png'
 },
   {
   id:10,
   title:'Laravel',
   description:`Laravel is an open-source PHP framework, which is robust and easy to understand. It follows a model-view-controller design pattern. Laravel reuses the existing components of different frameworks which helps in creating a web application. The web application thus designed is more structured and pragmatic.`,
-  img:'/assets/Technologies/laravel-wordmark-1.svg'
+  img:'/assets/Technologies/laravel-wordmark-1.svg',
+  logo:'/assets/TechnologyNew/10.png'
 },
   {
   id:11,
   title:'React Native',
   description:`React Native is a JavaScript framework for writing real, natively rendering mobile applications for iOS and Android. It's based on React, Facebook's JavaScript library for building user interfaces, but instead of targeting the browser, it targets mobile platforms.
   React Native has big community which helps providing very usefull tools and packages which make mobile applications attractive and reliable.`,
-  img:'/assets/Technologies/react-native-1.svg'
+  img:'/assets/Technologies/react-native-1.svg',
+  logo:'/assets/TechnologyNew/12.png'
 },
   {
   id:12,
@@ -401,7 +412,8 @@ export const TechnologiesList=[
   description:`PHP is a server side scripting language that is embedded in HTML. It is used to manage dynamic content, databases, session tracking, even build entire e-commerce sites.
   It is integrated with a number of popular databases, including MySQL, PostgreSQL, Oracle, Sybase, Informix, and Microsoft SQL Server.
   PHP supports a large number of major protocols such as POP3, IMAP, and LDAP. PHP4 added support for Java and distributed object architectures (COM and CORBA), making n-tier development a possibility for the first time.`,
-  img:'/assets/Technologies/php-1.svg'
+  img:'/assets/Technologies/php-1.svg',
+  logo:'/assets/TechnologyNew/13.png'
 }
 ]
 

@@ -31,7 +31,30 @@ function Technologies() {
     <div className="section-header">
       <h3>Technologies</h3>
     </div>
-    <div className="row no-gutters technologies-wrap clearfix wow fadeInUp">
+    <>
+  <div className="container">
+    <div className="row">
+    {React.Children.toArray(TechnologiesList.map((item)=>{
+        return (
+            <>
+      <div className="col-xs-12 col-sm-6 col-md-4" onClick={()=>{setModelData(item);setOpen(true)}}>
+        <div className="box">
+          <div className='box_logo'>
+          <img className='img-fluid' src={item.logo}></img>
+          </div>
+         
+          <p className='tech_text_desp'>{item.description}</p>
+        </div>
+      </div>
+            </>
+        )
+     }))}
+    
+    </div>
+  </div>
+</>
+
+    {/* <div className="row no-gutters technologies-wrap clearfix wow fadeInUp">
      
      {React.Children.toArray(TechnologiesList.map((item)=>{
         return (
@@ -54,7 +77,7 @@ function Technologies() {
       
      
    
-    </div>
+    </div> */}
   </div>
   <PortfolioModel
         setOpen={setOpen}
