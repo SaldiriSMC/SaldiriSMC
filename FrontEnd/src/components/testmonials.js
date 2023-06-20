@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React from 'react';
 import Slider from 'react-slick';
 import Baner from './baner';
 import { makeStyles } from 'tss-react/mui';
 import './comaon.css';
-import { FeedbackContext } from "../context/FeedbackContext";
+import {Client} from '../data'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { Grid } from '@mui/material';
 const useStyles = makeStyles()((theme) => {
@@ -21,17 +21,15 @@ const useStyles = makeStyles()((theme) => {
       }
   };
 });
-function Clients() {
+function TestMonails() {
   const { classes } = useStyles();
-  const { ClientNew} = useContext(FeedbackContext);
+
   var settings = {
     dots: false,
-    infinite: false,
-    speed: 300,
-    autoplay: true,
-    slidesToShow: 3,
-    arrows: false,
-    // slidesToScroll: 1
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
   };
 
 
@@ -44,24 +42,25 @@ function Clients() {
             <h3>Clients</h3>
           </header>
           
-
-          <div className="slideru">
-  <div className="slide-track">
-  {React.Children.toArray(ClientNew.map((item)=>{
+          <div id="demo" className="carousel slide" data-ride="carousel">
+        
+            <div className="carousel-inner">
+            <Slider {...settings}>
+              {React.Children.toArray(Client.map((item)=>{
                 return <>
-        <div className="slide">
-      <img
-      className="imgk"
-        src={item.img}
-        alt=""
-      />
-    </div>
+                    <div className="carousel-item active">
+                <div className="carousel-caption">
+                  <img className='m-auto' src={item.img} alt="Client 1" />
+                  <div id="image-caption">{item.name}</div>
+                  <p>{item.comment}</p>
+                </div>
+              </div>
                 </>
               }))}
-  
-  </div>
-</div>
-
+              </Slider>
+            </div>
+      
+          </div>
 
         </div>
       </div>
@@ -70,5 +69,5 @@ function Clients() {
   );
 }
 
-export default Clients;
+export default TestMonails;
 

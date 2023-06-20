@@ -4,6 +4,7 @@ import Baner from '../components/baner'
 import AboutUs from '../components/abousUs'
 import Portfolio from '../components/portfolio'
 import Clients from '../components/clients'
+import TestMonails from '../components/testmonials'
 import Services from '../components/servicesNew'
 import Technologies from '../components/technologies'
 import ContactUs from '../components/contactUs'
@@ -18,6 +19,7 @@ return (
       <AboutUs/>
       <Portfolio/>      
       <Clients/>
+      <TestMonails/>
       <Services/>
       <Technologies/>
       <ContactUs/>

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Slider from 'react-slick';
 import Baner from './baner';
 import { makeStyles } from 'tss-react/mui';
 import PortfolioModel from './modal'
 import './comaon.css';
-import {portfolio} from '../data'
+import { FeedbackContext } from "../context/FeedbackContext";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { Grid } from '@mui/material';
 const useStyles = makeStyles()((theme) => {
@@ -24,6 +24,7 @@ const useStyles = makeStyles()((theme) => {
 });
 function Portfolio() {
   const { classes } = useStyles();
+  const { portfolio} = useContext(FeedbackContext);
   const [modelData, setModelData]=useState({images:[]})
   const [open, setOpen]=useState(false)
 

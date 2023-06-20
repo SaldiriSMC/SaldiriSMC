@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useContext } from "react";
 import { makeStyles } from 'tss-react/mui';
 import './comaon.css';
-import {aboutUs} from '../data'
+import { FeedbackContext } from "../context/FeedbackContext";
 import Button from '@mui/material/Button';
 const useStyles = makeStyles()((theme) => {
   return {
@@ -27,7 +27,7 @@ const useStyles = makeStyles()((theme) => {
 });
 
 function AboutUs() {
-  
+  const { aboutUs} = useContext(FeedbackContext);
   const { classes } = useStyles();
 
 return (

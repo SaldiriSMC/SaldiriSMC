@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
 import './comaon.css';
-import {Services} from '../data'
 import PortfolioModel from './modal'
-
+import { FeedbackContext } from "../context/FeedbackContext";
 function Service() {
-
+  const { Services} = useContext(FeedbackContext);
   const [open, setOpen]=useState(false)
   const [modelData, setModelData]=useState({})
   return (

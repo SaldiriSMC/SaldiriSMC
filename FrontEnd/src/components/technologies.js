@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
 import { makeStyles } from 'tss-react/mui';
 import './comaon.css';
-import {TechnologiesList} from '../data'
 import { Grid } from '@mui/material';
+import { FeedbackContext } from "../context/FeedbackContext";
 import PortfolioModel from './modal'
 const useStyles = makeStyles()((theme) => {
   return {
@@ -22,6 +22,7 @@ const useStyles = makeStyles()((theme) => {
 });
 function Technologies() {
   const { classes } = useStyles();
+  const { TechnologiesList} = useContext(FeedbackContext);
   const [open, setOpen]=useState(false)
   const [modelData, setModelData]=useState({})
   return (

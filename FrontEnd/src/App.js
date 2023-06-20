@@ -11,10 +11,12 @@ import theme from '../src/theme';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import configureStore from "./store";
 import { Provider } from "react-redux";
-function App() {
+import { FeedbackProvider } from "./context/FeedbackContext";
+function App({data}) {
   const store = configureStore();
   
   return (
+    <FeedbackProvider data={data}>
     <ThemeProvider theme={theme}>
     <div className="App">
     <Provider store={store}>
@@ -28,6 +30,7 @@ function App() {
     </div>
     <ToastContainer />
     </ThemeProvider>
+    </FeedbackProvider>
   );
 }
 
