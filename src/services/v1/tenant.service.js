@@ -3,8 +3,8 @@ const { Tenant } = require('../../models/v1/index');
 const createTenant = async (userBody,res) => {
     try{
       const tenant = await Tenant.findOne({ domain: userBody.domain });
-      if (tenant === null) {
-        return Tenant.create({tanantName:userBody.tanantName, domain:userBody.domain});
+      if (!tenant) {
+        return Tenant.create({tanantName:userBody.tanantName, domain:userBody.domain, alias:userBody.alias});
       }else{
         res.status(httpStatus.BAD_REQUEST).send({message:'Domain already taken'});
       }

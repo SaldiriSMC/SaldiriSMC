@@ -19,6 +19,11 @@ const tenantSchema = mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    alias:{
+      type: String,
+      required: true,
+      unique: true,
+    }
   },
   {
     timestamps: true,

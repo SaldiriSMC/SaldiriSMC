@@ -42,6 +42,9 @@ module.exports = router;
  *               - password
  *               - tanantName
  *               - domain
+ *               - designation
+ *               - alias
+ * 
  *             properties:
  *               name:
  *                 type: string
@@ -60,12 +63,21 @@ module.exports = router;
  *               domain:
  *                 type: string
  *                 description: must be unique
+ *               phoneNumber:
+ *                 type:string
+ *               designation:
+ *                 type:string
+ *               alias:
+ *                 type:string
  *             example:
  *               name: fake name
  *               email: fake@example.com
  *               password: password1
  *               tanantName: fake tenant name
  *               domain: www.example.com
+ *               phoneNumber: '03003453343'
+ *               designation: CEO
+ *               alias: fake
  *     responses:
  *       "201":
  *         description: Created

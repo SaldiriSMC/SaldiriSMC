@@ -1,11 +1,12 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../../utils/catchAsync');
-const { authService, userService, tokenService, emailService, tenantService } = require('../../services/v1');
-const { User, Tenant } = require('../../models/v1/index');
+const { authService, userService, tokenService, emailService, tenantService, attendanceService } = require('../../services/v1');
+const { User, Tenant, Attendance } = require('../../models/v1/index');
 
 const register = catchAsync(async (req, res) => {
   try {
     const alias = await Tenant.findOne({ alias: req.body.alias });
+    console.log("alias------->>>>>",alias)
     const isEmail = await User.isEmailTaken(req.body.email);
     if (!isEmail) {
       if (!alias) {
@@ -43,6 +44,7 @@ const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
   const user = await authService.loginUserWithEmailAndPassword(email, password);
   const tokens = await tokenService.generateAuthTokens(user);
+  const attendance =  await attendanceService.markAttendance(user, res)
   res.send({ user, tokens });
 });
 

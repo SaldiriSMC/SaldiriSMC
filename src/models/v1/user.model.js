@@ -44,6 +44,12 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    phoneNumber:{
+      type: String,
+    },
+    designation:{
+      type: String,
+    },
     tenantId: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'Tenant',
