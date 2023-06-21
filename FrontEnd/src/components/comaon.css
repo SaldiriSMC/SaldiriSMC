@@ -51,9 +51,15 @@
   position: absolute;
   border-radius: 15px;
   background-color: white;
-  width: 300px;
-  left: 15%;
+  width: 84%;
+  left: 0;
   height: 270px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  /* width: 100px; */
   bottom: -20%;
   padding: 5px 5px 0px 5px;
 }
@@ -61,7 +67,7 @@
   /* font-family: 'Poppins'; */
 /* font-style: normal; */
 font-weight: 500;
-font-size: 24px;
+font-size: 1.5rem;
 }
 .services_text_desp{
   padding: 0px 2px 0px 2px;
@@ -90,11 +96,11 @@ font-size: 24px;
     text-align: justify;
     text-overflow: ellipsis;
     /* height: 39px; */
-    max-lines: 7;
-    -webkit-line-clamp: 7 !important;
+    max-lines: 6;
+    -webkit-line-clamp: 6 !important;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    font-family: 'Poppins';
+   font-family: inherit;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -104,17 +110,19 @@ font-size: 24px;
 }
 .blue_circule{
   cursor: pointer;
-width: 80px;
-font-size: large;
-padding: 5px 5px 0px 5px;
-margin: auto;
-height: 40px;
-/* left: 290px; */
-position: sticky;
-top: 1984px;
-border-radius: 100% 100% 0 0;
-color: white;
-background: #004EFF;
+  width: 80px;
+  font-size: large;
+  padding: 5px 5px 0px 5px;
+  margin: auto;
+  height: 40px;
+  /* left: 290px; */
+  left: 0;
+  right: 0;
+  position: absolute;
+  bottom: 0;
+  border-radius: 100% 100% 0 0;
+  color: white;
+  background: #004EFF;
 }
 .nav-logo{
   width: 300px;
@@ -610,9 +618,9 @@ justify-content: center;}
   /* justify-content: center; */
   background: white;
   margin: 20px 0;
-  padding: 10px;
+  padding: 45px;
   width: 100%;
-  border-radius: 25px 0px 25px 0px;
+  /* border-radius: 25px 0px 25px 0px; */
   min-height: 276px;
   border: 2px #ccc solid;
   color: black;
@@ -623,6 +631,24 @@ justify-content: center;}
   color: white;
 }
 
+.sercice_box {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  background: white;
+  margin: 50px 0;
+  width: 100%;
+  /* border-radius: 25px 0px 25px 0px; */
+  min-height: 276px;
+  /* border: 2px #ccc solid; */
+  color: black;
+  cursor: pointer;
+}
+
+
+
 .box_logo{
   /* height: 50px; */
   display: flex;
@@ -632,6 +658,7 @@ justify-content: center;}
    min-height: 70px;
   border-radius: 0px 10px 0px 10px;
   border: 1px solid;
+  margin-bottom: 20%;
   min-width: 97px;
   padding: 2px;
 }

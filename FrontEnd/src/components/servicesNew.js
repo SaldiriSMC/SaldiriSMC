@@ -18,8 +18,9 @@ function Service() {
     <div className="row mt-5">
       {React.Children.toArray(Services.map((item,index)=>{
             return<>
-    <div className='col-lg-4 col-sm-12 col-md-6 services_card position-relative'>
-        <img src={item.mainImg}></img>
+      <div className="col-xs-12 col-sm-6 col-md-4" onClick={()=>{setModelData(item);setOpen(true)}}>
+        <div className="sercice_box">
+        <img className='w-100' src={item.mainImg}></img>
         <div className='services_img_text '> 
         <div className='border services_icon  m-auto'>
         <img src='/assets/servicesNew/Vector.svg'></img>
@@ -30,6 +31,7 @@ function Service() {
         <ArrowRightAltOutlinedIcon  size="large"/>
        </div>
        </div>
+        </div>
       </div>
             </>
         }))}
