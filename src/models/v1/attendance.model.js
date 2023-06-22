@@ -24,7 +24,7 @@ const attendanceSchema = mongoose.Schema(
     },
     Date:{
         type:Date,
-        default:currentDate()
+        default:Date.now()
     },
     time:{
       type:[timeSchema]
@@ -40,8 +40,8 @@ const attendanceSchema = mongoose.Schema(
     },
     status:{
       type: String,
-      enum: ["Break", 'Day Completed'],
-      default: 'Break',
+      enum: ["Absent", "Present", 'Break', "Day Completed"],
+      default: 'Absent',
     }
     
   },

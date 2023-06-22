@@ -10,7 +10,7 @@ const tenant = require('./models/v2/tenant.model')
 let server;
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
-  server = app.listen(config.port, '0.0.0.0',  () => {
+  server = app.listen(config.port,() => {
     logger.info(`Listening to port ${config.port}`);
   });
 });

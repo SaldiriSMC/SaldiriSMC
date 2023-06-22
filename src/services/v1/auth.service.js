@@ -4,6 +4,7 @@ const userService = require('../v1/user.service');
 const Token = require('../../models/v1/token.model');
 const ApiError = require('../../utils/ApiError');
 const { tokenTypes } = require('../../config/tokens');
+const {response} = require("../../utils/response")
 
 /**
  * Login with username and password
@@ -29,7 +30,7 @@ const logout = async (refreshToken) => {
   if (!refreshTokenDoc) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Not found');
   }
-  await refreshTokenDoc.remove();
+  return refreshTokenDoc
 };
 
 /**
@@ -57,16 +58,18 @@ const refreshAuth = async (refreshToken) => {
  * @param {string} newPassword
  * @returns {Promise}
  */
-const resetPassword = async (resetPasswordToken, newPassword) => {
+const resetPassword = async (resetPasswordToken, newPassword, res) => {
   try {
     const resetPasswordTokenDoc = await tokenService.verifyToken(resetPasswordToken, tokenTypes.RESET_PASSWORD);
     const user = await userService.getUserById(resetPasswordTokenDoc.user);
     if (!user) {
-      throw new Error();
+      response(res, "", "user does not found")
+      throw new Error(httpStatus.BAD_REQUEST, 'user does not found');
     }
     await userService.updateUserById(user.id, { password: newPassword });
     await Token.deleteMany({ user: user.id, type: tokenTypes.RESET_PASSWORD });
   } catch (error) {
+    console.log(error)
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Password reset failed');
   }
 };
