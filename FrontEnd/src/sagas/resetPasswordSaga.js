@@ -16,7 +16,7 @@ import URls from "../constants/urls";
 function* emailVerificationCall(action) {
      console.log("actionaction", action);
     try {
-      const response = yield call(postRequest, URls.emailVerificationUrl, action?.payload?.email);
+      const response = yield call(postRequest, URls.emailVerificationUrl, action?.payload);
       console.log(response)
       if (response?.data?.message?.success) {     
         //navigate("/Login")
@@ -29,7 +29,7 @@ function* emailVerificationCall(action) {
         action.payload.navigate("/Login")
       } else {
            pushNotification(
-          `${response?.data?.message?.description}`,
+          `${response?.data?.message}`,
           "error",
         );
       }
@@ -43,7 +43,7 @@ function* emailVerificationCall(action) {
   function* resetPasswordCall(action) {
     console.log("actionaction", action);
    try {
-     const response = yield call(patchRequest, URls.resetPassword, action?.payload?.credentials);
+     const response = yield call(postRequest, `${URls.resetPassword}?token=${action?.payload?.LogIntoken}`, action?.payload?.credentials);
      console.log(response)
      if (response?.data?.message?.success) {     
        localStorage.setItem("data",JSON.stringify(response.data))

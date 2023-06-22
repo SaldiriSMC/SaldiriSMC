@@ -3,9 +3,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Home from './pages/home'
+import Technologies from './components/technologies'
+import ContactUs from './components/contactUs'
+import Careers from './components/career'
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SignUp from './components/SignUp'
+import ForgetPassword from './components/forgetPassword'
+import ChnagePassword from './components/chnagePassword'
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../src/theme';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -24,6 +29,11 @@ function App({data}) {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signUp" element={<SignUp/>} />
+        <Route path="/forget" element={<ForgetPassword/>} />
+        <Route path="/chanagePassword" element={<ChnagePassword/>} />
+        <Route path="/technologies" element={<Technologies/>} />
+        <Route path="/contactUs" element={<ContactUs/>} /> 
+        <Route path="/careers" element={<Careers/>} />
       </Routes>
     </BrowserRouter>
     </Provider>

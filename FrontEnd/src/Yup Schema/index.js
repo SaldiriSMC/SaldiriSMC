@@ -14,6 +14,12 @@ export const signupSchemaCompany = Yup.object({
     .required('Confrim Password is required')
     .oneOf([Yup.ref("password"), null], "Password must match"),
 });
+export const chnagePasswordSechmea = Yup.object({
+  password: Yup.string().min(8).required("Please enter your password"),
+  confirmPassword: Yup.string()
+    .required('Confrim Password is required')
+    .oneOf([Yup.ref("password"), null], "Password must match"),
+});
 export const signupSchemaUser = Yup.object({
   fullName: Yup.string()
     .min(3)

@@ -44,17 +44,20 @@ function* signUpCall(action) {
   // console.log("actionaction", action);
   try {
     const response = yield call(postRequest, URls.signupUrl, action?.payload?.credentials);
+    console.log("response catch",response)
     if (response?.data?.message?.success) {
       pushNotification(`${response?.data?.message?.description}`, "success", "TOP_CENTER", 1000);
       yield put(signUpSuccess(response.data));
       action.payload.navigate("/Login")
     } else {
+      console.log("response eeeeeeeee catch",response)
       pushNotification(
-        `${response?.data?.message?.description}`,
+        `${response?.data?.data?.message ? response?.data?.data?.message : 'Network Error'}`,
         "error",
       );
     }
   } catch (error) {
+    console.log("error catch",error)
     pushNotification("Get data failure", "error", "TOP_CENTER", 1000);
     yield put(signUpFailure());
   }

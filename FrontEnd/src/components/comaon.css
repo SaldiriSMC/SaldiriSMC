@@ -53,14 +53,14 @@
   background-color: white;
   width: 84%;
   left: 0;
-  height: 270px;
+  height: 225px;
   position: absolute;
   left: 0;
   right: 0;
   margin-left: auto;
   margin-right: auto;
   /* width: 100px; */
-  bottom: -20%;
+  bottom: -15%;
   padding: 5px 5px 0px 5px;
 }
 .services_text_title{
@@ -203,6 +203,12 @@ right: 25px;
 .image-container {
     position: relative;
     width: 100%;
+  }
+
+  .navBarwrap{
+    position: sticky;
+    top: 0;
+    z-index: 999;
   }
   
   .background-image {
@@ -1661,7 +1667,7 @@ font-size: 1.5rem;
 }
 #about {
   background: #fff;
-  margin-top: 7.4vh;
+  /* margin-top: 7.4vh; */
       box-shadow: 0px 0px 12px 0px rgb(0 0 0 / 10%);
 }
 #demo{

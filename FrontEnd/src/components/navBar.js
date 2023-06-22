@@ -71,9 +71,9 @@ function NavScrollExample() {
 
 
   return (
-    <Navbar bg="white" expand="lg">
+    <Navbar className='navBarwrap' bg="white" expand="lg">
       <Container fluid>
-       <HashLink to="#home">  <img
+       <HashLink to="/">  <img
                 src="/assets/logo.png"
                 alt="logo"
                 className='nav-logo img-fluid'
@@ -86,17 +86,20 @@ function NavScrollExample() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="#action2">  Services</Nav.Link>
+            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="#services">  Services</Nav.Link>
             <NavDropdown title="Company" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#action3"> Portfolio</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">
+              <NavDropdown.Item href="#portfolio"> Portfolio</NavDropdown.Item>
+              <NavDropdown.Item href="/technologies">
+              Technologies
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#clients">
               Clients
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action4">
+              <NavDropdown.Item href="/careers">
               Careers
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action5">
+              <NavDropdown.Item href="/contactUs">
               Contact Us
               </NavDropdown.Item>
             </NavDropdown>

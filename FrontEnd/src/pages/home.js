@@ -21,9 +21,9 @@ return (
       <Clients/>
       <TestMonails/>
       <Services/>
-      <Technologies/>
+      {/* <Technologies/>
       <ContactUs/>
-      <Careers/>
+      <Careers/> */}
       <Footer/>
   </>
   );

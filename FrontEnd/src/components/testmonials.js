@@ -39,7 +39,7 @@ function TestMonails() {
       <div className="container-new">
         <div className="container">
           <header className="section-header">
-            <h3>Clients</h3>
+            <h3>Testimonials </h3>
           </header>
           
           <div id="demo" className="carousel slide" data-ride="carousel">

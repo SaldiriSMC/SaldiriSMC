@@ -41,7 +41,7 @@ const useStyles = makeStyles()((theme) => {
       }
   };
 });
-function Technologies() {
+function SignUp() {
   const { classes } = useStyles();
 
   const dispatch = useDispatch();
@@ -119,12 +119,12 @@ useEffect(()=>{
 <>
 <section >
   <form onSubmit={handleSubmit}>
-<Grid container flexDirection='row' display='flex' justifyContent='flex-end' spacing={2} sx={{p:1}}>
+<Grid style={{height:'100vh'}} container flexDirection='row' display='flex' justifyContent='flex-end' spacing={2} sx={{p:1}}>
      
-     <Grid display='flex' justifyContent='center' alignItems='center' item sm={6} sx={{backgroundColor:'#3B5999'}}>
+     <Grid display='flex' justifyContent='center' alignItems='center' item sm={12} md={6} sx={{backgroundColor:'#3B5999'}}>
    <img src="/assets/Background.png" className='w-50 p-4 img-fluid' ></img>
      </Grid>
-     <Grid item spacing={2} padding={10} container sm={6}>
+     <Grid item spacing={2} padding={10} container sm={12} md={6}>
     <Grid item sm={12} sx={{textAlign:'start'}}>
     <Typography variant="body" >
     Start, Run and Grow Your Business
@@ -368,8 +368,8 @@ useEffect(()=>{
                   /> 
             <MUITextField
               noTitle
-              sm={6}
-              xs={6}
+              sm={12}
+              xs={12}
               id="allies"
               name="allies"
               placeholder='Allies'
@@ -381,8 +381,8 @@ useEffect(()=>{
             /> 
             <MUITextField
               noTitle
-              sm={6}
-              xs={6}
+              sm={12}
+              xs={12}
               id="designation"
               name="designation"
               placeholder='Designation'
@@ -392,32 +392,91 @@ useEffect(()=>{
               errors={errors.designation}
               touched={touched.designation}
             /> 
-            <MUITextField
-              sm={6}
-              xs={6}
-              type="password"
-              id="password"
-              name="password"
-              placeholder='Password '
-              value={values.password}
-              handleChange={handleChange}
-              onBlur={handleBlur}
-              errors={errors.password}
-              touched={touched.password}
-            /> 
-           <MUITextField
-              sm={6}
-              xs={6}
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder='Confirm Password'
-              value={values.confirmPassword}
-              handleChange={handleChange}
-              onBlur={handleBlur}
-              errors={errors.confirmPassword}
-              touched={touched.confirmPassword}
-            /> 
+            <Grid
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    item
+                    sm={6}
+                    xs={6}
+                  >
+
+                  <TextField
+                      id="password"
+                      value={values?.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      type={showPassword ? "text" : "password"}
+                      helperText={touched?.password ? errors?.password : ""}
+                      error={touched?.password && Boolean(errors?.password)}
+                      placeholder="Enter your password"
+                      fullWidth
+                      margin="normal"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleMouseDownPassword}
+                              onMouseDown={handleClickShowPassword}
+                            >
+                              {showPassword ? (
+                                <Visibility className={classes.iconColor} />
+                              ) : (
+                                <VisibilityOff className={classes.iconColor} />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid>
+                   <Grid
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    item
+                    sm={6}
+                    xs={6}
+                  >
+                  <TextField
+                      id="confirmPassword"
+                      value={values?.confirmPassword}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      type={showConfirmPassword ? "text" : "password"}
+                      helperText={touched?.confirmPassword ? errors?.confirmPassword : ""}
+                      error={touched?.confirmPassword && Boolean(errors?.confirmPassword)}
+                      placeholder="Enter your password"
+                      fullWidth
+                      margin="normal"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowConfirmPassword}
+                              onMouseDown={handleMouseDownConfirmPassword}
+                            >
+                              {showConfirmPassword ? (
+                                <Visibility className={classes.iconColor} />
+                              ) : (
+                                <VisibilityOff className={classes.iconColor} />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid> 
                 </>)}
             
             <Grid item sx={{display:'flex', alignItems:'center'}}>
@@ -431,10 +490,11 @@ useEffect(()=>{
                SIGN UP
                </Button> 
                <Typography variant="body" sx={{ml:3}} >
-               Have an account? <span > <Link to="/">Sign In</Link></span>
+               Have an account? <span > <Link to="/">Sign In</Link></span><span > Forget Password  <Link to="/forget">Forget Password</Link></span>
             </Typography> 
             </Grid>
-                     
+      
+              
      </Grid>
  
   
@@ -448,5 +508,5 @@ useEffect(()=>{
   );
 }
 
-export default Technologies;
+export default SignUp;
 
