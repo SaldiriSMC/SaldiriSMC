@@ -4,14 +4,14 @@ import Carousel from 'react-bootstrap/Carousel';
 function ControlledCarousel() {
  
   return (
-    <section className="courel-section" id="home">
+    <section className="courel-section banerViewHeight" id="home">
     <Carousel id="carouselExampleControls " interval={null} >
-      <Carousel.Item className="slide-a">
-        <img className="d-block slider_img w-100 img-fluid" src="/assets/baner1.jpg" alt="Third slide" />
+      <Carousel.Item className="slide-a banerViewHeight">
+        <img className="d-block banerViewHeight slider_img w-100 img-fluid" src="/assets/baner1.jpg" alt="Third slide" />
         <div className="clearfix">
           <div className="slide-a-in" id="intro">
             <div className="intro-img">
-              <img src="/assets/Background.png" alt="" className="img-fluid move_logo" />
+              <img src="/assets/Background.png" alt="" className=" img-fluid move_logo" />
             </div>
             <div className="intro-info">
               <h2>SALDIRI</h2>
@@ -25,18 +25,18 @@ function ControlledCarousel() {
         </div>
       </Carousel.Item>
       <Carousel.Item>
-        <div className="clearfix">
-          <img className="d-block slider_img w-100 img-fluid" src="./assets/baner2.jpg" alt="Third slide" />
+        <div className="clearfix banerViewHeight">
+          <img className="d-block banerViewHeight slider_img w-100 img-fluid" src="./assets/baner2.jpg" alt="Third slide" />
         </div>
       </Carousel.Item>
       <Carousel.Item>
         <div className="">
-          <img className="d-block slider_img w-100" src="/assets/baner3.jpg" alt="Third slide" />
+          <img className="d-block banerViewHeight slider_img w-100" src="/assets/baner3.jpg" alt="Third slide" />
         </div>
       </Carousel.Item>
       <Carousel.Item>
         <div className="">
-          <img className="d-block slider_img w-100" src="/assets/baner4.jpg" alt="Third slide" />
+          <img className="d-block  banerViewHeight slider_img w-100" src="/assets/baner4.jpg" alt="Third slide" />
         </div>
       </Carousel.Item>
       {/* <Carousel.Item>

@@ -1,5 +1,5 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { LOGIN, SIGNUP } from "../actions/Auth/actionTypes";
+import { LOGIN, SIGNUP, LOGOUT } from "../actions/Auth/actionTypes";
 import {
   logInSuccess,
   logInFailure,
@@ -33,8 +33,7 @@ function* signInCall(action) {
     }
 
   } catch (error) {
-    console.log("error-------",error)
-    pushNotification('Get data failure', 'error', 'TOP_CENTER', 1000);
+    pushNotification('Network Error', 'error', 'TOP_CENTER', 1000);
     yield put(logInFailure());
   }
 }
@@ -45,16 +44,35 @@ function* signUpCall(action) {
   try {
     const response = yield call(postRequest, URls.signupUrl, action?.payload?.credentials);
     console.log("response catch",response)
-    if (response?.data?.message?.success) {
-      pushNotification(`${response?.data?.message?.description}`, "success", "TOP_CENTER", 1000);
+    if (response?.data?.data?.user) {
+      pushNotification(`${response?.data.message}`, "success", "TOP_CENTER", 1000);
       yield put(signUpSuccess(response.data));
-      action.payload.navigate("/Login")
+      action.payload.navigate("/")
     } else {
-      console.log("response eeeeeeeee catch",response)
+      console.log("response eeeeeeeee catch",response?.data.message )
       pushNotification(
-        `${response?.data?.data?.message ? response?.data?.data?.message : 'Network Error'}`,
+        `${response?.data.message}`,
         "error",
       );
+    }
+  } catch (error) {
+    console.log("error catch",error)
+    pushNotification("Get data failure", "error", "TOP_CENTER", 1000);
+    yield put(signUpFailure());
+  }
+}
+// logOut call
+function* logOutCall(action) {
+  console.log(action?.payload?.refreshToken,"actionaction", action);
+  try {
+    const response = yield call(postRequest, URls.logOut, action?.payload);
+    console.log("response catch",response)
+    if (response?.data?.data?.user) {
+      localStorage.removeItem("accessToken"); 
+      window.location.reload()
+    } else {
+
+    
     }
   } catch (error) {
     console.log("error catch",error)
@@ -66,6 +84,7 @@ function* signUpCall(action) {
 function* watchGetRequest() {
   yield takeLatest(LOGIN, signInCall);
   yield takeLatest(SIGNUP, signUpCall);
+  yield takeLatest(LOGOUT, logOutCall);
 }
 
 export default function* sagas() {

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { makeStyles } from "tss-react/mui";
 import Typography from '@mui/material/Typography'
+import TextField from '@mui/material/TextField'
+
 import { loginSchema } from "../Yup Schema";
 import MUITextField from "../sharedComponents/textField";
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -16,15 +18,54 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link, Outlet } from 'react-router-dom';
-import { logIn } from "../actions/Auth";
+import { logIn, logout } from "../actions/Auth";
 const useStyles = makeStyles()((theme) => {
   return {
     btn: {
-      // marginTop: 40,
+      marginTop: 6,
       // marginLeft:10,
       borderRadius: 5,
-      height:50,
+      borderColor:'#1C4FC3',
+      background:'white',
+      height:35,
+      width:40,
       fontWeight: 600,
+    },
+    textAreaContainerWrap: {
+      // border:'1px solid',
+      padding:'5px !important'
+        
+    },
+    textAreaContainer: {
+      // paddingTop:'4px !important',
+      '& > label': {
+        lineHeight:'2.4rem',
+        fontSize:'0.9rem'
+      },
+      '& > div': {
+        height: '100%',
+        '& input': {
+         height:1,
+        },
+        '& .MuiInputLabel-root': {
+         lineHeight:'2rem',
+        }
+      }
+    },
+    selectBox: {
+      '& > div': {
+        textAlign: 'left'
+      }
+    },
+    removeBorder: {
+      '& > div': {
+        border: 'none',
+        textAlign: 'left',
+        height: 20,
+        '& input': {
+          padding: '0px 5px',
+        }
+      }
     },
     SignUp:{
       textDecoration:'underline',
@@ -38,7 +79,8 @@ function NavScrollExample() {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("accessToken"))
 
-  console.log("user-----------",user)
+    const logOutToken = user?.data?.tokens?.refresh?.token
+    console.log("refreshToken",logOutToken)
   const initialValues = {
     email: "",
     password: "",
@@ -106,15 +148,74 @@ function NavScrollExample() {
           </Nav>
           {user ? <>
             <Grid container flexDirection='row' display='flex' justifyContent='flex-end'sx={{p:1}}>
-          <Button variant="contained" endIcon={<LogoutIcon />} onClick={()=>{localStorage.removeItem("accessToken"); window.location.reload()}}>
+          <Button variant="contained" endIcon={<LogoutIcon />} onClick={()=>{
+         dispatch(
+          logout({
+            refreshToken:logOutToken
+          })
+        )}}>
             Log Out
            </Button></Grid>
           </> : <>
           <form onSubmit={handleSubmit}>
           <Grid container flexDirection='row' display='flex' justifyContent='flex-end'sx={{p:1}}>
     
-     <Grid container spacing={2} item lg={10} md={12} sm={12}>
-         <MUITextField
+     <Grid container  display='flex' justifyContent='flex-end' spacing={2} item lg={10} md={12} sm={12}>
+     <Grid
+ className={`${classes.textAreaContainerWrap}`}
+container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    item
+                    sm={3}
+                    xs={12}
+                  >
+                  <TextField
+                      className={`${classes.textAreaContainer}`}
+                      id="confirmPassword"
+                      value={values?.confirmPassword}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      label="Email"
+                      type="text"
+                      error={touched?.confirmPassword && Boolean(errors?.confirmPassword)}
+                      placeholder="E-mail"
+                      fullWidth
+                      margin="normal"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+             <Grid
+              className={`${classes.textAreaContainerWrap}`}
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    item
+                    sm={3}
+                    xs={12}
+                  >
+                  <TextField
+                   className={`${classes.textAreaContainer}`}
+                      id="confirmPassword"
+                      value={values?.confirmPassword}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      label="Password"
+                      type="text"
+                      error={touched?.confirmPassword && Boolean(errors?.confirmPassword)}
+                      placeholder="Password"
+                      fullWidth
+                      margin="normal"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+         {/* <MUITextField
              noTitle
               sm={5}
               xs={12}
@@ -126,8 +227,8 @@ function NavScrollExample() {
               handleChange={handleChange}
               errors={errors.email}
               touched={touched.email}
-            /> 
-            <MUITextField
+            />  */}
+            {/* <MUITextField
             noTitle
               sm={5}
               xs={12}
@@ -140,26 +241,28 @@ function NavScrollExample() {
               handleChange={handleChange}
               errors={errors.password}
               touched={touched.password}
-            /> 
-             <Grid  sm={2}
+            />  */}
+             <Grid  sm={1}
+              className={`${classes.textAreaContainerWrap}`}
               xs={12} item sx={{display:'flex',alignItems:'center'}}> 
-            <Button
-            sx={{mt:3}}
+            <button
+            // sx={{mt:1}}
                 className={classes.btn}
                variant="outlined"
                color="primary"
                type='submit'
-              //  style={{ marginTop: '20px' }}
+              //  style={{ width: '2px' }}
              >
               Go
-             </Button>
+             </button>
 
             </Grid>
-            <Grid item display='flex' sm={12}>
-          <Typography variant="body" className={classes.title} >
-            Don’t have an account yet? Click here to <span > <Link to="/signUp">Sign Up</Link></span>
+            {/* <Grid  className={`${classes.textAreaContainerWrap}`} item sx={{p:0}} display='flex' justifyContent='center'  sm={10}> */}
+          <Typography sx={{mb:-1}} variant="body">
+          Don’t have an account yet? Click here to <span > <Link to="/signUp">Sign Up</Link></span> / <span > <Link to="/forget"> Forgot Password</Link></span>
+
           </Typography> 
-            </Grid>
+            {/* </Grid> */}
      </Grid>
 
                      

@@ -1,3 +1,11 @@
+.banerViewHeight{
+ height:calc(100vh - 120px)
+}
+
+
+
+
+
 .imgk {
   width: 100px;
   /* height: 100px; */
@@ -1273,7 +1281,7 @@ margin-top: 2%;
 #intro .intro-img {
   width: 25%;
   float: right;
-  margin-top: 15%;
+  margin-top: 10%;
   animation: rotation 100s infinite linear;
 }
 
@@ -1294,7 +1302,7 @@ margin-top: 2%;
 
 #intro .intro-info {
   width: 50%;
-  margin-top: 20%;
+  margin-top: 12%;
   float: left;
 }
 

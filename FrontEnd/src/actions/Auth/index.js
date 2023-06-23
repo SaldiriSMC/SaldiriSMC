@@ -39,7 +39,8 @@ export const signUpFailure = () => ({
 });
 
  //Logout action function
-export const logout = () => ({
+export const logout = (data) => ({
   type: LOGOUT,
+  payload: data,
 });
 

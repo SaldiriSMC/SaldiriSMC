@@ -56,7 +56,7 @@ function SignUp() {
   const initialValues = {
     tanantName: "",
     fullName: "",
-    phone: "",
+    phoneNumber: "",
     designation: "",
     email: "",
     allies: "",
@@ -87,8 +87,9 @@ function SignUp() {
               email: values.email,
               alias: values.allies,
               designation: values.designation,
-              // phone: values.phone,
-              password: values.password,},
+              phoneNumber: values.phoneNumber,
+              password: values.password},
+              navigate:navigate,
             })
           );
         } else{
@@ -101,8 +102,9 @@ function SignUp() {
               alias: values.allies,
               designation: values.designation,
               domain: values.domain,
-              // phone: values.phone,
-              password: values.password,},
+              phoneNumber: values.phoneNumber,
+              password: values.password},
+              navigate:navigate,
             })
           );
         }
@@ -191,11 +193,11 @@ useEffect(()=>{
                      sm={6}
                      xs={6}
                      laceholder='Phone Number'
-                      id="phone"
-                    value={values.phone}
+                      id="phoneNumber"
+                    value={values.phoneNumber}
                     setFieldValue={setFieldValue}
-                    touched={touched.phone}
-                    errors={errors.phone}
+                    touched={touched.phoneNumber}
+                    errors={errors.phoneNumber}
                     selectedCountry="pk"
                     
                   />
@@ -358,11 +360,11 @@ useEffect(()=>{
                      sm={6}
                      xs={6}
                      laceholder='Phone Number'
-                      id="phone"
-                    value={values.phone}
+                      id="phoneNumber"
+                    value={values.phoneNumber}
                     setFieldValue={setFieldValue}
-                    touched={touched.phone}
-                    errors={errors.phone}
+                    touched={touched.phoneNumber}
+                    errors={errors.phoneNumber}
                     selectedCountry="pk"
                     
                   /> 

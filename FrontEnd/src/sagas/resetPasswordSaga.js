@@ -26,7 +26,6 @@ function* emailVerificationCall(action) {
           "success",
         );
         yield put(emailVerificationSuccess(response.data));
-        action.payload.navigate("/Login")
       } else {
            pushNotification(
           `${response?.data?.message}`,
@@ -45,8 +44,7 @@ function* emailVerificationCall(action) {
    try {
      const response = yield call(postRequest, `${URls.resetPassword}?token=${action?.payload?.LogIntoken}`, action?.payload?.credentials);
      console.log(response)
-     if (response?.data?.message?.success) {     
-       localStorage.setItem("data",JSON.stringify(response.data))
+     if (response?.data?.message == 'Password changed successfully') {     
        pushNotification(
          "Password Change Successfully",
          "success",
@@ -55,7 +53,7 @@ function* emailVerificationCall(action) {
        action.payload.navigate("/Login")
      } else {
           pushNotification(
-         `${response?.data?.message?.description}`,
+         `${response?.data?.message}`,
          "error",
          "TOP_CENTER",
        );

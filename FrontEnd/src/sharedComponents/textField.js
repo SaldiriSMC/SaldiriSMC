@@ -8,7 +8,7 @@ const useStyles = makeStyles()((theme) => {
   return {
     textAreaContainer: {
       '& > div': {
-        height: '100%'
+        // height: '100%'
       }
     },
     selectBox: {

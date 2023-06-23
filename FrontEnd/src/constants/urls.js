@@ -4,6 +4,7 @@ const URLs = {
   signupUrl: "/auth/register",
   emailVerificationUrl: "/auth/forgot-password",
   resetPassword: "/auth/reset-password",
+  logOut: "/auth/logout",
   emailStatus: "api/v1/users/email/verify/",
   course: "courses/all/",
   topics: "courses/topics/",
