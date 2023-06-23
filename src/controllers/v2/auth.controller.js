@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../../utils/catchAsync');
-const { User, Tenant } = require('../../models/v2/index');
-const { authService, userService, tokenService, emailService, tenantService } = require('../../services/v2');
+const { User, Tenant, Attendance } = require('../../models/v2/index');
+const { authService, userService, tokenService, emailService, tenantService, attendanceService } = require('../../services/v2');
 const {response} = require("../../utils/response")
 
 const register = catchAsync(async (req, res) => {
@@ -45,12 +45,31 @@ const login = catchAsync(async (req, res) => {
   const user = await authService.loginUserWithEmailAndPassword(email, password);
   const tenant = await Tenant.findOne({where:{id:user.tenantId}})
   const tokens = await tokenService.generateAuthTokens(user);
-  console.log(response)
+  await attendanceService.markAttendance(user, res)
   response(res,{ user, tenant, tokens }, 'User loged in successfully', 200)
 });
 
 const logout = catchAsync(async (req, res) => {
   await authService.logout(req.body.refreshToken);
+  const tokenDoc = await authService.logout(req.body.refreshToken); 
+  const userDoc = await User.findOne({where:{id:tokenDoc.user}})
+  let attendanceDoc = await Attendance.findOne({where:{userId:userDoc.id}})
+  let totalWorkedHours = attendanceDoc.workedHours
+  const timeInTimeOut = await attendanceService.markTimeOut(userDoc, res)
+  const timeOutMiliSeconds = timeInTimeOut.timeOut.getTime()
+  const timeInMiliSeconds = timeInTimeOut.timeIn.getTime()
+  const sessionMiliSeconds = timeOutMiliSeconds - timeInMiliSeconds
+  const sessionWorkedHours = sessionMiliSeconds / (1000 * 60 * 60);
+  totalWorkedHours += sessionWorkedHours
+  attendanceDoc.workedHours = totalWorkedHours.toFixed(2)
+  if(attendanceDoc.workedHours < 8){
+    attendanceDoc.status = "Break"
+  }else{
+    attendanceDoc.status = "Day Completed"
+  }
+  attendanceDoc.save()
+  //await tokenDoc.destroy();
+  response(res, "", "User loged out successfully", 200)
   res.status(httpStatus.NO_CONTENT).send();
 });
 
