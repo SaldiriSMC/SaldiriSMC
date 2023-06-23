@@ -42,7 +42,7 @@ const User = sequelize.define('users', {
   tenantId:{
     type: DataTypes.INTEGER,
     references:{
-      model:"tenant",
+      model:"tenants",
       key:"id"
     },
   },

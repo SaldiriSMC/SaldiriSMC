@@ -6,6 +6,8 @@ const logger = require('./config/logger');
 const user = require('./models/v2/user.model');
 const token = require('./models/v2/token.model')
 const tenant = require('./models/v2/tenant.model')
+const attendance = require("./models/v2/attendance.model")
+const time = require("./models/v2/time.model")
 
 let server;
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
@@ -38,6 +40,16 @@ const mySqlConnection = async() =>{
     console.log("yes re sync of tenant is done")
   }).catch((err)=>{
     console.log(err)
+  })
+  attendance.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re sync of attendance is done")
+  }).catch((err)=>{
+    console.log("attendance------->>>>>>",err)
+  })
+  time.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re sync of time is done")
+  }).catch((err)=>{
+    console.log("time------->>>>>>",err)
   })
   sequelize.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync is done")
