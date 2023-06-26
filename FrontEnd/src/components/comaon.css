@@ -166,13 +166,7 @@ right: 25px;
     left: 25px;
     z-index: 1;
 }
-.baner_wrap .slick-prev:before {
-  /* color: red!important; */
-}
 
-.baner_wrap .slick-next:before {
-  /* color: red!important; */
-}
 .clients_wrap .slick-prev:before {
   color: black !important;
 }
@@ -241,8 +235,8 @@ right: 25px;
     width: 100%;
     animation: 'rotation 100s infinite linear',
 }
-/* * Portfolio Section */
---------------------------------*/
+/* Portfolio Section */
+/* -------------------------------- */
 
 #portfolio {
   padding: 25px 0;
@@ -1051,8 +1045,7 @@ career section
   /* background: black;
   background-image: url('/img/background2.jpg'); */
   border-radius: 10px;
-  /* height: 600px;
-  p */
+
 margin-top: 2%;
  padding-bottom: 10px;
   background-color: #ecf5ff;
@@ -1088,9 +1081,8 @@ margin-top: 2%;
 .nav_logo{
   width: 260px;
 }
-*--------------------------------------------------------------
+
 /* # Footer */
---------------------------------------------------------------*/
 
 #footer {
   background: #00428a;
