@@ -38,7 +38,7 @@ function Clients() {
   return (
 <>
 <section id="clients" className='clients_wrap'>
-      <div className="container-new">
+      <div className="">
         <div className="container">
           <header className="section-header">
             <h3>Clients</h3>

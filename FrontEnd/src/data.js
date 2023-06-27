@@ -216,77 +216,77 @@ export const Services=[
   img:'/assets/Services/Services3.png',
   mainImg:'/assets/ServicesNew/3.jpg'
 },
-  {
-  id:4,
-  title:'Web Development and Design',
-  description:`We build well-designed and interactive web applications, tailored to solving your
-  business needs. Charts, visualizations, forms, and wizards in our web apps are custom-built and
-  highly-scalable. These apps are optimized to run faster and engage with the users, resulting in a web
-  experience that is both delightful and intuitive.`,
-  mainImg:'/assets/ServicesNew/1.jpg',
-  img:'/assets/Services/Services4.png'
-},
-  {
-  id:5,
-  title:'SEO',
-  description:`Each campaign is tailored to suit the specific needs of our customers. We carry out
-                a detailed analysis of the website and the competitive nature of the market and devise a plan
-                accordingly. In online marketing, there is no one-size-fits-all approach, so we'll develop a special
-                plan for your current scenario. Our main mission is to help our consumers obtain the best outcomes
-                possible. Our main mission is to help our stakeholders achieve the best outcomes possible, adopting
-                methodologies. Rather than a stream of random visitors, we provide the highest-value, highest-converting
-                web traffic. We are strongly focused and ready to buy the leads we produce.`,
-  img:'/assets/Services/Services5.png',
-  mainImg:'/assets/ServicesNew/2.jpg'
-},
-  {
-  id:6,
-  title:'Data Analytics',
-  description:`Where there’s data, there’s analytics. We help businesses convert their real-time
-                    and historical data into actionable insights. Our cognitive dashboards arrange information based on
-                    importance and visualize predictive and prescriptive analytics. With our anomaly detection solution, you
-                    can identify unusual patterns in usage trends so you can make informed and data-driven business
-                    decisions for the future.`,
-  img:'/assets/Services/Services6.png',
-  mainImg:'/assets/ServicesNew/4.jpg'
-},
-  {
-  id:7,
-  title:'UI/UX',
-  description:`Making details memorable with pixel-perfect designs and smooth UX is very important
-                to us. We understand user needs and create experiences that solve design challenges and also make people
-                happy. What makes our service unique is the mix of design, technology, and human-centred approach to
-                producing custom visualizations, dashboards, input-intensive applications, and videos.`,
-  img:'/assets/Services/Services7.png',
-  mainImg:'/assets/ServicesNew/8.jpg'
-},
-  {
-  id:8,
-  title:'Python Programming',
-  description:`Python is a wonderful programming language, and we at Saldiri are proud to provide
-                    the best of the best facilities for creating Python applications. Saldiri is a software development firm
-                    that provides the best python development services for the development of python applications. With
-                    Python, our team of experts has evolved to gain impeccable competence in one of the greatest languages
-                    of programming. Both famous Python web development frameworks are avidly mastered by our team of
-                    specialist Python developers. Our top Python developers have completely mastered the development of
-                    applications based on Python. Our Python platform experience would allow all of the functionality to be
-                    used in your project. We are also a top company for the production of android/IOS applications, which
-                    helps to develop both online and mobile apps for a product. Instead of going for some random
-                    technologies, we recommend the most relevant development language which will fit better for your
-                    project.`,
-  img:'/assets/Services/Services8.png',
-  mainImg:'/assets/ServicesNew/7.jpg'
-},
-  {
-  id:9,
-  title:'Digital Marketing',
-  description:`Digital marketing is the act of promoting products and services through digital channels, such as social media, SEO,
-                    email, and mobile apps. Any form of marketing that involves electronic devices is considered digital marketing.hat’s
-                    because Google and Facebook generate more revenue than any traditional media company. After all, they control more
-                    eyeballs. That’s why digital marketing matters; it’s where the attention is.`,
-  img:'/assets/Services/Services7.png',
-  mainImg:'/assets/ServicesNew/5.jpg'
-},
+//   {
+//   id:4,
+//   title:'Web Development and Design',
+//   description:`We build well-designed and interactive web applications, tailored to solving your
+//   business needs. Charts, visualizations, forms, and wizards in our web apps are custom-built and
+//   highly-scalable. These apps are optimized to run faster and engage with the users, resulting in a web
+//   experience that is both delightful and intuitive.`,
+//   mainImg:'/assets/ServicesNew/1.jpg',
+//   img:'/assets/Services/Services4.png'
+// },
+//   {
+//   id:5,
+//   title:'SEO',
+//   description:`Each campaign is tailored to suit the specific needs of our customers. We carry out
+//                 a detailed analysis of the website and the competitive nature of the market and devise a plan
+//                 accordingly. In online marketing, there is no one-size-fits-all approach, so we'll develop a special
+//                 plan for your current scenario. Our main mission is to help our consumers obtain the best outcomes
+//                 possible. Our main mission is to help our stakeholders achieve the best outcomes possible, adopting
+//                 methodologies. Rather than a stream of random visitors, we provide the highest-value, highest-converting
+//                 web traffic. We are strongly focused and ready to buy the leads we produce.`,
+//   img:'/assets/Services/Services5.png',
+//   mainImg:'/assets/ServicesNew/2.jpg'
+// },
+//   {
+//   id:6,
+//   title:'Data Analytics',
+//   description:`Where there’s data, there’s analytics. We help businesses convert their real-time
+//                     and historical data into actionable insights. Our cognitive dashboards arrange information based on
+//                     importance and visualize predictive and prescriptive analytics. With our anomaly detection solution, you
+//                     can identify unusual patterns in usage trends so you can make informed and data-driven business
+//                     decisions for the future.`,
+//   img:'/assets/Services/Services6.png',
+//   mainImg:'/assets/ServicesNew/4.jpg'
+// },
+//   {
+//   id:7,
+//   title:'UI/UX',
+//   description:`Making details memorable with pixel-perfect designs and smooth UX is very important
+//                 to us. We understand user needs and create experiences that solve design challenges and also make people
+//                 happy. What makes our service unique is the mix of design, technology, and human-centred approach to
+//                 producing custom visualizations, dashboards, input-intensive applications, and videos.`,
+//   img:'/assets/Services/Services7.png',
+//   mainImg:'/assets/ServicesNew/8.jpg'
+// },
+//   {
+//   id:8,
+//   title:'Python Programming',
+//   description:`Python is a wonderful programming language, and we at Saldiri are proud to provide
+//                     the best of the best facilities for creating Python applications. Saldiri is a software development firm
+//                     that provides the best python development services for the development of python applications. With
+//                     Python, our team of experts has evolved to gain impeccable competence in one of the greatest languages
+//                     of programming. Both famous Python web development frameworks are avidly mastered by our team of
+//                     specialist Python developers. Our top Python developers have completely mastered the development of
+//                     applications based on Python. Our Python platform experience would allow all of the functionality to be
+//                     used in your project. We are also a top company for the production of android/IOS applications, which
+//                     helps to develop both online and mobile apps for a product. Instead of going for some random
+//                     technologies, we recommend the most relevant development language which will fit better for your
+//                     project.`,
+//   img:'/assets/Services/Services8.png',
+//   mainImg:'/assets/ServicesNew/7.jpg'
+// },
+//   {
+//   id:9,
+//   title:'Digital Marketing',
+//   description:`Digital marketing is the act of promoting products and services through digital channels, such as social media, SEO,
+//                     email, and mobile apps. Any form of marketing that involves electronic devices is considered digital marketing.hat’s
+//                     because Google and Facebook generate more revenue than any traditional media company. After all, they control more
+//                     eyeballs. That’s why digital marketing matters; it’s where the attention is.`,
+//   img:'/assets/Services/Services7.png',
+//   mainImg:'/assets/ServicesNew/5.jpg'
+// },
 ];
 
 export const TechnologiesList=[

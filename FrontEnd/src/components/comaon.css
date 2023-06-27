@@ -9,21 +9,23 @@
 .imgk {
   width: 100px;
   /* height: 100px; */
-  animation: scroll 60s linear infinite;
+  animation: scroll 30s linear;
+  animation-iteration-count: infinite;
+
 }
 
 .slide-track {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 3em;
+  gap: 4em;
   overflow: hidden;
 }
 
 .slideru {
-  margin-top: 70px;
+  margin-top: 10px;
   background-color: white;
-  padding: 3.5em 2em;
+  padding: 0.5em ;
 }
 
 @keyframes scroll {
@@ -47,11 +49,11 @@
   height: 30vh;
 }
 .services_icon{
-  background: #D8E4FF;
-  border-radius: 8px;
+  /* background: #D8E4FF; */
+  /* border-radius: 8px; */
   width: 60px;
   /* display: flex; */
-  padding: 12px 0px 0px 0px;
+  /* padding: 12px 0px 0px 0px; */
   justify-content: center;
   height: 60px;
 }
@@ -61,7 +63,8 @@
   background-color: white;
   width: 84%;
   left: 0;
-  height: 225px;
+  overflow: hidden;
+  height: 250px;
   position: absolute;
   left: 0;
   right: 0;
@@ -122,13 +125,13 @@ font-size: 1.5rem;
   font-size: large;
   padding: 5px 5px 0px 5px;
   margin: auto;
-  height: 40px;
+  height: 70px;
   /* left: 290px; */
   left: 0;
   right: 0;
   position: absolute;
-  bottom: 0;
-  border-radius: 100% 100% 0 0;
+  bottom: -33px;
+  border-radius: 100%;
   color: white;
   background: #004EFF;
 }

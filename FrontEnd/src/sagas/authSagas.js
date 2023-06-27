@@ -67,7 +67,7 @@ function* logOutCall(action) {
   try {
     const response = yield call(postRequest, URls.logOut, action?.payload);
     console.log("response catch",response)
-    if (response?.data?.data?.user) {
+    if (response?.data.message == 'User loged out successfully') {
       localStorage.removeItem("accessToken"); 
       window.location.reload()
     } else {

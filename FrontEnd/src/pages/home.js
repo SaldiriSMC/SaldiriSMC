@@ -17,7 +17,7 @@ return (
       <Header/>
       <Baner/>
       <AboutUs/>
-      <Portfolio/>      
+      {/* <Portfolio/>       */}
       <Clients/>
       <TestMonails/>
       <Services/>

@@ -36,7 +36,7 @@ export const signupSchemaUser = Yup.object({
 });
 
 export const loginSchema = Yup.object({
-  password: Yup.string().min(8).required("Please enter your password"),
+  password: Yup.string().required("Please enter your password"),
 });
 
 export const setNewPassword = Yup.object({

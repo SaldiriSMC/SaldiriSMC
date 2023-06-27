@@ -65,7 +65,8 @@ function Service() {
           className='text-end'
           >
             {" "}
-            <ReadMoreIcon sx={{cursor:'pointer'}} onClick={()=>{setModelData(item);setOpen(true)}} className='more-logo'/>{" "}
+            {/* onClick={()=>{setModelData(item);setOpen(true)}} */}
+            <ReadMoreIcon sx={{cursor:'pointer'}}  className='more-logo'/>{" "}
             
           </div>
         </div>

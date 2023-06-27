@@ -22,19 +22,25 @@ import { logIn, logout } from "../actions/Auth";
 const useStyles = makeStyles()((theme) => {
   return {
     btn: {
-      marginTop: 6,
-      // marginLeft:10,
-      borderRadius: 5,
-      borderColor:'#1C4FC3',
-      background:'white',
-      height:35,
-      width:40,
+      borderRadius: 3,
+      background:'#3B5999',
+      fontSize:'0.6rem',
+      color:'#fff',
+      marginBottom:10,
+      border:'0.1rem solid #1C4FC3',
+      width:30,
+      padding:1,
       fontWeight: 600,
     },
     textAreaContainerWrap: {
       // border:'1px solid',
       padding:'5px !important'
         
+    },
+    heading2: {
+    //  marginRight:'auto',
+    //  marginLeft:'auto',
+    //  marginTop:'-1rem',
     },
     textAreaContainer: {
       // paddingTop:'4px !important',
@@ -113,7 +119,7 @@ function NavScrollExample() {
 
 
   return (
-    <Navbar className='navBarwrap' bg="white" expand="lg">
+    <Navbar bg="white" expand="lg">
       <Container fluid>
        <HashLink to="/">  <img
                 src="/assets/logo.png"
@@ -160,26 +166,30 @@ function NavScrollExample() {
           <form onSubmit={handleSubmit}>
           <Grid container flexDirection='row' display='flex' justifyContent='flex-end'sx={{p:1}}>
     
-     <Grid container  display='flex' justifyContent='flex-end' spacing={2} item lg={10} md={12} sm={12}>
-     <Grid
- className={`${classes.textAreaContainerWrap}`}
-container
+     <Grid container  display='flex' justifyContent='flex-end' spacing={2} item lg={12} md={12} sm={12}>
+   
+   <Grid container  display='flex' justifyContent='flex-end' spacing={2} item lg={11} md={12} sm={12}>
+   <Grid
+                 className={`${classes.textAreaContainerWrap}`}
+                    container
                     direction="row"
                     justifyContent="center"
                     alignItems="center"
                     item
-                    sm={3}
+                    sm={5.5}
                     xs={12}
                   >
                   <TextField
                       className={`${classes.textAreaContainer}`}
-                      id="confirmPassword"
-                      value={values?.confirmPassword}
+                      name="email"
+                      id="email"
+                      value={values.email}
                       onChange={handleChange}
-                      onBlur={handleBlur}
+                      touched={touched.email}
                       label="Email"
                       type="text"
-                      error={touched?.confirmPassword && Boolean(errors?.confirmPassword)}
+                      helperText={touched?.email ? errors?.email : ""}
+                      error={touched?.email && Boolean(errors?.email)}
                       placeholder="E-mail"
                       fullWidth
                       margin="normal"
@@ -195,18 +205,19 @@ container
                     justifyContent="center"
                     alignItems="center"
                     item
-                    sm={3}
+                    sm={5.5}
                     xs={12}
                   >
                   <TextField
                    className={`${classes.textAreaContainer}`}
-                      id="confirmPassword"
-                      value={values?.confirmPassword}
+                      id="password"
+                      value={values?.password}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       label="Password"
-                      type="text"
-                      error={touched?.confirmPassword && Boolean(errors?.confirmPassword)}
+                      type="password"
+                      helperText={touched?.password ? errors?.password : ""}
+                      error={touched?.password && Boolean(errors?.password)}
                       placeholder="Password"
                       fullWidth
                       margin="normal"
@@ -215,54 +226,26 @@ container
                       }}
                     />
                   </Grid>
-         {/* <MUITextField
-             noTitle
-              sm={5}
-              xs={12}
-              label="Email"
-              placeholder="Email"
-              name="email"
-              id="email"
-              value={values.email}
-              handleChange={handleChange}
-              errors={errors.email}
-              touched={touched.email}
-            />  */}
-            {/* <MUITextField
-            noTitle
-              sm={5}
-              xs={12}
-              label="Password"
-              type="password"
-              placeholder="Password"
-              name="password"
-              id="password"
-              value={values.password}
-              handleChange={handleChange}
-              errors={errors.password}
-              touched={touched.password}
-            />  */}
              <Grid  sm={1}
               className={`${classes.textAreaContainerWrap}`}
-              xs={12} item sx={{display:'flex',alignItems:'center'}}> 
+              xs={12} item sx={{display:'flex',alignItems:'flex-end'}}> 
             <button
-            // sx={{mt:1}}
                 className={classes.btn}
                variant="outlined"
                color="primary"
                type='submit'
-              //  style={{ width: '2px' }}
              >
               Go
              </button>
 
-            </Grid>
-            {/* <Grid  className={`${classes.textAreaContainerWrap}`} item sx={{p:0}} display='flex' justifyContent='center'  sm={10}> */}
-          <Typography sx={{mb:-1}} variant="body">
+            </Grid >
+   </Grid>
+
+   <Typography className={classes.heading2} sx={{mb:-1,fontSize:'0.7rem'}} variant="body">
           Don’t have an account yet? Click here to <span > <Link to="/signUp">Sign Up</Link></span> / <span > <Link to="/forget"> Forgot Password</Link></span>
 
-          </Typography> 
-            {/* </Grid> */}
+          </Typography>
+          <Grid  className={`${classes.textAreaContainerWrap}`} item sm={1}></Grid>
      </Grid>
 
                      
