@@ -3,6 +3,7 @@ const catchAsync = require('../../utils/catchAsync');
 const { User, Tenant, Attendance } = require('../../models/v2/index');
 const { authService, userService, tokenService, emailService, tenantService, attendanceService } = require('../../services/v2');
 const {response} = require("../../utils/response")
+const moment = require("moment")
 
 const register = catchAsync(async (req, res) => {
   try {
@@ -56,6 +57,7 @@ const logout = catchAsync(async (req, res) => {
   let attendanceDoc = await Attendance.findOne({where:{userId:userDoc.id}})
   let totalWorkedHours = attendanceDoc.workedHours
   const timeInTimeOut = await attendanceService.markTimeOut(userDoc, res)
+  console.log('timeintimeout-------->>>>>>>>>>>',timeInTimeOut)
   const timeOutMiliSeconds = timeInTimeOut.timeOut.getTime()
   const timeInMiliSeconds = timeInTimeOut.timeIn.getTime()
   const sessionMiliSeconds = timeOutMiliSeconds - timeInMiliSeconds
@@ -68,9 +70,8 @@ const logout = catchAsync(async (req, res) => {
     attendanceDoc.status = "Day Completed"
   }
   attendanceDoc.save()
-  //await tokenDoc.destroy();
+  await tokenDoc.destroy()
   response(res, "", "User loged out successfully", 200)
-  res.status(httpStatus.NO_CONTENT).send();
 });
 
 const refreshTokens = catchAsync(async (req, res) => {

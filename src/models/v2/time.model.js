@@ -1,5 +1,5 @@
 const {sequelize} = require('../../config/mySqlConnection')
-const { DataTypes, ENUM } = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 const Time = sequelize.define('time', {
     attendanceId:{
@@ -11,10 +11,12 @@ const Time = sequelize.define('time', {
       allowNull:false
     },
     timeIn: {
-        type:DataTypes.TIME,
+        type:DataTypes.DATE,
+        defaultValue:DataTypes.NOW
       },
       timeOut:{
-        type:DataTypes.TIME
+        type:DataTypes.DATE,
+        defaultValue:DataTypes.NOW
       }
   });
 

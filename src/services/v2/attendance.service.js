@@ -21,14 +21,16 @@ const markTimeOut = async (user, res) => {
     if (attendance === null) {
       res.send("No record found")
     }
-    const time = await Time.findAll()
-    consoel.log("time---------->>>>", time)
-    const lastIndex = time.length - 1
-    const lastItem = time[lastIndex]
-    lastItem.timeOut = new Date()
-    attendance.save()
-    return lastItem
+    const updateTimeOut = await Time.update({timeOut: new Date()},{
+      where: { attendanceId:attendance.id },
+      order: [ [ 'createdAt', 'DESC' ]],
+    });
+    const timeOut = await Time.findOne({where: { attendanceId:attendance.id },
+      order: [ [ 'createdAt', 'DESC' ]],})
+    console.log("timeOut------------>>>>>>>>>>>",timeOut)
+    return timeOut.dataValues
   } catch (err) {
+    console.log("err--------->>>>>>>>>>",err)
     res.send(err);
   }
 };

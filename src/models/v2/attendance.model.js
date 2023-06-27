@@ -4,7 +4,7 @@ const Attendance = sequelize.define('attendance', {
   userId: {
       type: DataTypes.INTEGER,
       references:{
-        model:"users",
+        model:"user",
         key:"id"
       },
       allowNull:false
