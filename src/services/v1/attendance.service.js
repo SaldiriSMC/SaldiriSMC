@@ -41,4 +41,9 @@ const markTimeOut = async (user, res) => {
   }
 };
 
-module.exports = { markAttendance, markTimeOut };
+const queryAttendance = async (filter, options) => {
+  const attendance = await Attendance.paginate(filter, options);
+  return attendance;
+};
+
+module.exports = { markAttendance, markTimeOut, queryAttendance };

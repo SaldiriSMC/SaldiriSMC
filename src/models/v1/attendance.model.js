@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const { toJSON } = require('../plugins');
-const {currentDate} = require('../../utils/currentDate')
+const { toJSON, paginate } = require('../plugins');
 const timeSchema = mongoose.Schema({ 
   timeIn: {
     type:Date,
@@ -52,7 +51,7 @@ const attendanceSchema = mongoose.Schema(
 
 // add plugin that converts mongoose to json
 attendanceSchema.plugin(toJSON);
-
+attendanceSchema.plugin(paginate)
 /**
  * @typedef Attendance
  */
