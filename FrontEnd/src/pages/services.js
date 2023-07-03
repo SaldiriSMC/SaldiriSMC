@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
-import './comaon.css';
+import '../components/comaon.css';
 import Button from '@mui/material/Button';
-import {Services} from '../data'
+import {ServicesAll} from '../data'
 import { Link, Outlet } from 'react-router-dom';
-import PortfolioModel from './modal'
+// import PortfolioModel from '../../modal'
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 function Service() {
 
@@ -18,7 +18,7 @@ function Service() {
       <h3>Services</h3>
     </header>
     <div className="row ">
-      {React.Children.toArray(Services.map((item,index)=>{
+      {React.Children.toArray(ServicesAll.map((item,index)=>{
             return<>
       <div className="col-xs-12 col-sm-6 col-md-4">
         <div className="sercice_box">
@@ -38,28 +38,19 @@ function Service() {
       </div>
             </>
         }))}
- <Link to="/services"> 
-           <Button
-              
-                 variant="contained"
-                 color="primary"
-                 style={{ marginTop: '30px',width:200,borderRadius:30,marginRight:'auto',marginLeft:'auto'}}
-               >
-                 View More
-            
-               </Button>
-               </Link>
+
+   
     </div>
     
   </div>
 
   
-  <PortfolioModel
+  {/* <PortfolioModel
         setOpen={setOpen}
         open={open}
         services={modelData}
         description={modelData?.description}
-      />
+      /> */}
 </section>
 
 </>

@@ -24,16 +24,17 @@ const useStyles = makeStyles()((theme) => {
 function Clients() {
   const { classes } = useStyles();
   const { ClientNew} = useContext(FeedbackContext);
-  var settings = {
+  const settings = {
     dots: false,
-    infinite: false,
-    speed: 300,
-    autoplay: true,
-    slidesToShow: 3,
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 1,
     arrows: false,
-    // slidesToScroll: 1
+    autoplay: true,
+    speed: 4000,
+    autoplaySpeed: 4000,
+    cssEase: "linear"
   };
-
 
   return (
 <>
@@ -47,6 +48,7 @@ function Clients() {
 
           <div className="slideru">
   <div className="slide-track">
+  <Slider {...settings}>
   {React.Children.toArray(ClientNew.map((item)=>{
                 return <>
         <div className="slide">
@@ -58,7 +60,7 @@ function Clients() {
     </div>
                 </>
               }))}
-  
+   </Slider>
   </div>
 </div>
 

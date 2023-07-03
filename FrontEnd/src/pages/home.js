@@ -18,12 +18,13 @@ return (
       <Baner/>
       <AboutUs/>
       {/* <Portfolio/>       */}
-      <Clients/>
+      
       <TestMonails/>
       <Services/>
       {/* <Technologies/>
       <ContactUs/>
       <Careers/> */}
+      <Clients/>
       <Footer/>
   </>
   );

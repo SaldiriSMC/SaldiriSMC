@@ -40,7 +40,7 @@ return (
             <div>
               <img className="about-img w-100" src="/assets/about.jpg" alt="software-development" />
             </div>
-            <img className="about_img_2 d-sm-none d-xs-none d-lg-block" src="/assets/about2.jpg" alt="software-development" />
+            <img className="about_img_2 d-sm-none d-xs-none d-lg-block" src="/assets/about2.png" alt="software-development" />
           </div>
             </div>
             <div className='col-lg-6 col-md-6 col-sm-12'>

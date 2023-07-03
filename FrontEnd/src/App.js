@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Home from './pages/home'
 import Technologies from './components/technologies'
+import Services from './pages/services'
 import ContactUs from './components/contactUs'
 import Careers from './components/career'
 import { toast, ToastContainer } from "react-toastify";
@@ -32,6 +33,7 @@ function App({data}) {
         <Route path="/forget" element={<ForgetPassword/>} />
         <Route path="/chanagePassword" element={<ChnagePassword/>} />
         <Route path="/technologies" element={<Technologies/>} />
+        <Route path="/services" element={<Services/>} />
         <Route path="/contactUs" element={<ContactUs/>} /> 
         <Route path="/careers" element={<Careers/>} />
       </Routes>

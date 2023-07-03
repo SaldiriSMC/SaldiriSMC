@@ -9,14 +9,14 @@
 .imgk {
   width: 100px;
   /* height: 100px; */
-  animation: scroll 30s linear;
-  animation-iteration-count: infinite;
+  /* animation: scroll 30s linear; */
+  /* animation-iteration-count: infinite; */
 
 }
 
 .slide-track {
   width: 100%;
-  display: flex;
+  /* display: flex; */
   align-items: center;
   gap: 4em;
   overflow: hidden;
@@ -28,10 +28,10 @@
   padding: 0.5em ;
 }
 
-@keyframes scroll {
+/* @keyframes scroll {
   0% {transform: translateX(0);}
   100% {transform: translatex(-1000%)}
-}
+} */
 
 
 
@@ -46,7 +46,7 @@
   position: absolute;
   top: 30%;
   left: 30%;
-  height: 30vh;
+  height: 27vh;
 }
 .services_icon{
   /* background: #D8E4FF; */
