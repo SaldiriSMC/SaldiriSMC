@@ -23,7 +23,7 @@ const attendanceSchema = mongoose.Schema(
     },
     Date:{
         type:Date,
-        default:Date.now()
+        default: new Date()
     },
     time:{
       type:[timeSchema]

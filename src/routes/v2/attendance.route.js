@@ -2,14 +2,13 @@ const express = require('express');
 const auth = require('../../middlewares/auth');
 const tenant = require("../../middlewares/v2/tenant")
 const validate = require('../../middlewares/validate');
-const userValidation = require('../../validations/user.validation');
-const userController = require('../../controllers/v2/user.controller');
+const attendanceController = require('../../controllers/v2/attendance.controller');
 const checkRoles = require('../../middlewares/v2/checkRole')
 const router = express.Router();
 
 router
     .route("/")
-    .get(auth(), tenant(), checkRoles(["admin"]), validate(userValidation.getUsers), userController.getUsers);
+    .get(auth(), tenant(), checkRoles(["admin"]), attendanceController.getAttendance);
 
 module.exports = router
 
@@ -41,6 +40,18 @@ module.exports = router
  *         schema:
  *           type: string
  *         description: Employee name
+ *       - in: query
+ *         name: start_Date
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description:  Start Date in YYYY-MM-DD format
+ *       - in: query
+ *         name: end_Date
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description:  End Date in YYYY-MM-DD format
  *       - in: query
  *         name: sortBy
  *         schema:
@@ -89,5 +100,65 @@ module.exports = router
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
  */
+
 /**
+ * @swagger
+ * /attendance/{id}:
+ *   put:
+ *     summary: Update a Attendance
+ *     description: Logged in users can only update their own information. Only admins can update other users.
+ *     tags: [Attendance]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: X-Tenent-Key
+ *         in: header
+ *         description: X-Tenent-Key
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: must be unique
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 minLength: 8
+ *                 description: At least one number and one letter
+ *             example:
+ *               name: fake name
+ *               email: fake@example.com
+ *               password: password1
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/User'
+ *       "400":
+ *         $ref: '#/components/responses/DuplicateEmail'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ *
  */

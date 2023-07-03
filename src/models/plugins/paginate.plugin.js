@@ -19,7 +19,7 @@ const paginate = (schema) => {
    * @param {number} [options.page] - Current page (default = 1)
    * @returns {Promise<QueryResult>}
    */
-  schema.statics.paginate = async function (filter, options) {
+  schema.statics.paginate = async function (filter, options, req) {
     let sort = '';
     if (options.sortBy) {
       const sortingCriteria = [];
@@ -31,13 +31,29 @@ const paginate = (schema) => {
     } else {
       sort = 'createdAt';
     }
-
     const limit = options.limit && parseInt(options.limit, 10) > 0 ? parseInt(options.limit, 10) : 10;
     const page = options.page && parseInt(options.page, 10) > 0 ? parseInt(options.page, 10) : 1;
     const skip = (page - 1) * limit;
-
     const countPromise = this.countDocuments(filter).exec();
-    let docsPromise = this.find(filter).sort(sort).skip(skip).limit(limit);
+    let docsPromise;
+    let condition = {}
+    if(filter.employeeName){
+      condition.employeeName = filter.employeeName
+    }
+    if(filter.start_Date && filter.end_Date){
+      condition.Date = {$gte: new Date(`${filter.start_Date}T00:00:00.000Z`), $lte:new Date(`${filter.end_Date}T00:00:00.000Z`)};
+    }
+    else if (filter.start_Date){
+      condition.Date = {$gte: new Date(`${filter.start_Date}T00:00:00.000Z`)};
+    }
+    else if (filter.end_Date){
+      condition.Date = {$lte:new Date(`${filter.end_Date}T00:00:00.000Z`)};
+    }
+    if(req.baseUrl === "/v1/attendance"){
+      docsPromise = this.find(condition).sort(sort).skip(skip).limit(limit);
+    }else{
+      docsPromise = this.find(filter).sort(sort).skip(skip).limit(limit);
+    }
 
     if (options.populate) {
       options.populate.split(',').forEach((populateOption) => {

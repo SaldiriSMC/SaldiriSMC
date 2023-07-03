@@ -33,7 +33,14 @@ const createUser = async (userBody,tenantId, user) => {
  */
 
 const queryUsers = async (filter, options) => {
-  const users = await User.findAndCountAll({limit:filter.limit, offset:((filter.page - 1 ) * filter.limit)});
+  let condition = {}
+  if(filter.name){
+    condition.name = filter.name
+  }
+  if(filter.role){
+    condition.role = filter.role
+  }
+  const users = await User.findAndCountAll({limit:filter.limit, offset:((filter.page - 1 ) * filter.limit),where:condition});
   const totalResults = users.count
   const totalPages = Math.ceil(totalResults / filter.limit);
   if(filter.sortBy === "desc"){

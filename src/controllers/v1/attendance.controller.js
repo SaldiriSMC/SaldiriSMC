@@ -6,10 +6,13 @@ const { attendanceService } = require('../../services/v1');
 const {Tenant, User} = require("../../models/v1/index")
 
 const getAttendance = catchAsync(async (req, res) => {
-    const filter = pick(req.query, ['name', 'role']);
+    const filter = pick(req.query, ['employeeName', 'start_Date', 'end_Date']);
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
-    const result = await attendanceService.queryAttendance(filter, options);
+    const result = await attendanceService.queryAttendance(filter, options, req);
     res.send(result);
 });
 
-module.exports = { getAttendance }
+const updateAttendance = catchAsync(async (req, res) => {
+    
+});
+module.exports = { getAttendance, updateAttendance }

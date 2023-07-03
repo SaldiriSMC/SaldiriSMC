@@ -41,8 +41,8 @@ const markTimeOut = async (user, res) => {
   }
 };
 
-const queryAttendance = async (filter, options) => {
-  const attendance = await Attendance.paginate(filter, options);
+const queryAttendance = async (filter, options, req) => {
+  const attendance = await Attendance.paginate(filter, options, req);
   return attendance;
 };
 
