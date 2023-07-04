@@ -26,16 +26,15 @@ function Clients() {
   const { ClientNew} = useContext(FeedbackContext);
   const settings = {
     dots: false,
+    arrows:false,
     infinite: true,
     slidesToShow: 4,
     slidesToScroll: 1,
-    arrows: false,
     autoplay: true,
-    speed: 4000,
-    autoplaySpeed: 4000,
+    speed: 2000,
+    autoplaySpeed: 2000,
     cssEase: "linear"
   };
-
   return (
 <>
 <section id="clients" className='clients_wrap'>
@@ -46,12 +45,10 @@ function Clients() {
           </header>
           
 
-          <div className="slideru">
-  <div className="slide-track">
   <Slider {...settings}>
   {React.Children.toArray(ClientNew.map((item)=>{
                 return <>
-        <div className="slide">
+        <div className="py-3">
       <img
       className="imgk"
         src={item.img}
@@ -65,8 +62,7 @@ function Clients() {
 </div>
 
 
-        </div>
-      </div>
+   
     </section>
 </>
   );

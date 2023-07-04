@@ -19,11 +19,11 @@ return (
       <AboutUs/>
       {/* <Portfolio/>       */}
       
-      <TestMonails/>
+      {/* <TestMonails/> */}
       <Services/>
-      {/* <Technologies/>
-      <ContactUs/>
-      <Careers/> */}
+      <Technologies/>
+      {/* <ContactUs/> */}
+      {/* <Careers/> */}
       <Clients/>
       <Footer/>
   </>

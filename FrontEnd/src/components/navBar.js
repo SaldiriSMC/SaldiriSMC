@@ -46,6 +46,7 @@ const useStyles = makeStyles()((theme) => {
       // paddingTop:'4px !important',
       '& > label': {
         lineHeight:'2.4rem',
+        fontWeight:'unset',
         fontSize:'0.9rem'
       },
       '& > div': {

@@ -25,7 +25,7 @@ function Service() {
         <img className='w-100' src={item.mainImg}></img>
         <div className='services_img_text '> 
         <div className='services_icon  m-auto'>
-        <img src='/assets/servicesNew/logo1.png'></img>
+        <img src='/assets/ServicesNew/logo1.png'></img>
         </div>
       <h3 className='services_text_title'> {item.title}</h3>
        <p className='services_text_desp'> {item.description} </p> 
@@ -43,7 +43,7 @@ function Service() {
               
                  variant="contained"
                  color="primary"
-                 style={{ marginTop: '30px',width:200,borderRadius:30,marginRight:'auto',marginLeft:'auto'}}
+                 style={{ marginTop: '50px',width:200,borderRadius:30,marginRight:'auto',marginLeft:'auto'}}
                >
                  View More
             

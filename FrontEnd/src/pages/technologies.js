@@ -1,12 +1,12 @@
 import React, {useState, useContext} from 'react';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
 import { makeStyles } from 'tss-react/mui';
-import Button from '@mui/material/Button';
-import { Link, Outlet } from 'react-router-dom';
-import './comaon.css';
+import '../components/comaon.css';
+import Header from '../components/navBar'
+import Footer from '../components/footer'
 import { Grid } from '@mui/material';
 import { FeedbackContext } from "../context/FeedbackContext";
-import PortfolioModel from './modal'
+// import PortfolioModel from './modal'
 const useStyles = makeStyles()((theme) => {
   return {
     sectionContainer: {
@@ -29,6 +29,7 @@ function Technologies() {
   const [modelData, setModelData]=useState({})
   return (
 <>
+<Header/>
 <section id="technologies" className="section-bg sect">
   <div className="container">
     <div className="section-header">
@@ -37,10 +38,10 @@ function Technologies() {
     <>
   <div className="container">
     <div className="row">
-    {React.Children.toArray(TechnologiesList.map((item,index)=>{
+    {React.Children.toArray(TechnologiesList.map((item)=>{
         return (
             <>
-            {index+9 < TechnologiesList.length  && ( <div className="col-xs-12 col-sm-6 col-md-4" onClick={()=>{setModelData(item);setOpen(true)}}>
+      <div className="col-xs-12 col-sm-6 col-md-4" >
         <div className="box">
           <div className='box_logo'>
           <img className='img-fluid' src={item.logo}></img>
@@ -48,22 +49,11 @@ function Technologies() {
          
           <p className='tech_text_desp'>{item.description}</p>
         </div>
-      </div> )}
-     
+      </div>
             </>
         )
      }))}
-     <Link to="/technologies"> 
-           <Button
-              
-                 variant="contained"
-                 color="primary"
-                 style={{ marginTop: '30px',width:200,borderRadius:30,marginRight:'auto',marginLeft:'auto'}}
-               >
-                 View More
-            
-               </Button>
-               </Link>
+    
     </div>
   </div>
 </>
@@ -93,15 +83,14 @@ function Technologies() {
    
     </div> */}
   </div>
-  <PortfolioModel
+  {/* <PortfolioModel
         setOpen={setOpen}
         open={open}
         services={modelData}
         description={modelData?.description}
-      />
+      /> */}
 </section>
-
-
+<Footer/>
 </>
   );
 }
