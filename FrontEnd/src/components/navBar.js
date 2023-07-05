@@ -135,10 +135,10 @@ function NavScrollExample() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#services">  Services</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/services">  Services</Nav.Link>
             <NavDropdown title="Company" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#portfolio"> Portfolio</NavDropdown.Item>
+              {/* <NavDropdown.Item href="#portfolio"> Portfolio</NavDropdown.Item> */}
               <NavDropdown.Item href="/technologies">
               Technologies
               </NavDropdown.Item>

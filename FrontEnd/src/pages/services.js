@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
 import Header from '../components/navBar'
 import Footer from '../components/footer'
@@ -12,6 +12,14 @@ function Service() {
 
   const [open, setOpen]=useState(false)
   const [modelData, setModelData]=useState({})
+  
+  useEffect(()=>{
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    });
+  },[])
+
   return (
 <>
 <Header/>

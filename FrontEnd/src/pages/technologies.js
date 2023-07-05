@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
 import { makeStyles } from 'tss-react/mui';
 import '../components/comaon.css';
@@ -27,6 +27,13 @@ function Technologies() {
   const { TechnologiesList} = useContext(FeedbackContext);
   const [open, setOpen]=useState(false)
   const [modelData, setModelData]=useState({})
+
+  useEffect(()=>{
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    });
+  },[])
   return (
 <>
 <Header/>
