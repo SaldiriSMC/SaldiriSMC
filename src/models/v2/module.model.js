@@ -1,21 +1,18 @@
 const {sequelize} = require('../../config/mySqlConnection')
 const { DataTypes } = require('sequelize');
 
-const Time = sequelize.define('time', {
-    attendanceId:{
+const Module = sequelize.define('modules', {
+    statusId:{
     type: DataTypes.INTEGER,
       references:{
-        model:"modules",
+        model:"attendances",
         key:"id"
       },
       allowNull:false
     },
-    timeIn: {
-        type:DataTypes.DATE,
+    module: {
+        type:DataTypes.STRING,
       },
-      timeOut:{
-        type:DataTypes.DATE,
-      }
   });
 
-  module.exports = Time;
+  module.exports = Module;
