@@ -12,11 +12,9 @@ const Time = sequelize.define('time', {
     },
     timeIn: {
         type:DataTypes.DATE,
-        defaultValue:DataTypes.NOW
       },
       timeOut:{
         type:DataTypes.DATE,
-        defaultValue:DataTypes.NOW
       }
   });
 

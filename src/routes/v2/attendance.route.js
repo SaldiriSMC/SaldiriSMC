@@ -9,7 +9,9 @@ const router = express.Router();
 router
     .route("/")
     .get(auth(), tenant(), checkRoles(["admin"]), attendanceController.getAttendance);
-
+router
+    .route('/:userId')
+    .put(auth(), tenant(), checkRoles(["admin"]), attendanceController.updateAttendance)
 module.exports = router
 
 /**
@@ -122,7 +124,7 @@ module.exports = router
  *         required: true
  *         schema:
  *           type: string
- *         description: User id
+ *         description: Attendance Id
  *     requestBody:
  *       required: true
  *       content:
@@ -142,16 +144,16 @@ module.exports = router
  *                 minLength: 8
  *                 description: At least one number and one letter
  *             example:
- *               name: fake name
- *               email: fake@example.com
- *               password: password1
+ *               workedHours: 0
+ *               status: Present
+ *               time: [{"id":"34273409sdjcshd32", "timeIn":"2:30:40", "timeOut": "8:25:59"}]
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
+ *                $ref: '#/components/schemas/Attendance'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":

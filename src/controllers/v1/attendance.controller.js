@@ -13,6 +13,7 @@ const getAttendance = catchAsync(async (req, res) => {
 });
 
 const updateAttendance = catchAsync(async (req, res) => {
-    
+  const attendance = await attendanceService.updateAttedanceByUserId(req.params.userId, req.body);
+  res.send(attendance);
 });
 module.exports = { getAttendance, updateAttendance }

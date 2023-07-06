@@ -5,3 +5,5 @@ db
 yarn-error.log
 # Code coverage
 coverage
+# yarn
+.yarn

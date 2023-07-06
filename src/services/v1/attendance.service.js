@@ -45,5 +45,15 @@ const queryAttendance = async (filter, options, req) => {
   const attendance = await Attendance.paginate(filter, options, req);
   return attendance;
 };
-
-module.exports = { markAttendance, markTimeOut, queryAttendance };
+const updateAttedanceByUserId = async (userId, updateBody) => {
+  const user = await getUserById(userId);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  const attendance = await Attendance.findById({userId:user._id})
+  console.log("attendance--------------->>>>>>>>>>>>>>>>>", attendance)
+  Object.assign(attendance, updateBody);
+  await attendance.save();
+  return attendance;
+}
+module.exports = { markAttendance, markTimeOut, queryAttendance, updateAttedanceByUserId };

@@ -1,6 +1,8 @@
 const express = require('express');
 const auth = require('../../middlewares/auth');
 const tenant = require("../../middlewares/v1/tenant")
+
+
 const validate = require('../../middlewares/validate');
 const userValidation = require('../../validations/user.validation');
 const attendanceController = require('../../controllers/v1/attendance.controller');
@@ -120,7 +122,7 @@ module.exports = router
  *         required: true
  *         schema:
  *           type: string
- *         description: User id
+ *         description: Attendance id
  *     requestBody:
  *       required: true
  *       content:
@@ -140,9 +142,8 @@ module.exports = router
  *                 minLength: 8
  *                 description: At least one number and one letter
  *             example:
- *               name: fake name
- *               email: fake@example.com
- *               password: password1
+ *               workedHours: 0
+ *               status: Present
  *     responses:
  *       "200":
  *         description: OK
