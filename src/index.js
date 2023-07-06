@@ -8,7 +8,6 @@ const token = require('./models/v2/token.model')
 const tenant = require('./models/v2/tenant.model')
 const attendance = require("./models/v2/attendance.model")
 const time = require("./models/v2/time.model")
-
 let server;
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
