@@ -189,7 +189,7 @@ export const Services=[
   id:1,
   title:'Amazon Web Services',
   description:'We use DevOps to accelerate your team’s performance by operationalizing and automating SDLC. Our expertise in the DevOps space has earned us a partnership with AWS. With CI/CD pipeline, continuous monitoring & testing, container orchestration, cloud optimization, and other key areas, we can significantly reduce time-to-market, ensure faster release deployments and optimize cloud costs with the AWS DevOps tool.',
-  img:'/assets/Services/Service1.png',
+  img:'/assets/ServicesNew/logo1.png',
   mainImg:'/assets/ServicesNew/1.jpg'
 },
   {
@@ -202,7 +202,7 @@ export const Services=[
   sell their products on Amazon, we are giving Amazon marketing and they require more advice and support
   to compete with all rivals. All these facilities are delivered at a very affordable price that you may
   never have heard of elsewhere. `,
-  img:'/assets/Services/Service2.png',
+  img:'/assets/ServicesNew/logo2.png',
   mainImg:'/assets/ServicesNew/8.jpg'
 },
   {
@@ -213,7 +213,7 @@ export const Services=[
   android/IOS applications, which helps to develop both online and mobile apps for a product. Instead of
   going for some random technologies, we recommend the most relevant development language which will fit
   better for your project.`,
-  img:'/assets/Services/Services3.png',
+  img:'/assets/ServicesNew/logo4.png ',
   mainImg:'/assets/ServicesNew/3.jpg'
 },
 //   {
@@ -293,7 +293,7 @@ export const ServicesAll=[
   id:1,
   title:'Amazon Web Services',
   description:'We use DevOps to accelerate your team’s performance by operationalizing and automating SDLC. Our expertise in the DevOps space has earned us a partnership with AWS. With CI/CD pipeline, continuous monitoring & testing, container orchestration, cloud optimization, and other key areas, we can significantly reduce time-to-market, ensure faster release deployments and optimize cloud costs with the AWS DevOps tool.',
-  img:'/assets/Services/Service1.png',
+  img:'/assets/ServicesNew/logo1.png',
   mainImg:'/assets/ServicesNew/1.jpg'
 },
   {
@@ -306,7 +306,7 @@ export const ServicesAll=[
   sell their products on Amazon, we are giving Amazon marketing and they require more advice and support
   to compete with all rivals. All these facilities are delivered at a very affordable price that you may
   never have heard of elsewhere. `,
-  img:'/assets/Services/Service2.png',
+  img:'/assets/ServicesNew/logo2.png',
   mainImg:'/assets/ServicesNew/8.jpg'
 },
   {
@@ -317,7 +317,7 @@ export const ServicesAll=[
   android/IOS applications, which helps to develop both online and mobile apps for a product. Instead of
   going for some random technologies, we recommend the most relevant development language which will fit
   better for your project.`,
-  img:'/assets/Services/Services3.png',
+  img:'/assets/ServicesNew/logo4.png',
   mainImg:'/assets/ServicesNew/3.jpg'
 },
   {
@@ -328,7 +328,7 @@ export const ServicesAll=[
   highly-scalable. These apps are optimized to run faster and engage with the users, resulting in a web
   experience that is both delightful and intuitive.`,
   mainImg:'/assets/ServicesNew/1.jpg',
-  img:'/assets/Services/Services4.png'
+  img:'/assets/ServicesNew/logo1.png '
 },
   {
   id:5,
@@ -340,7 +340,7 @@ export const ServicesAll=[
                 possible. Our main mission is to help our stakeholders achieve the best outcomes possible, adopting
                 methodologies. Rather than a stream of random visitors, we provide the highest-value, highest-converting
                 web traffic. We are strongly focused and ready to buy the leads we produce.`,
-  img:'/assets/Services/Services5.png',
+  img:'/assets/ServicesNew/logo5.png',
   mainImg:'/assets/ServicesNew/2.jpg'
 },
   {
@@ -351,7 +351,7 @@ export const ServicesAll=[
                     importance and visualize predictive and prescriptive analytics. With our anomaly detection solution, you
                     can identify unusual patterns in usage trends so you can make informed and data-driven business
                     decisions for the future.`,
-  img:'/assets/Services/Services6.png',
+  img:'/assets/ServicesNew/logo3.png',
   mainImg:'/assets/ServicesNew/4.jpg'
 },
   {
@@ -361,7 +361,7 @@ export const ServicesAll=[
                 to us. We understand user needs and create experiences that solve design challenges and also make people
                 happy. What makes our service unique is the mix of design, technology, and human-centred approach to
                 producing custom visualizations, dashboards, input-intensive applications, and videos.`,
-  img:'/assets/Services/Services7.png',
+  img:'/assets/ServicesNew/logo6.png',
   mainImg:'/assets/ServicesNew/8.jpg'
 },
   {
@@ -378,7 +378,7 @@ export const ServicesAll=[
                     helps to develop both online and mobile apps for a product. Instead of going for some random
                     technologies, we recommend the most relevant development language which will fit better for your
                     project.`,
-  img:'/assets/Services/Services8.png',
+  img:'/assets/ServicesNew/logo1.png',
   mainImg:'/assets/ServicesNew/7.jpg'
 },
   {
@@ -388,7 +388,7 @@ export const ServicesAll=[
                     email, and mobile apps. Any form of marketing that involves electronic devices is considered digital marketing.hat’s
                     because Google and Facebook generate more revenue than any traditional media company. After all, they control more
                     eyeballs. That’s why digital marketing matters; it’s where the attention is.`,
-  img:'/assets/Services/Services7.png',
+  img:'/assets/ServicesNew/logo3.png',
   mainImg:'/assets/ServicesNew/5.jpg'
 },
 ];

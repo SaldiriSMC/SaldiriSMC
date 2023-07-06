@@ -33,15 +33,29 @@ function Clients() {
     autoplay: true,
     speed: 2000,
     autoplaySpeed: 2000,
+    responsive: [
+      {
+        breakpoint: 320,
+        settings: { slidesToShow: 1, slidesToScroll: 1, infinite: true }
+      },
+      {
+        breakpoint: 768,
+        settings: { slidesToShow: 2, slidesToScroll: 2, infinite: true }
+      },
+      {
+        breakpoint: 1024,
+        settings: { slidesToShow: 3, slidesToScroll: 3, infinite: true }
+      }
+    ],
     cssEase: "linear"
   };
   return (
 <>
 <section id="clients" className='clients_wrap'>
       <div className="">
-        <div className="container">
+        <div className="container ">
           <header className="section-header">
-            <h3>Clients</h3>
+            <h3 className="mt-3">Clients</h3>
           </header>
           
 

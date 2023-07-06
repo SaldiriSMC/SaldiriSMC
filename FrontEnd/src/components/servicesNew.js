@@ -25,7 +25,7 @@ function Service() {
         <img className='w-100' src={item.mainImg}></img>
         <div className='services_img_text '> 
         <div className='services_icon  m-auto'>
-        <img src='/assets/ServicesNew/logo1.png'></img>
+        <img  src={item.img}></img>
         </div>
       <h3 className='services_text_title'> {item.title}</h3>
        <p className='services_text_desp'> {item.description} </p> 
