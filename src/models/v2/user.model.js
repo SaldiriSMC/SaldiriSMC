@@ -46,6 +46,13 @@ const User = sequelize.define('users', {
       key:"id"
     },
   },
+  departmentId:{
+    type: DataTypes.INTEGER,
+    references:{
+      model:"departments",
+      key:"id"
+    },
+},
 },
 );
 module.exports = User;

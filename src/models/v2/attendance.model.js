@@ -26,10 +26,14 @@ const Attendance = sequelize.define('attendance', {
       defaultValue: 0,
       allowNull:false
   },
-  status:{    
-    type: DataTypes.ENUM('Absent', 'Present', 'Break', 'DayCompleted'),
-    defaultValue:'Absent'
-  }
+  statusId: {
+    type: DataTypes.INTEGER,
+    references:{
+      model:"statuses",
+      key:"id"
+    },
+    allowNull:false
+  },
 },);
 
 module.exports = Attendance;

@@ -1,10 +1,10 @@
 const {sequelize} = require('../../config/mySqlConnection')
 const { DataTypes } = require('sequelize');
 
-const Module = sequelize.define('modules', {
-    moduleName: {
+const Department = sequelize.define('departments', {
+    departmentName: {
         type:DataTypes.STRING,
       },
   });
 
-  module.exports = Module;
+  module.exports = Department;

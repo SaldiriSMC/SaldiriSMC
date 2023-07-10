@@ -13,7 +13,7 @@ const markAttendance = async (user, res) => {
       const attendance = await Attendance.create({
         employeeName: user.name,
         userId: user.id,
-        status: 'Present',
+        statusId: 4,
         Date: new Date(),
       });
       await Time.create({ timeIn: new Date(), timeOut: null, attendanceId: attendance.id });
@@ -104,9 +104,9 @@ const updateWorkedHours = async (attendance, attendanceId) => {
   let workedHours = res[0];
   workedHours = workedHours['0']?.Difference;
   if (workedHours < 8) {
-    await Attendance.update({ workedHours: workedHours, status:"Break" }, { where: { id: attendanceId } });
+    await Attendance.update({ workedHours: workedHours, statusId:1 }, { where: { id: attendanceId } });
   } else {
-    await Attendance.update({ workedHours: workedHours, status:"DayCompleted" }, { where: { id: attendanceId } });
+    await Attendance.update({ workedHours: workedHours, statusId:2 }, { where: { id: attendanceId } });
   }
 };
 const updateAttendance = async (attendanceId, updateBody) => {

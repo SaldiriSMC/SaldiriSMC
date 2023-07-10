@@ -8,6 +8,9 @@ const token = require('./models/v2/token.model')
 const tenant = require('./models/v2/tenant.model')
 const attendance = require("./models/v2/attendance.model")
 const time = require("./models/v2/time.model")
+const status = require("./models/v2/statuses.model")
+const department = require("./models/v2/department.module")
+const modules = require("./models/v2/module.model")
 let server;
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
@@ -22,9 +25,7 @@ const mySqlConnection = async() =>{
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
-  // const db = {}
-  // db.sequelize = Sequelize
-  // db.sequelize = sequelize
+
   user.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync of users is done")
   }).catch((err)=>{
@@ -49,6 +50,21 @@ const mySqlConnection = async() =>{
     console.log("yes re sync of time is done")
   }).catch((err)=>{
     console.log("time------->>>>>>",err)
+  })
+  status.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re sync of status is done")
+  }).catch((err)=>{
+    console.log("status------->>>>>>",err)
+  })
+  modules.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re sync of module is done")
+  }).catch((err)=>{
+    console.log("module------->>>>>>",err)
+  })
+  department.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re sync of department is done")
+  }).catch((err)=>{
+    console.log("department------->>>>>>",err)
   })
   sequelize.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync is done")
