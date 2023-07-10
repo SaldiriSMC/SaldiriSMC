@@ -6,6 +6,7 @@ const URLs = {
   resetPassword: "/auth/reset-password",
   logOut: "/auth/logout",
   emailStatus: "api/v1/users/email/verify/",
+  attendanceAdjustment:"/attendance",
   course: "courses/all/",
   topics: "courses/topics/",
   courseCategory: "courses/categories/",

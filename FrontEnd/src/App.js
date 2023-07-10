@@ -9,6 +9,7 @@ import ContactUs from './components/contactUs'
 import Header from './components/navBar'
 import Careers from './components/career'
 import Footer from './components/footer'
+import Dashboard from './pages/dashboard';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SignUp from './components/SignUp'
@@ -42,6 +43,7 @@ function App({data}) {
         <Route path="/services" element={<Services/>} />
         <Route path="/contactUs" element={<ContactUs/>} /> 
         <Route path="/careers" element={<Careers/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
       </Routes>
       {/* <Footer/> */}
     </BrowserRouter>

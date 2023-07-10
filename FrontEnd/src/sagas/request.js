@@ -1,7 +1,13 @@
 import api from "../service/api";
 import apiWithToken from "../service/apiWithToken";
+import apiwithTokenTenant from "../service/apiwithTokenTenant";
 export const getRequest = async (requestUrl) =>
       apiWithToken
+    .get(requestUrl)
+    .then((resp) => resp)
+    .catch((error) => error.response);
+export const getRequestWithTenant = async (requestUrl) =>
+      apiwithTokenTenant
     .get(requestUrl)
     .then((resp) => resp)
     .catch((error) => error.response);

@@ -1,7 +1,7 @@
 import {
-    COURSE_CATEGORY,
-    COURSE_CATEGORY_SUCCESS,
-    COURSE_CATEGORY_FAILURE,
+    GET_ATTENDANCE,
+    GET_ATTENDANCE_SUCCESS,
+    GET_ATTENDANCE_FAILURE,
     COURSE,
     COURSE_SUCCESS,
     COURSE_FAILURE,
@@ -17,18 +17,18 @@ import {
   } from "./actionTypes";
 
   // Course Category action functions
-  export const courseCategory = (data) => ({
-    type: COURSE_CATEGORY,
+  export const getAttendance = (data) => ({
+    type: GET_ATTENDANCE,
     payload: data,
   });
   
-  export const courseCategorySuccess = (data) => ({
-    type: COURSE_CATEGORY_SUCCESS,
+  export const getAttendanceSuccess = (data) => ({
+    type: GET_ATTENDANCE_SUCCESS,
     payload: data,
   });
   
-  export const courseCategoryFailure = () => ({
-    type: COURSE_CATEGORY_FAILURE,
+  export const getAttendanceFailure = () => ({
+    type: GET_ATTENDANCE_FAILURE,
   });
   
     // Course action functions
