@@ -1,31 +1,35 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import {
   GET_ATTENDANCE,
+  USERLIST
 } from "../actions/Attendance/actionTypes";
 import {
   getAttendanceSuccess,
   getAttendanceFailure,
+  getAllUserFailure,
+  getAllUserSuccess
 } from "../actions/Attendance/index";
 
 import { getRequest, getRequestWithTenant, getRequest2, getRequestWithOutToken } from "./request";
 import URls from "../constants/urls";
 
-//course category generator function
-// function* courseCategoryCall(action) {
-//     console.log("actionaction", action);
-//    try {
-//      const response = yield call(getRequest, URls.attendanceAdjustment);
-//      console.log(response)
-//      if (response?.status === 200) {     
-//        //navigate("/Login")
-//        localStorage.setItem("data",JSON.stringify(response.data))
-//        yield put(getAttendanceSuccess(response.data));
-//      }
-//    } catch (error) {
-//      // pushNotification('Get data failure', 'error', 'TOP_CENTER', 1000);
-//      yield put(getAttendanceFailureFailure());
-//    }
-//  }
+// //course category generator function
+function* getUserList(action) {
+    console.log("actionaction", action);
+   try {
+     const response = yield call(getRequest, URls.attendanceAdjustment);
+     console.log(response)
+     if (response?.status === 200) {     
+       //navigate("/Login")
+       localStorage.setItem("data",JSON.stringify(response.data))
+       yield put(getAllUserSuccess(response.data));
+     }
+   } catch (error) {
+     // pushNotification('Get data failure', 'error', 'TOP_CENTER', 1000);
+     yield put(getAttendanceFailure());
+   }
+ }
+
  //course generator function
  function* getAttendanceCall(action) {
   console.log("course", action);
@@ -39,7 +43,7 @@ import URls from "../constants/urls";
    }
  } catch (error) {
    // pushNotification('Get data failure', 'error', 'TOP_CENTER', 1000);
-   yield put(getAttendanceFailure());
+   yield put(getAllUserFailure());
  }
 }
 
@@ -98,7 +102,7 @@ import URls from "../constants/urls";
 
  function* watchGetRequest() {
     yield takeLatest(GET_ATTENDANCE, getAttendanceCall);
-    // yield takeLatest(COURSE, courseCall);
+    yield takeLatest(USERLIST, getUserList);
     // yield takeLatest(TOPICS, topicsCall);
     // yield takeLatest(VIDEOS, vidoesCall);
     // yield takeLatest(SPEAKERS, SpeakersCall);

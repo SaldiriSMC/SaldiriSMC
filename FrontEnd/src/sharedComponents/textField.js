@@ -92,7 +92,7 @@ const MUITextField = (props) => {
   const renderOptionsHandler = (list) => {
     let result;
     if (pass === 'value') {
-      result = list.map(item => <MenuItem value={item.code} key={item.id}>{item.value}</MenuItem>)
+      result = list.map(item => <MenuItem value={item.code} key={item.id}>{`${item.value}/${item.department}`}</MenuItem>)
     } else if (pass === 'name') {
       result = list.map(item => <MenuItem value={item.name} key={item.id}>{item.name}</MenuItem>)
     } else if(pass === 'id') {
