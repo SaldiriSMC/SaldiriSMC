@@ -26,7 +26,7 @@ function* getUserList(action) {
      }
    } catch (error) {
      // pushNotification('Get data failure', 'error', 'TOP_CENTER', 1000);
-     yield put(getAttendanceFailureFailure());
+     yield put(getAttendanceFailure());
    }
  }
 

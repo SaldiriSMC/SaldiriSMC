@@ -1,39 +1,132 @@
-import * as React from 'react';
-import Backdrop from '@mui/material/Backdrop';
+import { makeStyles } from 'tss-react/mui';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import TimePickerValue from "../sharedComponents/dateTimePicker"
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+import Button from '@mui/material/Button'
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Slider from 'react-slick';
+import Grid from '@mui/material/Grid'
+import CancelIcon from '@mui/icons-material/Cancel';
+const useStyles = makeStyles()((theme) => {
+    return {
+        mainContainer: {
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 500,
+            background: theme.palette.white.main,
+            borderRadius: 24,
+            padding: '10px 10px 10px 10px',
+            textAlign: 'center',
+            [theme.breakpoints.down('md')]: {
+                width: 'auto'
+            },
+            [theme.breakpoints.down('sm')]: {
+                width: '300px'
+            }
+        },
+        imgFullWidth:{
+          width:'100%'
+           },
+        avatar: {
+          width: 160,
+          height: 160,
+          position: 'absolute',
+          top: -90,
+          left: 15,
+          borderRadius: '100%',
+          border: `4px solid red`,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          color: theme.palette.primary.main,
+          fontWeight: 700,
+          fontSize: 18,
+          marginRight: 15
+        },
+        uploadFileBtn: {
+          position: 'absolute',
+          bottom: 0,
+          right: 0
+        },
+        iconWrapper: {
+            background: 'rgba(0, 113, 188, 0.08)',
+            width: 90,
+            height: 90,
+            margin: '0 auto 36px',
+            borderRadius: '100%',
+            position: 'relative'
+        },
+        checkIcon: {
+            fontSize: 40,
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+        },
+        crosWrap:{
+          display:'flex',
+          justifyContent:'flex-end'
+        },
+        crosWrap2:{
+          display:'flex',
+          justifyContent:'flex-start'
+        },
+        innerContainer: {
+          padding: '0px 10px 10px 10px',
+          maxHeight: 'calc(100vh - 100px)',
+          overflow: 'auto'
+        },
+        btn: {
+          borderRadius: 10,
+          height:40,
+          marginRight:10,
+          width:100,
+          fontWeight: 600,
+        },
+    };
+});
 
-export default function EditModal({showModal, setShowModal}) {
+const MainModal = (props) => {
+    const { 
+      showModal, 
+      icon, 
+      description, 
+      handleClose,
+      handleCancel,
+      setShowModal,
+      title,
+      modelData,
+      services
+    } = props
+    const { classes } = useStyles();
+
+
+    var settings = {
+      dots: false,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    };
   return (
     <div>
       <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
         open={showModal}
         onClose={()=>setShowModal(false)}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-          },
-        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
-        <Fade in={showModal}>
-          <Box sx={style}>
+        <Box className={classes.mainContainer}>
+        <div className={classes.crosWrap}>
+        <IconButton  aria-label="upload picture" component="label" onClick={()=> setShowModal(false)}>
+              <CancelIcon />      
+            </IconButton>
+            </div>
+        <div className={classes.innerContainer}>    
+
           <div className='d-flex justify-center'>
           <div className='d-flex flex-column col-sm-6 px-2'>
           <label htmlFor="timeIn">Time In</label>
@@ -44,10 +137,23 @@ export default function EditModal({showModal, setShowModal}) {
           <input type="time" name="" id="timeOut" />
           </div>
           </div>
+          <Grid item sx={{display:'flex', alignItems:'center',justifyContent:'flex-end',my:3}}>  <Button
+                   className={classes.btn}
+                 variant="contained"
+                 type='submit'
+                 color="primary"
+                //  style={{ marginTop: '20px' }}
+               >
+               Save
+               </Button> </Grid>
+          </div>
+      
+        
+        </Box>
        
-          </Box>
-        </Fade>
       </Modal>
     </div>
   );
-}
+};
+
+export default MainModal;

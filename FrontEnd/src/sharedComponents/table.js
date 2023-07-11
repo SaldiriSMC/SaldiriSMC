@@ -15,9 +15,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor:'#3B5999',
     color: theme.palette.common.white,
+    fontSize: 15,
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: 12,
   },
 }));
 
@@ -47,9 +48,9 @@ export default function CustomizedTables({attendanceRecord}) {
   return (
     <>
     <TableContainer component={Paper} className=''>
-      <Table  aria-label="customized table">
-        <TableHead>
-          <TableRow>
+      <Table size='small'  aria-label="customized table">
+        <TableHead >
+          <TableRow >
             <StyledTableCell>Time In</StyledTableCell>
             <StyledTableCell align="center">Time Out</StyledTableCell>
             <StyledTableCell align="center">Hours</StyledTableCell>
@@ -64,11 +65,11 @@ export default function CustomizedTables({attendanceRecord}) {
               <StyledTableCell align="center">{row.hors}</StyledTableCell>
               <StyledTableCell align="right">
                 <div className='flex'>
-                    <IconButton onClick={()=>setShowModal(true)}>
-                    <EditIcon />
+                    <IconButton size="small"  onClick={()=>setShowModal(true)}>
+                    <EditIcon  />
                     </IconButton>
-                    <IconButton>
-                    <DeleteForeverIcon />
+                    <IconButton size="small">
+                    <DeleteForeverIcon  />
                     </IconButton>
                 </div>
               </StyledTableCell>
