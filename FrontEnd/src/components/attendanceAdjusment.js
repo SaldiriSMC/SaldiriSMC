@@ -58,9 +58,9 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
     current.getMonth() + 1
   }/${current.getFullYear()}`;
   useEffect(() => {
-    const interval = setInterval(() => setValue(new Date()), 1000);
+    // const interval = setInterval(() => setValue(new Date()), 1000);
     return () => {
-      clearInterval(interval);
+      // clearInterval(interval);
     };
   }, []);
   const initialValues = {
@@ -233,7 +233,7 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
         >
           <>
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <Clock value={value} />
+              {/* <Clock value={value} /> */}
             </div>
           </>
         </Grid>

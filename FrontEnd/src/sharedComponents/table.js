@@ -36,6 +36,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function CustomizedTables({attendanceRecord}) {
     const [showModal,setShowModal] = React.useState(false)
+    const [userData,setUserData] = React.useState({})
     console.log(showModal)
     const data = useSelector((state)=> state?.attendance?.attendance?.data)
     console.log("attendace record------->>>>>>>>>", data)
@@ -60,7 +61,7 @@ export default function CustomizedTables({attendanceRecord}) {
               <StyledTableCell align="center">{item.Difference ? item.Difference : "-"}</StyledTableCell>
               <StyledTableCell align="right">
                 <div className='flex'>
-                    <IconButton size="small"  onClick={()=>setShowModal(true)}>
+                    <IconButton size="small"  onClick={()=>{setShowModal(true);setUserData(item)}}>
                     <EditIcon  />
                     </IconButton>
                     <IconButton size="small">
@@ -73,7 +74,7 @@ export default function CustomizedTables({attendanceRecord}) {
         </TableBody> : <StyledTableCell align="left">Record not found</StyledTableCell>} 
       </Table> 
     </TableContainer>
-    {<EditModal showModal={showModal} setShowModal={setShowModal} />}
+    {<EditModal showModal={showModal} userData={userData} setShowModal={setShowModal} />}
     </>
   );
 }

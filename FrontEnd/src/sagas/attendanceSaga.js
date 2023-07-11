@@ -2,7 +2,8 @@ import { all, call, put, takeLatest } from "redux-saga/effects";
 import {
   GET_ATTENDANCE,
   USERLIST,
-  GETATTENDANCEBYHOURS
+  GETATTENDANCEBYHOURS,
+  ATTENDANCEUPDATE
 } from "../actions/Attendance/actionTypes";
 import {
   getAttendanceSuccess,
@@ -10,7 +11,9 @@ import {
   getAllUserFailure,
   getAllUserSuccess,
   getAttendanceByHoursSuccess,
-  getAttendanceByHoursFailure
+  getAttendanceByHoursFailure,
+  updateTimeFailure,
+  updateTimeSuccess
 
 } from "../actions/Attendance/index";
 
@@ -68,23 +71,22 @@ function* getAttendanceByHoursCall(action) {
  }
 }
 
-// //Videos generator function
+// //update  generator function
 
-// function* vidoesCall(action) {
-//   console.log("videos", action);
-//  try {
-//    const response = yield call(getRequest, URls.videos+`${action.payload.id}/`);
-//    console.log(response)
-//    if (response?.status === 200) {     
-//      //navigate("/Login")
-//      localStorage.setItem("data",JSON.stringify(response.data))
-//      yield put(videosSuccess(response.data));
-//    }
-//  } catch (error) {
-//    // pushNotification('Get data failure', 'error', 'TOP_CENTER', 1000);
-//    yield put(videoFailure());
-//  }
-// }
+function* updateTime(action) {
+  console.log("updateTime fun add ")
+ try {
+   const response = yield call(getRequestWithTenant, URls.attendanceAdjustment+`${action.payload.date}/`);
+   console.log(response)
+   if (response?.status === 200) {     
+     //navigate("/Login")
+     yield put(updateTimeSuccess(response.data));
+   }
+ } catch (error) {
+   // pushNotification('Get data failure', 'error', 'TOP_CENTER', 1000);
+   yield put(updateTimeFailure());
+ }
+}
 // //SPEAKERS generator function
 
 // function* SpeakersCall(action) {
@@ -108,7 +110,7 @@ function* getAttendanceByHoursCall(action) {
     yield takeLatest(GET_ATTENDANCE, getAttendanceCall);
     yield takeLatest(USERLIST, getUserList);
     yield takeLatest(GETATTENDANCEBYHOURS, getAttendanceByHoursCall);
-    // yield takeLatest(VIDEOS, vidoesCall);
+    yield takeLatest(ATTENDANCEUPDATE, updateTime);
     // yield takeLatest(SPEAKERS, SpeakersCall);
   }
   

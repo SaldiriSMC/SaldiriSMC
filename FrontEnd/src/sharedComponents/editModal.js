@@ -1,13 +1,16 @@
 import { makeStyles } from 'tss-react/mui';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import * as Yup from "yup";
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider';
+import { useFormik } from "formik";
+import { format } from "date-fns";
+import { useDispatch, useSelector } from "react-redux";
 import IconButton from '@mui/material/IconButton';
-import Slider from 'react-slick';
+import {updateTime, getAttendanceByHours} from "../actions/Attendance"
 import Grid from '@mui/material/Grid'
 import CancelIcon from '@mui/icons-material/Cancel';
+import { useEffect } from 'react';
 const useStyles = makeStyles()((theme) => {
     return {
         mainContainer: {
@@ -97,20 +100,43 @@ const MainModal = (props) => {
       handleClose,
       handleCancel,
       setShowModal,
-      title,
+      userData,
       modelData,
       services
     } = props
     const { classes } = useStyles();
-
-
-    var settings = {
-      dots: false,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1
+    const initialValues = {
+      timeIn: '',
+      timeOut:'',
     };
+    const timeScema = Yup.object({
+      timeIn: Yup.string(),
+      timeOut: Yup.string(),
+
+    })
+    const { handleChange, handleSubmit, handleBlur,setFieldValue, errors, values, touched } =
+      useFormik({
+        initialValues,
+        validationSchema:timeScema, 
+        onSubmit: () => {
+
+        },
+      });
+
+      const dispatch = useDispatch();
+      useEffect(()=>{
+        setFieldValue('timeIn',userData?.timeIn ? format(new Date(userData.timeIn), "HH:mm") : null)
+        setFieldValue('timeOut',userData?.timeOut ? format(new Date(userData.timeOut), "HH:mm") : null)
+      },[userData])
+      console.log("userData---------",values)
+
+
+      const updateTimeFun =()=>{
+        console.log("updateTimeFun---------",values)
+
+        var data ={...values,id:userData.id}
+        dispatch(updateTime(data))
+      }
   return (
     <div>
       <Modal
@@ -130,17 +156,21 @@ const MainModal = (props) => {
           <div className='d-flex justify-center'>
           <div className='d-flex flex-column col-sm-6 px-2'>
           <label htmlFor="timeIn">Time In</label>
-          <input type="time" name="" id="timeIn" />
+          <input type="time" onChange={handleChange} value={values.timeIn} name="timeIn" id="timeIn" />
+          {values.timeIn > values.timeOut && (
+              <div style={{color:'red'}}>Time Out is less then Time In </div>
+            )}
           </div>
           <div className='d-flex flex-column col-sm-6 px-2'>
           <label htmlFor="timeOut">Time Out</label>
-          <input type="time" name="" id="timeOut" />
+          <input type="time" onChange={handleChange} value={values.timeOut} name="timeOut" id="timeOut" />
+  
           </div>
           </div>
           <Grid item sx={{display:'flex', alignItems:'center',justifyContent:'flex-end',my:3}}>  <Button
                    className={classes.btn}
                  variant="contained"
-                 type='submit'
+                 onClick={()=>{updateTimeFun()}}
                  color="primary"
                 //  style={{ marginTop: '20px' }}
                >
