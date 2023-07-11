@@ -11,6 +11,7 @@ const time = require("./models/v2/time.model")
 const status = require("./models/v2/statuses.model")
 const department = require("./models/v2/department.module")
 const modules = require("./models/v2/module.model")
+const designation = require("./models/v2/designation.model")
 let server;
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
@@ -65,6 +66,11 @@ const mySqlConnection = async() =>{
     console.log("yes re sync of department is done")
   }).catch((err)=>{
     console.log("department------->>>>>>",err)
+  })
+  designation.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re sync of designation is done")
+  }).catch((err)=>{
+    console.log("designation------->>>>>>",err)
   })
   sequelize.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync is done")

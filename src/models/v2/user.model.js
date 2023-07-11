@@ -52,7 +52,14 @@ const User = sequelize.define('users', {
       model:"departments",
       key:"id"
     },
-},
+  },
+  designationId:{
+    type: DataTypes.INTEGER,
+    references:{
+      model:"designations",
+      key:"id"
+    },
+  },
 },
 );
 module.exports = User;

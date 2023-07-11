@@ -12,8 +12,13 @@ router
 router
     .route('/:userId')
     .put(auth(), tenant(), checkRoles(["admin"]), attendanceController.updateAttendance)
-module.exports = router
+    .get(auth(), checkRoles(["admin"]), attendanceController.getAttendanceWithWorkedHours);
+router
+    .route('/by-hours/:userId')
+    .get(auth(), tenant(), checkRoles(["admin"]), attendanceController.getAttendanceByHours);
 
+
+module.exports = router
 /**
  * @swagger
  * tags:
@@ -162,5 +167,82 @@ module.exports = router
  *         $ref: '#/components/responses/Forbidden'
  *       "404":
  *         $ref: '#/components/responses/NotFound'
+ * 
+ *   get:
+ *     summary: Get a attendace
+ *     description: Logged in users can only update their own information. Only admins can update other users.
+ *     tags: [Attendance]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: X-Tenent-Key
+ *         in: header
+ *         description: X-Tenent-Key
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Attendance Id
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Attendance'
+ *       "400":
+ *         $ref: '#/components/responses/DuplicateEmail'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ *
  *
  */
+
+
+/**
+ * @swagger
+ * /attendance/by-hours/{id}:
+ *   get:
+ *     summary: Get a attendace/by/hours
+ *     description: Logged in users can only update their own information. Only admins can update other users.
+ *     tags: [Attendance]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: X-Tenent-Key
+ *         in: header
+ *         description: X-Tenent-Key
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Attendance Id
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Attendance'
+ *       "400":
+ *         $ref: '#/components/responses/DuplicateEmail'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */
+

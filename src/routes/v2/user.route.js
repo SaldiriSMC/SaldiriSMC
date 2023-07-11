@@ -11,13 +11,16 @@ const router = express.Router();
 router
   .route('/')
   .post(auth('manageUsers'), tenant(),  validate(userValidation.createUser), userController.createUser)
-  .get(auth('getUsers'), tenant(), checkRoles(["admin","hr"]), validate(userValidation.getUsers), userController.getUsers);
-
+  .get(auth('getUsers'), tenant(), checkRoles(["admin","hr"]), validate(userValidation.getUsers), userController.getUsers)
 router
   .route('/:userId')
   .get(auth('getUsers'), tenant(), userController.getUser)
   .patch(auth('manageUsers'), tenant(), userController.updateUser)
   .delete(auth('manageUsers'), tenant(), userController.deleteUser);
+router
+  .route('/by/department-and-designation')
+  .get(auth(), tenant(), userController.getUsersByDeprtmentAndDesigntion);
+
 
 module.exports = router;
 
@@ -283,4 +286,35 @@ module.exports = router;
  *         $ref: '#/components/responses/Forbidden'
  *       "404":
  *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
+ * /users/by/department-and-designation:
+ *   get:
+ *     summary: Get a user by department name and designation
+ *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: X-Tenent-Key
+ *         in: header
+ *         description: X-Tenent-Key
+ *         required: true
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/User'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ *
+ *  
  */
