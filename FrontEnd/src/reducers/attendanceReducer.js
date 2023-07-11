@@ -2,6 +2,10 @@ import {
   GET_ATTENDANCE,
   GET_ATTENDANCE_SUCCESS,
   GET_ATTENDANCE_FAILURE,
+  USERLIST,
+  USERLIST_SUCCESS,
+  USERLIST_FAILURE,
+
 } from "../actions/Attendance/actionTypes";
 
 const initialState = {
@@ -31,25 +35,25 @@ const getAttendanceFailed = (state, action) => ({
   data: [],
 });
 
-//course reducer functions
-// const getCourse = (state, action) => ({
-//   ...state,
-//   getListLoading: true,
-// });
+//user list  reducer functions
+const getAllUser = (state, action) => ({
+  ...state,
+  getListLoading: true,
+});
 
-// const getCourseSuccess = (state, action) => {
-//   return {
-//     ...state,
-//     getListLoading: false,
-//     data: action.payload,
-//   };
-// };
+const getAllUserSuccess = (state, action) => {
+  return {
+    ...state,
+    getListLoading: false,
+    data: action.payload,
+  };
+};
 
-// const getCourseFailed = (state, action) => ({
-//   ...state,
-//   getListLoading: false,
-//   data: [],
-// });
+const getAllUserFailed = (state, action) => ({
+  ...state,
+  getListLoading: false,
+  data: [],
+});
 // // Topics reducer funtions
 // const getTopics = (state, action) => ({
 //   ...state,

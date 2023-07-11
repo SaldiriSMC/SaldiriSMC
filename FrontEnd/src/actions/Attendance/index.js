@@ -14,6 +14,9 @@ import {
     SPEAKERS,
     SPEAKERS_SUCCESS,
     SPEAKERS_FAILURE,
+    USERLIST_FAILURE,
+    USERLIST_SUCCESS,
+    USERLIST
   } from "./actionTypes";
 
   // Course Category action functions
@@ -93,3 +96,19 @@ import {
     export const SpeakersFailure = () => ({
       type: SPEAKERS_FAILURE,
     });
+
+
+      // all user action functions
+  export const getAllUser = (data) => ({
+    type: USERLIST,
+    payload: data,
+  });
+  
+  export const getAllUserSuccess = (data) => ({
+    type: USERLIST_SUCCESS,
+    payload: data,
+  });
+  
+  export const getAllUserFailure = () => ({
+    type: USERLIST_FAILURE,
+  });
