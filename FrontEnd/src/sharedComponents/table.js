@@ -11,6 +11,7 @@ import { IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditModal from "../sharedComponents/editModal"
+import { useSelector } from 'react-redux';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor:'#3B5999',
@@ -32,19 +33,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
 
 export default function CustomizedTables({attendanceRecord}) {
     const [showModal,setShowModal] = React.useState(false)
     console.log(showModal)
-
-    const dumyData=[{datStart:'10Am',dayEnd:'10Pm',hors:'10'},
-  
-  {datStart:'10Am',dayEnd:'10Pm',hors:'7'}
-,
-{datStart:'10Am',dayEnd:'10Pm',hors:'8'}]
+    const data = useSelector((state)=> state?.attendance?.attendance?.data)
+    console.log("attendace record------->>>>>>>>>", data)
   return (
     <>
     <TableContainer component={Paper} className=''>
@@ -57,12 +51,13 @@ export default function CustomizedTables({attendanceRecord}) {
             <StyledTableCell align="right">Action</StyledTableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {dumyData?.map((row) => (
-            <StyledTableRow key={row.id}>
-              <StyledTableCell align="left">{row.datStart ? row.datStart : "-"}</StyledTableCell>
-              <StyledTableCell align="center">{row.dayEnd}</StyledTableCell>
-              <StyledTableCell align="center">{row.hors}</StyledTableCell>
+       {data?.length > 0 ? 
+       <TableBody>
+          {data?.map((item, index) => (
+            <StyledTableRow key={index}>
+              <StyledTableCell align="left">{item.timeIn ? item.timeIn.split("T")[1] : "-"}</StyledTableCell>
+              <StyledTableCell align="center">{item.timeOut ? item.timeOut.split("T")[1] : "-"}</StyledTableCell>
+              <StyledTableCell align="center">{item.Difference ? item.Difference : "-"}</StyledTableCell>
               <StyledTableCell align="right">
                 <div className='flex'>
                     <IconButton size="small"  onClick={()=>setShowModal(true)}>
@@ -75,7 +70,7 @@ export default function CustomizedTables({attendanceRecord}) {
               </StyledTableCell>
             </StyledTableRow>
           ))}
-        </TableBody>
+        </TableBody> : <StyledTableCell align="left">Record not found</StyledTableCell>} 
       </Table> 
     </TableContainer>
     {<EditModal showModal={showModal} setShowModal={setShowModal} />}

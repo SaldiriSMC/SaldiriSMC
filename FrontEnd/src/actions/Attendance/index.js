@@ -2,21 +2,12 @@ import {
     GET_ATTENDANCE,
     GET_ATTENDANCE_SUCCESS,
     GET_ATTENDANCE_FAILURE,
-    COURSE,
-    COURSE_SUCCESS,
-    COURSE_FAILURE,
-    TOPICS,
-    TOPICS_SUCCESS,
-    TOPICS_FAILURE,
-    VIDEOS,
-    VIDEOS_SUCCESS,
-    VIDEOS_FAILURE,
-    SPEAKERS,
-    SPEAKERS_SUCCESS,
-    SPEAKERS_FAILURE,
     USERLIST_FAILURE,
     USERLIST_SUCCESS,
-    USERLIST
+    USERLIST,
+    GETATTENDANCEBYHOURS,
+    GETATTENDANCEBYHOURS_SUCCESS,
+    GETATTENDANCEBYHOURS_FAILURE
   } from "./actionTypes";
 
   // Course Category action functions
@@ -34,68 +25,68 @@ import {
     type: GET_ATTENDANCE_FAILURE,
   });
   
-    // Course action functions
-    export const course = (data) => ({
-      type: COURSE,
-      payload: data,
-    });
+//     // Course action functions
+//     export const course = (data) => ({
+//       type: COURSE,
+//       payload: data,
+//     });
     
-    export const courseSuccess = (data) => ({
-      type: COURSE_SUCCESS,
-      payload: data,
-    });
+//     export const courseSuccess = (data) => ({
+//       type: COURSE_SUCCESS,
+//       payload: data,
+//     });
     
-    export const courseFailure = () => ({
-      type: COURSE_FAILURE,
-    });
+//     export const courseFailure = () => ({
+//       type: COURSE_FAILURE,
+//     });
 
-     // Topics action functions
+//      // Topics action functions
 
-    export const topics = (data) => ({
-      type: TOPICS,
-      payload: data,
-    });
+//     export const topics = (data) => ({
+//       type: TOPICS,
+//       payload: data,
+//     });
     
-    export const topicsSuccess = (data) => ({
-      type: TOPICS_SUCCESS,
-      payload: data,
-    });
+//     export const topicsSuccess = (data) => ({
+//       type: TOPICS_SUCCESS,
+//       payload: data,
+//     });
     
-    export const topicsFailure = () => ({
-      type: TOPICS_FAILURE,
-    });
+//     export const topicsFailure = () => ({
+//       type: TOPICS_FAILURE,
+//     });
 
-    // Course action functions
+//     // Course action functions
 
-    export const videos = (data) => ({
-      type: VIDEOS,
-      payload: data,
-    });
+//     export const videos = (data) => ({
+//       type: VIDEOS,
+//       payload: data,
+//     });
     
-    export const videosSuccess = (data) => ({
-      type: VIDEOS_SUCCESS,
-      payload: data,
-    });
+//     export const videosSuccess = (data) => ({
+//       type: VIDEOS_SUCCESS,
+//       payload: data,
+//     });
     
-    export const videoFailure = () => ({
-      type: VIDEOS_FAILURE,
-});
+//     export const videoFailure = () => ({
+//       type: VIDEOS_FAILURE,
+// });
     
-    // Speakers action functions
+//     // Speakers action functions
 
-    export const Speakers = (data) => ({
-      type: SPEAKERS,
-      payload: data,
-    });
+//     export const Speakers = (data) => ({
+//       type: SPEAKERS,
+//       payload: data,
+//     });
     
-    export const SpeakersSuccess = (data) => ({
-      type: SPEAKERS_SUCCESS,
-      payload: data,
-    });
+//     export const SpeakersSuccess = (data) => ({
+//       type: SPEAKERS_SUCCESS,
+//       payload: data,
+//     });
     
-    export const SpeakersFailure = () => ({
-      type: SPEAKERS_FAILURE,
-    });
+//     export const SpeakersFailure = () => ({
+//       type: SPEAKERS_FAILURE,
+//     });
 
 
       // all user action functions
@@ -111,4 +102,19 @@ import {
   
   export const getAllUserFailure = () => ({
     type: USERLIST_FAILURE,
+  });
+
+
+  export const getAttendanceByHours = (data) => ({
+    type: GETATTENDANCEBYHOURS,
+    payload: data,
+  });
+  
+  export const getAttendanceByHoursSuccess = (data) => ({
+    type: GETATTENDANCEBYHOURS_SUCCESS,
+    payload: data,
+  });
+  
+  export const getAttendanceByHoursFailure = () => ({
+    type: GETATTENDANCEBYHOURS_FAILURE,
   });

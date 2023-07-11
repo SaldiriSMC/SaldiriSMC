@@ -7,6 +7,8 @@ const URLs = {
   logOut: "/auth/logout",
   emailStatus: "api/v1/users/email/verify/",
   attendanceAdjustment:"/attendance",
+  getAttendanceByHours:"/attendance/by-hours",
+  getAllUsers:'users/by/department-and-designation',
   course: "courses/all/",
   topics: "courses/topics/",
   courseCategory: "courses/categories/",

@@ -1,13 +1,17 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import {
   GET_ATTENDANCE,
-  USERLIST
+  USERLIST,
+  GETATTENDANCEBYHOURS
 } from "../actions/Attendance/actionTypes";
 import {
   getAttendanceSuccess,
   getAttendanceFailure,
   getAllUserFailure,
-  getAllUserSuccess
+  getAllUserSuccess,
+  getAttendanceByHoursSuccess,
+  getAttendanceByHoursFailure
+
 } from "../actions/Attendance/index";
 
 import { getRequest, getRequestWithTenant, getRequest2, getRequestWithOutToken } from "./request";
@@ -17,7 +21,7 @@ import URls from "../constants/urls";
 function* getUserList(action) {
     console.log("actionaction", action);
    try {
-     const response = yield call(getRequest, URls.attendanceAdjustment);
+     const response = yield call(getRequestWithTenant, URls.getAllUsers);
      console.log(response)
      if (response?.status === 200) {     
        //navigate("/Login")
@@ -47,22 +51,22 @@ function* getUserList(action) {
  }
 }
 
-// //Topics generator function
-// function* topicsCall(action) {
-//   console.log("topics", action);
-//  try {
-//    const response = yield call(getRequest, URls.topics+`${action.payload.id}/`);
-//    console.log(response)
-//    if (response?.status === 200) {     
-//      //navigate("/Login")
-//      localStorage.setItem("data",JSON.stringify(response.data))
-//      yield put(topicsSuccess(response.data));
-//    }
-//  } catch (error) {
-//    // pushNotification('Get data failure', 'error', 'TOP_CENTER', 1000);
-//    yield put(topicsFailure());
-//  }
-// }
+// //get attendace by hours generator function
+function* getAttendanceByHoursCall(action) {
+  console.log("action------>>>>>>>",action.payload)
+ try {
+   const response = yield call(getRequestWithTenant, URls.getAttendanceByHours+`/${action.payload}`);
+   console.log(response)
+   if (response?.status === 200) {     
+     //navigate("/Login")
+     localStorage.setItem("data",JSON.stringify(response.data))
+     yield put(getAttendanceByHoursSuccess(response.data));
+   }
+ } catch (error) {
+   // pushNotification('Get data failure', 'error', 'TOP_CENTER', 1000);
+   yield put(getAttendanceByHoursFailure());
+ }
+}
 
 // //Videos generator function
 
@@ -103,7 +107,7 @@ function* getUserList(action) {
  function* watchGetRequest() {
     yield takeLatest(GET_ATTENDANCE, getAttendanceCall);
     yield takeLatest(USERLIST, getUserList);
-    // yield takeLatest(TOPICS, topicsCall);
+    yield takeLatest(GETATTENDANCEBYHOURS, getAttendanceByHoursCall);
     // yield takeLatest(VIDEOS, vidoesCall);
     // yield takeLatest(SPEAKERS, SpeakersCall);
   }
