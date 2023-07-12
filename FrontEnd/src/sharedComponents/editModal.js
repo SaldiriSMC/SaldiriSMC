@@ -97,6 +97,7 @@ const MainModal = (props) => {
       handleClose,
       handleCancel,
       setShowModal,
+      isupdate,
       title,
       modelData,
       services
@@ -146,9 +147,7 @@ const MainModal = (props) => {
                >
                Save
                </Button> </Grid>
-          </div>
-      
-        
+          </div>  
         </Box>
        
       </Modal>

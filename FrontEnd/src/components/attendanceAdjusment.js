@@ -50,6 +50,13 @@ const useStyles = makeStyles()((theme) => {
 });
 const AttendanceAdjusment = ({ attendanceRecord }) => {
   const data = useSelector((state)=> state.attendance?.allUsers?.data)
+  const workedHours = useSelector((state)=> state?.attendance?.attendance?.data)
+  const calculateTotalWorkedHours = () => {
+    const total = workedHours?.map((item)=>Number(item.Difference)).reduce((acc, curr)=>{
+      return acc + curr
+    },0)
+    return total
+  }
   console.log("data------>>>>>",data)
   const dispatch = useDispatch();
   const [value, setValue] = useState(new Date());
@@ -87,8 +94,8 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
     },[])
     useEffect(()=>{
       if(values.user){
-        console.log("values-------->>>>>>>>>", values.user)
         dispatch(getAttendanceByHours(values.user))
+        calculateTotalWorkedHours()
       }
     },[values.user])
   return (
@@ -149,9 +156,9 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
           <div style={{ textAlign: "end" }}>
             <h6>
               {" "}
-              Date: <span>{date}</span>
+              Date: <span style={{fontWeight:"bold"}}>{date}</span>
             </h6>
-            <h6> Total Hours : 10 Hour</h6>
+            <h6> Total Hours : <span style={{fontWeight:"bold"}}>{calculateTotalWorkedHours() + " HRs"}</span></h6>
           </div>
         </Grid>
         <Grid

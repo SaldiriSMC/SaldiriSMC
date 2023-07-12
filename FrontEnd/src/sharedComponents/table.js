@@ -36,9 +36,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function CustomizedTables({attendanceRecord}) {
     const [showModal,setShowModal] = React.useState(false)
+    const [deleteModal, setDeleteModal] = React.useState(false)
     console.log(showModal)
     const data = useSelector((state)=> state?.attendance?.attendance?.data)
-    console.log("attendace record------->>>>>>>>>", data)
+    const handleDelete = ()=>{
+
+    }
   return (
     <>
     <TableContainer component={Paper} className=''>
@@ -63,7 +66,7 @@ export default function CustomizedTables({attendanceRecord}) {
                     <IconButton size="small"  onClick={()=>setShowModal(true)}>
                     <EditIcon  />
                     </IconButton>
-                    <IconButton size="small">
+                    <IconButton size="small" onClick={()=>handleDelete()}>
                     <DeleteForeverIcon  />
                     </IconButton>
                 </div>
@@ -73,7 +76,7 @@ export default function CustomizedTables({attendanceRecord}) {
         </TableBody> : <StyledTableCell align="left">Record not found</StyledTableCell>} 
       </Table> 
     </TableContainer>
-    {<EditModal showModal={showModal} setShowModal={setShowModal} />}
+    <EditModal showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 }
