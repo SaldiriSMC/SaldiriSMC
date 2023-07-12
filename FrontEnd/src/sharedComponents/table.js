@@ -6,6 +6,7 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { format } from "date-fns";
 import Paper from '@mui/material/Paper';
 import { IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
@@ -64,8 +65,8 @@ export default function CustomizedTables({setDeleteTimeInOut, deleteTimeInOut, v
        <TableBody>
           {data?.map((item, index) => (
             <StyledTableRow key={index}>
-              <StyledTableCell align="left">{item.timeIn ? item.timeIn.split("T")[1] : "-"}</StyledTableCell>
-              <StyledTableCell align="center">{item.timeOut ? item.timeOut.split("T")[1] : "-"}</StyledTableCell>
+              <StyledTableCell align="left">{item.timeIn ? format(new Date(item.timeIn), "h:mm:ss a") : "-"}</StyledTableCell>
+              <StyledTableCell align="center">{item.timeOut ? format(new Date(item.timeOut), "h:mm:ss a") : "-"}</StyledTableCell>
               <StyledTableCell align="center">{item.Difference ? item.Difference : "-"}</StyledTableCell>
               <StyledTableCell align="right">
                 <div className='flex'>

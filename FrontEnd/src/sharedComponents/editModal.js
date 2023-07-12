@@ -120,14 +120,16 @@ const MainModal = (props) => {
 
       const dispatch = useDispatch();
       useEffect(()=>{
-        setFieldValue('timeIn',userData?.timeIn ? format(new Date(userData.timeIn), "HH:mm") : null)
-        setFieldValue('timeOut',userData?.timeOut ? format(new Date(userData.timeOut), "HH:mm") : null)
+        setFieldValue('timeIn',userData?.timeIn ? format(new Date(userData.timeIn), "HH:mm:ss") : null)
+        setFieldValue('timeOut',userData?.timeOut ? format(new Date(userData.timeOut), "HH:mm:ss") : null)
       },[userData])
       const updateTimeFun =()=>{
-        const totalHours = calculateTotalWorkedHours
+        const totalHours = calculateTotalWorkedHours()
         var data ={time:[{...values,id:userData.timeId, isUpdate:true, attendanceid:userData.attendenceid, totalHours:totalHours}]}
         dispatch(updateTime(data))
-        dispatch(getAttendanceByHours(value))
+        setTimeout(()=>{
+          dispatch(getAttendanceByHours(value))
+        },50)
         setShowModal(false)
       }
   return (

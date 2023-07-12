@@ -1,32 +1,19 @@
 import React, { useEffect, useState, useRef } from "react";
-import * as Yup from "yup";
 import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
-import CommentIcon from "@mui/icons-material/Comment";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { makeStyles } from "tss-react/mui";
-import Clock from "react-clock";
 import Table from "../sharedComponents/table";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import { Link, useNavigate } from "react-router-dom";
 import "./comaon.css";
+import { IconButton } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import { useFormik } from "formik";
-import MUITextField from "../sharedComponents/textField";
 import Grid from "@mui/material/Grid";
-import RadioButtonsGroup from "../sharedComponents/radioButton";
-import BasicPhoneInput from "../sharedComponents/phoneInput";
-import Button from "@mui/material/Button";
-import { signupSchemaCompany, signupSchemaUser } from "../Yup Schema";
 import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import {getAllUser, getAttendanceByHours} from "../actions/Attendance"
-import axios from "axios";
-import URLs from "../constants/urls";
+import { getAllUser, getAttendanceByHours } from "../actions/Attendance";
 const useStyles = makeStyles()((theme) => {
   return {
     sectionContainer: {
@@ -51,30 +38,27 @@ const useStyles = makeStyles()((theme) => {
   };
 });
 const AttendanceAdjusment = ({ attendanceRecord }) => {
-  const [deleteTimeInOut,setDeleteTimeInOut] = React.useState({time:[]})
-  const data = useSelector((state)=> state.attendance?.allUsers?.data)
-  const workedHours = useSelector((state)=> state?.attendance?.attendance?.data)
-  console.log("workedHours", workedHours)
+  const [deleteTimeInOut, setDeleteTimeInOut] = React.useState({ time: [] });
+  const data = useSelector((state) => state.attendance?.allUsers?.data);
+  const workedHours = useSelector(
+    (state) => state?.attendance?.attendance?.data
+  );
+  console.log("workedHours", workedHours);
   const calculateTotalWorkedHours = () => {
-    const total = workedHours?.map((item)=>Number(item.Difference)).reduce((acc, curr)=>{
-      return acc + curr
-    },0)
-    const fixed = total?.toFixed(2)
-    return fixed
-  }
-  const totalWorkedHours = calculateTotalWorkedHours()
+    const total = workedHours
+      ?.map((item) => Number(item.Difference))
+      .reduce((acc, curr) => {
+        return acc + curr;
+      }, 0);
+    const fixed = total?.toFixed(2);
+    return fixed;
+  };
+  const totalWorkedHours = calculateTotalWorkedHours();
   const dispatch = useDispatch();
-  const [value, setValue] = useState(new Date());
   const current = new Date();
   const date = `${current.getDate()}/${
     current.getMonth() + 1
   }/${current.getFullYear()}`;
-  useEffect(() => {
-    // const interval = setInterval(() => setValue(new Date()), 1000);
-    return () => {
-      // clearInterval(interval);
-    };
-  }, []);
   const initialValues = {
     user: data?.length > 0 ? data[0]?.id : "1",
   };
@@ -86,26 +70,17 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
 
       onSubmit: async (data) => {
         dispatch();
-        // logIn({
-        //   credentials:{
-        //     email: data.email,
-        //   password: data.password
-        // },
-        // })
       },
     });
-    useEffect(()=>{
-      dispatch(getAllUser())
-    },[])
-    useEffect(()=>{
-      if(values.user){
-        dispatch(getAttendanceByHours(values.user))
-        calculateTotalWorkedHours()
-      }
-    },[values.user])
-    const handleSave = () =>{
-      
+  useEffect(() => {
+    dispatch(getAllUser());
+  }, []);
+  useEffect(() => {
+    if (values.user) {
+      dispatch(getAttendanceByHours(values.user));
+      calculateTotalWorkedHours();
     }
+  }, [values.user]);
   return (
     <div>
       <Grid
@@ -153,7 +128,7 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
                 defaultValue={`${values.user}`}
               >
                 {data?.map((item) => (
-                  <MenuItem key={item?.id} value={item?.id} >
+                  <MenuItem key={item?.id} value={item?.id}>
                     {`${item.name} / ${item.designationName} / ${item.departmentname}`}
                   </MenuItem>
                 ))}
@@ -164,9 +139,15 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
           <div style={{ textAlign: "end" }}>
             <h6>
               {" "}
-              Date: <span style={{fontWeight:"bold"}}>{date}</span>
+              Date: <span style={{ fontWeight: "bold" }}>{date}</span>
             </h6>
-            <h6> Total Hours : <span style={{fontWeight:"bold"}}>{`${totalWorkedHours ? totalWorkedHours : "0.00"} HRs`}</span></h6>
+            <h6>
+              {" "}
+              Total Hours :{" "}
+              <span style={{ fontWeight: "bold" }}>{`${
+                totalWorkedHours ? totalWorkedHours : "0.00"
+              } HRs`}</span>
+            </h6>
           </div>
         </Grid>
         <Grid
@@ -200,13 +181,23 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
         <Grid
           sx={{ pl: 3 }}
           spacing={2}
-          justifyContent="center"
+          justifyContent="flex-end"
           alignItems="center"
           item
           sm={12}
           md={6}
         >
-          <Table deleteTimeInOut={deleteTimeInOut} setDeleteTimeInOut={setDeleteTimeInOut} value={values.user} calculateTotalWorkedHours={calculateTotalWorkedHours} />
+         <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"15px"}}>
+         <IconButton size="medium" style={{backgroundColor:"#0075FF", color:"white",}}>
+            <AddIcon />
+          </IconButton> 
+         </div>
+          <Table
+            deleteTimeInOut={deleteTimeInOut}
+            setDeleteTimeInOut={setDeleteTimeInOut}
+            value={values.user}
+            calculateTotalWorkedHours={calculateTotalWorkedHours}
+          />
           <Grid
             item
             sx={{
@@ -215,27 +206,7 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
               justifyContent: "flex-end",
               my: 3,
             }}
-          >
-              {/* <Button
-                className={classes.btn}
-                variant="contained"
-                type="submit"
-                color="primary"
-                //  style={{ marginTop: '20px' }}
-              >
-                Cancel
-              </Button>
-              <Button
-                className={classes.btn}
-                variant="contained"
-                type="submit"
-                color="primary"
-                onClick={()=>handleSave()}
-                //  style={{ marginTop: '20px' }}
-              >
-                Save
-              </Button> */}
-          </Grid>
+          ></Grid>
         </Grid>
         <Grid
           item
@@ -248,9 +219,7 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
           sm={12}
         >
           <>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              {/* <Clock value={value} /> */}
-            </div>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}></div>
           </>
         </Grid>
       </Grid>
