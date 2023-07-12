@@ -65,11 +65,12 @@ function* signUpCall(action) {
 function* logOutCall(action) {
   console.log(action?.payload?.refreshToken,"actionaction", action);
   try {
-    const response = yield call(postRequest, URls.logOut, action?.payload);
+    const response = yield call(postRequest, URls.logOut, action?.payload.data);
     console.log("response catch",response)
     if (response?.data.message == 'User loged out successfully') {
       localStorage.removeItem("accessToken"); 
       window.location.reload()
+      action.payload.navigate("/")
     } else {
 
     
