@@ -1,11 +1,8 @@
 const httpStatus = require('http-status');
 const { Op } = require('sequelize');
-const { QueryTypes } = require('sequelize');
 const { Attendance, Time } = require('../../models/v2/index');
-const ApiError = require('../../utils/ApiError');
 const { currentDate } = require('../../utils/currentDate');
 const todayDate = currentDate();
-const { sequelize } = require('../../config/mySqlConnection');
 const markAttendance = async (user, res) => {
   try {
     const attendance = await Attendance.findOne({ where: { userId: user.id, Date: new Date() } });
@@ -93,25 +90,15 @@ const queryAttendance = async (filter, option) => {
   }
 };
 
-const updateWorkedHours = async (attendance, attendanceId) => {
-  let res = await sequelize.query('call get_AttendanceSumByID(:id, :date)', {
-    replacements: {
-      id: attendance.id,
-      date: attendance.Date,
-    },
-    type: QueryTypes.SELECT,
-  });
-  let workedHours = res[0];
-  workedHours = workedHours['0']?.Difference;
-  if (workedHours < 8) {
-    await Attendance.update({ workedHours: workedHours, statusId:1 }, { where: { id: attendanceId } });
+const updateWorkedHours = async (attendanceId, totalHours) => {
+  if (totalHours < 8) {
+    await Attendance.update({ workedHours: totalHours, statusId: 1 }, { where: { id: attendanceId } });
   } else {
-    await Attendance.update({ workedHours: workedHours, statusId:2 }, { where: { id: attendanceId } });
+    await Attendance.update({ workedHours: totalHours, statusId: 2 }, { where: { id: attendanceId } });
   }
 };
 const updateAttendance = async (attendanceId, updateBody) => {
   const attendance = await Attendance.findOne({ where: { id: attendanceId } });
-  console.log('attendance---------------->>>>>>>>', attendance);
   if (attendance === null) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Attendance record not found');
   }
@@ -132,14 +119,12 @@ const updateAttendance = async (attendanceId, updateBody) => {
       }
       if (!item.id) {
         await Time.create({ ...timeCondition, attendanceId: attendanceId });
-        updateWorkedHours(attendance, attendanceId);
       } else if (item.id && item.isUpdate) {
         await Time.update(timeCondition, { where: { id: item.id } });
-        updateWorkedHours(attendance, attendanceId);
       } else if (item.id && item.isDeleted) {
         await Time.destroy({ where: { id: item.id } });
-        updateWorkedHours(attendance, attendanceId);
       }
+      updateWorkedHours(attendanceId, item.totalHours);
     });
     return { updateTime, updateAttendance };
   }

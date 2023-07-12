@@ -45,7 +45,6 @@ const mySqlConnection = async() =>{
   attendance.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync of attendance is done")
   }).catch((err)=>{
-    console.log("attendance------->>>>>>",err)
   })
   time.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync of time is done")

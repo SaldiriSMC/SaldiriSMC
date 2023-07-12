@@ -4,8 +4,7 @@ const catchAsync = require('../../utils/catchAsync');
 const { attendanceService } = require('../../services/v2');
 const { response } = require('../../utils/response');
 const { Attendance } = require('../../models/v2');
-const { sequelize } = require('../../config/mySqlConnection');
-const { QueryTypes } = require('sequelize');
+const { callDBRoutine } = require("../../config/helperMethods")
 const getAttendance = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['employeeName']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
@@ -15,30 +14,17 @@ const getAttendance = catchAsync(async (req, res) => {
 
 const getAttendanceByHours = catchAsync(async(req, res) =>{
   const id = req.params.userId;
-  const attendance = await Attendance.findOne({where:{userId:id}})
-  console.log("attendacne--------->>>>>>>>", attendance)
-  if(attendance){
-    let results = await sequelize.query('call get_AttendanceByHours(:id, :date)', {
-      replacements: {
-        id: attendance.id,
-        date: attendance.Date,
-      },
-      type: QueryTypes.SELECT,
-    });
-    results = results[0]
-    const data = Object.values(results)
-    response(res, data, "Record found succesfully", 200)
-  }else{
-    response(res, [], "Record not found", 200)
-  }
+  callDBRoutine("get_AttendanceByHours", {'id':id, 'date': new Date()}, res)
+  
 })
+
 const getAttendanceWithWorkedHours = catchAsync(async(req, res) =>{
   const id = req.params.userId
   const attendance =  await Attendance.findOne({where:{userId:id}})
   if(attendance){
     response(res, attendance, "Get worked hours successfully", 200)
   }else{
-    response(res, "", "Record not found", 401)
+    response(res, "", "Record not found", 200)
   }
 })
 
