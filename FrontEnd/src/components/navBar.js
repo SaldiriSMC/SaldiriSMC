@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import Button from '@mui/material/Button';
 import {HashLink, NavHashLink } from 'react-router-hash-link';
-import {  useLocation } from "react-router-dom"
+import {  useLocation ,useNavigate} from "react-router-dom"
 import './comaon.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -84,10 +84,11 @@ function NavScrollExample() {
   const location = useLocation();
   const { classes } = useStyles();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("accessToken"))
-
+  const userRole =  user?.data?.user?.role
     const logOutToken = user?.data?.tokens?.refresh?.token
-    console.log("refreshToken",logOutToken)
+    console.log("userRole------------->>>>>>>>>>>",userRole)
   const initialValues = {
     email: "",
     password: "",
@@ -113,6 +114,7 @@ function NavScrollExample() {
               email: data.email,
             password: data.password
           },
+
           })
         );
       }
@@ -152,14 +154,39 @@ function NavScrollExample() {
               Contact Us
               </NavDropdown.Item>
             </NavDropdown>
-            {user && <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>}
+           
+            {user &&  <NavDropdown title="Operations" id="navbarScrollingDropdown">
+           {
+            userRole == 'admin' ?(<>
+               <NavDropdown.Item as={Link} to="/dashboard" >
+              Dashboard
+              </NavDropdown.Item>
+              <NavDropdown title=" Attendance" id="navbarScrollingDropdown">
+              <NavDropdown.Item as={Link} to="/technologies" >
+              Attendance List
+              </NavDropdown.Item>
+            </NavDropdown>
+            </>) : userRole == 'HR' ? <>    <NavDropdown.Item as={Link} to="/dashboard" >
+              Dashboard 
+              </NavDropdown.Item>
+              <NavDropdown title=" Attendance" id="navbarScrollingDropdown">
+              <NavDropdown.Item as={Link} to="/technologies" >
+              Attendance List
+              </NavDropdown.Item>
+            </NavDropdown> </> : <> </>  
+           }
+           
+            </NavDropdown>}
           </Nav>
           {user ? <>
             <Grid container flexDirection='row' display='flex' justifyContent='flex-end'sx={{p:1}}>
           <Button variant="contained" endIcon={<LogoutIcon />} onClick={()=>{
          dispatch(
           logout({
-            refreshToken:logOutToken
+            data:{
+              refreshToken:logOutToken,
+            },
+            navigate:navigate,
           })
         )}}>
             Log Out
