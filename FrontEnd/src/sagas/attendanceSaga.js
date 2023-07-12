@@ -2,7 +2,8 @@ import { all, call, put, takeLatest } from "redux-saga/effects";
 import {
   GET_ATTENDANCE,
   USERLIST,
-  GETATTENDANCEBYHOURS
+  GETATTENDANCEBYHOURS,
+  ATTENDANCEUPDATE,
 } from "../actions/Attendance/actionTypes";
 import {
   getAttendanceSuccess,
@@ -10,11 +11,13 @@ import {
   getAllUserFailure,
   getAllUserSuccess,
   getAttendanceByHoursSuccess,
-  getAttendanceByHoursFailure
+  getAttendanceByHoursFailure,
+  updateTimeFailure,
+  updateTimeSuccess,
 
 } from "../actions/Attendance/index";
 
-import { getRequest, getRequestWithTenant, getRequest2, getRequestWithOutToken } from "./request";
+import { getRequest, getRequestWithTenant , putRequestWithTenant, getRequest2, getRequestWithOutToken } from "./request";
 import URls from "../constants/urls";
 
 // //course category generator function
@@ -68,47 +71,46 @@ function* getAttendanceByHoursCall(action) {
  }
 }
 
-// //Videos generator function
+// //update  generator function
 
-// function* vidoesCall(action) {
-//   console.log("videos", action);
+function* updateTime(action) {
+  console.log("updateTime fun add ",action.payload)
+ try {
+   const response = yield call(putRequestWithTenant, URls.attendanceAdjustment+`/${action?.payload?.time[0].attendanceid}`, action.payload);
+   if (response?.status === 200) {     
+     //navigate("/Login")
+     yield put(updateTimeSuccess(response.data));
+   }
+ } catch (error) {
+   // pushNotification('Get data failure', 'error', 'TOP_CENTER', 1000);
+   yield put(updateTimeFailure());
+ }
+}
+
+// function* deleteTime(action) {
+//   console.log("updateTime fun add ",action.payload)
+//   let data = localStorage.getItem("accessToken")
+//   data = JSON.parse(data)
+//   const id = data?.data?.user?.id
+//   console.log("action--------->>>>>>>>",action.payload)
 //  try {
-//    const response = yield call(getRequest, URls.videos+`${action.payload.id}/`);
-//    console.log(response)
+//    const response = yield call(putRequestWithTenant, URls.attendanceAdjustment+`/${action?.payload?.attendanceid}`, action.payload);
 //    if (response?.status === 200) {     
 //      //navigate("/Login")
-//      localStorage.setItem("data",JSON.stringify(response.data))
-//      yield put(videosSuccess(response.data));
+//      yield put(deleteTimeSuccess(response.data));
 //    }
 //  } catch (error) {
 //    // pushNotification('Get data failure', 'error', 'TOP_CENTER', 1000);
-//    yield put(videoFailure());
+//    yield put(deleteTimeFailure());
 //  }
-// }
-// //SPEAKERS generator function
-
-// function* SpeakersCall(action) {
-//   try {
-//     const response = yield call(
-//       getRequestWithOutToken,
-//       URls.Speakers 
-//     );
-//     console.log(response);
-//     if (response?.status === 200) {
-//       //navigate("/Login")
-//       yield put(SpeakersSuccess(response.data));
-//     }
-//   } catch (error) {
-//     // pushNotification('Get data failure', 'error', 'TOP_CENTER', 1000);
-//     yield put(SpeakersFailure());
-//   }
 // }
 
  function* watchGetRequest() {
     yield takeLatest(GET_ATTENDANCE, getAttendanceCall);
     yield takeLatest(USERLIST, getUserList);
     yield takeLatest(GETATTENDANCEBYHOURS, getAttendanceByHoursCall);
-    // yield takeLatest(VIDEOS, vidoesCall);
+    yield takeLatest(ATTENDANCEUPDATE, updateTime);
+    // yield takeLatest(ATTENDANCEDELETE, deleteTime);
     // yield takeLatest(SPEAKERS, SpeakersCall);
   }
   

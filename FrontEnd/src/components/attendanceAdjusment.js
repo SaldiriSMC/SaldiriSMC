@@ -25,6 +25,8 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import {getAllUser, getAttendanceByHours} from "../actions/Attendance"
+import axios from "axios";
+import URLs from "../constants/urls";
 const useStyles = makeStyles()((theme) => {
   return {
     sectionContainer: {
@@ -49,15 +51,18 @@ const useStyles = makeStyles()((theme) => {
   };
 });
 const AttendanceAdjusment = ({ attendanceRecord }) => {
+  const [deleteTimeInOut,setDeleteTimeInOut] = React.useState({time:[]})
   const data = useSelector((state)=> state.attendance?.allUsers?.data)
   const workedHours = useSelector((state)=> state?.attendance?.attendance?.data)
+  console.log("workedHours", workedHours)
   const calculateTotalWorkedHours = () => {
     const total = workedHours?.map((item)=>Number(item.Difference)).reduce((acc, curr)=>{
       return acc + curr
     },0)
-    return total
+    const fixed = total?.toFixed(2)
+    return fixed
   }
-  console.log("data------>>>>>",data)
+  const totalWorkedHours = calculateTotalWorkedHours()
   const dispatch = useDispatch();
   const [value, setValue] = useState(new Date());
   const current = new Date();
@@ -65,9 +70,9 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
     current.getMonth() + 1
   }/${current.getFullYear()}`;
   useEffect(() => {
-    const interval = setInterval(() => setValue(new Date()), 1000);
+    // const interval = setInterval(() => setValue(new Date()), 1000);
     return () => {
-      clearInterval(interval);
+      // clearInterval(interval);
     };
   }, []);
   const initialValues = {
@@ -98,6 +103,9 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
         calculateTotalWorkedHours()
       }
     },[values.user])
+    const handleSave = () =>{
+      
+    }
   return (
     <div>
       <Grid
@@ -145,7 +153,7 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
                 defaultValue={`${values.user}`}
               >
                 {data?.map((item) => (
-                  <MenuItem key={item.id} value={item.id} >
+                  <MenuItem key={item?.id} value={item?.id} >
                     {`${item.name} / ${item.designationName} / ${item.departmentname}`}
                   </MenuItem>
                 ))}
@@ -158,7 +166,7 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
               {" "}
               Date: <span style={{fontWeight:"bold"}}>{date}</span>
             </h6>
-            <h6> Total Hours : <span style={{fontWeight:"bold"}}>{calculateTotalWorkedHours() + " HRs"}</span></h6>
+            <h6> Total Hours : <span style={{fontWeight:"bold"}}>{`${totalWorkedHours ? totalWorkedHours : "0.00"} HRs`}</span></h6>
           </div>
         </Grid>
         <Grid
@@ -198,7 +206,7 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
           sm={12}
           md={6}
         >
-          <Table />
+          <Table deleteTimeInOut={deleteTimeInOut} setDeleteTimeInOut={setDeleteTimeInOut} value={values.user} calculateTotalWorkedHours={calculateTotalWorkedHours} />
           <Grid
             item
             sx={{
@@ -208,24 +216,25 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
               my: 3,
             }}
           >
-            <Button
-              className={classes.btn}
-              variant="contained"
-              type="submit"
-              color="primary"
-              //  style={{ marginTop: '20px' }}
-            >
-              Cancel
-            </Button>
-            <Button
-              className={classes.btn}
-              variant="contained"
-              type="submit"
-              color="primary"
-              //  style={{ marginTop: '20px' }}
-            >
-              Save
-            </Button>
+              {/* <Button
+                className={classes.btn}
+                variant="contained"
+                type="submit"
+                color="primary"
+                //  style={{ marginTop: '20px' }}
+              >
+                Cancel
+              </Button>
+              <Button
+                className={classes.btn}
+                variant="contained"
+                type="submit"
+                color="primary"
+                onClick={()=>handleSave()}
+                //  style={{ marginTop: '20px' }}
+              >
+                Save
+              </Button> */}
           </Grid>
         </Grid>
         <Grid
@@ -240,7 +249,7 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
         >
           <>
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <Clock value={value} />
+              {/* <Clock value={value} /> */}
             </div>
           </>
         </Grid>

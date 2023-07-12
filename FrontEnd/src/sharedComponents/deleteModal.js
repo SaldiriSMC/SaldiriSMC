@@ -94,82 +94,50 @@ const useStyles = makeStyles()((theme) => {
 
 const MainModal = (props) => {
     const { 
-      showModal, 
-      setShowModal,
-      userData,
+      setShowDeleteModal,
+      showDeleteModal,
+      deleteTimeInOut,
+      deleteId,
       value,
       calculateTotalWorkedHours
     } = props
     const { classes } = useStyles();
-    const initialValues = {
-      timeIn: '',
-      timeOut:'',
-    };
-    const timeScema = Yup.object({
-      timeIn: Yup.string(),
-      timeOut: Yup.string(),
-
-    })
-    const { handleChange, handleSubmit, handleBlur,setFieldValue, errors, values, touched } =
-      useFormik({
-        initialValues,
-        validationSchema:timeScema, 
-        onSubmit: () => {
-        },
-      });
-
-      const dispatch = useDispatch();
-      useEffect(()=>{
-        setFieldValue('timeIn',userData?.timeIn ? format(new Date(userData.timeIn), "HH:mm") : null)
-        setFieldValue('timeOut',userData?.timeOut ? format(new Date(userData.timeOut), "HH:mm") : null)
-      },[userData])
-      const updateTimeFun =()=>{
-        const totalHours = calculateTotalWorkedHours
-        var data ={time:[{...values,id:userData.timeId, isUpdate:true, attendanceid:userData.attendenceid, totalHours:totalHours}]}
-        dispatch(updateTime(data))
+    const dispatch = useDispatch()
+    const handleDelete =()=>{
+        const totalHours =calculateTotalWorkedHours
+        let payload = {time:[{isDeleted:true,id:deleteId.id, attendanceid:deleteId.attendanceid, totalHours:totalHours}]}
+        // console.log("payload----------->>>>>>>>", payload)
+        // deleteTimeInOut.time.push(payload)
+        dispatch(updateTime(payload))
         dispatch(getAttendanceByHours(value))
-        setShowModal(false)
-      }
+        setShowDeleteModal(false)
+    }
   return (
     <div>
       <Modal
-        open={showModal}
-        onClose={()=>setShowModal(false)}
+        open={showDeleteModal}
+        onClose={()=>setShowDeleteModal(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box className={classes.mainContainer}>
         <div className={classes.crosWrap}>
-        <IconButton  aria-label="upload picture" component="label" onClick={()=> setShowModal(false)}>
+        <IconButton  aria-label="upload picture" component="label" onClick={()=> setShowDeleteModal(false)}>
               <CancelIcon />      
             </IconButton>
             </div>
         <div className={classes.innerContainer}>    
-
-          <div className='d-flex justify-center'>
-          <div className='d-flex flex-column col-sm-6 px-2'>
-          <label htmlFor="timeIn">Time In</label>
-          <input type="time" onChange={handleChange} value={values.timeIn} name="timeIn" id="timeIn" />
-          {values.timeIn > values.timeOut && (
-              <div style={{color:'red'}}>Time Out is less then Time In </div>
-            )}
-          </div>
-          <div className='d-flex flex-column col-sm-6 px-2'>
-          <label htmlFor="timeOut">Time Out</label>
-          <input type="time" onChange={handleChange} value={values.timeOut} name="timeOut" id="timeOut" />
-
-          </div>
-          </div>
-          <Grid item sx={{display:'flex', alignItems:'center',justifyContent:'flex-end',my:3}}>  <Button
-                   className={classes.btn}
+        <h4>Are you sure you want to delete</h4>
+          <Grid item sx={{display:'flex', alignItems:'center',justifyContent:'center',my:3}}>  <Button
+                className={classes.btn}
                  variant="contained"
-                 onClick={()=>{updateTimeFun()}}
+                 onClick={()=>{handleDelete()}}
                  color="primary"
                 //  style={{ marginTop: '20px' }}
                >
-               Save
+               Delete
                </Button> 
-               </Grid>
+            </Grid>
           </div>  
         </Box>
        

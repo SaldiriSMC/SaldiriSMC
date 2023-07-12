@@ -12,7 +12,7 @@ const URLs = {
   course: "courses/all/",
   topics: "courses/topics/",
   courseCategory: "courses/categories/",
-  videos: "/courses/videos/",
+  videos: "attendance/2",
   Speakers: "api/v1/users/getSpeakers/",
   //mainUrl: "http://192.168.18.11:8000/",
   baseURL: "http://192.168.18.36:8000/",

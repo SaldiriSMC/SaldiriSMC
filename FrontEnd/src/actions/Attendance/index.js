@@ -7,7 +7,14 @@ import {
     USERLIST,
     GETATTENDANCEBYHOURS,
     GETATTENDANCEBYHOURS_SUCCESS,
-    GETATTENDANCEBYHOURS_FAILURE
+    GETATTENDANCEBYHOURS_FAILURE,
+    ATTENDANCEUPDATE,
+    ATTENDANCEUPDATE_SUCCESS,
+    ATTENDANCEUPDATE_FAILURE,
+    REMOVE_ATTENDANCE_AT_INDEX,
+    ATTENDANCEDELETE,
+    ATTENDANCEDELETE_SUCCESS,
+    ATTENDANCEDELETE_FAILURE
   } from "./actionTypes";
 
   // Course Category action functions
@@ -25,20 +32,20 @@ import {
     type: GET_ATTENDANCE_FAILURE,
   });
   
-//     // Course action functions
-//     export const course = (data) => ({
-//       type: COURSE,
-//       payload: data,
-//     });
+    // update time  action functions
+    export const updateTime = (data) => ({
+      type: ATTENDANCEUPDATE,
+      payload: data,
+    });
     
-//     export const courseSuccess = (data) => ({
-//       type: COURSE_SUCCESS,
-//       payload: data,
-//     });
+    export const updateTimeSuccess = (data) => ({
+      type: ATTENDANCEUPDATE_SUCCESS,
+      payload: data,
+    });
     
-//     export const courseFailure = () => ({
-//       type: COURSE_FAILURE,
-//     });
+    export const updateTimeFailure = () => ({
+      type: ATTENDANCEUPDATE_FAILURE,
+    });
 
 //      // Topics action functions
 
@@ -114,7 +121,14 @@ import {
     type: GETATTENDANCEBYHOURS_SUCCESS,
     payload: data,
   });
-  
+  export const removeAttendenceOnIndexAction = (data) => ({
+    type: REMOVE_ATTENDANCE_AT_INDEX,
+    payload: data,
+  });
   export const getAttendanceByHoursFailure = () => ({
     type: GETATTENDANCEBYHOURS_FAILURE,
   });
+
+  
+
+  

@@ -11,7 +11,9 @@ import { IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditModal from "../sharedComponents/editModal"
-import { useSelector } from 'react-redux';
+import DeleteModal from "../sharedComponents/deleteModal"
+import { useDispatch, useSelector } from 'react-redux';
+import {removeAttendenceOnIndexAction,} from "../actions/Attendance"
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor:'#3B5999',
@@ -34,13 +36,17 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-export default function CustomizedTables({attendanceRecord}) {
+export default function CustomizedTables({setDeleteTimeInOut, deleteTimeInOut, value, calculateTotalWorkedHours}) {
+  const dispatch = useDispatch();
     const [showModal,setShowModal] = React.useState(false)
-    const [deleteModal, setDeleteModal] = React.useState(false)
-    console.log(showModal)
+    const [showDeleteModal,setShowDeleteModal] = React.useState(false)
+    const [userData,setUserData] = React.useState({})
     const data = useSelector((state)=> state?.attendance?.attendance?.data)
-    const handleDelete = ()=>{
-
+    const [deleteId, setDeleteId] = React.useState({})
+    const handleDelete = (item)=>{
+      setShowDeleteModal(true)
+      console.log("item----------------->>>>>>>>>>",item)
+      setDeleteId({id:item.timeId, attendanceid:item.attendenceid})
     }
   return (
     <>
@@ -63,10 +69,10 @@ export default function CustomizedTables({attendanceRecord}) {
               <StyledTableCell align="center">{item.Difference ? item.Difference : "-"}</StyledTableCell>
               <StyledTableCell align="right">
                 <div className='flex'>
-                    <IconButton size="small"  onClick={()=>setShowModal(true)}>
+                    <IconButton size="small"  onClick={()=>{setShowModal(true);setUserData(item)}}>
                     <EditIcon  />
                     </IconButton>
-                    <IconButton size="small" onClick={()=>handleDelete()}>
+                    <IconButton size="small" onClick={()=>handleDelete(item,index)}>
                     <DeleteForeverIcon  />
                     </IconButton>
                 </div>
@@ -76,7 +82,8 @@ export default function CustomizedTables({attendanceRecord}) {
         </TableBody> : <StyledTableCell align="left">Record not found</StyledTableCell>} 
       </Table> 
     </TableContainer>
-    <EditModal showModal={showModal} setShowModal={setShowModal} />
+    {<EditModal showModal={showModal} userData={userData} setShowModal={setShowModal} value={value} calculateTotalWorkedHours={calculateTotalWorkedHours} />}
+  <DeleteModal showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} deleteTimeInOut={deleteTimeInOut} setDeleteTimeInOut={setDeleteTimeInOut} deleteId={deleteId} value={value} calculateTotalWorkedHours={calculateTotalWorkedHours} />
     </>
   );
 }

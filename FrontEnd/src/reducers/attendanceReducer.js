@@ -7,8 +7,8 @@ import {
   USERLIST_FAILURE,
   GETATTENDANCEBYHOURS,
   GETATTENDANCEBYHOURS_SUCCESS,
-  GETATTENDANCEBYHOURS_FAILURE
-
+  GETATTENDANCEBYHOURS_FAILURE,
+  REMOVE_ATTENDANCE_AT_INDEX,
 } from "../actions/Attendance/actionTypes";
 
 const initialState = {
@@ -84,10 +84,21 @@ const getAttendanceByHoursFailed = (state, action) => {
   };
  
 };
+const removeAttendenceOnIndex = (state, action) => {
+  var data = state?.attendance?.data
+  console.log("data-->> ",state?.attendance)
+  data.splice(action.payload.index, 1);
+  return {
+    ...state,
+    getListLoading: false,
+    attendance: {...state.attendance,data:[...data]},
+  };
+};
 
 const attedanceReducer = (state = initialState, action) => {
-  console.log("type---------->>>>>>", action)
   switch (action.type) {
+    case REMOVE_ATTENDANCE_AT_INDEX:
+      return removeAttendenceOnIndex(state,action)
     case GET_ATTENDANCE:
       return getAttendance(state, action);
     case GET_ATTENDANCE_SUCCESS:

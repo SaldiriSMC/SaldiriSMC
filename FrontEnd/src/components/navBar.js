@@ -152,7 +152,7 @@ function NavScrollExample() {
               Contact Us
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+            {user && <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>}
           </Nav>
           {user ? <>
             <Grid container flexDirection='row' display='flex' justifyContent='flex-end'sx={{p:1}}>
