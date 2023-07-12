@@ -13,18 +13,33 @@ const department = require("./models/v2/department.module")
 const modules = require("./models/v2/module.model")
 const designation = require("./models/v2/designation.model")
 let server;
-mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
+mongoose.connect(config.mongoose.url, config.mongoose.options).then(async () => {
   logger.info('Connected to MongoDB');
+  var mysqlConfig = await mySqlConnection();
+  if(mysqlConfig){
+    logger.info('Connected to Mysql');
+  }
+  server = app.listen(config.port,() => {
+    logger.info(`Listening to port ${config.port}`);
+  });
+}).catch(async ()=>{
+  logger.info('Failed to connect with mongoDB');
+  var mysqlConfig = await mySqlConnection();
+  if(mysqlConfig){
+    logger.info('Connected to Mysql');
+  }
   server = app.listen(config.port,() => {
     logger.info(`Listening to port ${config.port}`);
   });
 });
 const mySqlConnection = async() =>{
+  
   try {
     await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
+    console.log('Connection has been established successfully with mysql.');
   } catch (error) {
-    console.error('Unable to connect to the database:', error);
+    console.error('Unable to connect to the mysql database:', error);
+    return false;
   }
 
   user.sync({ alter: { drop: false } }).then(()=>{
@@ -77,8 +92,9 @@ const mySqlConnection = async() =>{
   }).catch((err)=>{
     console.log(err)
   })
+  return true
 } 
-mySqlConnection()
+
 const exitHandler = () => {
   if (server) {
     server.close(() => {
