@@ -1,0 +1,26 @@
+# Base image
+FROM node:16-alpine
+# Set working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json (if exists)
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Set environment variables
+ARG REACT_APP_API_URL
+ENV REACT_APP_API_URL $REACT_APP_API_URL
+
+# Build the React app
+RUN npm run build
+
+# Expose the container port (optional)
+EXPOSE 3000
+
+# Start the React app
+CMD ["npm", "start"]
