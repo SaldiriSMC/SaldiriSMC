@@ -9,7 +9,9 @@ import ContactUs from './components/contactUs'
 import Header from './components/navBar'
 import Careers from './components/career'
 import Footer from './components/footer'
-import Dashboard from './pages/dashboard';
+import Dashboard from './components/dashboard';
+import InviteUser from './components/inviteUser';
+import Attendance from './pages/attendance';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SignUp from './components/SignUp'
@@ -44,6 +46,8 @@ function App({data}) {
         <Route path="/contactUs" element={<ContactUs/>} /> 
         <Route path="/careers" element={<Careers/>} />
         <Route path="/dashboard" element={<Dashboard/>} />
+        <Route path="/attendance" element={<Attendance/>} />
+        <Route path="/inviteUser" element={<InviteUser/>} />
       </Routes>
       {/* <Footer/> */}
     </BrowserRouter>

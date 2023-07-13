@@ -9,7 +9,7 @@ import { emailVerification } from "../actions/Auth/passwordReset";
 import AttendanceAdjusment from "../components/attendanceAdjusment"
 import { useDispatch, useSelector } from 'react-redux'
 import { getAttendance } from '../actions/Attendance'
-const Dashboard = () => {
+const Attendance = () => {
   const dispatch = useDispatch()
   const attendanceRecord = useSelector((state)=> state?.attendance?.data?.results)
   useEffect(()=>{
@@ -25,4 +25,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default Attendance

@@ -162,16 +162,22 @@ function NavScrollExample() {
               Dashboard
               </NavDropdown.Item>
               <NavDropdown title=" Attendance" id="navbarScrollingDropdown">
-              <NavDropdown.Item as={Link} to="/technologies" >
+              <NavDropdown.Item as={Link} to="/attendance" >
               Attendance List
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/inviteUser" >
+              Invite User
               </NavDropdown.Item>
             </NavDropdown>
             </>) : userRole == 'HR' ? <>    <NavDropdown.Item as={Link} to="/dashboard" >
               Dashboard 
               </NavDropdown.Item>
               <NavDropdown title=" Attendance" id="navbarScrollingDropdown">
-              <NavDropdown.Item as={Link} to="/technologies" >
+              <NavDropdown.Item as={Link} to="/attendance" >
               Attendance List
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/inviteUser" >
+              Invite User
               </NavDropdown.Item>
             </NavDropdown> </> : <> </>  
            }
