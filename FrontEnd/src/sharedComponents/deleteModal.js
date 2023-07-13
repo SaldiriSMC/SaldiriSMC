@@ -114,7 +114,7 @@ const MainModal = (props) => {
     dispatch(updateTime(payload));
     setTimeout(() => {
       dispatch(getAttendanceByHours(value));
-    }, 50);
+    }, 100);
     setShowDeleteModal(false);
   };
   return (

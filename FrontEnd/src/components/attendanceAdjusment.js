@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect } from "react";
 import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
-import { makeStyles } from "tss-react/mui";
 import Table from "../sharedComponents/table";
 import "./comaon.css";
 import { IconButton } from '@mui/material';
@@ -14,35 +13,15 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { getAllUser, getAttendanceByHours } from "../actions/Attendance";
-const useStyles = makeStyles()((theme) => {
-  return {
-    sectionContainer: {
-      background: theme.palette.white?.main,
-      padding: "40px 20px 20px 20px",
-      borderRadius: 10,
-      position: "relative",
-      margin: "20px 0",
-    },
-    btn: {
-      display: "flex",
-      borderRadius: 10,
-      height: 40,
-      marginRight: 10,
-      width: 100,
-      fontWeight: 600,
-    },
-    aboutImgs: {
-      display: "flex",
-      justifyContent: "center",
-    },
-  };
-});
-const AttendanceAdjusment = ({ attendanceRecord }) => {
+const AttendanceAdjusment = () => {
   const [deleteTimeInOut, setDeleteTimeInOut] = React.useState({ time: [] });
+  const [isCreate, setIsCreate] = React.useState(false)
+  const [showModal,setShowModal] = React.useState(false)
+  const [userData,setUserData] = React.useState({})
   const data = useSelector((state) => state.attendance?.allUsers?.data);
   const workedHours = useSelector(
     (state) => state?.attendance?.attendance?.data
-  );
+  );  
   console.log("workedHours", workedHours);
   const calculateTotalWorkedHours = () => {
     const total = workedHours
@@ -62,9 +41,7 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
   const initialValues = {
     user: data?.length > 0 ? data[0]?.id : "1",
   };
-  const chartRef = useRef(null);
-  const { classes } = useStyles();
-  const { handleChange, handleSubmit, handleBlur, errors, values, touched } =
+  const { handleChange,values } =
     useFormik({
       initialValues,
 
@@ -188,7 +165,14 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
           md={6}
         >
          <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"15px"}}>
-         <IconButton size="medium" style={{backgroundColor:"#0075FF", color:"white",}}>
+         <IconButton size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
+          if(data.length>0){
+            setUserData(workedHours[0])
+            setShowModal(true)
+            setIsCreate(true)
+          }
+         
+          } }>
             <AddIcon />
           </IconButton> 
          </div>
@@ -197,6 +181,12 @@ const AttendanceAdjusment = ({ attendanceRecord }) => {
             setDeleteTimeInOut={setDeleteTimeInOut}
             value={values.user}
             calculateTotalWorkedHours={calculateTotalWorkedHours}
+            userData={userData}
+            setUserData={setUserData}
+            isCreate={isCreate}
+            setIsCreate={setIsCreate}
+            showModal={showModal}
+            setShowModal={setShowModal}
           />
           <Grid
             item

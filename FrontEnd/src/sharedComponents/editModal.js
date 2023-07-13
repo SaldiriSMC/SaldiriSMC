@@ -98,7 +98,8 @@ const MainModal = (props) => {
       setShowModal,
       userData,
       value,
-      calculateTotalWorkedHours
+      calculateTotalWorkedHours,
+      isCreate
     } = props
     const { classes } = useStyles();
     const initialValues = {
@@ -110,7 +111,7 @@ const MainModal = (props) => {
       timeOut: Yup.string(),
 
     })
-    const { handleChange, handleSubmit, handleBlur,setFieldValue, errors, values, touched } =
+    const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched } =
       useFormik({
         initialValues,
         validationSchema:timeScema, 
@@ -125,11 +126,28 @@ const MainModal = (props) => {
       },[userData])
       const updateTimeFun =()=>{
         const totalHours = calculateTotalWorkedHours()
-        var data ={time:[{...values,id:userData.timeId, isUpdate:true, attendanceid:userData.attendenceid, totalHours:totalHours}]}
-        dispatch(updateTime(data))
-        setTimeout(()=>{
-          dispatch(getAttendanceByHours(value))
-        },50)
+        if(isCreate){
+          var data = {
+            time: [
+              {
+                ...values,
+                attendanceid: userData.attendenceid,
+                totalHours: totalHours,
+              },
+            ],
+          };
+          dispatch(updateTime(data));
+          setTimeout(() => {
+            dispatch(getAttendanceByHours(value));
+          }, 100);
+          handleReset()
+        }else{
+          var data ={time:[{...values,id:userData.timeId, isUpdate:true, attendanceid:userData.attendenceid, totalHours:totalHours}]}
+          dispatch(updateTime(data))
+          setTimeout(()=>{
+            dispatch(getAttendanceByHours(value))
+          },100)
+        }
         setShowModal(false)
       }
   return (
