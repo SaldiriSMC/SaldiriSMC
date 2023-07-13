@@ -7,4 +7,5 @@ module.exports.Statuse = require('./statuses.model');
 module.exports.Module = require('./module.model');
 module.exports.Department = require('./department.module');
 module.exports.Designation = require('./designation.model');
+module.exports.Contact = require('./contact.model');
 

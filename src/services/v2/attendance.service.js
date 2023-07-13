@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const ApiError = require('../../utils/ApiError');
 const { Op } = require('sequelize');
 const { Attendance, Time } = require('../../models/v2/index');
 const { currentDate } = require('../../utils/currentDate');

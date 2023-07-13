@@ -18,10 +18,21 @@ const createUser = async (userBody,tenantId, user) => {
     return User.create({...userBody, tenantId: tenantId
     });
   }
-  
-   
 };
 
+
+const createUserByDepartmentAndDesignation = async (userBody,tenantId, user) => {
+  const randomPassword = Math.random().toString(36).slice(-8);   
+  if(user){
+    if( userBody.designation === "hr"){
+      return User.create({...userBody, tenantId: tenantId, role:"hr", password: randomPassword});
+    }else{
+      return User.create({...userBody, tenantId: tenantId, role:"employee", password: randomPassword});
+    }
+  }else{
+    return User.create({...userBody, tenantId: tenantId, password: randomPassword});
+  }
+};
 /**
  * Query for users
  * @param {Object} filter - Mongo filter
@@ -107,4 +118,5 @@ module.exports = {
   getUserByEmail,
   updateUserById,
   deleteUserById,
+  createUserByDepartmentAndDesignation
 };

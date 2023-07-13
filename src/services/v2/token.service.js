@@ -35,8 +35,9 @@ const generateToken = (userId, expires, type, secret = config.jwt.secret) => {
  * @returns {Promise<Token>}
  */
 const saveToken = async (token, userId, expires, type, blacklisted = false) => {
+  console.log("tokenData->>> ",token, userId, expires, type, blacklisted = false)
   const tokenDoc = await Token.create({
-    token,
+    token:token,
     user: userId,
     expires: expires.toDate(),
     type:type,
@@ -68,6 +69,7 @@ const verifyToken = async (token, type) => {
 const generateAuthTokens = async (user) => {
   const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
   const accessToken = generateToken(user.id, accessTokenExpires, tokenTypes.ACCESS);
+
   const refreshTokenExpires = moment().add(config.jwt.refreshExpirationDays, 'days');
   const refreshToken = generateToken(user.id, refreshTokenExpires, tokenTypes.REFRESH);
   await saveToken(refreshToken, user.id, refreshTokenExpires, tokenTypes.REFRESH);
@@ -101,6 +103,17 @@ const generateResetPasswordToken = async (email) => {
   return resetPasswordToken;
 };
 
+const generateEmailIvitationToken = async (email) => {
+  const user = await userService.getUserByEmail(email);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'No users found with this email');
+  }
+  const expires = moment().add(config.jwt.resetPasswordExpirationMinutes, 'minutes');
+  const emailInvitationToken= generateToken(user.id, expires, tokenTypes.EMAIL_INVITATION);
+  await saveToken(emailInvitationToken, user.id, expires, tokenTypes.EMAIL_INVITATION);
+  return emailInvitationToken;
+};
+
 /**
  * Generate verify email token
  * @param {User} user
@@ -119,5 +132,6 @@ module.exports = {
   verifyToken,
   generateAuthTokens,
   generateResetPasswordToken,
+  generateEmailIvitationToken,
   generateVerifyEmailToken,
 };

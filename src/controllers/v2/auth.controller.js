@@ -45,6 +45,7 @@ const login = catchAsync(async (req, res) => {
   const user = await authService.loginUserWithEmailAndPassword(email, password);
   const tenant = await Tenant.findOne({where:{id:user.tenantId}})
   const tokens = await tokenService.generateAuthTokens(user);
+  console.log("tokens------------>>>>>>>>>>", tokens)
   await attendanceService.markAttendance(user, res)
   response(res,{ user, tenant, tokens }, 'User loged in successfully', 200)
 });

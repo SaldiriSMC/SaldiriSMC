@@ -11,15 +11,16 @@ const router = express.Router();
 router
   .route('/')
   .post(auth('manageUsers'), tenant(),  validate(userValidation.createUser), userController.createUser)
-  .get(auth('getUsers'), tenant(), checkRoles(["admin","hr"]), validate(userValidation.getUsers), userController.getUsers)
+  .get(auth('getUsers'), tenant(), checkRoles(["admin","hr"]), validate(userValidation.getUsers), userController.getUsers);
+router
+  .route('/by/department-and-designation')
+  .get(auth(), tenant(), checkRoles(["admin","hr"]), userController.getUsersByDeprtmentAndDesigntion)
+  .post(auth(), tenant(), checkRoles(["admin","hr"]), userController.createUserByDepartmentAndDesignation);
 router
   .route('/:userId')
   .get(auth('getUsers'), tenant(), userController.getUser)
   .patch(auth('manageUsers'), tenant(), userController.updateUser)
   .delete(auth('manageUsers'), tenant(), userController.deleteUser);
-router
-  .route('/by/department-and-designation')
-  .get(auth(), tenant(), userController.getUsersByDeprtmentAndDesigntion);
 
 
 module.exports = router;
@@ -165,7 +166,92 @@ module.exports = router;
  *         $ref: '#/components/responses/Forbidden'
  */
 
-/**
+
+ /**
+ * @swagger
+ * /users/by/department-and-designation:
+ *   get:
+ *     summary: Get a users by department name and designation
+ *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: X-Tenent-Key
+ *         in: header
+ *         description: X-Tenent-Key
+ *         required: true
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/User'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ * 
+ *   post:
+ *     summary: Create a user by department name and designation
+ *     description: Only admins can create other users.
+ *     parameters:
+ *         - name: X-Tenent-Key
+ *           in: header
+ *           description: X-Tenent-Key
+ *           required: true
+ *           schema:
+ *             type: string
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - departmentId
+ *               - designationId
+ *               - email
+ *             properties:
+ *               name:
+ *                 type: string
+ *               departmentId:
+ *                 type: number
+ *               designationId:
+ *                 type: number
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: must be unique
+ *             example:
+ *               name: fake name
+ *               departmentId: 1
+ *               designationId: 4
+ *               email: fake@example.com
+ *     responses:
+ *       "201":
+ *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/User'
+ *       "400":
+ *         $ref: '#/components/responses/DuplicateEmail'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ */
+
+ 
+ /**
  * @swagger
  * /users/{id}:
  *   get:
@@ -286,35 +372,4 @@ module.exports = router;
  *         $ref: '#/components/responses/Forbidden'
  *       "404":
  *         $ref: '#/components/responses/NotFound'
- */
-
-/**
- * @swagger
- * /users/by/department-and-designation:
- *   get:
- *     summary: Get a user by department name and designation
- *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Users]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - name: X-Tenent-Key
- *         in: header
- *         description: X-Tenent-Key
- *         required: true
- *     responses:
- *       "200":
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *                $ref: '#/components/schemas/User'
- *       "401":
- *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
- *       "404":
- *         $ref: '#/components/responses/NotFound'
- *
- *  
  */
