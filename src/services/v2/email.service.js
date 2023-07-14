@@ -39,14 +39,16 @@ const sendResetPasswordEmail = async (to, token) => {
   await sendEmail(to, subject, text);
 };
 
-const sendInviteEmail = async (to, token) => {
+const sendInviteEmail = async (tokenArray) => {
   const subject = 'Invitation';
   // replace this url with the link to the reset password page of your front-end app
-  const resetPasswordUrl = `http://localhost:3000/chanagePassword/?token=${token}`;
-  const text = `Dear user, we are inviting 
-  To reset your password, click on this link: ${resetPasswordUrl}
-  If you did not request any password resets, then ignore this email.`;
-  await sendEmail(to, subject, text);
+  tokenArray.map(async (item) =>{
+    const resetPasswordUrl = `http://localhost:3000/chanagePassword/?token=${item.token}`;
+    const text = `Dear user, we are inviting 
+    To reset your password, click on this link: ${resetPasswordUrl}
+    If you did not request any password resets, then ignore this email.`;
+    await sendEmail(item.email, subject, text);
+  })
 };
 
 /**

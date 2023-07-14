@@ -35,7 +35,6 @@ const generateToken = (userId, expires, type, secret = config.jwt.secret) => {
  * @returns {Promise<Token>}
  */
 const saveToken = async (token, userId, expires, type, blacklisted = false) => {
-  console.log("tokenData->>> ",token, userId, expires, type, blacklisted = false)
   const tokenDoc = await Token.create({
     token:token,
     user: userId,
@@ -103,15 +102,15 @@ const generateResetPasswordToken = async (email) => {
   return resetPasswordToken;
 };
 
-const generateEmailIvitationToken = async (email) => {
-  const user = await userService.getUserByEmail(email);
-  if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'No users found with this email');
-  }
-  const expires = moment().add(config.jwt.resetPasswordExpirationMinutes, 'minutes');
-  const emailInvitationToken= generateToken(user.id, expires, tokenTypes.EMAIL_INVITATION);
-  await saveToken(emailInvitationToken, user.id, expires, tokenTypes.EMAIL_INVITATION);
-  return emailInvitationToken;
+const generateEmailIvitationToken = async (emailArray) => {
+  const emailInvitationTokenArray = []
+  emailArray.map(async(item) => {
+    const expires = moment().add(config.jwt.resetPasswordExpirationMinutes, 'minutes');
+    const emailInvitationToken= generateToken(item.id, expires, tokenTypes.RESET_PASSWORD);
+    saveToken(emailInvitationToken, item.id, expires, tokenTypes.RESET_PASSWORD);
+    emailInvitationTokenArray.push({token: emailInvitationToken, email: item.email});
+  })
+  return emailInvitationTokenArray
 };
 
 /**

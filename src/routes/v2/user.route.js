@@ -22,6 +22,8 @@ router
   .patch(auth('manageUsers'), tenant(), userController.updateUser)
   .delete(auth('manageUsers'), tenant(), userController.deleteUser);
 
+router.post("/send-invite-emails", auth(), tenant(), checkRoles(["admin","hr"]), userController.sendInvtiteEmails)
+
 
 module.exports = router;
 
@@ -251,6 +253,42 @@ module.exports = router;
  */
 
  
+/**
+ * @swagger
+ * /users/send-invite-emails:
+ *   post:
+ *     summary: Send multiple invite email
+ *     description: An email will be sent to invite user.
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: X-Tenent-Key
+ *         in: header
+ *         description: X-Tenent-Key
+ *         required: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             properties:
+ *               id:
+ *                 type: number
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: must be unique
+ *             example:
+ *               users: [{"id":"1", "email":"fake@gmail.com"}]
+ *     responses:
+ *       "200":
+ *         description: email send to users
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ */
+
  /**
  * @swagger
  * /users/{id}:

@@ -74,7 +74,8 @@ const getUserById = async (id) => {
  * @returns {Promise<User>}
  */
 const getUserByEmail = async (email) => {
-  return User.findOne({where:{ email:email }});
+  const user = await User.findOne({where:{ email:email }});
+  return user
 };
 
 /**
