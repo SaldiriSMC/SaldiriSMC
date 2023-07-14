@@ -6,8 +6,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { appointmentActionDropdown } from '../../../configs/appConstants'
-
 const useStyles = makeStyles()((theme) => {
     return {
         mainContainer: {
@@ -92,9 +90,6 @@ const AppointmentActions = ({ value: { patientId, change } }) => {
               transformOrigin={{ horizontal: 'right', vertical: 'top' }}
               anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-              {
-                appointmentActionDropdown.map(item => <MenuItem onClick={changeHalder} value={item.id} key={item.id}>{item.label}</MenuItem>)
-              }
             </Menu>
         </div>
     </>   

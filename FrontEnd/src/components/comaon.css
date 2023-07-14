@@ -579,7 +579,7 @@ right: 25px;
 }
 /* Services Section
 --------------------------------*/
-.main_wrap{
+_wrap{
   display: flex;
   flex-wrap: nowrap;
 justify-content: center;}
