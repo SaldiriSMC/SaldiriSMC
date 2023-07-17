@@ -2,10 +2,8 @@ const httpStatus = require('http-status');
 const pick = require('../../utils/pick');
 const ApiError = require('../../utils/ApiError');
 const catchAsync = require('../../utils/catchAsync');
-const { authService, userService, tokenService, emailService } = require('../../services/v2');
+const { userService, tokenService, emailService } = require('../../services/v2');
 const { User, Tenant } = require('../../models/v2/index');
-const { QueryTypes } = require('sequelize');
-const { sequelize } = require('../../config/mySqlConnection');
 const { response } = require('../../utils/response');
 const { callDBRoutine } = require('../../config/helperMethods');
   const createUser = catchAsync(async (req, res) => {
@@ -34,6 +32,7 @@ const { callDBRoutine } = require('../../config/helperMethods');
         const key = req.get('X-Tenent-Key');
         const tenant = await Tenant.findOne({ where: { key: key } });
         const user = await userService.createUserByDepartmentAndDesignation(req.body, tenant.id);
+        console.log("user---------->>>>>>>>>>", user)
         if (user) {
           const emailArray = [{id: user.id,email: user.email}]
           const resetPasswordTokenArray = await tokenService.generateEmailIvitationToken(emailArray);
@@ -56,7 +55,6 @@ const { callDBRoutine } = require('../../config/helperMethods');
     response(res , "" , "Invite email send successfully" , 200)
   })
   const getUsers = catchAsync(async (req, res) => {
-    console.log('req.query', req.query);
     const filter = pick(req.query, ['name', 'role']);
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     const result = await userService.queryUsers(req.query, filter, options);
@@ -81,16 +79,13 @@ const { callDBRoutine } = require('../../config/helperMethods');
   });
 
   const updateUser = catchAsync(async (req, res) => {
-    const id = JSON.stringify(req.params.userId);
-    console.log('if --? ', typeof req.params.userId.toString(), typeof req.params.userId);
     const user = await userService.updateUserById(req.body, req.params.userId.toString());
-    console.log('user------> ', user);
-    res.send(user);
+    response(res, "", "user updated successfully", 200)
   });
 
   const deleteUser = catchAsync(async (req, res) => {
     const user = await userService.deleteUserById(req.params.userId);
-    res.send(user);
+    response(res, "", "user deleted successfully", 200)
   });
 
 module.exports = {

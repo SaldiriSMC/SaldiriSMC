@@ -44,9 +44,22 @@ const sendInviteEmail = async (tokenArray) => {
   // replace this url with the link to the reset password page of your front-end app
   tokenArray.map(async (item) =>{
     const resetPasswordUrl = `http://localhost:3000/chanagePassword/?token=${item.token}`;
-    const text = `Dear user, we are inviting 
+    const text = ` Congratulations! To get onboard with Saldiri SMC PVT LTD (company name) in 
+    #Department as a #Designation. you are requested to get signup on our official portal by
+    clicking here. Signing up to the Saldiri website is very important for further support, operations
+    and official documentation. You are requested to contact the HR department for any queries you
+    may have.
+
     To reset your password, click on this link: ${resetPasswordUrl}
-    If you did not request any password resets, then ignore this email.`;
+    If you did not request any password resets, then ignore this email.
+
+    We wish you best of luck and a bright future with our company.
+
+  
+    Regards,
+    Management,
+    #CompanyName
+`;
     await sendEmail(item.email, subject, text);
   })
 };

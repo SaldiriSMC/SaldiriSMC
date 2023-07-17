@@ -16,14 +16,7 @@ const User = sequelize.define('users', {
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false,
-    validate:{
-      validate(value) {
-        if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
-          throw new Error('Password must contain at least one letter and one number');
-        }
-    }
-    },
+    allowNull: false, 
   },
   role: {
     type:DataTypes.ENUM('admin','hr', 'employee'),
@@ -60,6 +53,10 @@ const User = sequelize.define('users', {
       key:"id"
     },
   },
+  isSignedIn:{
+    type: DataTypes.BOOLEAN,
+    defaultValue:false
+  }
 },
 );
 module.exports = User;

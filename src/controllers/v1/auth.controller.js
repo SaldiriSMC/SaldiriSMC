@@ -7,7 +7,6 @@ const {response} = require("../../utils/response")
 const register = catchAsync(async (req, res) => {
   try {
     const alias = await Tenant.findOne({ alias: req.body.alias });
-    console.log("alias------->>>>>",alias)
     const isEmail = await User.isEmailTaken(req.body.email);
     if (!isEmail) {
       if (!alias) {

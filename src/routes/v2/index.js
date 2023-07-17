@@ -4,6 +4,7 @@ const userRoute = require('./user.route');
 const attendanceRoute = require("./attendance.route")
 const departmentRoute = require("./department.route")
 const designationRoute = require("./designation.route")
+const emailTemplateRoute = require("./emailTemplate.route")
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -29,6 +30,10 @@ const defaultRoutes = [
   {
     path: '/designation',
     route: designationRoute,
+  },
+  {
+    path: '/email-templates',
+    route: emailTemplateRoute,
   },
 ];
 

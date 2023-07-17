@@ -13,6 +13,7 @@ const department = require("./models/v2/department.module")
 const modules = require("./models/v2/module.model")
 const designation = require("./models/v2/designation.model")
 const contact = require("./models/v2/contact.model")
+const emailTemplate = require("./models/v2/emailTemplates.module")
 let server;
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
@@ -76,6 +77,11 @@ const mySqlConnection = async() =>{
     console.log("yes re sync of contact is done")
   }).catch((err)=>{
     console.log("contact------->>>>>>",err)
+  })
+  emailTemplate.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re emailTemplate of contact is done")
+  }).catch((err)=>{
+    console.log("emailTemplate------->>>>>>",err)
   })
   sequelize.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync is done")

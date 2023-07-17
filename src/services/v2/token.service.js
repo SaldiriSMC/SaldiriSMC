@@ -105,6 +105,7 @@ const generateResetPasswordToken = async (email) => {
 const generateEmailIvitationToken = async (emailArray) => {
   const emailInvitationTokenArray = []
   emailArray.map(async(item) => {
+    Token.destroy({where:{user:item.id, type:tokenTypes.RESET_PASSWORD}})
     const expires = moment().add(config.jwt.resetPasswordExpirationMinutes, 'minutes');
     const emailInvitationToken= generateToken(item.id, expires, tokenTypes.RESET_PASSWORD);
     saveToken(emailInvitationToken, item.id, expires, tokenTypes.RESET_PASSWORD);

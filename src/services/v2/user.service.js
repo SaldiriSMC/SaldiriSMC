@@ -89,13 +89,12 @@ const updateUserById = async (updateBody,userId) => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  const emialTaken = await getUserByEmail(updateBody?.email)
-  console.log("taken email----->>>>>",emialTaken)
-  if (updateBody.email && emialTaken) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
-  }
+  // const emialTaken = await getUserByEmail(updateBody?.email)
+  // console.log("taken email----->>>>>",emialTaken)
+  // if (updateBody.email && emialTaken) {
+  //   throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+  // }
   const user_ = await User.update(updateBody,{where:{id:userId}})
-  return {message:"user updated successfully"};
 };
 
 /**
@@ -109,7 +108,6 @@ const deleteUserById = async (userId) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
   await user.destroy();
-  return {message:"user deleted successfully"};
 };
 
 module.exports = {
