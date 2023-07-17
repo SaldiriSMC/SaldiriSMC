@@ -2,7 +2,19 @@ import * as React from 'react';
 import { makeStyles } from "tss-react/mui";
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import { deepOrange, deepPurple } from '@mui/material/colors';
 
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
 import { loginSchema } from "../Yup Schema";
 import MUITextField from "../sharedComponents/textField";
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -88,7 +100,7 @@ function NavScrollExample() {
   const user = JSON.parse(localStorage.getItem("accessToken"))
   const userRole =  user?.data?.user?.role
     const logOutToken = user?.data?.tokens?.refresh?.token
-    console.log("userRole------------->>>>>>>>>>>",userRole)
+    console.log("userRole------------->>>>>>>>>>>",user)
   const initialValues = {
     email: "",
     password: "",
@@ -120,7 +132,14 @@ function NavScrollExample() {
       }
     });
 
-
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
   return (
     <Navbar bg="white" expand="lg">
       <Container fluid>
@@ -169,7 +188,7 @@ function NavScrollExample() {
               Invite User
               </NavDropdown.Item>
             </NavDropdown>
-            </>) : userRole == 'HR' ? <>    <NavDropdown.Item as={Link} to="/dashboard" >
+            </>) : userRole == 'hr' ? <>    <NavDropdown.Item as={Link} to="/dashboard" >
               Dashboard 
               </NavDropdown.Item>
               <NavDropdown title=" Attendance" id="navbarScrollingDropdown">
@@ -185,8 +204,70 @@ function NavScrollExample() {
             </NavDropdown>}
           </Nav>
           {user ? <>
-            <Grid container flexDirection='row' display='flex' justifyContent='flex-end'sx={{p:1}}>
-          <Button variant="contained" endIcon={<LogoutIcon />} onClick={()=>{
+            <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+        <Tooltip title="Account settings">
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{ ml: 2 }}
+            aria-controls={open ? 'account-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+          >
+            <Avatar sx={{ width: 45, height: 45, }}  src="/assets/2.jpg"  ></Avatar>
+          </IconButton>
+        </Tooltip>
+      </Box>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: 'visible',
+            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+            mt: 1.5,
+            '& .MuiAvatar-root': {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            '&:before': {
+              content: '""',
+              display: 'block',
+              position: 'absolute',
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: 'background.paper',
+              transform: 'translateY(-50%) rotate(45deg)',
+              zIndex: 0,
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <MenuItem onClick={handleClose}>
+          <Avatar /> {user?.data?.user?.name.toUpperCase()}
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Avatar /> My account
+        </MenuItem>
+        <Divider />
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          Settings
+        </MenuItem>
+        <MenuItem     
+          onClick={()=>{
          dispatch(
           logout({
             data:{
@@ -195,8 +276,12 @@ function NavScrollExample() {
             navigate:navigate,
           })
         )}}>
-            Log Out
-           </Button></Grid>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon >
+          Logout
+        </MenuItem>
+      </Menu>
           </> : <>
           <form onSubmit={handleSubmit}>
           <Grid container flexDirection='row' display='flex' justifyContent='flex-end'sx={{p:1}}>

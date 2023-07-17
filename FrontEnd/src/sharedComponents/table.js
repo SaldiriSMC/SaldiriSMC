@@ -14,6 +14,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditModal from "../sharedComponents/editModal";
 import DeleteModal from "../sharedComponents/deleteModal";
 import AddModal from "../sharedComponents/addModal";
+import { updateTime, getAttendanceByHours } from "../actions/Attendance";
 import { useDispatch, useSelector } from "react-redux";
 import { removeAttendenceOnIndexAction } from "../actions/Attendance";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -53,9 +54,29 @@ export default function CustomizedTables({
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const data = useSelector((state) => state?.attendance?.attendance?.data);
   const [deleteId, setDeleteId] = React.useState({});
-  const handleDelete = (item) => {
-    setShowDeleteModal(true);
-    setDeleteId({ id: item.timeId, attendanceid: item.attendenceid });
+
+    const handleDelete = (item) => {
+      setShowDeleteModal(true);
+      setDeleteId({ id: item.timeId, attendanceid: item.attendenceid });
+    }
+    const handleDeleteModel = (item) => {
+    const totalHours = calculateTotalWorkedHours();
+    let payload = {
+      time: [
+        {
+          isDeleted: true,
+          id: deleteId.id,
+          attendanceid: deleteId.attendanceid ,
+          totalHours: totalHours,
+        },
+      ],
+    };
+    console.log("payloadpayload------------",payload)
+    dispatch(updateTime(payload));
+    setTimeout(() => {
+      dispatch(getAttendanceByHours(value));
+    }, 100);
+    setShowDeleteModal(false);
   };
   return (
     <>
@@ -128,11 +149,8 @@ export default function CustomizedTables({
       <DeleteModal
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
-        deleteTimeInOut={deleteTimeInOut}
-        setDeleteTimeInOut={setDeleteTimeInOut}
-        deleteId={deleteId}
-        value={value}
-        calculateTotalWorkedHours={calculateTotalWorkedHours}
+        handleDeleteModel={handleDeleteModel}
+
       />
     </>
   );

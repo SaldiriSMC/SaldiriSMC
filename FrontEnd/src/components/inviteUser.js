@@ -5,7 +5,6 @@ import "react-clock/dist/Clock.css";
 import MUITable from "../sharedComponents/MUITable";
 import NavBar from "../components/navBar"
 import InviteUserModel from "../sharedComponents/inviteUserModel";
-import Table from "../sharedComponents/table";
 import { UserInviteConfig } from "../configs/tableConfig";
 import "./comaon.css";
 import { IconButton } from '@mui/material';
@@ -13,22 +12,62 @@ import AddIcon from '@mui/icons-material/Add';
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
+import DeleteModal from "../sharedComponents/deleteModal";
 import EmailIcon from '@mui/icons-material/Email';
-import { getAllUser, getAttendanceByHours } from "../actions/Attendance";
-const InviteUser = () => {
+import {
+  deleteInviteUser,
+  getAllDesignation,
+  getAllUserByDeptDes
+} from "../service/users";
+const InviteUser = ({loader,setLoader}) => {
   const [deleteTimeInOut, setDeleteTimeInOut] = React.useState({ time: [] });
   const [isCreate, setIsCreate] = React.useState(false)
   const [showModal,setShowModal] = React.useState(false)
   const [userData,setUserData] = React.useState({})
-  const data = useSelector((state) => state.attendance?.allUsers?.data);
-  const workedHours = useSelector(
-    (state) => state?.attendance?.attendance?.data
-  );  
-
+  const [allUserList, setAllUserList] = useState([])
   const [checkedValue, setCheckedValue] = useState([])
-
+  const [showDeleteModal, setShowDeleteModal] = React.useState(false);
+  const [userDeleteId, setUserDeleteId] = React.useState(null);
+  const [action, setAction] = React.useState(null);
   const dispatch = useDispatch();
 
+console.log("---------loader-----------",loader)
+useEffect(()=>{
+  getAllUser()
+},[])
+
+
+  const getAllUser=()=>{
+    setLoader(true);
+    getAllUserByDeptDes()
+    .then((response) => {
+      if (response.data) {
+        setAllUserList(response.data.data)
+      }
+    })
+    .catch((error) => console.log(error.message))
+    .finally(() => {
+      setLoader(false);
+
+  });
+
+  }
+
+  const handleDeleteModel = () => {
+    setLoader(true);
+    deleteInviteUser(userDeleteId)
+    .then((response) => {
+      if (response.data) {
+        getAllUser()
+        setShowDeleteModal(false)
+      }
+    })
+    .catch((error) => console.log(error.message))
+    .finally(() => {
+      setLoader(false);
+
+  });
+  }
 
 
   const normalizeTableProgram= (source) => {
@@ -41,8 +80,8 @@ const InviteUser = () => {
           onchange: (check, id) => handleCheck(check, id)
         },
         name: record?.name,
-        designation: record?.designation,
-        department: record?.department,
+        designation: record?.designationName,
+        department: record?.departmentname,
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),
@@ -54,30 +93,35 @@ const InviteUser = () => {
   const handleDropdownActionsupport= (data, val,index) => {
 
     if (val === 'delete' ) {
+      setShowDeleteModal(true)
+      setUserDeleteId(data?.id)
      
     }  if (val === 'edit' ) {
+      setAction('update')
+      setUserData(data)
       setShowModal(true)
     }
 
   }
   const handleCheck = (check, id) => {
     if (check) {
-      // setCheckedValue([
-      //   ...checkedValue,
-      //   id,
-      // ])
+      setCheckedValue([
+        ...checkedValue,
+        id,
+      ])
     } else {
-      // setCheckedValue(checkedValue?.filter(item => item !== id))
+      setCheckedValue(checkedValue?.filter(item => item !== id))
     }
   }
 
   const selectedCheckValueHandler = (check) => {
     if (check) {
+      setCheckedValue(allUserList.map(item => item.id))
     } else {
       setCheckedValue([])
     }
   }
-  const dumyData =[{name:'Ali',designation:'Senier',department:'Frontend'},{name:'Abdullah',designation:'Junier',department:'Backend'},{name:'Hassan',designation:'Senier',department:'Frontend'}]
+
   return (
     <div>
          <NavBar />
@@ -112,9 +156,9 @@ const InviteUser = () => {
          </div>
          <MUITable
              onCheckAll={(val) => selectedCheckValueHandler(val)}
-             checkedValue={false}
+             checkedValue={checkedValue.length >= allUserList.length ? true : false}
             column={UserInviteConfig}
-            list={normalizeTableProgram(dumyData)}
+            list={normalizeTableProgram(allUserList)}
 
           />
           <Grid
@@ -144,8 +188,19 @@ const InviteUser = () => {
       </Grid>
       <InviteUserModel
         showModal={showModal}
+        setLoader={setLoader}
         userData={userData}
+        setUserData={setUserData}
         setShowModal={setShowModal}
+        getAllUser={getAllUser}
+        action={action}
+        setAction={setAction}
+      />
+       <DeleteModal
+        showDeleteModal={showDeleteModal}
+        setShowDeleteModal={setShowDeleteModal}
+        handleDeleteModel={handleDeleteModel}
+
       />
     </div>
   );

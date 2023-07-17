@@ -92,31 +92,16 @@ const MainModal = (props) => {
   const {
     setShowDeleteModal,
     showDeleteModal,
-    deleteTimeInOut,
+    handleDeleteModel,
     deleteId,
     value,
     calculateTotalWorkedHours,
   } = props;
   const { classes } = useStyles();
-  const dispatch = useDispatch();
-  const handleDelete = () => {
-    const totalHours = calculateTotalWorkedHours();
-    let payload = {
-      time: [
-        {
-          isDeleted: true,
-          id: deleteId.id,
-          attendanceid: deleteId.attendanceid,
-          totalHours: totalHours,
-        },
-      ],
-    };
-    dispatch(updateTime(payload));
-    setTimeout(() => {
-      dispatch(getAttendanceByHours(value));
-    }, 100);
-    setShowDeleteModal(false);
-  };
+
+
+  
+
   return (
     <div>
       <Modal
@@ -151,7 +136,7 @@ const MainModal = (props) => {
                 className={classes.btn}
                 variant="contained"
                 onClick={() => {
-                  handleDelete();
+                  handleDeleteModel();
                 }}
                 color="primary"
               >

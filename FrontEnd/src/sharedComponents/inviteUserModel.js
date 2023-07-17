@@ -1,3 +1,4 @@
+import React, { useEffect,useState } from "react";
 import { makeStyles } from 'tss-react/mui';
 import Box from '@mui/material/Box';
 import * as Yup from "yup";
@@ -8,10 +9,15 @@ import { useFormik } from "formik";
 import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import IconButton from '@mui/material/IconButton';
-import {updateTime, getAttendanceByHours} from "../actions/Attendance"
+import { pushNotification } from "../utils/notifications";
+import {
+  getAllDepartment,
+  getAllDesignation,
+  createInviteUser,
+  updateInviteUser
+} from "../service/users";
 import Grid from '@mui/material/Grid'
 import CancelIcon from '@mui/icons-material/Cancel';
-import { useEffect } from 'react';
 const useStyles = makeStyles()((theme) => {
     return {
         mainContainer: {
@@ -98,30 +104,143 @@ const InviteUserModel = (props) => {
       showModal, 
       setShowModal,
       userData,
-      value,
-      calculateTotalWorkedHours,
-      isCreate
+      action,
+      setAction,
+      getAllUser,
+      setLoader,
+      setUserData
     } = props
     const { classes } = useStyles();
     const initialValues = {
-      timeIn: '',
-      timeOut:'',
+      designationId: '',
+      departmentId:'',
+      name:'',
+      email:'',
     };
-    const timeScema = Yup.object({
-      timeIn: Yup.string(),
-      timeOut: Yup.string(),
+    const inviteUserScema = Yup.object({
+      designationId: Yup.string().required("Field is required"),
+      departmentId:  Yup.string().required("Field is required"),
+      name:  Yup.string().required("Field is required"),
+      email: Yup
+      .string()
+      .max(255, "Letters must be less than 255")
+      .email('Enter valid email')
+      .required('Field is required'),
 
     })
-    const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched } =
+    const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
+      dirty } =
       useFormik({
         initialValues,
-        validationSchema:timeScema, 
+        validationSchema:inviteUserScema, 
         onSubmit: () => {
+
+          if (action === 'update'){
+            const pauload={...values}
+            setLoader(true);
+            updateInviteUser(pauload,userData.id)
+            .then((response) => {
+              if (response.data) {
+                getAllUser()
+                setShowModal(false)
+                handleReset()
+                setAction(null)
+              }
+              pushNotification(
+                `${response?.data?.message}`,
+                "success",
+              );
+            })
+            .catch((err) => {
+              const { response } = err;
+              setLoader(false)
+              pushNotification(
+                `${response?.data?.message}`,
+                "error",
+              );
+            })
+            .finally(() => {
+              setLoader(false);
+          });
+  
+          } else{
+            const pauload={...values}
+            setLoader(true);
+            createInviteUser([pauload])
+            .then((response) => {
+              if (response.data) {
+                getAllUser()
+                setShowModal(false)
+                handleReset()
+              }
+              pushNotification(
+                `${response?.data?.message}`,
+                "success",
+              );
+            })
+            .catch((err) => {
+              const { response } = err;
+              setLoader(false)
+              pushNotification(
+                `${response?.data?.message}`,
+                "error",
+              );
+            })
+            .finally(() => {
+              setLoader(false);
+          });
+  
+          }
+        
+
+
+
         },
       });
+      const [designationList, setDesignationList] = useState([])
+      const [departmentList, setDepartmentList] = useState([])
 
-      const dispatch = useDispatch();
-   
+    
+      useEffect(()=>{
+        
+        getAllDepartment()
+        .then((response) => {
+          if (response.data) {
+            setDepartmentList(response.data.data)
+          }
+        })
+        .catch((error) => console.log(error.message))
+        .finally(() => {
+    
+      });
+    
+    
+        getAllDesignation()
+        .then((response) => {
+          if (response.data) {
+            setDesignationList(response.data.data)
+          }
+        })
+        .catch((error) => console.log(error.message))
+        .finally(() => {
+    
+      });
+    
+      },[])
+
+
+console.log("userData----------",userData)
+      useEffect(()=>{
+        if (action === 'update'){
+          setValues({
+            ...userData
+          })
+         
+        } else{
+            // handleReset()
+        }
+
+      },[action])
   
   return (
     <div>
@@ -133,73 +252,71 @@ const InviteUserModel = (props) => {
       >
         <Box className={classes.mainContainer}>
         <div className={classes.crosWrap}>
-        <IconButton  aria-label="upload picture" component="label" onClick={()=> setShowModal(false)}>
+        <IconButton  aria-label="upload picture" component="label" onClick={()=> {setShowModal(false);setUserData({}); handleReset();setAction(null)}}>
               <CancelIcon />      
             </IconButton>
             </div>
         <div className={classes.innerContainer}>    
-
+        <form onSubmit={handleSubmit}>
         <Grid  container  spacing={2} sx={{p:1}}>
-     
- 
               <MUITextField
               label='Name'
-               placeholder='Name'
+              placeholder='Name'
               sm={6}
               xs={12}
-              id="tanantName"
-              name="tanantName"
-              value={values.tanantName}
+              id="name"
+              name="name"
+              value={values.name}
               handleChange={handleChange}
-              onBlur={handleBlur}
-              errors={errors.tanantName}
-              touched={touched.tanantName}
+              // onBlur={handleBlur}
+              errors={errors.name}
+              touched={touched.name}
             /> 
             <MUITextField
               sm={6}
               xs={12}
-              name="fullName"
-              value={values.fullName}
+              name="departmentId"
+              value={values.departmentId}
               handleChange={handleChange}
               onBlur={handleBlur}
-              id="fullName"
+              id="departmentId"
               label='Department'
               placeholder='department'
-              errors={errors.fullName}
-              touched={touched.fullName}
+              errors={errors.departmentId}
+              touched={touched.departmentId}
               type="select"
-              options={[]}
-              pass="value"
+              options={departmentList}
+              pass="department"
             />  
                <MUITextField
                sm={6}
                xs={12}
                label='Designation'
-              id="domain"
-              name="domain"
+              id="designationId"
+              name="designationId"
               placeholder='Designation'
-              value={values.domain}
+              value={values.designationId}
               handleChange={handleChange}
               onBlur={handleBlur}
-              errors={errors.domain}
+              errors={errors.designationId}
               type="select"
-              options={[]}
-              pass="value"
-              touched={touched.domain}
+              options={designationList}
+              pass="designation"
+              touched={touched.designationId}
             />
             
             <MUITextField
               sm={6}
               xs={12}
-              id="allies"
+              id="email"
               label='Email'
-              name="allies"
+              name="email"
               placeholder='Email'
-              value={values.allies}
+              value={values.email}
               handleChange={handleChange}
               onBlur={handleBlur}
-              errors={errors.allies}
-              touched={touched.allies}
+              errors={errors.email}
+              touched={touched.email}
             /> 
                  
             </Grid>
@@ -208,8 +325,8 @@ const InviteUserModel = (props) => {
             <Button
                   className={classes.btn}
                  variant="contained"
-                 type='submit'
                  color="primary"
+                 onClick={()=> {setShowModal(false);setUserData({});handleReset();setAction(null)}}
                  style={{ marginTop: '20px' }}
                >
             Cancel
@@ -224,7 +341,7 @@ const InviteUserModel = (props) => {
                Save
                </Button> 
             </Grid>
- 
+            </form>
           </div>  
         </Box>
        
