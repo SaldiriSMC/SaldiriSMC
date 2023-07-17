@@ -166,7 +166,7 @@ const InviteUserModel = (props) => {
           } else{
             const pauload={...values}
             setLoader(true);
-            createInviteUser([pauload])
+            createInviteUser(pauload)
             .then((response) => {
               if (response.data) {
                 getAllUser()

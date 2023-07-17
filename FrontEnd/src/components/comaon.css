@@ -62,7 +62,7 @@ align-items: center;
   position: absolute;
   top: 30%;
   left: 30%;
-  height: 27vh;
+  /* height: 27vh; */
 }
 .services_icon{
   /* background: #D8E4FF; */
@@ -1368,6 +1368,10 @@ margin-top: 2%;
   color: #fff;
 }
 
+.section-header_about{
+  padding-top: 10%;
+  padding-left: 10%;
+}
 
 /*--------------------------------------------------------------
 # Responsive Media Queries

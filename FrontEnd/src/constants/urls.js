@@ -12,6 +12,7 @@ const URLs = {
   getDepartment:'/department',
   getDesignation:'/designation',
   getUserDepartmentDesignation:'/users/by/department-and-designation',
+  sandUsersEmails:'/users/send-invite-emails',
   user:'/users',
   course: "courses/all/",
   topics: "courses/topics/",

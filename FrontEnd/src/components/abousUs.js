@@ -44,8 +44,9 @@ return (
           </div>
             </div>
             <div className='col-lg-6 col-md-6 col-sm-12'>
-            <header className="section-header">
             <h3>{aboutUs.title}</h3>
+            <header className="section-header_about">
+           
             <p className="about-para">
               {aboutUs.description1}
             </p>

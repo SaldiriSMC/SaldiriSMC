@@ -192,9 +192,9 @@ function NavScrollExample() {
               Dashboard 
               </NavDropdown.Item>
               <NavDropdown title=" Attendance" id="navbarScrollingDropdown">
-              <NavDropdown.Item as={Link} to="/attendance" >
+              {/* <NavDropdown.Item as={Link} to="/attendance" >
               Attendance List
-              </NavDropdown.Item>
+              </NavDropdown.Item> */}
               <NavDropdown.Item as={Link} to="/inviteUser" >
               Invite User
               </NavDropdown.Item>
@@ -296,7 +296,7 @@ function NavScrollExample() {
                     justifyContent="center"
                     alignItems="center"
                     item
-                    sm={5.5}
+                    sm={3.5}
                     xs={12}
                   >
                   <TextField
@@ -325,7 +325,7 @@ function NavScrollExample() {
                     justifyContent="center"
                     alignItems="center"
                     item
-                    sm={5.5}
+                    sm={3.5}
                     xs={12}
                   >
                   <TextField

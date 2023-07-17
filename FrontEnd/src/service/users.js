@@ -48,4 +48,11 @@ export const updateInviteUser = (payload,id) => {
     ...headerWithToken
 })
 }
-
+export const sandEmailInviteUser = (payload) => {
+    return instance({
+    url: URls.sandUsersEmails,
+    method: 'post',
+    data: payload,
+    ...headerWithToken
+})
+}

@@ -5,7 +5,7 @@ function ControlledCarousel() {
  
   return (
     <section className="courel-section banerViewHeight" id="home">
-    <Carousel id="carouselExampleControls " interval={null} >
+    <Carousel id="carouselExampleControls "  interval={3000}>
       <Carousel.Item className="slide-a banerViewHeight">
         <img className="d-block banerViewHeight slider_img w-100 img-fluid" src="/assets/baner1.jpg" alt="Third slide" />
         <div className="clearfix">

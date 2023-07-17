@@ -1,4 +1,5 @@
 import React, { useEffect,useState } from "react";
+import { pushNotification } from "../utils/notifications";
 import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
@@ -16,7 +17,7 @@ import DeleteModal from "../sharedComponents/deleteModal";
 import EmailIcon from '@mui/icons-material/Email';
 import {
   deleteInviteUser,
-  getAllDesignation,
+  sandEmailInviteUser,
   getAllUserByDeptDes
 } from "../service/users";
 const InviteUser = ({loader,setLoader}) => {
@@ -49,6 +50,34 @@ useEffect(()=>{
     .finally(() => {
       setLoader(false);
 
+  });
+
+  }
+
+  const sandEmailsUser=()=>{
+
+    const objectsWithIds = allUserList.filter(obj => checkedValue.includes(obj.id));
+    
+    setLoader(true);
+    sandEmailInviteUser({users:objectsWithIds})
+    .then((response) => {
+      if (response.data) {
+        pushNotification(
+          `${response?.data?.message}`,
+          "success",
+        );
+      }
+    })
+    .catch((err) => {
+      const { response } = err;
+      setLoader(false)
+      pushNotification(
+        `${response?.data?.message}`,
+        "error",
+      );
+    })
+    .finally(() => {
+      setLoader(false);
   });
 
   }
@@ -122,6 +151,7 @@ useEffect(()=>{
     }
   }
 
+  console.log("checkedValue----------",checkedValue)
   return (
     <div>
          <NavBar />
@@ -142,8 +172,8 @@ useEffect(()=>{
           md={6}
         >
          <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"15px"}}>
-         <IconButton disabled sx={{mr:1}} size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
-
+         <IconButton disabled={checkedValue.length<1} sx={{mr:1}} size="medium" style={{backgroundColor:checkedValue.length<1 ?"gray" : '#0075FF ', color:"white",}} onClick={()=>{
+sandEmailsUser()
           } }>
             <EmailIcon />
           </IconButton> 

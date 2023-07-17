@@ -65,30 +65,6 @@ function Technologies() {
   </div>
 </>
 
-    {/* <div className="row no-gutters technologies-wrap clearfix wow fadeInUp">
-     
-     {React.Children.toArray(TechnologiesList.map((item)=>{
-        return (
-            <>
-            <div className=" my-2 col-lg-4 col-md-4 col-xs-6">
-        <div className="client-logo" onClick={()=>{setModelData(item);setOpen(true)}}>
-          <img
-            src={item.img}
-            className="img-fluid"
-            data-toggle="modal"
-            data-target="#myModal10"
-            alt=""
-          />
-        
-        </div>
-      </div>
-            </>
-        )
-     }))}
-      
-     
-   
-    </div> */}
   </div>
   {/* <PortfolioModel
         setOpen={setOpen}
