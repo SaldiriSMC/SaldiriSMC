@@ -19,20 +19,21 @@ const createEmailTemplate = catchAsync(async (req, res) => {
 });
 
 const updateEmailTemplate = catchAsync(async (req, res) => {
-    const id = req.params
-    console.log("id------->>>>>>",id)
+    const id = req.params.emailTemplateId
     const key = req.get('X-Tenent-Key');
     const tenant = await Tenant.findOne({ where: { key: key } });
-    // const emailTemplate = await EmailTemplate.update({subject:req.body.subject, body:req.body.body}, where:{
-    //     id:id
-    // })
-    // const emailTemplate = await EmailTemplate.create(req.body)
-    // response(res, emailTemplate, "Email templates created successfully", 200)
+    const emailTemplate = await EmailTemplate.update({subject:req.body.subject, body:req.body.body}, {where:{
+        id:id, tenantId:tenant.id
+    }})
+    response(res, emailTemplate, "Email templates updated successfully", 200)
 });
 
 const deleteEmailTemplate = catchAsync(async (req, res) => {
-    const emailTemplate = await EmailTemplate.create(req.body)
-    response(res, emailTemplate, "Email templates created successfully", 200)
+    const id = req.params.emailTemplateId
+    const key = req.get('X-Tenent-Key');
+    const tenant = await Tenant.findOne({ where: { key: key } });
+    const emailTemplate = await EmailTemplate.destroy({where:{id:id, tenantId:tenant.id}})
+    response(res, emailTemplate, "Email templates deleted successfully", 200)
 });
 
 

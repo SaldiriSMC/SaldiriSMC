@@ -1,8 +1,6 @@
 const express = require('express');
 const auth = require('../../middlewares/auth');
 const tenant = require("../../middlewares/v2/tenant")
-const validate = require('../../middlewares/validate');
-const userValidation = require('../../validations/user.validation');
 const emailTemplateController = require('../../controllers/v2/emailTemplate.controller');
 const checkRoles = require('../../middlewares/v2/checkRole')
 
@@ -15,7 +13,7 @@ router
 router
   .route('/:emailTemplateId')
   .patch(auth('manageUsers'), tenant(), emailTemplateController.updateEmailTemplate)
-  .delete(auth('manageUsers'), tenant(), emailTemplateController.createEmailTemplate);
+  .delete(auth('manageUsers'), tenant(), emailTemplateController.deleteEmailTemplate);
 
 module.exports = router;
 
@@ -23,7 +21,7 @@ module.exports = router;
  * @swagger
  * tags:
  *   name: EmailTemplates
- *   description:EmailTemplates management and retrieval
+ *   description: EmailTemplates management and retrieval
  */
 
   
@@ -46,10 +44,14 @@ module.exports = router;
  *         description: OK
  *         content:
  *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/EmailTemplates'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
  *   post:
  *     summary: Create a email template
  *     description: Only admins can create other email templates.
@@ -93,6 +95,12 @@ module.exports = router;
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
+ */
+
+
+/**
+ * @swagger
+ * /email-templates/{id}:
  *   patch:
  *     summary: Update a email template
  *     description: Logged in users can only update their own information. Only admins can update other users.

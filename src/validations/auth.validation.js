@@ -10,7 +10,8 @@ const register = {
     domain:Joi.string(),
     phoneNumber:Joi.string(),
     designation:Joi.string().required(),
-    alias:Joi.string().required()
+    alias:Joi.string().required(),
+    type:Joi.string()
   }),
 };
 

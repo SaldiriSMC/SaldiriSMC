@@ -11,11 +11,11 @@ const register = catchAsync(async (req, res) => {
     if (isEmail === null) {
       if (alias === null) {
         if(req.body.type === "user"){
-          response(res, "", 'No tenant found agaist this alias', httpStatus.BAD_REQUEST)
-        }
+          response(res, "", 'No tenant found against this alias', httpStatus.BAD_REQUEST)
+        } 
         const tenant = await tenantService.createTenant(req.body, res);
         if (tenant) {
-          const user = await userService.createUser(req.body, tenant.id);
+          const user = await userService.createUser(req.body, tenant.id, null);
           if (user) {
             const tokens = await tokenService.generateAuthTokens(user);
             response(res, { tenant, user, tokens }, 'User created successfully', httpStatus.CREATED)
