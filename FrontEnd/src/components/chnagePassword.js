@@ -74,7 +74,8 @@ function ForgetPassword() {
             resetPassword({
               credentials:{
               password: values.password,},
-              LogIntoken:token
+              LogIntoken:token,    
+              navigate:navigate,
             }
             )
           );

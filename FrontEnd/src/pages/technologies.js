@@ -63,20 +63,6 @@ function Technologies() {
         
         <div className="mt-4">
  
-          {/* <img className='img-fluid' src={item.logo}></img> */}
-          
- 
-        </div>
-        </div>
-       
-      </div> 
-  <div className="col-xs-12 col-sm-6 col-md-6" >
-        <div className="bo">
-         {/* <h3>{item.title}</h3>/ */}
-          {/* <p className='tech_text_desp'>{item.description}</p> */}
-        
-        <div className="mt-4">
- 
           <img className='img-fluid' src={item.logo}></img>
           
  
@@ -84,6 +70,7 @@ function Technologies() {
         </div>
        
       </div> 
+
   
   
    </>)
@@ -91,20 +78,9 @@ function Technologies() {
 {
   index%2 !== 0 && ( <>  
   
-  <div className="col-xs-12 col-sm-6 col-md-6" >
-       <img className='img-fluid' src={item.logo}></img>
-  <div className="bo">
- 
-  <div className="mt-4">
 
- 
-    
-
-  </div>
-  </div>
- 
-</div>
   <div className="col-xs-12 col-sm-6 col-md-6" >
+  <img className='img-fluid' src={item.logo}></img>
   <div className="bo">
   <h3 className='text-start'>{item.title}</h3>
     <p className='tech_text_desp'>{item.description}</p>

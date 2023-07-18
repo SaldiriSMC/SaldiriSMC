@@ -84,6 +84,7 @@ function SignUp() {
             signUp({
               credentials:{
               name: values.fullName,
+              type: values.type,
               email: values.email,
               alias: values.allies,
               designation: values.designation,
@@ -98,6 +99,7 @@ function SignUp() {
               credentials:{
               name: values.fullName,
               tanantName: values.tanantName,
+              type: values.type,
               email: values.email,
               alias: values.allies,
               designation: values.designation,

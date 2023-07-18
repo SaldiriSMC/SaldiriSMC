@@ -64,6 +64,7 @@ function* signUpCall(action) {
 // logOut call
 function* logOutCall(action) {
   console.log(action?.payload?.refreshToken,"actionaction", action);
+  
   try {
     const response = yield call(postRequest, URls.logOut, action?.payload.data);
     console.log("response catch",response)

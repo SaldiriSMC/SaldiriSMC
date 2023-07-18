@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from "tss-react/mui";
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
@@ -98,6 +98,8 @@ function NavScrollExample() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("accessToken"))
+  const currentTime = new Date().getTime();
+  const tokenExpirey = user?.user?.tokenExpiry;
   const userRole =  user?.data?.user?.role
     const logOutToken = user?.data?.tokens?.refresh?.token
     console.log("userRole------------->>>>>>>>>>>",user)
@@ -140,6 +142,20 @@ function NavScrollExample() {
     const handleClose = () => {
       setAnchorEl(null);
     };
+
+    useEffect(() => {
+      async function fetchData() {
+        if (currentTime >= tokenExpirey) {
+ 
+          // router.push(`${process.env.NEXTAUTH_URL}/sign-in`);
+          // Cookies.remove('token');
+        }
+      }
+      fetchData();
+    }, [currentTime])
+
+
+
   return (
     <Navbar bg="white" expand="lg">
       <Container fluid>
