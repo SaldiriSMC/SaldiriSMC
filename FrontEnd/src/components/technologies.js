@@ -39,78 +39,83 @@ function Technologies() {
   <div className="container mt-5">
     <div className="row">
 
-     <div className="col-xs-12 col-sm-6 col-md-4" >
+    {React.Children.toArray(TechnologiesList.map((item,index)=>{
+        return (
+            <>
+
+            {index <= 2 && (
+              <>
+             
+{
+  index%2 === 0 && ( <>
+  
+
+  <div className="col-xs-12 col-sm-6 col-md-4" >
         <div className="bo">
-         
-          <p className='tech_text_desp'>React is a framework of NodeJS and one of the stack in MERN, which features a modular architecture and the ability to integrate open</p>
+        <h3 className='text-start'>{item.title}</h3>
+          <p className='tech_text_desp'>{item.description}</p>
         
-          <Link to="/technologies"> 
+
            <Button
+            onClick={()=>{setModelData(item);setOpen(true)}}
              endIcon={<TrendingFlatIcon />} 
                  variant=""
                  color="primary"
-                 style={{width:200,borderRadius:30,marginRight:'auto',marginLeft:'auto'}}
+                 style={{width:200,borderRadius:30,marginRight:'auto',marginLeft:'auto',color:'#1BB1EA'}}
                >
                 Read More
             
                </Button>
-               </Link>
+
         <div className="mt-4">
  
-          <img className='img-fluid' src='/assets/TechnologyNew/1.jpg' ></img>
+          <img className='img-fluid'  src={item.logo} ></img>
           
  
         </div>
         </div>
        
       </div> 
-     <div className="col-xs-12 col-sm-6 col-md-4" >
+  
+  
+   </>)
+}
+{
+  index%2 !== 0 && ( <> 
+  
+  <div className="col-xs-12 col-sm-6 col-md-4" >
      <div className="mb-5">
  
- <img className='img-fluid' src='/assets/TechnologyNew/22.jpg' ></img>
+ <img className='img-fluid'  src={item.logo} ></img>
  
 
 </div>
         <div className="bo">
-         
-          <p className='tech_text_desp'>React is a framework of NodeJS and one of the stack in MERN, which features a modular architecture and the ability to integrate open</p>
+        <h3 className='text-start'>{item.title}</h3>
+          <p className='tech_text_desp'>{item.description}</p>
         </div>
-        <Link to="/technologies"> 
+
            <Button
+           onClick={()=>{setModelData(item);setOpen(true)}}
              endIcon={<TrendingFlatIcon />} 
                  variant=""
                  color="primary"
-                 style={{ borderRadius:30,marginRight:'auto',marginLeft:'auto'}}
+                 style={{ borderRadius:30,marginRight:'auto',marginLeft:'auto',color:'#1BB1EA'}}
                >
                 Read More
             
                </Button>
-               </Link>
+        
         
       </div> 
-     <div className="col-xs-12 col-sm-6 col-md-4" >
-        <div className="bo">
-         
-          <p className='tech_text_desp'>React is a framework of NodeJS and one of the stack in MERN, which features a modular architecture and the ability to integrate open</p>
-        </div>
-        <Link to="/technologies"> 
-           <Button
-             endIcon={<TrendingFlatIcon />} 
-                 variant=""
-                 color="primary"
-                 style={{ marginTop: '30px',width:200,borderRadius:30,marginRight:'auto',marginLeft:'auto'}}
-               >
-                Read More
-            
-               </Button>
-               </Link>
-        <div className="mt-4">
- 
-          <img className='img-fluid' src='/assets/TechnologyNew/3.jpg' ></img>
-          
- 
-        </div>
-      </div> 
+       </>)
+}
+</>
+            )}
+  
+            </>
+        )
+     }))}
      
 
     </div>
