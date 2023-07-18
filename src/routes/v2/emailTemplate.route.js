@@ -93,17 +93,10 @@ module.exports = router;
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
- *
- */
-
-
- /**
- * @swagger
- * /users/by/department-and-designation:
- *   get:
- *     summary: Get a users by department name and designation
- *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Users]
+ *   patch:
+ *     summary: Update a email template
+ *     description: Logged in users can only update their own information. Only admins can update other users.
+ *     tags: [EmailTemplates]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -111,33 +104,14 @@ module.exports = router;
  *         in: header
  *         description: X-Tenent-Key
  *         required: true
- *     responses:
- *       "200":
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *                $ref: '#/components/schemas/User'
- *       "401":
- *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
- *       "404":
- *         $ref: '#/components/responses/NotFound'
- * 
- *   post:
- *     summary: Create a user by department name and designation
- *     description: Only admins can create other users.
- *     parameters:
- *         - name: X-Tenent-Key
- *           in: header
- *           description: X-Tenent-Key
- *           required: true
- *           schema:
- *             type: string
- *     tags: [Users]
- *     security:
- *       - bearerAuth: []
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: email template id
  *     requestBody:
  *       required: true
  *       content:
@@ -145,100 +119,16 @@ module.exports = router;
  *           schema:
  *             type: object
  *             required:
- *               - name
- *               - departmentId
- *               - designationId
- *               - email
+ *               - subject
+ *               - body
  *             properties:
- *               name:
+ *               subject:
  *                 type: string
- *               departmentId:
- *                 type: number
- *               designationId:
- *                 type: number
- *               email:
+ *               body:
  *                 type: string
- *                 format: email
- *                 description: must be unique
  *             example:
- *               name: fake name
- *               departmentId: 1
- *               designationId: 4
- *               email: fake@example.com
- *     responses:
- *       "201":
- *         description: Created
- *         content:
- *           application/json:
- *             schema:
- *                $ref: '#/components/schemas/User'
- *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
- *       "401":
- *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
- */
-
- 
-/**
- * @swagger
- * /users/send-invite-emails:
- *   post:
- *     summary: Send multiple invite email
- *     description: An email will be sent to invite user.
- *     tags: [Users]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - name: X-Tenent-Key
- *         in: header
- *         description: X-Tenent-Key
- *         required: true
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: array
- *             properties:
- *               id:
- *                 type: number
- *               email:
- *                 type: string
- *                 format: email
- *                 description: must be unique
- *             example:
- *               users: [{"id":"1", "email":"fake@gmail.com"}]
- *     responses:
- *       "200":
- *         description: email send to users
- *       "401":
- *         $ref: '#/components/responses/Unauthorized'
- */
-
- /**
- * @swagger
- * /users/{id}:
- *   get:
- *     summary: Get a user
- *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Users]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - name: X-Tenent-Key
- *         in: header
- *         description: X-Tenent-Key
- *         required: true
- *         schema:
- *           type: string
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: User id
+ *               subject: Reset Password
+ *               body: Hello
  *     responses:
  *       "200":
  *         description: OK
@@ -246,63 +136,6 @@ module.exports = router;
  *           application/json:
  *             schema:
  *                $ref: '#/components/schemas/User'
- *       "401":
- *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
- *       "404":
- *         $ref: '#/components/responses/NotFound'
- *
- *   patch:
- *     summary: Update a user
- *     description: Logged in users can only update their own information. Only admins can update other users.
- *     tags: [Users]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - name: X-Tenent-Key
- *         in: header
- *         description: X-Tenent-Key
- *         required: true
- *         schema:
- *           type: string
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: User id
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
- *                 format: email
- *                 description: must be unique
- *               password:
- *                 type: string
- *                 format: password
- *                 minLength: 8
- *                 description: At least one number and one letter
- *             example:
- *               name: fake name
- *               email: fake@example.com
- *               password: password1
- *     responses:
- *       "200":
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *                $ref: '#/components/schemas/User'
- *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -311,9 +144,9 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
- *     summary: Delete a user
+ *     summary: Delete a emial template
  *     description: Logged in users can delete only themselves. Only admins can delete other users.
- *     tags: [Users]
+ *     tags: [EmailTemplates]
  *     security:
  *       - bearerAuth: []
  *     parameters:
