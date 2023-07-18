@@ -6,6 +6,10 @@ const Token = sequelize.define('tokens', {
           type: DataTypes.STRING,
           allowNull: false,
         },
+        refreshToken: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
         user: {
           type: DataTypes.INTEGER,
           references:{
@@ -15,7 +19,7 @@ const Token = sequelize.define('tokens', {
           allowNull: false,
         },
         type: {
-          type: DataTypes.ENUM(tokenTypes.REFRESH, tokenTypes.ACCESS, tokenTypes.RESET_PASSWORD, tokenTypes.VERIFY_EMAIL, tokenTypes.EMAIL_INVITATION),
+          type: DataTypes.ENUM(tokenTypes.REFRESH, tokenTypes.AUTH, tokenTypes.RESET_PASSWORD, tokenTypes.VERIFY_EMAIL, tokenTypes.EMAIL_INVITATION),
           allowNull: false,
         },
         expires: {
