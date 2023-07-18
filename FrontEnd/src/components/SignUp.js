@@ -60,7 +60,7 @@ function SignUp() {
     designation: "",
     email: "",
     allies: "",
-    type: "Company",
+    type: "company",
     domain: "",
     password: "",
   };
@@ -112,7 +112,7 @@ function SignUp() {
       },
     });
 useEffect(()=>{
-  if (values.type == 'User'){
+  if (values.type == 'user'){
     setUserType('User')
   }
 
@@ -142,12 +142,12 @@ useEffect(()=>{
                   value={values.type}
                   setFieldValue={setFieldValue}
                   options={[
-                    { value: "Company", label: "Company" },
-                    { value: "User", label: "User" },
+                    { value: "company", label: "Company" },
+                    { value: "user", label: "User" },
                   ]}
                 />
 
-                {values.type == 'Company' ? (
+                {values.type == 'company' ? (
                 <>
               <MUITextField
                noTitle
