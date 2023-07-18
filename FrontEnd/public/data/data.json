@@ -402,11 +402,13 @@
   },
   {
     "id": 5,
-    "img": "/assets/NewClients/4.png"
+    "img": "/assets/NewClients/4.png",
+    "url": "https://www.askertech.com/" 
   },
   {
     "id": 6,
-    "img": "/assets/NewClients/5.png"
+    "img": "/assets/NewClients/5.png",
+    "url": "https://royal35steakhouse.com/" 
   },
   {
     "id": 7,
@@ -414,7 +416,8 @@
   },
   {
     "id": 8,
-    "img": "/assets/NewClients/7.png"
+    "img": "/assets/NewClients/7.png",
+    "url": "https://thevirtualux.com/" 
   },
   {
     "id": 9,
@@ -422,19 +425,23 @@
   },
   {
     "id": 10,
-    "img": "/assets/NewClients/9.png"
+    "img": "/assets/NewClients/client3.png",
+    "url": "https://hlres.com/" 
   },
   {
     "id": 11,
-    "img": "/assets/NewClients/10.png"
+    "img": "/assets/NewClients/10.png",
+    "url": "https://anzpartners.com.au/" 
   },
   {
     "id": 12,
-    "img": "/assets/NewClients/11.png"
+    "img": "/assets/NewClients/11.png",
+    "url": "https://ophycare.com" 
   },
   {
     "id": 13,
-    "img": "/assets/NewClients/12.png"
+    "img": "/assets/NewClients/12.png",
+    "url": "https://www.zkrollups.xyz/" 
   },
   {
     "id": 14,
@@ -446,7 +453,8 @@
   },
   {
     "id": 15,
-    "img": "/assets/NewClients/15.png"
+    "img": "/assets/NewClients/15.png",
+    "url": "http://sellanywheel.com/" 
   }
 ]
 }

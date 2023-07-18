@@ -109,11 +109,6 @@ useEffect(()=>{
           onchange: (check, id) => handleCheck(check, id),
           // disabled:((record.isSIgnin) || (!record.isSignin && ! record.isToken))
 
-
-
-
-
-
         },
         name: record?.name,
         designation: record?.designationName,

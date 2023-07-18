@@ -131,7 +131,7 @@ const MainModal = (props) => {
             time: [
               {
                 ...values,
-                attendanceid: userData.attendenceid,
+                attendanceid: userData?.attendenceid,
                 totalHours: totalHours,
               },
             ],

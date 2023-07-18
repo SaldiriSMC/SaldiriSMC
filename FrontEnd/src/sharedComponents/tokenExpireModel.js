@@ -1,16 +1,12 @@
 import { makeStyles } from "tss-react/mui";
 import Box from "@mui/material/Box";
-import * as Yup from "yup";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-import { useFormik } from "formik";
-import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import IconButton from "@mui/material/IconButton";
 import { updateTime, getAttendanceByHours } from "../actions/Attendance";
 import Grid from "@mui/material/Grid";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { useEffect } from "react";
 const useStyles = makeStyles()((theme) => {
   return {
     mainContainer: {
@@ -86,68 +82,31 @@ const useStyles = makeStyles()((theme) => {
       borderRadius: 10,
       height: 40,
       marginRight: 10,
-      width: 100,
+      // width: 100,
       fontWeight: 600,
     },
   };
 });
 
-const MainModal = (props) => {
+const TokenExpireModel = (props) => {
   const {
-    showAddModal,
-    setShowAddModal,
-    userData,
+    setShowDeleteModal,
+    showDeleteModal,
+    handleDeleteModel,
+    deleteId,
     value,
     calculateTotalWorkedHours,
   } = props;
   const { classes } = useStyles();
-  const initialValues = {
-    timeIn: "",
-    timeOut: "",
-  };
-  const timeScema = Yup.object({
-    timeIn: Yup.string(),
-    timeOut: Yup.string(),
-  });
-  const {
-    handleChange,
-    handleSubmit,
-    handleBlur,
-    setFieldValue,
-    handleReset,
-    errors,
-    values,
-    touched,
-  } = useFormik({
-    initialValues,
-    validationSchema: timeScema,
-    onSubmit: () => {},
-  });
 
-  const dispatch = useDispatch();
-  const updateTimeFun = () => {
-    const totalHours = calculateTotalWorkedHours();
-    var data = {
-      time: [
-        {
-          ...values,
-          attendanceid: userData?.attendenceid,
-          totalHours: totalHours,
-        },
-      ],
-    };
-    dispatch(updateTime(data));
-    setTimeout(() => {
-      dispatch(getAttendanceByHours(value));
-    }, 100);
-    handleReset()
-    setShowAddModal(false); 
-  };
+
+  
+
   return (
     <div>
       <Modal
-        open={showAddModal}
-        onClose={() => setShowAddModal(false)}
+        open={showDeleteModal}
+        // onClose={() => setShowDeleteModal(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -156,45 +115,19 @@ const MainModal = (props) => {
             <IconButton
               aria-label="upload picture"
               component="label"
-              onClick={() => setShowAddModal(false)}
+              onClick={() => setShowDeleteModal(false)}
             >
               <CancelIcon />
             </IconButton>
           </div>
           <div className={classes.innerContainer}>
-            <div className="d-flex justify-center">
-              <div className="d-flex flex-column col-sm-6 px-2">
-                <label htmlFor="timeIn">Time In</label>
-                <input
-                  type="time"
-                  onChange={handleChange}
-                  value={values.timeIn}
-                  name="timeIn"
-                  id="timeIn"
-                />
-                {values.timeIn > values.timeOut && (
-                  <div style={{ color: "red" }}>
-                    Time Out is less then Time In{" "}
-                  </div>
-                )}
-              </div>
-              <div className="d-flex flex-column col-sm-6 px-2">
-                <label htmlFor="timeOut">Time Out</label>
-                <input
-                  type="time"
-                  onChange={handleChange}
-                  value={values.timeOut}
-                  name="timeOut"
-                  id="timeOut"
-                />
-              </div>
-            </div>
+            <h5>Are you sure you want to delete Are you sure you want to delete Are you sure you want to deleteAre you sure you want to delete</h5>
             <Grid
               item
               sx={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "flex-end",
+                justifyContent: "center",
                 my: 3,
               }}
             >
@@ -202,12 +135,20 @@ const MainModal = (props) => {
               <Button
                 className={classes.btn}
                 variant="contained"
+                onClick={() => setShowDeleteModal(false)}
+                color="primary"
+              >
+                Cancel
+              </Button>
+              <Button
+                className={classes.btn}
+                variant="contained"
                 onClick={() => {
-                  updateTimeFun();
+                  handleDeleteModel();
                 }}
                 color="primary"
               >
-                Add
+                Continue Work
               </Button>
             </Grid>
           </div>
@@ -217,4 +158,4 @@ const MainModal = (props) => {
   );
 };
 
-export default MainModal;
+export default TokenExpireModel;

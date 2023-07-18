@@ -19,10 +19,11 @@ const AttendanceAdjusment = () => {
   const [showModal,setShowModal] = React.useState(false)
   const [userData,setUserData] = React.useState({})
   const data = useSelector((state) => state.attendance?.allUsers?.data);
+  const attendanceData = useSelector((state) => state?.attendance?.attendance?.data);
   const workedHours = useSelector(
     (state) => state?.attendance?.attendance?.data
   );  
-  console.log("workedHours", workedHours);
+  console.log("data----------------------->>>>>>>>>>>>>  data", data);
   const calculateTotalWorkedHours = () => {
     const total = workedHours
       ?.map((item) => Number(item.Difference))
@@ -166,7 +167,7 @@ const AttendanceAdjusment = () => {
         >
          <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"15px"}}>
          <IconButton size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
-          if(data?.length>0){
+          if(attendanceData?.length > 0){
             setUserData(workedHours[0])
             setShowModal(true)
             setIsCreate(true)

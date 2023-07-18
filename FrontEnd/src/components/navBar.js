@@ -11,7 +11,7 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { deepOrange, deepPurple } from '@mui/material/colors';
-
+import { format } from "date-fns";
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
@@ -30,7 +30,12 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link, Outlet } from 'react-router-dom';
+import TokenExpireModel from "../sharedComponents/tokenExpireModel";
 import { logIn, logout } from "../actions/Auth";
+import { pushNotification } from "../utils/notifications";
+import {
+  userTokenExpire
+} from "../service/users";
 const useStyles = makeStyles()((theme) => {
   return {
     btn: {
@@ -92,17 +97,20 @@ const useStyles = makeStyles()((theme) => {
     }
   };
 });
-function NavScrollExample() {
+function NavScrollExample({ setLoader,}) {
   const location = useLocation();
   const { classes } = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const user = JSON.parse(localStorage.getItem("accessToken"))
-  const currentTime = new Date().getTime();
-  const tokenExpirey = user?.user?.tokenExpiry;
+  const currentTime = new Date()
+  currentTime.setMinutes(currentTime.getMinutes() - 10);
+  const currentTimeFormet = format((new Date(currentTime)), "yyyy-MM-dd'T'HH:mm:ss'Z'")
+  const tokenExpirey = user ? format((new Date(user?.data?.tokens?.access?.expires)), "yyyy-MM-dd'T'HH:mm:ss'Z'"): ''
   const userRole =  user?.data?.user?.role
-    const logOutToken = user?.data?.tokens?.refresh?.token
-    console.log("userRole------------->>>>>>>>>>>",user)
+    const logOutToken = user?.data?.tokens?.access?.refreshToken
+    console.log(currentTime,"tokenExpirey------------->>>>>>>>>>>",tokenExpirey > currentTime)
   const initialValues = {
     email: "",
     password: "",
@@ -145,16 +153,52 @@ function NavScrollExample() {
 
     useEffect(() => {
       async function fetchData() {
-        if (currentTime >= tokenExpirey) {
- 
-          // router.push(`${process.env.NEXTAUTH_URL}/sign-in`);
-          // Cookies.remove('token');
+        if (currentTimeFormet >= tokenExpirey) { 
+          // logOut()
         }
       }
       fetchData();
-    }, [currentTime])
+    }, [currentTimeFormet])
+
+const logOut =()=>{
+  dispatch(
+    logout({
+      data:{
+        refreshToken:logOutToken,
+      },
+      navigate:navigate,
+    }))
+} 
 
 
+const continueWorkHandel = () =>{
+
+
+  const pauload={}
+  setLoader(true);
+  userTokenExpire(pauload)
+  .then((response) => {
+    if (response.data) {
+      setShowDeleteModal(false)
+
+    }
+    pushNotification(
+      `${response?.data?.message}`,
+      "success",
+    );
+  })
+  .catch((err) => {
+    const { response } = err;
+    setLoader(false)
+    pushNotification(
+      `${response?.data?.message}`,
+      "error",
+    );
+  })
+  .finally(() => {
+    setLoader(false);
+});
+}
 
   return (
     <Navbar bg="white" expand="lg">
@@ -283,15 +327,7 @@ function NavScrollExample() {
           Settings
         </MenuItem>
         <MenuItem     
-          onClick={()=>{
-         dispatch(
-          logout({
-            data:{
-              refreshToken:logOutToken,
-            },
-            navigate:navigate,
-          })
-        )}}>
+          onClick={()=>{logOut()}}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon >
@@ -391,7 +427,16 @@ function NavScrollExample() {
        
         </Navbar.Collapse>
       </Container>
+      <TokenExpireModel
+     showDeleteModal={showDeleteModal}
+     setShowDeleteModal={setShowDeleteModal}
+     handleDeleteModel={continueWorkHandel}
+    
+
+   />
     </Navbar>
+    
+   
   );
 }
 

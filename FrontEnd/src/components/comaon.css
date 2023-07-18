@@ -590,7 +590,13 @@ justify-content: center;}
 
 #services {
   padding: 25px 0 40px 0;
+
   box-shadow: inset 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
+}
+#divider {
+  padding: 0px 0 4px 0;
+  box-shadow: 0 4px 2px -2px  rgba(0, 0, 0, 0.1);
+
 }
 
 #services .box {

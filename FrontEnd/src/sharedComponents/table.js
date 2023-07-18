@@ -57,7 +57,7 @@ export default function CustomizedTables({
 
     const handleDelete = (item) => {
       setShowDeleteModal(true);
-      setDeleteId({ id: item.timeId, attendanceid: item.attendenceid });
+      setDeleteId({ id: item.timeId, attendanceid: item?.attendenceid });
     }
     const handleDeleteModel = (item) => {
     const totalHours = calculateTotalWorkedHours();

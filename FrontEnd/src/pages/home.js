@@ -24,6 +24,7 @@ return (
       <Technologies/>
       {/* <ContactUs/> */}
       {/* <Careers/> */}
+      <div id='divider'></div>
       <Clients/>
       <Footer/>
   </>

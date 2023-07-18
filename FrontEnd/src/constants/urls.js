@@ -13,6 +13,7 @@ const URLs = {
   getDesignation:'/designation',
   getUserDepartmentDesignation:'/users/by/department-and-designation',
   sandUsersEmails:'/users/send-invite-emails',
+  tokenRefrash:'/auth/refresh-tokens',
   user:'/users',
   course: "courses/all/",
   topics: "courses/topics/",

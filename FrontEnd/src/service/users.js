@@ -56,3 +56,11 @@ export const sandEmailInviteUser = (payload) => {
     ...headerWithToken
 })
 }
+export const userTokenExpire = (payload) => {
+    return instance({
+    url: URls.tokenRefrash,
+    method: 'post',
+    data: payload,
+    ...headerWithToken
+})
+}
