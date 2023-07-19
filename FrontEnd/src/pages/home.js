@@ -17,7 +17,7 @@ return (
       <Header/>
       <Baner/>
       <AboutUs/>
-      {/* <Portfolio/>       */}
+
       
       {/* <TestMonails/> */}
       <Services/>
@@ -25,6 +25,7 @@ return (
       {/* <ContactUs/> */}
       {/* <Careers/> */}
       <div id='divider'></div>
+            <Portfolio/>      
       <Clients/>
       <Footer/>
   </>

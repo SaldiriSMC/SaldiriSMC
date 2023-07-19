@@ -50,7 +50,7 @@ function* emailVerificationCall(action) {
          "success",
        );
        yield put(resetPasswordSuccess(response.data));
-       action.payload.navigate("/Login")
+       action.payload.navigate("/")
      } else {
           pushNotification(
          `${response?.data?.message}`,

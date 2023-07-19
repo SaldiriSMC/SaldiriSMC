@@ -10,6 +10,7 @@ import { UserInviteConfig } from "../configs/tableConfig";
 import "./comaon.css";
 import { IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { loderTrue,loderFalse } from "../actions/Auth";
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +21,7 @@ import {
   sandEmailInviteUser,
   getAllUserByDeptDes
 } from "../service/users";
-const InviteUser = ({loader,setLoader}) => {
+const InviteUser = ({setLoader}) => {
   const [deleteTimeInOut, setDeleteTimeInOut] = React.useState({ time: [] });
   const [isCreate, setIsCreate] = React.useState(false)
   const [showModal,setShowModal] = React.useState(false)
@@ -31,15 +32,18 @@ const InviteUser = ({loader,setLoader}) => {
   const [userDeleteId, setUserDeleteId] = React.useState(null);
   const [action, setAction] = React.useState(null);
   const dispatch = useDispatch();
-
-console.log("---------loader-----------",loader)
+  const user = JSON.parse(localStorage.getItem("accessToken"))
+  const logInUserId = user?.data?.user?.id
 useEffect(()=>{
   getAllUser()
 },[])
 
+console.log("logInUserId---------",logInUserId)
 
   const getAllUser=()=>{
-    setLoader(true);
+    dispatch(
+      loderTrue(true)
+    );
     getAllUserByDeptDes()
     .then((response) => {
       if (response.data) {
@@ -48,7 +52,9 @@ useEffect(()=>{
     })
     .catch((error) => console.log(error.message))
     .finally(() => {
-      setLoader(false);
+      dispatch(
+        loderFalse(true)
+      );
 
   });
 
@@ -58,7 +64,7 @@ useEffect(()=>{
 
     const objectsWithIds = allUserList.filter(obj => checkedValue.includes(obj.id));
     
-    setLoader(true);
+    // setLoader(true);
     sandEmailInviteUser({users:objectsWithIds})
     .then((response) => {
       if (response.data) {
@@ -70,20 +76,20 @@ useEffect(()=>{
     })
     .catch((err) => {
       const { response } = err;
-      setLoader(false)
+      // setLoader(false)
       pushNotification(
         `${response?.data?.message}`,
         "error",
       );
     })
     .finally(() => {
-      setLoader(false);
+      // setLoader(false);
   });
 
   }
 
   const handleDeleteModel = () => {
-    setLoader(true);
+    // setLoader(true);
     deleteInviteUser(userDeleteId)
     .then((response) => {
       if (response.data) {
@@ -93,7 +99,7 @@ useEffect(()=>{
     })
     .catch((error) => console.log(error.message))
     .finally(() => {
-      setLoader(false);
+      // setLoader(false);
 
   });
   }
@@ -107,7 +113,7 @@ useEffect(()=>{
           checked: checkedValue,
           id: record.id,
           onchange: (check, id) => handleCheck(check, id),
-          // disabled:((record.isSIgnin) || (!record.isSignin && ! record.isToken))
+          disabled:((record.isSignedIn) || (!record.isSignedIn && ! record.is_token))
 
         },
         name: record?.name,
@@ -116,6 +122,7 @@ useEffect(()=>{
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),
+          hideDelete: record.id == logInUserId
         },
       });
     });
@@ -127,7 +134,9 @@ useEffect(()=>{
       setShowDeleteModal(true)
       setUserDeleteId(data?.id)
      
-    }  if (val === 'edit' ) {
+    }  
+    
+    if (val === 'edit' ) {
       setAction('update')
       setUserData(data)
       setShowModal(true)
@@ -147,7 +156,7 @@ useEffect(()=>{
 
   const selectedCheckValueHandler = (check) => {
     if (check) {
-      setCheckedValue(allUserList.map(item => item.id))
+      setCheckedValue(allUserList.filter(item=> !((item.isSignedIn) || (!item.isSignedIn && ! item.is_token))).map(item => item.id))
     } else {
       setCheckedValue([])
     }

@@ -19,26 +19,35 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SignUp from './components/SignUp'
 import ForgetPassword from './components/forgetPassword'
+// import { useDispatch, useSelector } from "react-redux";
 import ChnagePassword from './components/chnagePassword'
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../src/theme';
-import { BrowserRouter, Routes, Route, useLocation  } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate ,Outlet } from 'react-router-dom';
 import configureStore from "./store";
-import { Provider } from "react-redux";
+import { Provider,useSelector } from "react-redux";
 import { FeedbackProvider } from "./context/FeedbackContext";
 function App({data}) {
+  const user = JSON.parse(localStorage.getItem("accessToken"))
+  // const isLoading = useSelector((state) => state.loder?.isLoading);
   const store = configureStore();
   const url = window.location.href.split( '/' )[3];
   const [loader, setLoader] = useState(false)
-  console.log("current pathn--",url);
+
+  // console.log("isLoading------------",isLoading)
+
+
+
+  const PrivateRoute = ({loader,setLoader}) => {
+    return user ? <Outlet loader={loader} setLoader={setLoader}  /> : <Navigate to="/" />;
+}
+
   return (
     <FeedbackProvider data={data}>
     <ThemeProvider theme={theme}>
     <div className="App">
-
     <Provider store={store}>
     <BrowserRouter>
-    {/* <Header/> */}
     {loader &&    <Box sx={{ width: '100%' }}>
       <LinearProgress />
     </Box>}
@@ -52,11 +61,17 @@ function App({data}) {
         <Route path="/services" element={<Services/>} />
         <Route path="/contactUs" element={<ContactUs/>} /> 
         <Route path="/careers" element={<Careers/>} />
-        <Route path="/dashboard" element={<Dashboard/>} />
-        <Route path="/attendance" element={<Attendance/>} />
-        <Route path="/inviteUser" element={<InviteUser  loader={loader} setLoader={setLoader} />} />
+        <Route exact path='/dashboard' element={<PrivateRoute/>}>
+            <Route exact path='/dashboard' element={<Dashboard   />}/>
+        </Route>
+        <Route exact path='/inviteUser' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
+            <Route exact path='/inviteUser' element={<InviteUser  loader={loader} setLoader={setLoader} />}/>
+        </Route>
+        <Route exact path='/attendance' element={<PrivateRoute/>}>
+            <Route exact path='/attendance' element={<Attendance   />}/>
+        </Route>
       </Routes>
-      {/* <Footer/> */}
+
     </BrowserRouter>
     </Provider>
     </div>

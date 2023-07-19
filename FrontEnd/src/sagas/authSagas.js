@@ -5,6 +5,8 @@ import {
   logInFailure,
   signUpSuccess,
   signUpFailure,
+  loderTrue,
+  loderFalse,
 } from "../actions/Auth";
 import { postRequest } from "./request";
 import { pushNotification } from "../utils/notifications";
@@ -13,8 +15,11 @@ import URls from "../constants/urls";
 
 function* signInCall(action) {
   console.log("actionaction", action);
+  yield put(loderTrue());
+
   try {
     const response = yield call(postRequest, URls.loginurl, action?.payload?.credentials);
+    yield put(loderFalse());
     console.log(response)
     if (response?.status == '200') {
         localStorage.setItem("accessToken", JSON.stringify(response?.data))
@@ -35,14 +40,17 @@ function* signInCall(action) {
   } catch (error) {
     pushNotification('Network Error', 'error', 'TOP_CENTER', 1000);
     yield put(logInFailure());
+    yield put(loderFalse());
   }
 }
 
 // signup call
 function* signUpCall(action) {
   // console.log("actionaction", action);
+  yield put(loderTrue());
   try {
     const response = yield call(postRequest, URls.signupUrl, action?.payload?.credentials);
+    yield put(loderFalse());
     console.log("response catch",response)
     if (response?.data?.data?.user) {
       pushNotification(`${response?.data.message}`, "success", "TOP_CENTER", 1000);
@@ -59,14 +67,16 @@ function* signUpCall(action) {
     console.log("error catch",error)
     pushNotification("Get data failure", "error", "TOP_CENTER", 1000);
     yield put(signUpFailure());
+    yield put(loderFalse());
   }
 }
 // logOut call
 function* logOutCall(action) {
   console.log(action?.payload?.refreshToken,"actionaction", action);
-  
+  yield put(loderTrue());
   try {
     const response = yield call(postRequest, URls.logOut, action?.payload.data);
+    yield put(loderFalse());
     console.log("response catch",response)
     if (response?.data.message == 'User loged out successfully') {
       localStorage.removeItem("accessToken"); 
@@ -80,6 +90,7 @@ function* logOutCall(action) {
     console.log("error catch",error)
     pushNotification("Get data failure", "error", "TOP_CENTER", 1000);
     yield put(signUpFailure());
+    yield put(loderFalse());
   }
 }
 

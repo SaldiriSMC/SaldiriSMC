@@ -44,8 +44,8 @@ function* getUserList(action) {
    const response = yield call(getRequestWithTenant, `${URls.attendanceAdjustment}?limit=10&page=1`);
    console.log(response)
    if (response?.status === 200) {     
-     //navigate("/Login")
-     localStorage.setItem("data",JSON.stringify(response.data))
+     
+
      yield put(getAttendanceSuccess(response.data));
    }
  } catch (error) {
@@ -62,7 +62,6 @@ function* getAttendanceByHoursCall(action) {
    console.log(response)
    if (response?.status === 200) {     
      //navigate("/Login")
-     localStorage.setItem("data",JSON.stringify(response.data))
      yield put(getAttendanceByHoursSuccess(response.data));
    }
  } catch (error) {

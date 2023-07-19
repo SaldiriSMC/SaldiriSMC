@@ -3,6 +3,7 @@ import { makeStyles } from "tss-react/mui";
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box';
+import CircleIcon from '@mui/icons-material/Circle';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -19,9 +20,9 @@ import { loginSchema } from "../Yup Schema";
 import MUITextField from "../sharedComponents/textField";
 import LogoutIcon from '@mui/icons-material/Logout';
 import Grid from '@mui/material/Grid';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import Button from '@mui/material/Button';
+import LinearProgress from '@mui/material/LinearProgress';
 import {HashLink, NavHashLink } from 'react-router-hash-link';
 import {  useLocation ,useNavigate} from "react-router-dom"
 import './comaon.css';
@@ -94,6 +95,16 @@ const useStyles = makeStyles()((theme) => {
     SignUp:{
       textDecoration:'underline',
       cursor:'pointer',
+    },
+    blueDotUrl: {
+      height: "0.4rem",
+      width: "100%",
+      marginBottom: "10px",
+      color: "blue"
+    },
+    blueDotUrlist: {
+      height: "0.4rem",
+      color: "blue"
     }
   };
 });
@@ -102,15 +113,17 @@ function NavScrollExample({ setLoader,}) {
   const { classes } = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+    const isLoading = useSelector((state) => state.loderReducer?.isLoading);
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const user = JSON.parse(localStorage.getItem("accessToken"))
   const currentTime = new Date()
   currentTime.setMinutes(currentTime.getMinutes() - 10);
+  const url = window.location.pathname
   const currentTimeFormet = format((new Date(currentTime)), "yyyy-MM-dd'T'HH:mm:ss'Z'")
   const tokenExpirey = user ? format((new Date(user?.data?.tokens?.access?.expires)), "yyyy-MM-dd'T'HH:mm:ss'Z'"): ''
   const userRole =  user?.data?.user?.role
     const logOutToken = user?.data?.tokens?.access?.refreshToken
-    console.log(currentTime,"tokenExpirey------------->>>>>>>>>>>",tokenExpirey > currentTime)
+    console.log(url,"url------------->>>>>>>>>>>",url == '/')
   const initialValues = {
     email: "",
     password: "",
@@ -151,14 +164,7 @@ function NavScrollExample({ setLoader,}) {
       setAnchorEl(null);
     };
 
-    useEffect(() => {
-      async function fetchData() {
-        if (currentTimeFormet >= tokenExpirey) { 
-          // logOut()
-        }
-      }
-      fetchData();
-    }, [currentTimeFormet])
+  
 
 const logOut =()=>{
   dispatch(
@@ -201,6 +207,11 @@ const continueWorkHandel = () =>{
 }
 
   return (
+    <>
+       {isLoading &&    <Box sx={{ width: '100%' }}>
+      <LinearProgress />
+    </Box>}
+   
     <Navbar bg="white" expand="lg">
       <Container fluid>
        <HashLink to="/">  <img
@@ -216,21 +227,21 @@ const continueWorkHandel = () =>{
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link as={Link} to="/services">  Services</Nav.Link>
+            <Nav.Link as={Link}  to="/">Home {url == '/' && (<CircleIcon  className={classes.blueDotUrl}/>)}</Nav.Link>
+            <Nav.Link as={Link} to="/services">  Services {url == '/services' && (<CircleIcon  className={classes.blueDotUrl}/>)}</Nav.Link>
             <NavDropdown title="Company" id="navbarScrollingDropdown">
               {/* <NavDropdown.Item href="#portfolio"> Portfolio</NavDropdown.Item> */}
               <NavDropdown.Item as={Link} to="/technologies" >
-              Technologies
+              Technologies {url == '/technologies' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
               {/* <NavDropdown.Item  as={Link} to="/#clients">
               Clients
               </NavDropdown.Item> */}
               <NavDropdown.Item as={Link} to="/careers">
-              Careers
+              Careers {url == '/careers' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
               <NavDropdown.Item  as={Link} to="/contactUs">
-              Contact Us
+              Contact Us {url == '/contactUs' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
             </NavDropdown>
            
@@ -238,25 +249,25 @@ const continueWorkHandel = () =>{
            {
             userRole == 'admin' ?(<>
                <NavDropdown.Item as={Link} to="/dashboard" >
-              Dashboard
+              Dashboard {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
               <NavDropdown title=" Attendance" id="navbarScrollingDropdown">
               <NavDropdown.Item as={Link} to="/attendance" >
-              Attendance List
+              Attendance List {url == '/attendance' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/inviteUser" >
-              Invite User
+              Invite User {url == '/inviteUser' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
             </NavDropdown>
             </>) : userRole == 'hr' ? <>    <NavDropdown.Item as={Link} to="/dashboard" >
-              Dashboard 
+              Dashboard  {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
               <NavDropdown title=" Attendance" id="navbarScrollingDropdown">
               {/* <NavDropdown.Item as={Link} to="/attendance" >
               Attendance List
               </NavDropdown.Item> */}
               <NavDropdown.Item as={Link} to="/inviteUser" >
-              Invite User
+              Invite User {url == '/inviteUser' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
             </NavDropdown> </> : <> </>  
            }
@@ -435,7 +446,7 @@ const continueWorkHandel = () =>{
 
    />
     </Navbar>
-    
+    </>
    
   );
 }

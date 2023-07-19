@@ -5,13 +5,14 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const EditDeleteAction = ({ value: { change } }) => {
+const EditDeleteAction = ({ value: { change,hideDelete } }) => {
   const handleClick = (val) => {
     change(val)
   }
   return (
     <>
     <Stack direction="row" alignItems="center" spacing={1}>
+        
         <Tooltip
             classes={{
                 tooltip: 'capitalize',
@@ -24,7 +25,7 @@ const EditDeleteAction = ({ value: { change } }) => {
                 <EditIcon fontSize="inherit" />
             </IconButton>
         </Tooltip>
-        <Tooltip
+        {hideDelete ? '' :  <Tooltip
             classes={{
                 tooltip: 'capitalize',
             }}
@@ -37,7 +38,8 @@ const EditDeleteAction = ({ value: { change } }) => {
                     <DeleteIcon fontSize="small" />
                 </IconButton>
             </IconButton>
-        </Tooltip>
+        </Tooltip>}
+       
     </Stack>
     </>
   );

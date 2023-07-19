@@ -6,6 +6,8 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP,
   LOGOUT,
+  LODER_TRUE,
+  LODER_FALSE
 } from "./actionTypes";
 
 // Signin actions function
@@ -42,5 +44,16 @@ export const signUpFailure = () => ({
 export const logout = (data) => ({
   type: LOGOUT,
   payload: data,
+});
+
+
+
+export const loderTrue = () => ({
+  type: LODER_TRUE,
+});
+
+
+export const loderFalse = () => ({
+  type: LODER_FALSE
 });
 

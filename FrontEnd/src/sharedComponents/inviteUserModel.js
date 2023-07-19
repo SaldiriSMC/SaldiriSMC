@@ -9,6 +9,7 @@ import { useFormik } from "formik";
 import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import IconButton from '@mui/material/IconButton';
+import { loderTrue,loderFalse } from "../actions/Auth";
 import { pushNotification } from "../utils/notifications";
 import {
   getAllDepartment,
@@ -117,6 +118,7 @@ const InviteUserModel = (props) => {
       name:'',
       email:'',
     };
+    const dispatch = useDispatch();
     const inviteUserScema = Yup.object({
       designationId: Yup.string().required("Field is required"),
       departmentId:  Yup.string().required("Field is required"),
@@ -137,7 +139,9 @@ const InviteUserModel = (props) => {
 
           if (action === 'update'){
             const pauload={...values}
-            setLoader(true);
+            dispatch(
+              loderTrue(true)
+            );
             updateInviteUser(pauload,userData.id)
             .then((response) => {
               if (response.data) {
@@ -153,19 +157,23 @@ const InviteUserModel = (props) => {
             })
             .catch((err) => {
               const { response } = err;
-              setLoader(false)
+              // setLoader(false)
               pushNotification(
                 `${response?.data?.message}`,
                 "error",
               );
             })
             .finally(() => {
-              setLoader(false);
+              dispatch(
+                loderFalse(true)
+              );
           });
   
           } else{
             const pauload={...values}
-            setLoader(true);
+            dispatch(
+              loderTrue(true)
+            );
             createInviteUser(pauload)
             .then((response) => {
               if (response.data) {
@@ -180,14 +188,16 @@ const InviteUserModel = (props) => {
             })
             .catch((err) => {
               const { response } = err;
-              setLoader(false)
+              // setLoader(false)
               pushNotification(
                 `${response?.data?.message}`,
                 "error",
               );
             })
             .finally(() => {
-              setLoader(false);
+              dispatch(
+                loderFalse(true)
+              );
           });
   
           }
