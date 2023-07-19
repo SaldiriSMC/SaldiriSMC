@@ -5,7 +5,7 @@ const Time = sequelize.define('time', {
     attendanceId:{
     type: DataTypes.INTEGER,
       references:{
-        model:"modules",
+        model:"attendances",
         key:"id"
       },
       allowNull:false

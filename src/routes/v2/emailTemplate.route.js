@@ -11,6 +11,9 @@ router
   .get(auth(), tenant(), checkRoles(["admin","hr"]), emailTemplateController.getEmailTempate)
   .post(auth(), tenant(), emailTemplateController.createEmailTemplate);
 router
+  .route('/send-email')
+  .post(auth(), tenant(), checkRoles(['admin', 'hr']), emailTemplateController.sendEmail)
+router
   .route('/:emailTemplateId')
   .patch(auth('manageUsers'), tenant(), emailTemplateController.updateEmailTemplate)
   .delete(auth('manageUsers'), tenant(), emailTemplateController.deleteEmailTemplate);
@@ -88,6 +91,51 @@ module.exports = router;
  *     responses:
  *       "201":
  *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/User'
+ *       "400":
+ *         $ref: '#/components/responses/DuplicateEmail'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ */
+
+/**
+ * @swagger
+ * /email-templates/send-email:
+ *   post:
+ *     summary: send a email 
+ *     description: Only admins can create other email templates.
+ *     parameters:
+ *         - name: X-Tenent-Key
+ *           in: header
+ *           description: X-Tenent-Key
+ *           required: true
+ *           schema:
+ *             type: string
+ *     tags: [EmailTemplates]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - subject
+ *               - body
+ *             properties:
+ *               subject:
+ *                 email: string
+ *             example:
+ *               email: fake@gmail.com
+ *     responses:
+ *       "201":
+ *         description: email sent successfully
  *         content:
  *           application/json:
  *             schema:

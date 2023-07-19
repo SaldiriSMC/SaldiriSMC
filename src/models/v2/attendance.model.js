@@ -1,6 +1,6 @@
 const {sequelize} = require('../../config/mySqlConnection')
 const { DataTypes } = require('sequelize');
-const Attendance = sequelize.define('attendance', {
+const Attendance = sequelize.define('attendances', {
   userId: {
       type: DataTypes.INTEGER,
       references:{
