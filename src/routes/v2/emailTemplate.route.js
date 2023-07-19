@@ -79,9 +79,12 @@ module.exports = router;
  *                 type: string
  *               body:
  *                 type: string
+ *               typeId:
+ *                 type: number
  *             example:
  *               subject: Reset Password
  *               body: Hello
+ *               typeId: 1
  *     responses:
  *       "201":
  *         description: Created

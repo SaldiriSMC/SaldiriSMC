@@ -9,4 +9,5 @@ module.exports.Department = require('./department.module');
 module.exports.Designation = require('./designation.model');
 module.exports.Contact = require('./contact.model');
 module.exports.EmailTemplate = require('./emailTemplates.module');
+module.exports.Tyoe = require('./type.model');
 

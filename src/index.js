@@ -14,6 +14,7 @@ const modules = require("./models/v2/module.model")
 const designation = require("./models/v2/designation.model")
 const contact = require("./models/v2/contact.model")
 const emailTemplate = require("./models/v2/emailTemplates.module")
+const type = require("./models/v2/type.model")
 let server;
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
@@ -79,7 +80,12 @@ const mySqlConnection = async() =>{
     console.log("contact------->>>>>>",err)
   })
   emailTemplate.sync({ alter: { drop: false } }).then(()=>{
-    console.log("yes re emailTemplate of contact is done")
+    console.log("yes re  of emailTemplate is done")
+  }).catch((err)=>{
+    console.log("emailTemplate------->>>>>>",err)
+  })
+  type.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re of type is done")
   }).catch((err)=>{
     console.log("emailTemplate------->>>>>>",err)
   })
