@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const config = require('../../config/config');
 const logger = require('../../config/logger');
+const emailTemplate = require('../../models/v2/emailTemplates.module');
 
 const transport = nodemailer.createTransport(config.email.smtp);
 /* istanbul ignore next */
@@ -20,6 +21,11 @@ if (config.env !== 'test') {
  */
 const sendEmail = async (to, subject, text) => {
   const msg = { from: config.email.from, to, subject, text };
+  await transport.sendMail(msg);
+};
+
+const sendHtmlTemplateEmail = async (to, subject, text) => {
+  const msg = { from: config.email.from, to, subject, html:text };
   await transport.sendMail(msg);
 };
 
@@ -63,6 +69,18 @@ const sendInviteEmail = async (tokenArray) => {
     await sendEmail(item.email, subject, text);
   })
 };
+const sendTemplateEmail = async (tokenArray) => {
+  let template = await emailTemplate.findOne({where:{id:9}})
+  const subject = template.subject;
+  // replace this url with the link to the reset password page of your front-end app
+  tokenArray.map(async (item) =>{
+    const customizedTemplate = template.body
+  .replace(/{{name}}/g, "safyan")
+  .replace(/{{company}}/g, "saldir smc");
+    const text = template.body
+    await sendHtmlTemplateEmail(item.email, subject, customizedTemplate);
+  })
+};
 
 /**
  * Send verification email
@@ -86,4 +104,5 @@ module.exports = {
   sendResetPasswordEmail,
   sendInviteEmail,
   sendVerificationEmail,
+  sendTemplateEmail
 };

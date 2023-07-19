@@ -124,15 +124,16 @@ module.exports = router;
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - subject
- *               - body
+ *             type: array
  *             properties:
- *               subject:
- *                 email: string
+ *               id:
+ *                 type: number
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: must be unique
  *             example:
- *               email: fake@gmail.com
+ *               users: [{"id":"1", "email":"fake@gmail.com"}]
  *     responses:
  *       "201":
  *         description: email sent successfully
