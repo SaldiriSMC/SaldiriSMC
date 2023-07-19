@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Home from './pages/home'
+import EmailTemplates from './pages/emialTemplates'
 import Services from './pages/services'
 import Technologies from './pages/technologies'
 import ContactUs from './components/contactUs'
@@ -61,6 +62,7 @@ function App({data}) {
         <Route path="/services" element={<Services/>} />
         <Route path="/contactUs" element={<ContactUs/>} /> 
         <Route path="/careers" element={<Careers/>} />
+        <Route path="/emailTemplates" element={<EmailTemplates/>} />
         <Route exact path='/dashboard' element={<PrivateRoute/>}>
             <Route exact path='/dashboard' element={<Dashboard   />}/>
         </Route>
