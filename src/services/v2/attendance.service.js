@@ -99,7 +99,7 @@ const updateWorkedHours = async (attendanceId, totalHours) => {
   }
 };
 const updateAttendance = async (attendanceId, updateBody) => {
-  const attendance = await Attendance.findOne({ where: { id: attendanceId } });
+ try{ const attendance = await Attendance.findOne({ where: { id: attendanceId } });
   if (attendance === null) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Attendance record not found');
   }
@@ -129,7 +129,10 @@ const updateAttendance = async (attendanceId, updateBody) => {
     });
     return { updateTime, updateAttendance };
   }
-  return updateAttendance;
+  return updateAttendance;}
+  catch(err){
+    console.log("err----------->>>>>>>>>>", err)
+  }
 };
 
 module.exports = { markAttendance, markTimeOut, queryAttendance, updateAttendance, updateWorkedHours };
