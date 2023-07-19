@@ -1,10 +1,10 @@
 const {sequelize} = require('../../config/mySqlConnection')
 const { DataTypes } = require('sequelize');
-const Attendance = sequelize.define('attendance', {
+const Attendance = sequelize.define('attendances', {
   userId: {
       type: DataTypes.INTEGER,
       references:{
-        model:"user",
+        model:"users",
         key:"id"
       },
       allowNull:false
@@ -29,7 +29,7 @@ const Attendance = sequelize.define('attendance', {
   statusId: {
     type: DataTypes.INTEGER,
     references:{
-      model:"statuses",
+      model:"status",
       key:"id"
     },
     allowNull:false

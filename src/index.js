@@ -13,6 +13,8 @@ const department = require("./models/v2/department.module")
 const modules = require("./models/v2/module.model")
 const designation = require("./models/v2/designation.model")
 let server;
+
+
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(async () => {
   logger.info('Connected to MongoDB');
   var mysqlConfig = await mySqlConnection();
@@ -41,41 +43,10 @@ const mySqlConnection = async() =>{
     console.error('Unable to connect to the mysql database:', error);
     return false;
   }
-
-  user.sync({ alter: { drop: false } }).then(()=>{
-    console.log("yes re sync of users is done")
-  }).catch((err)=>{
-    console.log(err)
-  })
-  token.sync({ alter: { drop: false } }).then(()=>{
-    console.log("yes re sync of tokens is done")
-  }).catch((err)=>{
-    console.log(err)
-  })
   tenant.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync of tenant is done")
   }).catch((err)=>{
     console.log(err)
-  })
-  attendance.sync({ alter: { drop: false } }).then(()=>{
-    console.log("yes re sync of attendance is done")
-  }).catch((err)=>{
-    console.log("attendance------->>>>>>",err)
-  })
-  time.sync({ alter: { drop: false } }).then(()=>{
-    console.log("yes re sync of time is done")
-  }).catch((err)=>{
-    console.log("time------->>>>>>",err)
-  })
-  status.sync({ alter: { drop: false } }).then(()=>{
-    console.log("yes re sync of status is done")
-  }).catch((err)=>{
-    console.log("status------->>>>>>",err)
-  })
-  modules.sync({ alter: { drop: false } }).then(()=>{
-    console.log("yes re sync of module is done")
-  }).catch((err)=>{
-    console.log("module------->>>>>>",err)
   })
   department.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync of department is done")
@@ -87,6 +58,41 @@ const mySqlConnection = async() =>{
   }).catch((err)=>{
     console.log("designation------->>>>>>",err)
   })
+  modules.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re sync of module is done")
+  }).catch((err)=>{
+    console.log("module------->>>>>>",err)
+  })
+  status.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re sync of status is done")
+  }).catch((err)=>{
+    console.log("status------->>>>>>",err)
+  })
+
+  user.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re sync of users is done")
+  }).catch((err)=>{
+    console.log(err)
+  })
+  token.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re sync of tokens is done")
+  }).catch((err)=>{
+    console.log(err)
+  })
+
+  attendance.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re sync of attendance is done")
+  }).catch((err)=>{
+    console.log("attendance------->>>>>>",err)
+  })
+  time.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re sync of time is done")
+  }).catch((err)=>{
+    console.log("time------->>>>>>",err)
+  })
+ 
+  
+ 
   sequelize.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync is done")
   }).catch((err)=>{

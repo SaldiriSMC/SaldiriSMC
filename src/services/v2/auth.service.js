@@ -31,7 +31,6 @@ const logout = async (refreshToken) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'Not found');
   }
   return refreshTokenDoc
-  
 };
 
 /**

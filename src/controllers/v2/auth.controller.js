@@ -53,7 +53,9 @@ const logout = catchAsync(async (req, res) => {
   await authService.logout(req.body.refreshToken);
   const tokenDoc = await authService.logout(req.body.refreshToken); 
   const userDoc = await User.findOne({where:{id:tokenDoc.user}})
+  console.log("userDoc------>", userDoc.id)
   let attendanceDoc = await Attendance.findOne({where:{userId:userDoc.id}})
+  console.log("attendaceDoc------>", attendanceDoc)
   let totalWorkedHours = attendanceDoc.workedHours
   const timeInTimeOut = await attendanceService.markTimeOut(userDoc, res)
   const timeOutMiliSeconds = timeInTimeOut.timeOut.getTime()

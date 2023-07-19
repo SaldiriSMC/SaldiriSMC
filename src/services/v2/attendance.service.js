@@ -21,7 +21,8 @@ const markAttendance = async (user, res) => {
       await Time.create({ timeIn: new Date(), timeOut: null, attendanceId: attendance.id });
     }
   } catch (err) {
-    res.send(err);
+    console.log('err------->',err)
+    //res.send(err);
   }
 };
 

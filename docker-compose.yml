@@ -20,6 +20,17 @@ services:
     networks:
       - node-network
 
+  frontend:
+    build:
+      context: ../../frontend/saldirismc/FrontEnd
+      dockerfile: dockerfile
+    image: saldiriweb
+    environment:
+      - REACT_APP_API_URL=http://127.0.0.1:8081/v2
+    ports:
+      - '3000:3000'
+    
+
   mysql-db:
     image: mysql:latest
     container_name: mysql-db
@@ -35,7 +46,6 @@ services:
       - ./data:/docker-entrypoint-initdb.d/
       - ./DatabaseScripts/get_AttendanceSumByID.sql:/docker-entrypoint-initdb.d/get_AttendanceSumByID.sql
       - ./DatabaseScripts/get_AttendanceByHours.sql:/docker-entrypoint-initdb.d/get_AttendanceByHours.sql
-
     ports:
       - 3306:3306
     expose:

@@ -16,7 +16,6 @@ const getAttendance = catchAsync(async (req, res) => {
 const getAttendanceByHours = catchAsync(async(req, res) =>{
   const id = req.params.userId;
   const attendance = await Attendance.findOne({where:{userId:id}})
-  console.log("attendacne--------->>>>>>>>", attendance)
   if(attendance){
     let results = await sequelize.query('call get_AttendanceByHours(:id, :date)', {
       replacements: {
