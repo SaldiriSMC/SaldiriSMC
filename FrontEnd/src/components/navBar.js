@@ -247,7 +247,7 @@ const continueWorkHandel = () =>{
            
             {user &&  <NavDropdown title="Operations" id="navbarScrollingDropdown">
            {
-            userRole == 'admin' ?(<>
+            userRole == 'admin' ? (<>
                <NavDropdown.Item as={Link} to="/dashboard" >
               Dashboard {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
@@ -255,10 +255,11 @@ const continueWorkHandel = () =>{
               <NavDropdown.Item as={Link} to="/attendance" >
               Attendance List {url == '/attendance' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/inviteUser" >
+           
+            </NavDropdown>
+            <NavDropdown.Item as={Link} to="/inviteUser" >
               Invite User {url == '/inviteUser' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
-            </NavDropdown>
             </>) : userRole == 'hr' ? <>    <NavDropdown.Item as={Link} to="/dashboard" >
               Dashboard  {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
