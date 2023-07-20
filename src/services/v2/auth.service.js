@@ -27,6 +27,7 @@ const loginUserWithEmailAndPassword = async (email, password) => {
  */
 const logout = async (refreshToken) => {
   const refreshTokenDoc = await Token.findOne({where:{ refreshToken: refreshToken, type: tokenTypes.AUTH, blacklisted: false }});
+  console.log("resfresTokenDoc---------->>>>>>>>>", refreshTokenDoc)
   // if (!refreshTokenDoc) {
   //   throw new ApiError(httpStatus.NOT_FOUND, 'Not found');
   // }

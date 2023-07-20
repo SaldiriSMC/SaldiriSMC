@@ -8,13 +8,13 @@ const emailTemplate = sequelize.define('emailTemplates', {
     body:{
         type:DataTypes.TEXT,
     },
-    typeId:{
-        type: DataTypes.INTEGER,
-        references:{
-            model:"types",
-            key:"id"
-        },
-    },
+    // typeId:{
+    //     type: DataTypes.INTEGER,
+    //     references:{
+    //         model:"types",
+    //         key:"id"
+    //     },
+    // },
     tenantId:{
         type: DataTypes.INTEGER,
         references:{

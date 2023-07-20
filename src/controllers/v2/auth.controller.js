@@ -52,6 +52,7 @@ const login = catchAsync(async (req, res) => {
 const logout = catchAsync(async (req, res) => {
   await authService.logout(req.body.refreshToken);
   const tokenDoc = await authService.logout(req.body.refreshToken); 
+  console.log("tokenDoc-------->>>>>>>>>", tokenDoc)
   const userDoc = await User.findOne({where:{id:tokenDoc.user}})
   let attendanceDoc = await Attendance.findOne({where:{userId:userDoc.id}})
   let totalWorkedHours = attendanceDoc.workedHours
