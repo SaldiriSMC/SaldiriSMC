@@ -55,7 +55,7 @@ function Clients() {
       <div className="">
         <div className="container ">
           <header className="section-header">
-            <h3 className="mt-3">Clients</h3>
+            <h3 className="mt-3"></h3>
           </header>
           
 

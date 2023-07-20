@@ -19,6 +19,7 @@ import InviteUser from './components/inviteUser';
 import Attendance from './pages/attendance';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PrivateRoute from './components/privateRoute';
 import SignUp from './components/SignUp'
 import ForgetPassword from './components/forgetPassword'
 // import { useDispatch, useSelector } from "react-redux";
@@ -30,19 +31,21 @@ import configureStore from "./store";
 import { Provider,useSelector } from "react-redux";
 import { FeedbackProvider } from "./context/FeedbackContext";
 function App({data}) {
-  const user = JSON.parse(localStorage.getItem("accessToken"))
+  var user = JSON.parse(localStorage.getItem("accessToken"))
   // const isLoading = useSelector((state) => state.loder?.isLoading);
   const store = configureStore();
   const url = window.location.href.split( '/' )[3];
   const [loader, setLoader] = useState(false)
 
-  // console.log("isLoading------------",isLoading)
+  console.log('user------------->appppppp>>>>>>>>>>',user)
 
+useEffect(()=>{
+  console.log('user------------->appppp   kkkkkk  pp>>>>>>>>>>',user)
+},[localStorage])
 
-
-  const PrivateRoute = ({loader,setLoader}) => {
-    return user ? <Outlet loader={loader} setLoader={setLoader}  /> : <Navigate to="/" />;
-}
+//   const PrivateRoute = ({loader,setLoader}) => {
+//     return user ? <Outlet loader={loader} setLoader={setLoader}  /> : <Navigate to="/" />;
+// }
 
   return (
     <FeedbackProvider data={data}>

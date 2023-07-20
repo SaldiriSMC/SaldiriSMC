@@ -1,111 +1,122 @@
 import React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import './comaon.css';
-
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
 function Footer() {
 
   return (
 <>
-<section className='footer' id="footer">
-  <div className="footer-top">
-    <div className="container">
-      <div className="row" style={{ margin: "0 15px 0 15px" }}>
+<div style={{position:'relative'}} > 
+<img className='newFooter' src='/assets/foterimg.png' style={{ 
+ backgroundSize: "cover",
+ width:'100%',
+ position:'relative',
+               backgroundRepeat: "no-repeat", }}/>
+<div style={{position:'absolute',top:0,width:'100%',overflow:'hidden',height:'100%'}}>
+
+<section className='mt-5' id="">
+<div className="row" >
    
-        <div className="col-lg-4 col-md-4">
-          <div className="punch-info">
-            <img src="/assets/business.svg" alt="" />
-            <p className="home-text">
-              {" "}
-              <strong>Business</strong>{" "}
-            </p>
-          </div>
-          <p className="tex_align">
-            Our team has the capability to work with multiple business domains
-            like Finance, Telecom, CRM, and E-Commerce. We have the capability
-            to analyse your business's actual needs and requirements.
-          </p>
-        </div>
-        <div className="col-lg-4 col-md-4">
-          <div className="punch-info">
-            <img src="/assets/technology.svg" alt="" />
-            <p className="home-text">
-              {" "}
-              <strong>Technology</strong>
-            </p>
-          </div>
-          <p className="tex_align">
-            We are equipped with latest tool and technologies that not only help
-            analyse your business and problems but also provides appropriate
-            solutions. We are technology lovers, always keep updating with.
-          </p>
-        </div>
-        <div className="col-lg-4 col-md-4">
-          <div className="punch-info">
-            <img src="/assets/empowerment.svg" alt="" />
-            <p className="home-text">
-              {" "}
-              <strong>Empowerment</strong>
-            </p>
-          </div>
-          <p className="tex_align">
-            With our intellect, latest software development methodologies, and
-            updated technologies we give you better solutions to your problems.
-            Come grow with us and empower your business.
-          </p>
-        </div>
-        {/* <div className="col-lg-3 col-md-3 footer-info footer_logo">
-          <div className="punch-info">
-            <img src="/assets/footer.png" alt="" className="footer_image" />
-          </div>
-        </div> */}
-      </div>
-    </div>
+   <div className="col-lg-4 col-md-4">
+     <div className="">
+       <img src="/assets/f1.png" alt="" />
+   
+   
+         <h1 className='foter_title'>20+</h1>
+         <p className='foter_subtitle'>Our Customers</p>
+       
+     </div>
+   </div>
+   <div className="col-lg-4 col-md-4">
+     <div className="">
+       <img src="/assets/f2.png" alt="" />
+          
+       <h1 className='foter_title'>20+</h1>
+         <p className='foter_subtitle'>Completed Projects</p>
+     </div>
+     
+   </div>
+   <div className="col-lg-4 col-md-4">
+     <div className=" mt-2">
+       <img src="/assets/f3.png" alt="" />
+        
+       <h1 className='foter_title'>20+</h1>
+         <p className='foter_subtitle'>Ongoing Projects</p>
+     </div>
+
+   </div>
+
+ </div>
+  <div className="foterForm mt-5">
+    
+  <div className="row" >
+   
+   <div className="col-lg-6 col-md-6 social_wrap">
+     <div className=" w-25 d-flex justify-content-around">
+     <img src="/assets/flogo.png" alt="" />   
+     <img src="/assets/tlogo.png" alt="" />   
+     <img src="/assets/llog.png" alt="" />   
+     </div>
+   </div>
+   <div className="col-lg-6 col-md-6 foter_inputs">
+  
+   <Form>
+      <Row className="mb-3">
+        <Form.Group as={Col}>
+          <Form.Control type="text" placeholder="Full Name *" />
+        </Form.Group>
+
+        <Form.Group as={Col} controlId="formGridPassword">
+          <Form.Control type="text" placeholder="Last Name*" />
+        </Form.Group>
+        
+      </Row>
+      <Row className="mb-3">
+        <Form.Group as={Col}>
+          <Form.Control type="email" placeholder="Email*" />
+        </Form.Group>
+
+        <Form.Group as={Col} controlId="formGridPassword">
+          <Form.Control type="text" placeholder="Cell/Phone*" />
+        </Form.Group>
+        
+      </Row>
+      <Row className="mb-3">
+        <Form.Group as={Col}>
+          <Form.Control type="text" placeholder="Company*" />
+        </Form.Group>
+
+        <Form.Group as={Col} controlId="formGridPassword">
+          <Form.Control type="text" placeholder="Contact Us" />
+        </Form.Group>
+        
+      </Row>
+      <Row className="mb-3">
+        <Form.Group as={Col}>
+        <Form.Control as="textarea" placeholder="Comments* " rows={3} />
+        </Form.Group>
+        
+      </Row>
+
+    
+      <Button variant="primary" type="submit" className='d-flex'>
+        Submit
+      </Button>
+    </Form>
+     
+   </div>
+
+
+ </div>
   </div>
-  <div className="container">
-    <div className="row">
-      <div className="col-1"></div>
-      <div className="col-2"></div>
-      <div className="col-3">
-        <div className="footer-menu">
-          <span> 
-          <HashLink to="#carouselExampleControls">Home</HashLink>
-           </span> 
-          <span>
-          <HashLink to="#about">About Us</HashLink>
-          </span> 
-          <span>
-          <HashLink to="#portfolio">Portfolio</HashLink>
-          </span>
-          <span>
-          <HashLink to="#services">Services</HashLink>
-          </span>
-        </div>
-      </div>
-      <div className="col-3">
-        <div className="footer-menu">
-          <span>
-          <HashLink to="#technologies">Technologies</HashLink>
-          </span>
-          <span>
-          <HashLink to="#contact">Contact Us</HashLink>
-          </span>
-          <span>
-          <HashLink to="#career">Careers</HashLink>
-          </span>
-        </div>
-      </div>
-      <div className="col-2"></div>
-      <div className="col-1"></div>
-    </div>
-  </div>
-  <div className="container">
-    <div className="copyright">
-      © Copyright <strong>2021 Saldiri</strong>. All Rights Reserved
-    </div>
-  </div>
+  
 </section>
 
-
+</div>
+</div>
 </>
   );
 }

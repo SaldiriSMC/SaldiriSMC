@@ -1,13 +1,42 @@
 .banerViewHeight{
  height:calc(100vh - 120px)
 }
+.foterForm{
+ padding: 1rem;
+  background-color: #043F75;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.foter_title{
+  font-weight: 900;
+  color: white;
+  margin-top: 4%;
 
+}
 
+.social_wrap{
+  display: flex;
+  justify-content: center;
+  align-content: flex-end;
+  flex-wrap: wrap;
 
+}
+.foter_subtitle{
+  color: white;
+  font-weight: 600;
 
-
+}
+.whyUs_card{
+  /* height: 303px; */
+  padding: 10px;
+}
+.whyUs_card > div {
+  height: 303px;
+}
 .imgk {
   width: 100px;
+  margin-right: 5px;
   /* height: 100px; */
   /* animation: scroll 30s linear; */
   /* animation-iteration-count: infinite; */
@@ -43,9 +72,21 @@ body {
 }
 
 
+.foter_inputs .form-control{
+  background-color: transparent;
+  border-color: white;
+}
 
+.foter_inputs .btn-primary{
+  background-color: transparent;
+  border-color: white;
+  margin-right: auto;
 
-
+}
+.foter_inputs .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #FFFFFF;
+  /* opacity: 1; Firefox */
+}
 
 
 .clients_wrap .slick-track{

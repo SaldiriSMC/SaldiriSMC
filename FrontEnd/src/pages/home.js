@@ -10,6 +10,7 @@ import Technologies from '../components/technologies'
 import ContactUs from '../components/contactUs'
 import Careers from '../components/career'
 import Footer from '../components/footer'
+import ChooseUs  from '../components/chooseUs'
 function Home() {
   
 return (
@@ -24,8 +25,9 @@ return (
       <Technologies/>
       {/* <ContactUs/> */}
       {/* <Careers/> */}
-      <div id='divider'></div>
+      {/* <div id='divider'></div> */}
             <Portfolio/>      
+      <ChooseUs/>
       <Clients/>
       <Footer/>
   </>

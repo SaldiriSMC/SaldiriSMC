@@ -80,7 +80,7 @@ function* logOutCall(action) {
     console.log("response catch",response)
     if (response?.data.message == 'User loged out successfully') {
       localStorage.removeItem("accessToken"); 
-      window.location.reload()
+      // window.location.reload()
       action.payload.navigate("/")
     } else {
 

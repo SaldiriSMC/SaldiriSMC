@@ -39,10 +39,10 @@ function Portfolio() {
 
   return (
 <>
-<section id="portfolio" className="clearfix sect portfolio-wrap">
+<section id="portfolio" className="clearfix sect section-bg portfolio-wrap">
       <div className="container">
         <header className="section-header">
-          <h3 className="section-title">Our Portfolio</h3>
+          <h3 className="section-title">Portfolio</h3>
         </header>
         <div className="row portfolio-container" >
         

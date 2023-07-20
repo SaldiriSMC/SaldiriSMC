@@ -2,9 +2,14 @@ import React, { useEffect } from "react";
 import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
+import { format } from "date-fns";
 import Table from "../sharedComponents/table";
+import { UserAttendanceeConfig } from "../configs/tableConfig";
+import MUITable from "../sharedComponents/MUITable";
 import "./comaon.css";
 import { IconButton } from '@mui/material';
+import EditModal from "../sharedComponents/editModal";
+import DeleteModal from "../sharedComponents/deleteModal";
 import AddIcon from '@mui/icons-material/Add';
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
@@ -12,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
+import { updateTime } from "../actions/Attendance";
 import { getAllUser, getAttendanceByHours } from "../actions/Attendance";
 const AttendanceAdjusment = () => {
   const [deleteTimeInOut, setDeleteTimeInOut] = React.useState({ time: [] });
@@ -23,6 +29,32 @@ const AttendanceAdjusment = () => {
   const workedHours = useSelector(
     (state) => state?.attendance?.attendance?.data
   );  
+  const [showDeleteModal, setShowDeleteModal] = React.useState(false);
+  const [deleteId, setDeleteId] = React.useState({});
+
+    const handleDelete = (item) => {
+      setShowDeleteModal(true);
+      setDeleteId({ id: item.timeId, attendanceid: item?.attendenceid });
+    }
+    const handleDeleteModel = (item) => {
+    const totalHours = calculateTotalWorkedHours();
+    let payload = {
+      time: [
+        {
+          isDeleted: true,
+          id: deleteId.id,
+          attendanceid: deleteId.attendanceid ,
+          totalHours: totalHours,
+        },
+      ],
+    };
+    console.log("payloadpayload------------",payload)
+    dispatch(updateTime(payload));
+    setTimeout(() => {
+      dispatch(getAttendanceByHours(values.user));
+    }, 100);
+    setShowDeleteModal(false);
+  };
   console.log("data----------------------->>>>>>>>>>>>>  data", data);
   const calculateTotalWorkedHours = () => {
     const total = workedHours
@@ -59,6 +91,44 @@ const AttendanceAdjusment = () => {
       calculateTotalWorkedHours();
     }
   }, [values.user]);
+
+
+  const normalizeTableProgram= (source) => {
+    const result = [];
+    source.forEach((record,index) => {
+      if (  record.timeIn){
+        result.push({
+          timeIn: record.timeIn
+            ? format(new Date(record.timeIn), "h:mm:ss a")
+            : "-",
+            timeOut: record.timeOut
+            ? format(new Date(record.timeOut), "h:mm:ss a")
+            : "-",
+          hours: record.Difference ? record.Difference : "-",
+          action: {
+            change: (val) =>
+            handleDropdownActionsupport(record, val,index),
+          },
+        });
+      }
+     
+    });
+    return result;
+  };
+  const handleDropdownActionsupport= (data, val,index) => {
+
+    if (val === 'delete' ) {
+      handleDelete(data)
+     
+    }  
+    
+    if (val === 'edit' ) {
+      setIsCreate(false)
+      setShowModal(true);
+      setUserData(data);
+    }
+
+  }
   return (
     <div>
       <Grid
@@ -177,17 +247,10 @@ const AttendanceAdjusment = () => {
             <AddIcon />
           </IconButton> 
          </div>
-          <Table
-            deleteTimeInOut={deleteTimeInOut}
-            setDeleteTimeInOut={setDeleteTimeInOut}
-            value={values.user}
-            calculateTotalWorkedHours={calculateTotalWorkedHours}
-            userData={userData}
-            setUserData={setUserData}
-            isCreate={isCreate}
-            setIsCreate={setIsCreate}
-            showModal={showModal}
-            setShowModal={setShowModal}
+         <MUITable
+            column={UserAttendanceeConfig}
+            list={normalizeTableProgram(attendanceData ?? [])}
+
           />
           <Grid
             item
@@ -214,6 +277,20 @@ const AttendanceAdjusment = () => {
           </>
         </Grid>
       </Grid>
+      <EditModal
+        showModal={showModal}
+        userData={userData}
+        setShowModal={setShowModal}
+        value={values.user}
+        calculateTotalWorkedHours={calculateTotalWorkedHours}
+        isCreate={isCreate}
+      />
+      <DeleteModal
+        showDeleteModal={showDeleteModal}
+        setShowDeleteModal={setShowDeleteModal}
+        handleDeleteModel={handleDeleteModel}
+
+      />
     </div>
   );
 };
