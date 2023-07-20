@@ -2,12 +2,14 @@ import { combineReducers } from "redux";
 import authReducer from "./authReducer";
 import resetPasswordReducer from "./resetPasswordReducer";
 import  attendanceReducer  from "./attendanceReducer";
+import emailTemplateReducer from "./emailTemplateReducer"
 import  loderReducer  from "./loder";
 
 const appReducer = combineReducers({
   resetPassword: resetPasswordReducer,
   auth: authReducer,
   attendance: attendanceReducer,
+  emailTemplate: emailTemplateReducer,
   loderReducer: loderReducer,
 });
 

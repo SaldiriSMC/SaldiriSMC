@@ -9,12 +9,10 @@ import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { emailTemplate } from "../Yup Schema";
 import { createTemplate } from '../actions/EmailTemplate'
-import { Link, useNavigate } from "react-router-dom";;
-const EmailTemplates = () => {
+import { Link, useNavigate } from "react-router-dom";
+const EmailTemplates = ({isEdit}) => {
   Quill.register('modules/imageResize', ImageResize);
   const [value, setValue] = React.useState('');
-  const [subject, setSubect] = React.useState('');
-  console.log(value)
   const modules = {
     toolbar: [
       [{ header: '1' }, { header: '2' }, { font: [] }],
@@ -70,17 +68,20 @@ const EmailTemplates = () => {
       initialValues: initialValues,
       validationSchema: emailTemplate,
       onSubmit: async (values, action) => {
-        console.log({...values, body: value})
+        if(isEdit){
+          
+        }else{
           dispatch(
             createTemplate({
               ...values, body: value, navigate:navigate
             })
           );
+        }
       },
     });
   return (
     <>
-    <NavBar />
+    {/* <NavBar /> */}
     <form action="" onSubmit={handleSubmit}>
     <div className='mb-5'>
     <MUITextField
@@ -112,7 +113,7 @@ const EmailTemplates = () => {
       color="primary"
       type='submit'
       >
-      Create Email Template
+      {isEdit ? "Save" : "Create Email Template"}
     </Button>
      </div>
     </form>

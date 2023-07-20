@@ -40,6 +40,7 @@ export const deleteInviteUser = (id) => {
         ...headerWithToken
     })
 }
+
 export const updateInviteUser = (payload,id) => {
     return instance({
     url: `${URls.user}/${id}`,
@@ -52,6 +53,23 @@ export const sandEmailInviteUser = (payload) => {
     return instance({
     url: URls.sandUsersEmails,
     method: 'post',
+    data: payload,
+    ...headerWithToken
+})
+}
+
+export const deleteEmailTemplate = (id) => {
+    return instance({
+    url: `${URls.emailTemplate}/${id}`,
+    method: 'DELETE',
+    ...headerWithToken
+})
+}
+
+export const updateEmailTemplate = (payload,id) => {
+    return instance({
+    url: `${URls.emailTemplate}/${id}`,
+    method: 'patch',
     data: payload,
     ...headerWithToken
 })
