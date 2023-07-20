@@ -5,6 +5,8 @@ import "react-clock/dist/Clock.css";
 import Table from "../sharedComponents/table";
 import "./comaon.css";
 import { IconButton } from '@mui/material';
+import EditModal from "../sharedComponents/editModal";
+import DeleteModal from "../sharedComponents/deleteModal";
 import AddIcon from '@mui/icons-material/Add';
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
@@ -214,6 +216,20 @@ const AttendanceAdjusment = () => {
           </>
         </Grid>
       </Grid>
+      <EditModal
+        showModal={showModal}
+        userData={userData}
+        setShowModal={setShowModal}
+        value={value}
+        calculateTotalWorkedHours={calculateTotalWorkedHours}
+        isCreate={isCreate}
+      />
+      <DeleteModal
+        showDeleteModal={showDeleteModal}
+        setShowDeleteModal={setShowDeleteModal}
+        handleDeleteModel={handleDeleteModel}
+
+      />
     </div>
   );
 };
