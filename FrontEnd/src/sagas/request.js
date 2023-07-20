@@ -18,7 +18,7 @@ export const getRequestWithOutToken = async (requestUrl) =>
     .catch((error) => error.response);
 
 export const postRequestWithTenat = async (requestUrl, data) =>
-  api
+apiwithTokenTenant
     .post(requestUrl, data)
     .then((resp) => resp)
     .catch((error) => error.response);

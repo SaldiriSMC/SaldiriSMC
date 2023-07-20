@@ -118,6 +118,7 @@ console.log("erroe-------------------in fiels",errors)
       item
       sm={sm}
       xs={xs}
+      md={3}
     >
       {
         type === 'select' ? (
