@@ -4,7 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Home from './pages/home'
-import EmailTemplates from './pages/emialTemplates'
+import CreateEmailTemplate from './pages/createEmailTemplate'
+import EmailTemplate from './pages/emailTemplate'
 import Services from './pages/services'
 import Technologies from './pages/technologies'
 import ContactUs from './components/contactUs'
@@ -62,16 +63,22 @@ function App({data}) {
         <Route path="/services" element={<Services/>} />
         <Route path="/contactUs" element={<ContactUs/>} /> 
         <Route path="/careers" element={<Careers/>} />
-        <Route path="/emailTemplates" element={<EmailTemplates/>} />
         <Route exact path='/dashboard' element={<PrivateRoute/>}>
             <Route exact path='/dashboard' element={<Dashboard   />}/>
-        </Route>
-        <Route exact path='/inviteUser' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
-            <Route exact path='/inviteUser' element={<InviteUser  loader={loader} setLoader={setLoader} />}/>
         </Route>
         <Route exact path='/attendance' element={<PrivateRoute/>}>
             <Route exact path='/attendance' element={<Attendance   />}/>
         </Route>
+        <Route exact path='/inviteUser' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
+            <Route exact path='/inviteUser' element={<InviteUser  loader={loader} setLoader={setLoader} />}/>
+        </Route>
+        <Route exact path='/emailTemplate' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
+            <Route exact path='/emailTemplate' element={<EmailTemplate  loader={loader} setLoader={setLoader} />}/>
+        </Route>
+        <Route exact path='/createEmailTemplate' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
+            <Route exact path='/createEmailTemplate' element={<CreateEmailTemplate  loader={loader} setLoader={setLoader} />}/>
+        </Route>
+       
       </Routes>
 
     </BrowserRouter>

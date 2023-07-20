@@ -251,15 +251,20 @@ const continueWorkHandel = () =>{
                <NavDropdown.Item as={Link} to="/dashboard" >
               Dashboard {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/emailTemplates" >
-              Email Templates {url == '/emailTemplates' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
-              </NavDropdown.Item>
               <NavDropdown title=" Attendance" id="navbarScrollingDropdown">
               <NavDropdown.Item as={Link} to="/attendance" >
               Attendance List {url == '/attendance' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/inviteUser" >
               Invite User {url == '/inviteUser' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
+              </NavDropdown.Item>
+            </NavDropdown>
+            <NavDropdown title=" EmailTemplate" id="navbarScrollingDropdown1">
+              <NavDropdown.Item as={Link} to="/emailTemplate" >
+              Email Template List
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/createEmailTemplate" >
+              Create Template {url == '/createEmailTemplate' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
             </NavDropdown>
             </>) : userRole == 'hr' ? <>    <NavDropdown.Item as={Link} to="/dashboard" >
@@ -272,7 +277,9 @@ const continueWorkHandel = () =>{
               <NavDropdown.Item as={Link} to="/inviteUser" >
               Invite User {url == '/inviteUser' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
-            </NavDropdown> </> : <> </>  
+            </NavDropdown>
+            
+             </> : <> </>  
            }
            
             </NavDropdown>}
