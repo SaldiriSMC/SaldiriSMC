@@ -251,6 +251,9 @@ const continueWorkHandel = () =>{
                <NavDropdown.Item as={Link} to="/dashboard" >
               Dashboard {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/emailTemplates" >
+              Email Templates {url == '/emailTemplates' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
+              </NavDropdown.Item>
               <NavDropdown title=" Attendance" id="navbarScrollingDropdown">
               <NavDropdown.Item as={Link} to="/attendance" >
               Attendance List {url == '/attendance' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
