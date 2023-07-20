@@ -28,7 +28,7 @@ function* signInCall(action) {
           "success",
         );
         yield put(logInSuccess(response.data));
-        // window.location.reload()
+        window.location.reload()
       
     } else {
       pushNotification(

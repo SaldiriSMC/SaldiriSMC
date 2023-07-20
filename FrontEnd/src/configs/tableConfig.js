@@ -56,7 +56,15 @@ export const UserAttendanceeConfig = [
     renderer: "Text",
     align: "left",
     label: "Hours",
-  }];
+  },
+  {
+    id: "action",
+    name: "action",
+    renderer: "EditDeleteAction",
+    align: "right",
+    label: "Actions",
+  },
+];
 export const EmailTemplateConfig = [
   {
     id: "created_date",
