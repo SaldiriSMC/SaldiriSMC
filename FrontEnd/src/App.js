@@ -18,6 +18,7 @@ import InviteUser from './components/inviteUser';
 import Attendance from './pages/attendance';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PrivateRoute from './components/privateRoute';
 import SignUp from './components/SignUp'
 import ForgetPassword from './components/forgetPassword'
 // import { useDispatch, useSelector } from "react-redux";
@@ -35,13 +36,13 @@ function App({data}) {
   const url = window.location.href.split( '/' )[3];
   const [loader, setLoader] = useState(false)
 
-  // console.log("isLoading------------",isLoading)
+  console.log('user------------->appppppp>>>>>>>>>>',user)
 
 
 
-  const PrivateRoute = ({loader,setLoader}) => {
-    return user ? <Outlet loader={loader} setLoader={setLoader}  /> : <Navigate to="/" />;
-}
+//   const PrivateRoute = ({loader,setLoader}) => {
+//     return user ? <Outlet loader={loader} setLoader={setLoader}  /> : <Navigate to="/" />;
+// }
 
   return (
     <FeedbackProvider data={data}>
@@ -63,7 +64,7 @@ function App({data}) {
         <Route path="/contactUs" element={<ContactUs/>} /> 
         <Route path="/careers" element={<Careers/>} />
         <Route path="/emailTemplates" element={<EmailTemplates/>} />
-        <Route exact path='/dashboard' element={<PrivateRoute/>}>
+        <Route exact path='/dashboard' element={<PrivateRoute />}>
             <Route exact path='/dashboard' element={<Dashboard   />}/>
         </Route>
         <Route exact path='/inviteUser' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>

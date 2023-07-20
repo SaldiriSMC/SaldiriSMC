@@ -123,7 +123,7 @@ function NavScrollExample({ setLoader,}) {
   const tokenExpirey = user ? format((new Date(user?.data?.tokens?.access?.expires)), "yyyy-MM-dd'T'HH:mm:ss'Z'"): ''
   const userRole =  user?.data?.user?.role
     const logOutToken = user?.data?.tokens?.access?.refreshToken
-    console.log(url,"url------------->>>>>>>>>>>",url == '/')
+    console.log('user------------->>>>>>>>>>>',user)
   const initialValues = {
     email: "",
     password: "",
