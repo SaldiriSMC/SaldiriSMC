@@ -25,12 +25,14 @@ const login = {
 const logout = {
   body: Joi.object().keys({
     refreshToken: Joi.string().required(),
+    timeId:Joi.required(),
+    attendanceId:Joi.required()
   }),
 };
 
 const refreshTokens = {
   body: Joi.object().keys({
-    refreshToken: Joi.string().required(),
+    refreshToken: Joi.string().required()
   }),
 };
 

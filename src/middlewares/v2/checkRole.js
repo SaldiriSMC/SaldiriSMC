@@ -3,24 +3,28 @@ const httpStatus = require('http-status');
 const ApiError = require('../../utils/ApiError');
 
 const checkRoles = (roles) => async (req, res, next) => {
-    return new Promise(async (resolve, reject) => {
-      const authToken = req.headers.authorization.split(' ')[1];
-      const token = await Token.findOne({ where: { token: authToken } });
+  return new Promise(async (resolve, reject) => {
+    const authToken = req.headers.authorization.split(' ')[1];
+    const token = await Token.findOne({ where: { token: authToken } });
+    if (token) {
       const user = await User.findOne({ where: { id: token?.user } });
       if (roles.length && !roles.includes(user.role)) {
         return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Sorry you do not have access to this route.'));
       } else {
         resolve();
       }
+    } else {
+      new ApiError(httpStatus.UNAUTHORIZED, 'Token not found');
+    }
+  })
+    .then((res) => {
+      console.log(res);
+      next();
     })
-      .then((res) => {
-        console.log(res);
-        next();
-      })
-      .catch((err) => {
-        console.log(err);
-        next(err);
-      });
-  };
-  
-module.exports = checkRoles
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
+};
+
+module.exports = checkRoles;

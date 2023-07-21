@@ -5,6 +5,7 @@ const { Attendance, Time } = require('../../models/v2/index');
 const { currentDate } = require('../../utils/currentDate');
 const todayDate = currentDate();
 const markAttendance = async (user, res) => {
+  let timeDoc;
   try {
     const attendance = await Attendance.findOne({ where: { userId: user.id, Date: new Date() } });
     if (attendance === null) {
@@ -14,30 +15,21 @@ const markAttendance = async (user, res) => {
         statusId: 4,
         Date: new Date(),
       });
-      await Time.create({ timeIn: new Date(), timeOut: null, attendanceId: attendance.id });
+      timeDoc = await Time.create({ timeIn: new Date(), timeOut: null, attendanceId: attendance.id });
     } else {
-      await Time.create({ timeIn: new Date(), timeOut: null, attendanceId: attendance.id });
+      timeDoc = await Time.create({ timeIn: new Date(), timeOut: null, attendanceId: attendance.id });
     }
+    return timeDoc
   } catch (err) {
     res.send(err);
   }
 };
 
-const markTimeOut = async (user, res) => {
+const markTimeOut = async ( id, res) => {
   try {
-    const attendance = await Attendance.findOne({ where: { userId: user.id, Date: new Date() } });
-    if (attendance === null) {
-      res.send('No record found');
-    }
-    const updateTimeOut = await Time.update(
-      { timeOut: new Date() },
-      {
-        where: { attendanceId: attendance.id },
-        order: [['createdAt', 'DESC']],
-      }
-    );
-    const timeOut = await Time.findOne({ where: { attendanceId: attendance.id }, order: [['createdAt', 'DESC']] });
-    return timeOut.dataValues;
+    await Time.update({ timeOut: new Date() },{where: { id: id }});
+    const timeOut = await Time.findOne({ where: { id: id }});
+    return timeOut
   } catch (err) {
     console.log('err--------->>>>>>>>>>', err);
     res.send(err);
@@ -98,43 +90,47 @@ const updateWorkedHours = async (attendanceId, totalHours) => {
     await Attendance.update({ workedHours: totalHours, statusId: 2 }, { where: { id: attendanceId } });
   }
 };
-const updateAttendance = async (attendanceId, updateBody) => {
- try{ const attendance = await Attendance.findOne({ where: { id: attendanceId } });
-  if (attendance === null) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Attendance record not found');
-  }
-  let updateAttendance;
-  if (updateBody.status) {
-    updateAttendance = await Attendance.update({ status: updateBody.status }, { where: { id: attendanceId } });
-  }
-  if (updateBody.time.length > 0) {
-    const updateTime = updateBody.time.map(async (item) => {
-      let timeCondition = {};
-      if (item.timeIn && item.timeOut) {
-        timeCondition.timeIn = `${todayDate} ${item.timeIn}`;
-        timeCondition.timeOut = `${todayDate} ${item.timeOut}`;
-      } else if (item.timeIn) {
-        timeCondition.timeIn = `${todayDate} ${item.timeIn}`;
-      } else if (item.timeOut) {
-        timeCondition.timeOut = `${todayDate} ${item.timeOut}`;
-      }
-      if (!item.id) {
-        await Time.create({ ...timeCondition, attendanceId: attendanceId });
-      } else if (item.id && item.isUpdate) {
-        console.log("id---------->>>>>>>>>>", item.id)
-        const update = await Time.update(timeCondition, { where: { id: item.id } });
-        console.log("update---------->>>>>>>>>>", update)
-      } else if (item.id && item.isDeleted) {
-        await Time.destroy({ where: { id: item.id } });
-      }
-      updateWorkedHours(attendanceId, item.totalHours);
-    });
-    return { updateTime, updateAttendance };
-  }
-  return updateAttendance;}
-  catch(err){
-    console.log("err----------->>>>>>>>>>", err)
-  }
-};
 
-module.exports = { markAttendance, markTimeOut, queryAttendance, updateAttendance, updateWorkedHours };
+
+// const updateAttendance = async (attendanceId, updateBody) => {
+//  try{ 
+//   const attendance = await Attendance.findOne({ where: { id: attendanceId } });
+//   if (attendance === null) {
+//     throw new ApiError(httpStatus.NOT_FOUND, 'Attendance record not found');
+//   }
+//   let updateAttendance;
+//   if (updateBody.status) {
+//     updateAttendance = await Attendance.update({ status: updateBody.status }, { where: { id: attendanceId } });
+//   }
+//   if (updateBody.time.length > 0) {
+//     const updateTime = updateBody.time.map(async (item) => {
+//       let timeCondition = {};
+    
+//       if (item.timeIn && item.timeOut) {
+//         timeCondition.timeIn = `${todayDate} ${item.timeIn}`;
+//         timeCondition.timeOut = `${todayDate} ${item.timeOut}`;
+//       } else if (item.timeIn) {
+//         timeCondition.timeIn = `${todayDate} ${item.timeIn}`;
+//       } else if (item.timeOut) {
+//         timeCondition.timeOut = `${todayDate} ${item.timeOut}`;
+//       }
+//       if (!item.id) {
+//         await Time.create({ ...timeCondition, attendanceId: attendanceId });
+//       } else if (item.id && item.isUpdate) {
+//         console.log("id---------->>>>>>>>>>", item.id)
+//         const update = await Time.update(timeCondition, { where: { id: item.id } });
+//         console.log("update---------->>>>>>>>>>", update)
+//       } else if (item.id && item.isDeleted) {
+//         await Time.destroy({ where: { id: item.id } });
+//       }
+//       updateWorkedHours(attendanceId, item.totalHours);
+//     });
+//     return { updateTime, updateAttendance };
+//   }
+//   return updateAttendance;}
+//   catch(err){
+//     console.log("err----------->>>>>>>>>>", err)
+//   }
+// };
+
+module.exports = { markAttendance, markTimeOut, queryAttendance, updateWorkedHours };

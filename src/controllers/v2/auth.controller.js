@@ -45,18 +45,16 @@ const login = catchAsync(async (req, res) => {
   const user = await authService.loginUserWithEmailAndPassword(email, password);
   const tenant = await Tenant.findOne({where:{id:user.tenantId}})
   const tokens = await tokenService.generateAuthTokens(user);
-  await attendanceService.markAttendance(user, res)
-  response(res,{ user, tenant, tokens }, 'User loged in successfully', 200)
+  const timeDoc = await attendanceService.markAttendance(user, res)
+  response(res,{ user, tenant, tokens, timeDoc }, 'User loged in successfully', 200)
 });
 
 const logout = catchAsync(async (req, res) => {
   await authService.logout(req.body.refreshToken);
   const tokenDoc = await authService.logout(req.body.refreshToken); 
-  console.log("tokenDoc-------->>>>>>>>>", tokenDoc)
-  const userDoc = await User.findOne({where:{id:tokenDoc.user}})
-  let attendanceDoc = await Attendance.findOne({where:{userId:userDoc.id}})
+  let attendanceDoc = await Attendance.findOne({where:{id:req.body.attendanceId}})
   let totalWorkedHours = attendanceDoc.workedHours
-  const timeInTimeOut = await attendanceService.markTimeOut(userDoc, res)
+  const timeInTimeOut = await attendanceService.markTimeOut(req.body.timeId, res)
   const timeOutMiliSeconds = timeInTimeOut.timeOut.getTime()
   const timeInMiliSeconds = timeInTimeOut.timeIn.getTime()
   const sessionMiliSeconds = timeOutMiliSeconds - timeInMiliSeconds
@@ -64,9 +62,9 @@ const logout = catchAsync(async (req, res) => {
   totalWorkedHours += sessionWorkedHours
   attendanceDoc.workedHours = totalWorkedHours.toFixed(2)
   if(attendanceDoc.workedHours < 8){
-    attendanceDoc.status = "Break"
+    attendanceDoc.statusId = 1
   }else{
-    attendanceDoc.status = "Day Completed"
+    attendanceDoc.statusId = 2
   }
   attendanceDoc.save()
   await tokenDoc.destroy()

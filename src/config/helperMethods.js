@@ -17,7 +17,7 @@ const callDBRoutine = async (SpName, params, res) =>{
         response(res, data, "Record found succesfully", 200)
     }
     else{
-        return results;
+        return data;
     }
     
 

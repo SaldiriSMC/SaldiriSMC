@@ -8,11 +8,13 @@ const router = express.Router();
 
 router
     .route("/")
-    .get(auth(), tenant(), checkRoles(["admin"]), attendanceController.getAttendance);
+    .get(auth(), tenant(), checkRoles(["admin"]), attendanceController.getAttendance)
 router
-    .route('/:userId')
+    .route('/:attendanceId')
+    .get(auth(), checkRoles(["admin"]), attendanceController.getAttendanceWithWorkedHours)
+    .post(auth(), tenant(), checkRoles(["admin"]), attendanceController.createAttendance)
     .put(auth(), tenant(), checkRoles(["admin"]), attendanceController.updateAttendance)
-    .get(auth(), checkRoles(["admin"]), attendanceController.getAttendanceWithWorkedHours);
+    .delete(auth(), tenant(), checkRoles(["admin"]), attendanceController.deleteAttendance);
 router
     .route('/by-hours/:userId')
     .get(auth(), tenant(), checkRoles(["admin"]), attendanceController.getAttendanceByHours);
@@ -111,63 +113,6 @@ module.exports = router
 /**
  * @swagger
  * /attendance/{id}:
- *   put:
- *     summary: Update a Attendance
- *     description: Logged in users can only update their own information. Only admins can update other users.
- *     tags: [Attendance]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - name: X-Tenent-Key
- *         in: header
- *         description: X-Tenent-Key
- *         required: true
- *         schema:
- *           type: string
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: Attendance Id
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
- *                 format: email
- *                 description: must be unique
- *               password:
- *                 type: string
- *                 format: password
- *                 minLength: 8
- *                 description: At least one number and one letter
- *             example:
- *               workedHours: 0
- *               status: Present
- *               time: [{"id":"34273409sdjcshd32", "timeIn":"2:30:40", "timeOut": "8:25:59"}]
- *     responses:
- *       "200":
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *                $ref: '#/components/schemas/Attendance'
- *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
- *       "401":
- *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
- *       "404":
- *         $ref: '#/components/responses/NotFound'
- * 
  *   get:
  *     summary: Get a attendace
  *     description: Logged in users can only update their own information. Only admins can update other users.
@@ -202,8 +147,151 @@ module.exports = router
  *         $ref: '#/components/responses/Forbidden'
  *       "404":
  *         $ref: '#/components/responses/NotFound'
- *
- *
+ *   post:
+ *     summary: create a time
+ *     description: Logged in users can only update their own information. Only admins can update other users.
+ *     tags: [Attendance]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: X-Tenent-Key
+ *         in: header
+ *         description: X-Tenent-Key
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Attendance Id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               timeIn:
+ *                 type: date
+ *               timeOut:
+ *                 type: date
+ *             example: 
+ *               timeIn: "2:30:40"
+ *               timeOut: "8:25:59"
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Attendance'
+ *       "400":
+ *         $ref: '#/components/responses/DuplicateEmail'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ *   put:
+ *     summary: update a time
+ *     description: Logged in users can only update their own information. Only admins can update other users.
+ *     tags: [Attendance]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: X-Tenent-Key
+ *         in: header
+ *         description: X-Tenent-Key
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Attendance Id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *               timeIn:
+ *                 type: date
+ *               timeOut:
+ *                 type: date
+ *             example:
+ *               id: 13 
+ *               timeIn: "2:30:40"
+ *               timeOut: "8:25:59"
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Attendance'
+ *       "400":
+ *         $ref: '#/components/responses/DuplicateEmail'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ *   delete:
+ *     summary: delete a time
+ *     description: Logged in users can only update their own information. Only admins can update other users.
+ *     tags: [Attendance]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: X-Tenent-Key
+ *         in: header
+ *         description: X-Tenent-Key
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Attendance Id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *             example:
+ *               id: 13 
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Attendance'
+ *       "400":
+ *         $ref: '#/components/responses/DuplicateEmail'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ * 
  */
 
 
