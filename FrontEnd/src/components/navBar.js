@@ -123,6 +123,8 @@ function NavScrollExample({ setLoader,}) {
   const tokenExpirey = user ? format((new Date(user?.data?.tokens?.access?.expires)), "yyyy-MM-dd'T'HH:mm:ss'Z'"): ''
   const userRole =  user?.data?.user?.role
     const logOutToken = user?.data?.tokens?.access?.refreshToken
+    const timeId = user?.data?.timeDoc?.id
+    const attendanceid = user?.data?.timeDoc?.attendanceId
     console.log('user------------->>>>>>>>>>>',user)
   const initialValues = {
     email: "",
@@ -171,6 +173,8 @@ const logOut =()=>{
     logout({
       data:{
         refreshToken:logOutToken,
+        attendanceId:attendanceid,
+        timeId:timeId
       },
       navigate:navigate,
     }))

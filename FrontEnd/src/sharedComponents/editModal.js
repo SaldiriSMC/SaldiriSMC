@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import * as Yup from "yup";
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button'
+import { pushNotification } from "../utils/notifications";
 import { useFormik } from "formik";
 import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +11,10 @@ import IconButton from '@mui/material/IconButton';
 import {updateTime, getAttendanceByHours} from "../actions/Attendance"
 import Grid from '@mui/material/Grid'
 import CancelIcon from '@mui/icons-material/Cancel';
+import {
+  updateAttendance,
+  createAttendance,
+} from "../service/users";
 import { useEffect } from 'react';
 const useStyles = makeStyles()((theme) => {
     return {
@@ -125,30 +130,72 @@ const MainModal = (props) => {
         setFieldValue('timeOut',userData?.timeOut ? format(new Date(userData.timeOut), "HH:mm:ss") : null)
       },[userData])
       const updateTimeFun =()=>{
-        const totalHours = calculateTotalWorkedHours()
-        if(isCreate){
-          var data = {
-            time: [
-              {
-                ...values,
-                attendanceid: userData?.attendenceid,
-                totalHours: totalHours,
-              },
-            ],
-          };
-          dispatch(updateTime(data));
-          setTimeout(() => {
-            dispatch(getAttendanceByHours(value));
-          }, 100);
-          handleReset()
-        }else{
-          var data ={time:[{...values,id:userData.timeId, isUpdate:true, attendanceid:userData.attendenceid, totalHours:totalHours}]}
-          dispatch(updateTime(data))
-          setTimeout(()=>{
-            dispatch(getAttendanceByHours(value))
-          },100)
+
+        if (values.timeIn < values.timeOut ){
+          const totalHours = calculateTotalWorkedHours()
+          if(isCreate){
+            var data = {
+                  ...values,
+                  attendanceId: userData?.attendenceid,
+                  totalHours: totalHours,          
+            };
+  
+            // setLoader(true);
+            createAttendance(data)
+            .then((response) => {
+              if (response.data) {
+                dispatch(getAttendanceByHours(value));
+                pushNotification(
+                  `${response?.data?.message}`,
+                  "success",
+                );
+              }
+            })
+            .catch((err) => {
+              const { response } = err;
+              // setLoader(false)
+              pushNotification(
+                `${response?.data?.message}`,
+                "error",
+              );
+            })
+            .finally(() => {
+              // setLoader(false);
+          });
+  
+  
+  
+  
+  
+            handleReset()
+          }else{
+            var data ={...values,id:userData.timeId, attendanceId:userData.attendenceid}
+                 // setLoader(true);
+                 updateAttendance(data)
+                 .then((response) => {
+                   if (response.data) {
+                     dispatch(getAttendanceByHours(value));
+                     pushNotification(
+                       `${response?.data?.message}`,
+                       "success",
+                     );
+                   }
+                 })
+                 .catch((err) => {
+                   const { response } = err;
+                   // setLoader(false)
+                   pushNotification(
+                     `${response?.data?.message}`,
+                     "error",
+                   );
+                 })
+                 .finally(() => {
+                   // setLoader(false);
+               });
+          }
+          setShowModal(false)
         }
-        setShowModal(false)
+       
       }
   return (
     <div>

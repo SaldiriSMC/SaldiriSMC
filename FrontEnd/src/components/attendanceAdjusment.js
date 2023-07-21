@@ -14,6 +14,11 @@ import AddIcon from '@mui/icons-material/Add';
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteAttendance,
+  sandEmailInviteUser,
+  getAllUserByDeptDes
+} from "../service/users";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
@@ -39,21 +44,27 @@ const AttendanceAdjusment = () => {
     const handleDeleteModel = (item) => {
     const totalHours = calculateTotalWorkedHours();
     let payload = {
-      time: [
-        {
-          isDeleted: true,
           id: deleteId.id,
-          attendanceid: deleteId.attendanceid ,
-          totalHours: totalHours,
-        },
-      ],
+          attendanceId: deleteId.attendanceid ,
+
     };
-    console.log("payloadpayload------------",payload)
-    dispatch(updateTime(payload));
-    setTimeout(() => {
-      dispatch(getAttendanceByHours(values.user));
-    }, 100);
-    setShowDeleteModal(false);
+
+  
+    // setLoader(true);
+    deleteAttendance(payload)
+    .then((response) => {
+      if (response.data) {
+        dispatch(getAttendanceByHours(values.user));
+        setShowDeleteModal(false);
+      }
+    })
+    .catch((error) => console.log(error.message))
+    .finally(() => {
+      // setLoader(false);
+  });
+  
+
+    
   };
   console.log("data----------------------->>>>>>>>>>>>>  data", data);
   const calculateTotalWorkedHours = () => {
@@ -72,9 +83,9 @@ const AttendanceAdjusment = () => {
     current.getMonth() + 1
   }/${current.getFullYear()}`;
   const initialValues = {
-    user: data?.length > 0 ? data[0]?.id : "1",
+    user: '',
   };
-  const { handleChange,values } =
+  const { handleChange,values,setFieldValue } =
     useFormik({
       initialValues,
 
@@ -85,6 +96,13 @@ const AttendanceAdjusment = () => {
   useEffect(() => {
     dispatch(getAllUser());
   }, []);
+
+  useEffect(() => {
+   setFieldValue("user",data?.length > 0 ? data[0]?.id : "1")
+  }, [data]);
+
+  console.log("useruseruser----------------",values.user)
+
   useEffect(() => {
     if (values.user) {
       dispatch(getAttendanceByHours(values.user));
