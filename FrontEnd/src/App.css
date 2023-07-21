@@ -54,8 +54,8 @@ body {
   border-top-right-radius: 0.5em;
 }
 
-#root .ql-editor {
-  min-height: 18em;
+.ql-editor{
+  min-height: 200px;
 }
 
 @keyframes App-logo-spin {

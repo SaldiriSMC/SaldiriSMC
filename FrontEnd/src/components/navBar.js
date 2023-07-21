@@ -259,14 +259,14 @@ const continueWorkHandel = () =>{
               Invite User {url == '/inviteUser' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title=" EmailTemplate" id="navbarScrollingDropdown1">
+            {/* <NavDropdown title=" EmailTemplate" id="navbarScrollingDropdown1"> */}
               <NavDropdown.Item as={Link} to="/emailTemplate" >
-              Email Template List
+              Email Template 
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/createEmailTemplate" >
+              {/* <NavDropdown.Item as={Link} to="/createEmailTemplate" >
               Create Template {url == '/createEmailTemplate' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
-              </NavDropdown.Item>
-            </NavDropdown>
+              </NavDropdown.Item> */}
+            {/* </NavDropdown> */}
             </>) : userRole == 'hr' ? <>    <NavDropdown.Item as={Link} to="/dashboard" >
               Dashboard  {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>

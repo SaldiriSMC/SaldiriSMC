@@ -7,8 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteEmailTemplate } from "../service/users";
 import { loderTrue, loderFalse } from "../actions/Auth";
 import EmailTemplateEditModal from "../sharedComponents/emailTemplateEditModal"
+import Grid from "@mui/material/Grid";
+import { IconButton } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 const EmailTemplate = () => {
   const [showModal, setShowModal] = React.useState(false);
+  const [isEdit, setIsEdit] = React.useState(false)
+  const [itemId, setItemId] = React.useState(null)
   const dispatch = useDispatch();
   const emailTemplateData = useSelector(
     (state) => state?.emailTemplate?.data?.data
@@ -36,6 +41,7 @@ const EmailTemplate = () => {
   const handleDropdownActionsupport = (data, val, index) => {
     console.log("id----------->>>>>>>>", data.id);
     if (val === "delete") {
+      setIsEdit(false)
       deleteEmailTemplate(data.id)
         .then((response) => {
           dispatch(getTemplate());
@@ -47,19 +53,68 @@ const EmailTemplate = () => {
     }
 
     if (val === "edit") {
-      //   setAction('update')
-      //   setUserData(data)
+      setIsEdit(true)
       setShowModal(true);
+      setItemId(data.id)
     }
   };
   return (
     <div>
       <NavBar />
-      <MUITable
+      <Grid
+        container
+        flexDirection="row"
+        display="flex"
+        justifyContent=""
+        sx={{ p: 1 }}
+      >
+        <Grid
+          sx={{ pl: 3 }}
+          spacing={2}
+          justifyContent="flex-end"
+          alignItems="center"
+          item
+          sm={12}
+          md={6}
+        >
+         <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"15px"}}>
+         <IconButton  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
+            setShowModal(true)
+          } }>
+            <AddIcon />
+          </IconButton> 
+         </div>
+         <MUITable
         column={EmailTemplateConfig}
         list={normalizeTableProgram(emailTemplateData)}
       />
-      <EmailTemplateEditModal showModal={showModal} setShowModal={setShowModal} isEdit={true} />
+          <Grid
+            item
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              my: 3,
+            }}
+          ></Grid>
+        </Grid>
+        <Grid
+          item
+          spacing={2}
+          justifyContent="center"
+          alignContent="flex-start"
+          alignItems="start"
+          container
+          md={6}
+          sm={12}
+        >
+          <>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}></div>
+          </>
+        </Grid>
+      </Grid>
+      
+      <EmailTemplateEditModal showModal={showModal} setShowModal={setShowModal} isEdit={isEdit} setIsEdit={setIsEdit} itemId={itemId} /> 
     </div>
   );
 };
