@@ -48,29 +48,18 @@ function Portfolio() {
         
                    <div className="col-lg-4 col-md-6  mb-2">
             <div className="portfolio-wrap">
-              <img src='/assets/portfolio/ab3.jpg' className=" poltfolio-img" alt="website template image" />
+              <img src='/assets/portfolio/p1.png' className=" poltfolio-img" alt="website template image" />
 
             </div>
             <div className="portfolio-wrap mt-3">
-              <img src='/assets/portfolio/ab2.jpg' className=" poltfolio-img" alt="website template image" />
+              <img src='/assets/portfolio/p2.png' className=" poltfolio-img" alt="website template image" />
             </div>
           </div>
           
                    <div className="col-lg-4 col-md-6  filter-card mb-2 position-relative">
             <div className="portfolio-wrap position-relative">
-              <img src='/assets/portfolio/c.jpg' className=" poltfolio-img position-relative" alt="website template image" />
-              <div className="portfolio-info position-absolute" style={{
-                 bottom: "0",
-                 left: "0",
-                 right: "0",
-                 marginLeft: "auto",
-                 marginRight: "auto"
-}}>
-              <img src='/assets/portfolio/cb.png' className=" poltfolio-img" alt="website template image" />
-                <div>
-         
-                </div>
-              </div>
+              <img src='/assets/portfolio/Rectangle 111.png' className=" poltfolio-img position-relative" alt="website template image" />
+
             </div>
           </div>
           
@@ -78,7 +67,7 @@ function Portfolio() {
   flexDirection: "column",
   justifyContent: "space-around"}}>
             <div className="portfolio-wrap">
-              <img src='/assets/portfolio/d.jpg' className=" poltfolio-img" alt="website template image" />
+              <img src='/assets/portfolio/p3.png' className=" poltfolio-img" alt="website template image" />
               <div className="portfolio-info">
           
                 <div>
@@ -87,7 +76,7 @@ function Portfolio() {
               </div>
             </div>
             <div className="portfolio-wrap mt-3">
-              <img src='/assets/portfolio/ab1.jpg' className=" poltfolio-img" alt="website template image" />
+              <img src='/assets/portfolio/p4.png' className=" poltfolio-img" alt="website template image" />
               <div className="portfolio-info">
           
                 <div>

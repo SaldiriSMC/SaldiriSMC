@@ -82,3 +82,32 @@ export const userTokenExpire = (payload) => {
     ...headerWithToken
 })
 }
+
+
+export const createAttendance = (payload) => {
+    return instance({
+    url: `${URls.attendanceAdjustment}/${payload.attendanceId}`,
+    method: 'post',
+    data: payload,
+    ...headerWithToken
+})
+}
+
+
+export const deleteAttendance = (payload) => {
+    return instance({
+    url: `${URls.attendanceAdjustment}/${payload.attendanceId}`,
+    method: 'DELETE',
+    data: payload,
+    ...headerWithToken
+})
+}
+
+export const updateAttendance = (payload) => {
+return instance({
+    url: `${URls.attendanceAdjustment}/${payload.attendanceId}`,
+method: 'put',
+data: payload,
+...headerWithToken
+})
+}
