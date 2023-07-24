@@ -28,7 +28,7 @@ function Clients() {
     dots: false,
     arrows:false,
     infinite: true,
-    slidesToShow: 4,
+    slidesToShow: 6,
     slidesToScroll: 1,
     autoplay: true,
     speed: 2000,
@@ -55,14 +55,19 @@ function Clients() {
       <div className="">
         <div className="container ">
           <header className="section-header">
-            <h3 className="mt-3">Clients</h3>
+            <h3 className="mt-3"></h3>
           </header>
           
 
   <Slider {...settings}>
   {React.Children.toArray(ClientNew.map((item)=>{
                 return <>
-        <div className="py-3">
+        <div style={ item.url ? {cursor:'pointer'} : { }} className="py-3" onClick={()=>{
+          if (item.url){
+            window.open(`${item.url}`);
+          }
+       
+        }}>
       <img
       className="imgk"
         src={item.img}

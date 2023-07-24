@@ -1,13 +1,46 @@
 .banerViewHeight{
  height:calc(100vh - 120px)
 }
+.foterForm{
+ padding: 1rem;
+  background-color: #043F75;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.foter_title{
+  font-weight: 900;
+  color: white;
+  margin-top: 4%;
 
+}
 
+.css-bzv0vy-MuiPaper-root-MuiDrawer-paper{
+  position: unset !important;
+}
 
+.social_wrap{
+  display: flex;
+  justify-content: center;
+  align-content: flex-end;
+  flex-wrap: wrap;
 
+}
+.foter_subtitle{
+  color: white;
+  font-weight: 600;
 
+}
+.whyUs_card{
+  /* height: 303px; */
+  padding: 10px;
+}
+.whyUs_card > div {
+  height: 303px;
+}
 .imgk {
   width: 100px;
+  margin-right: 5px;
   /* height: 100px; */
   /* animation: scroll 30s linear; */
   /* animation-iteration-count: infinite; */
@@ -43,9 +76,21 @@ body {
 }
 
 
+.foter_inputs .form-control{
+  background-color: transparent;
+  border-color: white;
+}
 
+.foter_inputs .btn-primary{
+  background-color: transparent;
+  border-color: white;
+  margin-right: auto;
 
-
+}
+.foter_inputs .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #FFFFFF;
+  /* opacity: 1; Firefox */
+}
 
 
 .clients_wrap .slick-track{
@@ -62,7 +107,7 @@ align-items: center;
   position: absolute;
   top: 30%;
   left: 30%;
-  height: 27vh;
+  /* height: 27vh; */
 }
 .services_icon{
   /* background: #D8E4FF; */
@@ -579,7 +624,7 @@ right: 25px;
 }
 /* Services Section
 --------------------------------*/
-.main_wrap{
+_wrap{
   display: flex;
   flex-wrap: nowrap;
 justify-content: center;}
@@ -590,7 +635,13 @@ justify-content: center;}
 
 #services {
   padding: 25px 0 40px 0;
+
   box-shadow: inset 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
+}
+#divider {
+  padding: 0px 0 4px 0;
+  box-shadow: 0 4px 2px -2px  rgba(0, 0, 0, 0.1);
+
 }
 
 #services .box {
@@ -1368,6 +1419,10 @@ margin-top: 2%;
   color: #fff;
 }
 
+.section-header_about{
+  padding-top: 10%;
+  padding-left: 10%;
+}
 
 /*--------------------------------------------------------------
 # Responsive Media Queries

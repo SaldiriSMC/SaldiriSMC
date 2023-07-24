@@ -36,6 +36,28 @@ body {
   color: #61dafb;
 }
 
+#root {
+  /* margin: 1rem 4rem; */
+}
+
+#root .ql-container {
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  background: #fefcfc;
+}
+
+/* Snow Theme */
+#root .ql-snow.ql-toolbar {
+  display: block;
+  background: #eaecec;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
+.ql-editor{
+  min-height: 200px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

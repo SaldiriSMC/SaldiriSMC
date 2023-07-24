@@ -44,13 +44,13 @@ function* emailVerificationCall(action) {
    try {
      const response = yield call(postRequest, `${URls.resetPassword}?token=${action?.payload?.LogIntoken}`, action?.payload?.credentials);
      console.log(response)
-     if (response?.data?.message == 'Password changed successfully') {     
+     if (response?.status === 200) {      
        pushNotification(
          "Password Change Successfully",
          "success",
        );
        yield put(resetPasswordSuccess(response.data));
-       action.payload.navigate("/Login")
+       action.payload.navigate("/")
      } else {
           pushNotification(
          `${response?.data?.message}`,

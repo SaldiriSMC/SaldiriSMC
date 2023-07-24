@@ -45,3 +45,7 @@ export const setNewPassword = Yup.object({
     .required('Confrim Password is required')
     .oneOf([Yup.ref("password"), null], "Password must match"),
 });
+
+export const emailTemplate = Yup.object({
+  subject: Yup.string().min(3).max(100).required("Please enter subject"),
+});

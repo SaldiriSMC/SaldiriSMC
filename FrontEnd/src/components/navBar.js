@@ -1,24 +1,42 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from "tss-react/mui";
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
-
+import Box from '@mui/material/Box';
+import CircleIcon from '@mui/icons-material/Circle';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import { deepOrange, deepPurple } from '@mui/material/colors';
+import { format } from "date-fns";
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
 import { loginSchema } from "../Yup Schema";
 import MUITextField from "../sharedComponents/textField";
 import LogoutIcon from '@mui/icons-material/Logout';
 import Grid from '@mui/material/Grid';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import Button from '@mui/material/Button';
+import LinearProgress from '@mui/material/LinearProgress';
 import {HashLink, NavHashLink } from 'react-router-hash-link';
-import {  useLocation } from "react-router-dom"
+import {  useLocation ,useNavigate} from "react-router-dom"
 import './comaon.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link, Outlet } from 'react-router-dom';
+import TokenExpireModel from "../sharedComponents/tokenExpireModel";
 import { logIn, logout } from "../actions/Auth";
+import { pushNotification } from "../utils/notifications";
+import {
+  userTokenExpire
+} from "../service/users";
 const useStyles = makeStyles()((theme) => {
   return {
     btn: {
@@ -77,17 +95,37 @@ const useStyles = makeStyles()((theme) => {
     SignUp:{
       textDecoration:'underline',
       cursor:'pointer',
+    },
+    blueDotUrl: {
+      height: "0.4rem",
+      width: "100%",
+      marginBottom: "10px",
+      color: "blue"
+    },
+    blueDotUrlist: {
+      height: "0.4rem",
+      color: "blue"
     }
   };
 });
-function NavScrollExample() {
+function NavScrollExample({ setLoader,}) {
   const location = useLocation();
   const { classes } = useStyles();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+    const isLoading = useSelector((state) => state.loderReducer?.isLoading);
+  const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const user = JSON.parse(localStorage.getItem("accessToken"))
-
-    const logOutToken = user?.data?.tokens?.refresh?.token
-    console.log("refreshToken",logOutToken)
+  const currentTime = new Date()
+  currentTime.setMinutes(currentTime.getMinutes() - 10);
+  const url = window.location.pathname
+  const currentTimeFormet = format((new Date(currentTime)), "yyyy-MM-dd'T'HH:mm:ss'Z'")
+  const tokenExpirey = user ? format((new Date(user?.data?.tokens?.access?.expires)), "yyyy-MM-dd'T'HH:mm:ss'Z'"): ''
+  const userRole =  user?.data?.user?.role
+    const logOutToken = user?.data?.tokens?.access?.refreshToken
+    const timeId = user?.data?.timeDoc?.id
+    const attendanceid = user?.data?.timeDoc?.attendanceId
+    console.log('user------------->>>>>>>>>>>',user)
   const initialValues = {
     email: "",
     password: "",
@@ -113,13 +151,71 @@ function NavScrollExample() {
               email: data.email,
             password: data.password
           },
+
           })
         );
       }
     });
 
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
+  
+
+const logOut =()=>{
+  dispatch(
+    logout({
+      data:{
+        refreshToken:logOutToken,
+        attendanceId:attendanceid,
+        timeId:timeId
+      },
+      navigate:navigate,
+    }))
+} 
+
+
+const continueWorkHandel = () =>{
+
+
+  const pauload={}
+  setLoader(true);
+  userTokenExpire(pauload)
+  .then((response) => {
+    if (response.data) {
+      setShowDeleteModal(false)
+
+    }
+    pushNotification(
+      `${response?.data?.message}`,
+      "success",
+    );
+  })
+  .catch((err) => {
+    const { response } = err;
+    setLoader(false)
+    pushNotification(
+      `${response?.data?.message}`,
+      "error",
+    );
+  })
+  .finally(() => {
+    setLoader(false);
+});
+}
 
   return (
+    <>
+       {isLoading &&    <Box sx={{ width: '100%' }}>
+      <LinearProgress />
+    </Box>}
+   
     <Navbar bg="white" expand="lg">
       <Container fluid>
        <HashLink to="/">  <img
@@ -135,35 +231,146 @@ function NavScrollExample() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link as={Link} to="/services">  Services</Nav.Link>
+            <Nav.Link as={Link}  to="/">Home {url == '/' && (<CircleIcon  className={classes.blueDotUrl}/>)}</Nav.Link>
+            <Nav.Link as={Link} to="/services">  Services {url == '/services' && (<CircleIcon  className={classes.blueDotUrl}/>)}</Nav.Link>
             <NavDropdown title="Company" id="navbarScrollingDropdown">
               {/* <NavDropdown.Item href="#portfolio"> Portfolio</NavDropdown.Item> */}
               <NavDropdown.Item as={Link} to="/technologies" >
-              Technologies
+              Technologies {url == '/technologies' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
               {/* <NavDropdown.Item  as={Link} to="/#clients">
               Clients
               </NavDropdown.Item> */}
               <NavDropdown.Item as={Link} to="/careers">
-              Careers
+              Careers {url == '/careers' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
               <NavDropdown.Item  as={Link} to="/contactUs">
-              Contact Us
+              Contact Us {url == '/contactUs' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
             </NavDropdown>
+<<<<<<< HEAD
             <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+=======
+           
+            {user && 
+             <NavDropdown title="Operations" id="navbarScrollingDropdown">
+            {
+            userRole == 'admin' ?(<>
+               <NavDropdown.Item as={Link} to="/tenant" >
+               Tenant {url == '/tenant' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
+              </NavDropdown.Item>
+               <NavDropdown.Item as={Link} to="/dashboard" >
+              Dashboard {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
+              </NavDropdown.Item>
+              <NavDropdown title=" Attendance" id="navbarScrollingDropdown">
+              <NavDropdown.Item as={Link} to="/attendance" >
+              Attendance List {url == '/attendance' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/inviteUser" >
+              Invite User {url == '/inviteUser' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
+              </NavDropdown.Item>
+            </NavDropdown>
+            {/* <NavDropdown title=" EmailTemplate" id="navbarScrollingDropdown1"> */}
+              <NavDropdown.Item as={Link} to="/emailTemplate" >
+              Email Template 
+              </NavDropdown.Item>
+              {/* <NavDropdown.Item as={Link} to="/createEmailTemplate" >
+              Create Template {url == '/createEmailTemplate' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
+              </NavDropdown.Item> */}
+            {/* </NavDropdown> */}
+            </>) : userRole == 'hr' ? <>  
+            <NavDropdown.Item as={Link} to="/tenant" >
+               Tenant {url == '/tenant' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/dashboard" >
+              Dashboard  {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
+              </NavDropdown.Item>
+              <NavDropdown title=" Attendance" id="navbarScrollingDropdown">
+              {/* <NavDropdown.Item as={Link} to="/attendance" >
+              Attendance List
+              </NavDropdown.Item> */}
+              <NavDropdown.Item as={Link} to="/inviteUser" >
+              Invite User {url == '/inviteUser' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
+              </NavDropdown.Item>
+            </NavDropdown>
+            
+             </> : <> </>  
+           }
+           
+            </NavDropdown>}
+>>>>>>> 51a199b03f63a0c6bc36560c169e914c4c272630
           </Nav>
           {user ? <>
-            <Grid container flexDirection='row' display='flex' justifyContent='flex-end'sx={{p:1}}>
-          <Button variant="contained" endIcon={<LogoutIcon />} onClick={()=>{
-         dispatch(
-          logout({
-            refreshToken:logOutToken
-          })
-        )}}>
-            Log Out
-           </Button></Grid>
+            <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+        <Tooltip title="Account settings">
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{ ml: 2 }}
+            aria-controls={open ? 'account-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+          >
+            <Avatar sx={{ width: 45, height: 45, }}  src="/assets/2.jpg"  ></Avatar>
+          </IconButton>
+        </Tooltip>
+      </Box>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: 'visible',
+            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+            mt: 1.5,
+            '& .MuiAvatar-root': {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            '&:before': {
+              content: '""',
+              display: 'block',
+              position: 'absolute',
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: 'background.paper',
+              transform: 'translateY(-50%) rotate(45deg)',
+              zIndex: 0,
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <MenuItem onClick={handleClose}>
+          <Avatar /> {user?.data?.user?.name.toUpperCase()}
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Avatar /> My account
+        </MenuItem>
+        <Divider />
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          Settings
+        </MenuItem>
+        <MenuItem     
+          onClick={()=>{logOut()}}>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon >
+          Logout
+        </MenuItem>
+      </Menu>
           </> : <>
           <form onSubmit={handleSubmit}>
           <Grid container flexDirection='row' display='flex' justifyContent='flex-end'sx={{p:1}}>
@@ -178,7 +385,7 @@ function NavScrollExample() {
                     justifyContent="center"
                     alignItems="center"
                     item
-                    sm={5.5}
+                    sm={3.5}
                     xs={12}
                   >
                   <TextField
@@ -207,7 +414,7 @@ function NavScrollExample() {
                     justifyContent="center"
                     alignItems="center"
                     item
-                    sm={5.5}
+                    sm={3.5}
                     xs={12}
                   >
                   <TextField
@@ -257,7 +464,16 @@ function NavScrollExample() {
        
         </Navbar.Collapse>
       </Container>
+      <TokenExpireModel
+     showDeleteModal={showDeleteModal}
+     setShowDeleteModal={setShowDeleteModal}
+     handleDeleteModel={continueWorkHandel}
+    
+
+   />
     </Navbar>
+    </>
+   
   );
 }
 

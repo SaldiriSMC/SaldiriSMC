@@ -88,32 +88,27 @@ const MUITextField = (props) => {
     noTitle,
   } = props
   const { classes } = useStyles();
-
   const renderOptionsHandler = (list) => {
     let result;
     if (pass === 'value') {
-      result = list.map(item => <MenuItem value={item.code} key={item.id}>{item.value}</MenuItem>)
-    } else if (pass === 'name') {
-      result = list.map(item => <MenuItem value={item.name} key={item.id}>{item.name}</MenuItem>)
-    } else if(pass === 'id') {
-      result = list.map(item => <MenuItem value={item.id} key={item.id}>{item.value}</MenuItem>)
+      result = list.map(item => <MenuItem value={item.code} key={item.id}>{`${item.value}/${item.department}`}</MenuItem>)
+    } else if (pass === 'designation') {
+      result = list.map(item => <MenuItem value={item.id} key={item.id}>{item.designationName}</MenuItem>)
+    } else if(pass === 'department') {
+      result = list.map(item => <MenuItem value={item.id} key={item.id}>{item.departmentName}</MenuItem>)
     } else if(pass === 'name-value') {
       result = list.map(item => <MenuItem value={item.value} key={item.id}>{item.value}</MenuItem>)
     } else if(pass === 'code') {
       result = list.map(item => <MenuItem value={item.code} key={item.id}>{item.name}</MenuItem>)
-    } else if(pass === 'code-value') {
-      result = list.map(item => <MenuItem value={item.code} key={item.code}>{item.value}</MenuItem>)
-    } else if(pass === 'object') {
-      result = list.map(item => <MenuItem value={item} key={item.code}>{item.value}</MenuItem>)
-    } else if(pass === 'paitient') {
-      result = list.map(item => <MenuItem value={item?.patient?.id} key={item.id}>{`${item?.patient?.firstName} ${item?.patient?.lastName}`}</MenuItem>)
-    }  else if(pass === 'data') {
-        result = list.map(item => <MenuItem value={item?.data} key={item.id}>{item.value}</MenuItem>)
     } else {
       result = list.map(item => <MenuItem value={item.id} key={item.id}>{item.name}</MenuItem>)
     }
     return result
   }
+
+
+console.log("erroe-------------------in fiels",errors)
+
   return (
     <Grid
       container

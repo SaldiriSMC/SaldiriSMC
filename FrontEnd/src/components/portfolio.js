@@ -39,27 +39,53 @@ function Portfolio() {
 
   return (
 <>
-<section id="portfolio" className="clearfix sect portfolio-wrap">
+<section id="portfolio" className="clearfix sect section-bg portfolio-wrap">
       <div className="container">
         <header className="section-header">
-          <h3 className="section-title">Our Portfolio</h3>
+          <h3 className="section-title">Portfolio</h3>
         </header>
-        <div className="row portfolio-container" style={{ position: 'relative' }}>
-               {React.Children.toArray(portfolio.map((item,index)=>{
-                return <>
-                   <div className="col-lg-4 col-md-6 portfolio-item filter-card mb-2">
+        <div className="row portfolio-container" >
+        
+                   <div className="col-lg-4 col-md-6  mb-2">
             <div className="portfolio-wrap">
-              <img src={item.mainImage} className="img-fluid poltfolio-img" alt="website template image" />
+              <img src='/assets/portfolio/p1.png' className=" poltfolio-img" alt="website template image" />
+
+            </div>
+            <div className="portfolio-wrap mt-3">
+              <img src='/assets/portfolio/p2.png' className=" poltfolio-img" alt="website template image" />
+            </div>
+          </div>
+          
+                   <div className="col-lg-4 col-md-6  filter-card mb-2 position-relative">
+            <div className="portfolio-wrap position-relative">
+              <img src='/assets/portfolio/Rectangle 111.png' className=" poltfolio-img position-relative" alt="website template image" />
+
+            </div>
+          </div>
+          
+                   <div className="col-lg-4 col-md-6  filter-card mb-2" style={{ display: "",
+  flexDirection: "column",
+  justifyContent: "space-around"}}>
+            <div className="portfolio-wrap">
+              <img src='/assets/portfolio/p3.png' className=" poltfolio-img" alt="website template image" />
               <div className="portfolio-info">
-                <h4><a href="https://www.free-css.com/free-css-templates">{item.title}</a></h4>
+          
                 <div>
-                  <span className="link-preview"><RemoveRedEyeIcon onClick={()=>{setModelData(item);setOpen(true)}} sx={{mt:.75}}/></span>
+         
+                </div>
+              </div>
+            </div>
+            <div className="portfolio-wrap mt-3">
+              <img src='/assets/portfolio/p4.png' className=" poltfolio-img" alt="website template image" />
+              <div className="portfolio-info">
+          
+                <div>
+         
                 </div>
               </div>
             </div>
           </div>
-                </>
-            }))}
+          
        
           
           {/* Add the remaining portfolio items here */}

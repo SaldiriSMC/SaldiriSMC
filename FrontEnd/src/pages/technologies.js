@@ -37,26 +37,70 @@ function Technologies() {
   return (
 <>
 <Header/>
-<section id="technologies" className="section-bg sect">
+<section id="technologies" className="sect">
   <div className="container">
     <div className="section-header">
       <h3>Technologies</h3>
     </div>
     <>
-  <div className="container">
+  <div className="container mt-5">
     <div className="row">
-    {React.Children.toArray(TechnologiesList.map((item)=>{
+    {React.Children.toArray(TechnologiesList.map((item,index)=>{
         return (
             <>
-      <div className="col-xs-12 col-sm-6 col-md-4" >
-        <div className="box">
-          <div className='box_logo'>
-          <img className='img-fluid' src={item.logo}></img>
-          </div>
-         
+
+            {index >= 3 && (
+              <>
+             
+{
+  index%2 === 0 && ( <>
+  
+
+  <div className="col-xs-12 col-sm-6 col-md-6" >
+        <div className="bo">
+         <h3 className='text-start'>{item.title}</h3>
           <p className='tech_text_desp'>{item.description}</p>
+        
+        <div className="mt-4">
+ 
+          <img className='img-fluid' src={item.logo}></img>
+          
+ 
         </div>
-      </div>
+        </div>
+       
+      </div> 
+
+  
+  
+   </>)
+}
+{
+  index%2 !== 0 && ( <>  
+  
+
+  <div className="col-xs-12 col-sm-6 col-md-6" >
+  <img className='img-fluid' src={item.logo}></img>
+  <div className="bo">
+  <h3 className='text-start'>{item.title}</h3>
+    <p className='tech_text_desp'>{item.description}</p>
+  
+  <div className="mt-4">
+
+ 
+    
+
+  </div>
+  </div>
+ 
+</div>
+
+
+ </>)
+}
+</>
+            )}
+  
             </>
         )
      }))}
@@ -65,30 +109,6 @@ function Technologies() {
   </div>
 </>
 
-    {/* <div className="row no-gutters technologies-wrap clearfix wow fadeInUp">
-     
-     {React.Children.toArray(TechnologiesList.map((item)=>{
-        return (
-            <>
-            <div className=" my-2 col-lg-4 col-md-4 col-xs-6">
-        <div className="client-logo" onClick={()=>{setModelData(item);setOpen(true)}}>
-          <img
-            src={item.img}
-            className="img-fluid"
-            data-toggle="modal"
-            data-target="#myModal10"
-            alt=""
-          />
-        
-        </div>
-      </div>
-            </>
-        )
-     }))}
-      
-     
-   
-    </div> */}
   </div>
   {/* <PortfolioModel
         setOpen={setOpen}
