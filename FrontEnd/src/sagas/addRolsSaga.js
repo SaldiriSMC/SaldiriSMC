@@ -1,18 +1,26 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import {
   ADD_ROLE,
-  GET_ROLE
+  GET_ROLE,
+  DELETE_ROLE,
+  UPDATE_ROLE
 } from "../actions/AddRols/actionTypes";
 import {
   getRollSuccess,
   getRollFailure,
   createRollSuccess,
-  createRollFailure
+  createRollFailure,
+  deleteRollSuccess,
+  deleteRollFailure,
+  updateRollSuccess,
+  updateRollFailure
 } from "../actions/AddRols/index";
 import { pushNotification, } from "../utils/notifications";
 import {
   postRequestWithTenat,
-  getRequestWithTenant
+  getRequestWithTenant,
+  patchRequestWithTokenTenant,
+  deleteRequestWithTokenTenant
 } from "./request";
 import URls from "../constants/urls";
 
@@ -42,7 +50,7 @@ function* createRollsCall(action) {
 
 function* getAllRollsCall(action) {
   try {
-    const response = yield call(getRequestWithTenant, action.payload.type == 'designation'? URls.designation : action.payload.type == 'department' ?  URls.department :  URls.status);
+    const response = yield call(getRequestWithTenant, action.payload.type == 'designation'? URls.designation : action.payload.type == 'department' ?  URls.department :  `${URls.status}?Module_Id=${action.payload.id}`);
     console.log(response);
     if (response?.status === 200) {
       yield put(getRollSuccess(response.data));
@@ -52,25 +60,34 @@ function* getAllRollsCall(action) {
   }
 }
 function* updateRollCall(action) {
+  console.log("createRollsCall-------------kkkk------ ",action.payload.type)
   try {
-    const response = yield call(getRequestWithTenant, action.payload.type == 'designation'? URls.designation : action.payload.type == 'department' ?  URls.department :  URls.status);
+    const response = yield call(patchRequestWithTokenTenant,  action.payload.type == 'designation'? `${URls.designation}/${ action.payload.id}` : action.payload.type == 'department' ?  `${URls.department}/${ action.payload.id}` :  `${URls.status}/${ action.payload.id}`,action.payload.data);
     console.log(response);
     if (response?.status === 200) {
-      yield put(getRollSuccess(response.data));
+      pushNotification(
+        `${response?.data.message}`,
+        "success",
+        "TOP_CENTER",
+        1000
+      );
+      yield put(updateRollSuccess(response.data));
+    } else {
+      pushNotification(`${response?.data?.message}`, "");
     }
   } catch (error) {
-    yield put(getRollFailure());
+    yield put(updateRollFailure());
   }
 }
 function* deleteRollsCall(action) {
   try {
-    const response = yield call(getRequestWithTenant, action.payload.type == 'designation'? URls.designation : action.payload.type == 'department' ?  URls.department :  URls.status);
+    const response = yield call(deleteRequestWithTokenTenant, action.payload.type == 'designation'? `${URls.designation}/${ action.payload.id}` : action.payload.type == 'department' ?  `${URls.department}/${ action.payload.id}` :  `${URls.status}/${ action.payload.id}`);
     console.log(response);
     if (response?.status === 200) {
-      yield put(getRollSuccess(response.data));
+      yield put(deleteRollSuccess(response.data));
     }
   } catch (error) {
-    yield put(getRollFailure());
+    yield put(deleteRollFailure());
   }
 }
 
@@ -78,6 +95,8 @@ function* deleteRollsCall(action) {
 function* watchGetRequest() {
   yield takeLatest(ADD_ROLE, createRollsCall);
   yield takeLatest(GET_ROLE, getAllRollsCall);
+  yield takeLatest(DELETE_ROLE, deleteRollsCall);
+  yield takeLatest(UPDATE_ROLE, updateRollCall);
 }
 export default function* sagas() {
   yield all([watchGetRequest()]);

@@ -5,6 +5,7 @@ import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import MUITable from "../sharedComponents/MUITable";
+import EditIcon from '@mui/icons-material/Edit';
 import { designationConfig } from "../configs/tableConfig";
 import AddIcon from '@mui/icons-material/Add';
 import { loderTrue,loderFalse } from "../actions/Auth";
@@ -24,7 +25,7 @@ import IconButton from '@mui/material/IconButton';
 import Header from '../components/navBar'
 import Footer from '../components/footer'
 import SideMenu from '../pages/sideMenu'
-import { getRoll,createRoll } from "../actions/AddRols";
+import { getRoll,createRoll ,deleteRoll, updateRoll} from "../actions/AddRols";
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -45,6 +46,7 @@ export default function PersistentDrawerLeft() {
   useEffect(() => {
     if (dataUpdate){
       dispatch(getRoll({type:'designation'}));
+      handleReset()
     }
    
   }, [dataUpdate]);
@@ -62,7 +64,13 @@ export default function PersistentDrawerLeft() {
 
 
 const addRollFun =()=>{
-  dispatch(createRoll({data:{designationName:values.designationId},type:'designation'}));
+  if (action){
+    setAction(false)
+    dispatch(updateRoll({data:{designationName:values.designationId},type:'designation',id:action}));
+  } else{
+    dispatch(createRoll({data:{designationName:values.designationId},type:'designation'}));
+  }
+
 }
 
 
@@ -83,11 +91,12 @@ const addRollFun =()=>{
 
     if (val === 'delete' ) {
 
-     
+      dispatch(deleteRoll({type:'designation',id:data?.id}));
     }  
     
     if (val === 'edit' ) {
-     
+      setAction(data?.id)
+     setFieldValue('designationId',data.designationName)
     }
 
   }
@@ -132,12 +141,17 @@ const addRollFun =()=>{
             /> 
     <div style={{display:"flex", justifyContent:"flex-end"}}>
 
-      
-         <IconButton sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
+      {!action ?      <IconButton sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
           addRollFun();
           } }>
             <AddIcon />
-          </IconButton> 
+          </IconButton> :  <IconButton sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
+          addRollFun();
+          } }>
+            <EditIcon />
+          </IconButton>  }
+     
+       
          </div>
              </div>
 

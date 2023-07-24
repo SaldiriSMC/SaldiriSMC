@@ -94,3 +94,10 @@ data: payload,
 ...headerWithToken
 })
 }
+export const getAllModules = () => {
+    return instance({
+        url: URls.modules,
+        method: 'get',
+        ...headerWithToken
+    })
+}
