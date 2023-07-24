@@ -46,10 +46,7 @@ const AttendanceAdjusment = () => {
     let payload = {
           id: deleteId.id,
           attendanceId: deleteId.attendanceid ,
-
     };
-
-  
     // setLoader(true);
     deleteAttendance(payload)
     .then((response) => {
@@ -137,7 +134,6 @@ const AttendanceAdjusment = () => {
 
     if (val === 'delete' ) {
       handleDelete(data)
-     
     }  
     
     if (val === 'edit' ) {

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import NavBar from "../components/navBar";
 import MUITable from "../sharedComponents/MUITable";
 import { EmailTemplateConfig } from "../configs/tableConfig";
-import { getTemplate } from "../actions/EmailTemplate";
+import { getTemplate, deleteTemplate } from "../actions/EmailTemplate";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteEmailTemplate } from "../service/users";
 import { loderTrue, loderFalse } from "../actions/Auth";
@@ -10,22 +10,33 @@ import EmailTemplateEditModal from "../sharedComponents/emailTemplateEditModal"
 import Grid from "@mui/material/Grid";
 import { IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteModal from "../sharedComponents/deleteModal"
 const EmailTemplate = () => {
   const [showModal, setShowModal] = React.useState(false);
+  const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [isEdit, setIsEdit] = React.useState(false)
   const [itemId, setItemId] = React.useState(null)
+  const [itemData, setItemData] = React.useState({})
   const dispatch = useDispatch();
   const emailTemplateData = useSelector(
     (state) => state?.emailTemplate?.data?.data
   );
+  const isLoading = useSelector((state) => state?.emailTemplate?.getListLoading)
+  console.log("isEdit----------->>>>>>>>>", isLoading)
   useEffect(() => {
-    dispatch(getTemplate());
-  }, []);
+    if(!isLoading){
+      dispatch(getTemplate());
+    }
+  }, [isLoading]);
+  const handleDeleteModel = ()=>{
+    dispatch(deleteTemplate({itemId:itemId}))
+    setShowDeleteModal(false)
+  }
   const normalizeTableProgram = (source) => {
     const result = [];
-    if (source) {
+    if (source?.length > 0) {
       source.forEach((record, index) => {
-        const created_date = record.createdAt.split("T")[0];
+        const created_date = record.createdAt?.split("T")[0];
         result.push({
           created_date: created_date,
           subject: record?.subject,
@@ -39,23 +50,15 @@ const EmailTemplate = () => {
     return result;
   };
   const handleDropdownActionsupport = (data, val, index) => {
-    console.log("id----------->>>>>>>>", data.id);
     if (val === "delete") {
-      setIsEdit(false)
-      deleteEmailTemplate(data.id)
-        .then((response) => {
-          dispatch(getTemplate());
-        })
-        .catch((err) => console.log(err))
-        .finally(() => loderFalse(true));
-      //   setShowDeleteModal(true)
-      //   setUserDeleteId(data?.id)
+      setItemId(data.id)
+      setShowDeleteModal(true)
     }
-
     if (val === "edit") {
       setIsEdit(true)
       setShowModal(true);
       setItemId(data.id)
+      setItemData(data)
     }
   };
   return (
@@ -81,7 +84,9 @@ const EmailTemplate = () => {
          <IconButton  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
             setShowModal(true)
           } }>
-            <AddIcon />
+            <AddIcon onClick={()=>{
+             setShowModal(true)
+             setIsEdit(false)}} />
           </IconButton> 
          </div>
          <MUITable
@@ -114,7 +119,8 @@ const EmailTemplate = () => {
         </Grid>
       </Grid>
       
-      <EmailTemplateEditModal showModal={showModal} setShowModal={setShowModal} isEdit={isEdit} setIsEdit={setIsEdit} itemId={itemId} /> 
+      <EmailTemplateEditModal showModal={showModal} setShowModal={setShowModal} isEdit={isEdit} setIsEdit={setIsEdit} itemId={itemId} itemData={itemData} />
+      <DeleteModal showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} handleDeleteModel={handleDeleteModel} /> 
     </div>
   );
 };
