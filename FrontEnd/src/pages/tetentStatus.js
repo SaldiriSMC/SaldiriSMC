@@ -11,7 +11,7 @@ import { loderTrue,loderFalse } from "../actions/Auth";
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
-import { getRoll } from "../actions/AddRols";
+import { getRoll,createRoll } from "../actions/AddRols";
 import MUITextField from "../sharedComponents/textField";
 import {
   getAllDepartment,
@@ -34,16 +34,30 @@ export default function TetentStatus() {
 
   const [action, setAction] = React.useState(null);
   const initialValues = {
-    designationId: '',
+    status: '',
   };
   const dispatch = useDispatch();
 
   const allRollsList = useSelector(
     (state) => state?.tenetRolls?.allRollsdata?.data
   );
+
+  const dataUpdate = useSelector(
+    (state) => state?.tenetRolls?.dataUpdate
+  );
   useEffect(() => {
-    dispatch(getRoll({type:'status'}));
-  }, []);
+if (dataUpdate){
+  dispatch(getRoll({type:'status'}));
+}
+   
+  }, [dataUpdate]);
+  
+const addRollFun =()=>{
+  if (values.status){
+    dispatch(createRoll({data:{statusName:values.status},type:'status'}));
+  }
+ 
+}
   
   console.log("allRollsList-----------",allRollsList)
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
@@ -51,73 +65,6 @@ export default function TetentStatus() {
     useFormik({
       initialValues,
       onSubmit: () => {
-
-        if (action === 'update'){
-          const pauload={...values}
-          dispatch(
-            loderTrue(true)
-          );
-          updateInviteUser(pauload)
-          .then((response) => {
-            if (response.data) {
-              // getAllUser()
-
-              handleReset()
-              setAction(null)
-            }
-            pushNotification(
-              `${response?.data?.message}`,
-              "success",
-            );
-          })
-          .catch((err) => {
-            const { response } = err;
-            // setLoader(false)
-            pushNotification(
-              `${response?.data?.message}`,
-              "error",
-            );
-          })
-          .finally(() => {
-            dispatch(
-              loderFalse(true)
-            );
-        });
-
-        } else{
-          const pauload={...values}
-          dispatch(
-            loderTrue(true)
-          );
-          createInviteUser(pauload)
-          .then((response) => {
-            if (response.data) {
-              // getAllUser()
-              handleReset()
-            }
-            pushNotification(
-              `${response?.data?.message}`,
-              "success",
-            );
-          })
-          .catch((err) => {
-            const { response } = err;
-            // setLoader(false)
-            pushNotification(
-              `${response?.data?.message}`,
-              "error",
-            );
-          })
-          .finally(() => {
-            dispatch(
-              loderFalse(true)
-            );
-        });
-
-        }
-      
-
-
 
       },
     });
@@ -179,11 +126,11 @@ export default function TetentStatus() {
                noTitle
               sm={6}
               xs={6}
-              name="designationId"
-              value={values.designationId}
+              name="status"
+              value={values.status}
               handleChange={handleChange}
               onBlur={handleBlur}
-              id="designationId"
+              id="status"
               placeholder='Status Name'
 
             /> 
@@ -191,7 +138,7 @@ export default function TetentStatus() {
 
       
          <IconButton sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
-            // setShowModal(true)
+           addRollFun()
           } }>
             <AddIcon />
           </IconButton> 

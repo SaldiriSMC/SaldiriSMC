@@ -6,6 +6,8 @@ import {
     ADD_ROLE_SUCCESS,
     ADD_ROLE_FAILURE,
     DELETE_ROLE,
+    DELETE_ROLE_SUCCESS,
+    DELETE_ROLE_FAILURE,
   } from "./actionTypes";
   
   // Signin actions function
@@ -47,5 +49,13 @@ import {
     payload: data,
   });
   
+  export const deleteRollSuccess = (data) => ({
+    type: DELETE_ROLE_SUCCESS,
+    payload: data,
+  });
+  
+  export const deleteRollFailure = () => ({
+    type: DELETE_ROLE_FAILURE,
+  });
 
 

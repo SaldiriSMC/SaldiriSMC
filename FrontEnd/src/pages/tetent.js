@@ -39,9 +39,15 @@ export default function PersistentDrawerLeft() {
   const allRollsList = useSelector(
     (state) => state?.tenetRolls?.allRollsdata?.data
   );
+  const dataUpdate = useSelector(
+    (state) => state?.tenetRolls?.dataUpdate
+  );
   useEffect(() => {
-    dispatch(getRoll({type:'designation'}));
-  }, []);
+    if (dataUpdate){
+      dispatch(getRoll({type:'designation'}));
+    }
+   
+  }, [dataUpdate]);
   
   console.log("allRollsList-----------",allRollsList)
   
@@ -50,81 +56,13 @@ export default function PersistentDrawerLeft() {
     useFormik({
       initialValues,
       onSubmit: () => {
-
-        if (action === 'update'){
-          const pauload={...values}
-          dispatch(
-            loderTrue(true)
-          );
-          updateInviteUser(pauload)
-          .then((response) => {
-            if (response.data) {
-              // getAllUser()
-
-              handleReset()
-              setAction(null)
-            }
-            pushNotification(
-              `${response?.data?.message}`,
-              "success",
-            );
-          })
-          .catch((err) => {
-            const { response } = err;
-            // setLoader(false)
-            pushNotification(
-              `${response?.data?.message}`,
-              "error",
-            );
-          })
-          .finally(() => {
-            dispatch(
-              loderFalse(true)
-            );
-        });
-
-        } else{
-          const pauload={...values}
-          dispatch(
-            loderTrue(true)
-          );
-          createInviteUser(pauload)
-          .then((response) => {
-            if (response.data) {
-              // getAllUser()
-              handleReset()
-            }
-            pushNotification(
-              `${response?.data?.message}`,
-              "success",
-            );
-          })
-          .catch((err) => {
-            const { response } = err;
-            // setLoader(false)
-            pushNotification(
-              `${response?.data?.message}`,
-              "error",
-            );
-          })
-          .finally(() => {
-            dispatch(
-              loderFalse(true)
-            );
-        });
-
-        }
-      
-
-
-
       },
     });
 
 
 
 const addRollFun =()=>{
-  dispatch(createRoll({designationName:values.designationId}));
+  dispatch(createRoll({data:{designationName:values.designationId},type:'designation'}));
 }
 
 

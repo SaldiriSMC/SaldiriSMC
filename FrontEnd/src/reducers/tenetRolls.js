@@ -5,12 +5,15 @@ import {
   ADD_ROLE,
   ADD_ROLE_SUCCESS,
   ADD_ROLE_FAILURE,
+  DELETE_ROLE,
+  DELETE_ROLE_SUCCESS,
+  DELETE_ROLE_FAILURE,
   } from "../actions/AddRols/actionTypes";
   
   const initialState = {
     getListLoading: false,
     allRollsdata: [],
-    createData:null
+    dataUpdate:true,
   };
   
   // course category reducer funtions
@@ -37,6 +40,7 @@ import {
   const createRoll = (state, action) => ({
     ...state,
     getListLoading: true,
+    dataUpdate:false,
   });
   
   const createRollSuccess = (state, action) => {
@@ -44,7 +48,8 @@ import {
     return {
       ...state,
       getListLoading: false,
-      data: action.payload,
+      dataUpdate: true,
+      data: [],
     };
   };
   
@@ -52,8 +57,37 @@ import {
     ...state,
     getListLoading: false,
     data: [],
+    dataUpdate:false,
   });
   
+
+  const deleteRoll = (state, action) => ({
+    ...state,
+    getListLoading: true,
+    dataUpdate:false,
+  });
+  
+  const deleteRollSuccess = (state, action) => {
+    console.log("action.payload-------->>>>>>>>",action.payload)
+    return {
+      ...state,
+      getListLoading: false,
+      dataUpdate: true,
+      data: [],
+    };
+  };
+  
+  const deleteRollFailed = (state, action) => ({
+    ...state,
+    getListLoading: false,
+    data: [],
+    dataUpdate:false,
+  });
+  
+
+
+
+
   const emailTemplateReducer = (state = initialState, action) => {
     switch (action.type) {
       case GET_ROLE:
@@ -65,6 +99,12 @@ import {
       case ADD_ROLE:
         return createRoll(state, action);
       case ADD_ROLE_SUCCESS:
+        return createRollSuccess(state, action);
+      case ADD_ROLE_FAILURE:
+        return createRollFailed(state, action);
+      case DELETE_ROLE:
+        return deleteRoll(state, action);
+      case DELETE_ROLE_SUCCESS:
         return createRollSuccess(state, action);
       case ADD_ROLE_FAILURE:
         return createRollFailed(state, action);

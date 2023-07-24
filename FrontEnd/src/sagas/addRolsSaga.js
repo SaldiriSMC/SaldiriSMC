@@ -19,13 +19,12 @@ import URls from "../constants/urls";
 // //course category generator function
 function* createRollsCall(action) {
 
-
-
   console.log("createRollsCall-------------kkkk------ ",action.payload.type)
   try {
-    const response = yield call(postRequestWithTenat, action.payload.type == 'designation'? URls.designation : action.payload.type == 'department' ?  URls.department :  URls.status);
+    const response = yield call(postRequestWithTenat, action.payload.type == 'designation'? URls.designation : action.payload.type == 'department' ?  URls.department :  URls.status,action.payload.data);
     console.log(response);
     if (response?.status === 200) {
+      yield takeLatest(GET_ROLE, getAllRollsCall);
       pushNotification(
         `${response?.data.message}`,
         "success",

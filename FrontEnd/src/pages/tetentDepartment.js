@@ -9,16 +9,10 @@ import { departmentConfig } from "../configs/tableConfig";
 import AddIcon from '@mui/icons-material/Add';
 import { loderTrue,loderFalse } from "../actions/Auth";
 import { useFormik } from "formik";
-import { getRoll } from "../actions/AddRols";
+import { getRoll, createRoll } from "../actions/AddRols";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
 import MUITextField from "../sharedComponents/textField";
-import {
-  getAllDepartment,
-  getAllDesignation,
-  createInviteUser,
-  updateInviteUser
-} from "../service/users";
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -41,9 +35,19 @@ export default function TetentDepartment() {
   const allRollsList = useSelector(
     (state) => state?.tenetRolls?.allRollsdata?.data
   );
+  const dataUpdate = useSelector(
+    (state) => state?.tenetRolls?.dataUpdate
+  );
   useEffect(() => {
-    dispatch(getRoll({type:'department'}));
-  }, []);
+    if (dataUpdate){
+      dispatch(getRoll({type:'department'}));
+    }
+
+  }, [dataUpdate]);
+
+  const addRollFun =()=>{
+    dispatch(createRoll({data:{departmentName:values.designationId},type:'department'}));
+  }
   
   console.log("allRollsList-----------",allRollsList)
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
@@ -52,69 +56,6 @@ export default function TetentDepartment() {
       initialValues,
       onSubmit: () => {
 
-        if (action === 'update'){
-          const pauload={...values}
-          dispatch(
-            loderTrue(true)
-          );
-          updateInviteUser(pauload)
-          .then((response) => {
-            if (response.data) {
-              // getAllUser()
-
-              handleReset()
-              setAction(null)
-            }
-            pushNotification(
-              `${response?.data?.message}`,
-              "success",
-            );
-          })
-          .catch((err) => {
-            const { response } = err;
-            // setLoader(false)
-            pushNotification(
-              `${response?.data?.message}`,
-              "error",
-            );
-          })
-          .finally(() => {
-            dispatch(
-              loderFalse(true)
-            );
-        });
-
-        } else{
-          const pauload={...values}
-          dispatch(
-            loderTrue(true)
-          );
-          createInviteUser(pauload)
-          .then((response) => {
-            if (response.data) {
-              // getAllUser()
-              handleReset()
-            }
-            pushNotification(
-              `${response?.data?.message}`,
-              "success",
-            );
-          })
-          .catch((err) => {
-            const { response } = err;
-            // setLoader(false)
-            pushNotification(
-              `${response?.data?.message}`,
-              "error",
-            );
-          })
-          .finally(() => {
-            dispatch(
-              loderFalse(true)
-            );
-        });
-
-        }
       
 
 
@@ -191,7 +132,7 @@ export default function TetentDepartment() {
 
       
          <IconButton sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
-            // setShowModal(true)
+    addRollFun()
           } }>
             <AddIcon />
           </IconButton> 
