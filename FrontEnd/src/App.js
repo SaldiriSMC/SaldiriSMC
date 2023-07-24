@@ -17,6 +17,9 @@ import Footer from './components/footer'
 import Dashboard from './components/dashboard';
 import InviteUser from './components/inviteUser';
 import Attendance from './pages/attendance';
+import Tenant from './pages/tetent';
+import TetentStatus from './pages/tetentStatus';
+import TetentDepartment from './pages/tetentDepartment';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from './components/privateRoute';
@@ -80,6 +83,15 @@ useEffect(()=>{
         </Route>
         <Route exact path='/createEmailTemplate' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
             <Route exact path='/createEmailTemplate' element={<CreateEmailTemplate  loader={loader} setLoader={setLoader} />}/>
+        </Route>
+        <Route exact path='/tenant' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
+            <Route exact path='/tenant' element={<Tenant  loader={loader} setLoader={setLoader} />}/>
+        </Route>
+        <Route exact path='/tenantStatus' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
+            <Route exact path='/tenantStatus' element={<TetentStatus  loader={loader} setLoader={setLoader} />}/>
+        </Route>
+        <Route exact path='/tetentDepartment' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
+            <Route exact path='/tetentDepartment' element={<TetentDepartment  loader={loader} setLoader={setLoader} />}/>
         </Route>
        
       </Routes>

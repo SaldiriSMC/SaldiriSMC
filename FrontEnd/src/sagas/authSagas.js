@@ -82,9 +82,12 @@ function* logOutCall(action) {
       localStorage.removeItem("accessToken"); 
       // window.location.reload()
       action.payload.navigate("/")
-    } else {
+    } 
 
-    
+    if (response?.data.message == 'Token Not found' ){
+      localStorage.removeItem("accessToken"); 
+      // window.location.reload()
+      action.payload.navigate("/")
     }
   } catch (error) {
     console.log("error catch",error)

@@ -249,9 +249,13 @@ const continueWorkHandel = () =>{
               </NavDropdown.Item>
             </NavDropdown>
            
-            {user &&  <NavDropdown title="Operations" id="navbarScrollingDropdown">
+            {user && 
+             <NavDropdown title="Operations" id="navbarScrollingDropdown">
             {
             userRole == 'admin' ?(<>
+               <NavDropdown.Item as={Link} to="/tenant" >
+               Tenant {url == '/tenant' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
+              </NavDropdown.Item>
                <NavDropdown.Item as={Link} to="/dashboard" >
               Dashboard {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
@@ -271,7 +275,11 @@ const continueWorkHandel = () =>{
               Create Template {url == '/createEmailTemplate' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item> */}
             {/* </NavDropdown> */}
-            </>) : userRole == 'hr' ? <>    <NavDropdown.Item as={Link} to="/dashboard" >
+            </>) : userRole == 'hr' ? <>  
+            <NavDropdown.Item as={Link} to="/tenant" >
+               Tenant {url == '/tenant' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/dashboard" >
               Dashboard  {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
               <NavDropdown title=" Attendance" id="navbarScrollingDropdown">

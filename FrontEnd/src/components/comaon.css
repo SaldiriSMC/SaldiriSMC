@@ -15,6 +15,10 @@
 
 }
 
+.css-bzv0vy-MuiPaper-root-MuiDrawer-paper{
+  position: unset !important;
+}
+
 .social_wrap{
   display: flex;
   justify-content: center;
