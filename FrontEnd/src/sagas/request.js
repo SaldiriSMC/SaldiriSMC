@@ -7,7 +7,11 @@ export const getRequest = async (requestUrl) =>
     .then((resp) => resp)
     .catch((error) => error.response);
 export const getRequestWithTenant = async (requestUrl) =>
+<<<<<<< HEAD
+      apiwithTokenTenant
+=======
     apiwithTokenTenant
+>>>>>>> 51a199b03f63a0c6bc36560c169e914c4c272630
     .get(requestUrl)
     .then((resp) => resp)
     .catch((error) => error.response);

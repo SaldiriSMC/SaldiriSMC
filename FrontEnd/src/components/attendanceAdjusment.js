@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+import React from "react";
+import Tabel from "../sharedComponents/customizedTabel";
+import { Typography } from "@mui/material";
+const attendanceAdjusment = ({attendanceRecord}) => {
+  return (
+    <div>
+      <Typography variant="h1" component="h2" className="py-3">
+        Attendance
+      </Typography>
+      ;
+      <Tabel attendanceRecord={attendanceRecord} />
+=======
 import React, { useEffect } from "react";
 import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
@@ -309,8 +322,13 @@ const AttendanceAdjusment = () => {
         handleDeleteModel={handleDeleteModel}
 
       />
+>>>>>>> 51a199b03f63a0c6bc36560c169e914c4c272630
     </div>
   );
 };
 
+<<<<<<< HEAD
+export default attendanceAdjusment;
+=======
 export default AttendanceAdjusment;
+>>>>>>> 51a199b03f63a0c6bc36560c169e914c4c272630

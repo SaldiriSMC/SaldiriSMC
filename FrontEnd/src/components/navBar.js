@@ -248,6 +248,9 @@ const continueWorkHandel = () =>{
               Contact Us {url == '/contactUs' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
             </NavDropdown>
+<<<<<<< HEAD
+            <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+=======
            
             {user && 
              <NavDropdown title="Operations" id="navbarScrollingDropdown">
@@ -295,6 +298,7 @@ const continueWorkHandel = () =>{
            }
            
             </NavDropdown>}
+>>>>>>> 51a199b03f63a0c6bc36560c169e914c4c272630
           </Nav>
           {user ? <>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>

@@ -14,12 +14,16 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Header from './components/navBar'
 import Careers from './components/career'
 import Footer from './components/footer'
+<<<<<<< HEAD
+import Dashboard from './pages/dashboard';
+=======
 import Dashboard from './components/dashboard';
 import InviteUser from './components/inviteUser';
 import Attendance from './pages/attendance';
 import Tenant from './pages/tetent';
 import TetentStatus from './pages/tetentStatus';
 import TetentDepartment from './pages/tetentDepartment';
+>>>>>>> 51a199b03f63a0c6bc36560c169e914c4c272630
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from './components/privateRoute';
@@ -69,6 +73,9 @@ useEffect(()=>{
         <Route path="/services" element={<Services/>} />
         <Route path="/contactUs" element={<ContactUs/>} /> 
         <Route path="/careers" element={<Careers/>} />
+<<<<<<< HEAD
+        <Route path="/dashboard" element={<Dashboard/>} />
+=======
         <Route exact path='/dashboard' element={<PrivateRoute/>}>
             <Route exact path='/dashboard' element={<Dashboard   />}/>
         </Route>
@@ -94,6 +101,7 @@ useEffect(()=>{
             <Route exact path='/tetentDepartment' element={<TetentDepartment  loader={loader} setLoader={setLoader} />}/>
         </Route>
        
+>>>>>>> 51a199b03f63a0c6bc36560c169e914c4c272630
       </Routes>
 
     </BrowserRouter>
