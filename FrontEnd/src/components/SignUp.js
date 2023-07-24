@@ -149,7 +149,7 @@ useEffect(()=>{
 
                 {values.type == 'Company' ? (
                 <>
-                  <MUITextField
+              <MUITextField
                noTitle
                placeholder='Company Name'
               sm={6}

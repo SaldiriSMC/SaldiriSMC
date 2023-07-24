@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import authReducer from "./authReducer";
 import resetPasswordReducer from "./resetPasswordReducer";
-import  courseReducer  from "./courseReducer";
+import  attendanceReducer  from "./attendanceReducer";
 
 const appReducer = combineReducers({
   resetPassword: resetPasswordReducer,
   auth: authReducer,
-  courses: courseReducer,
+  attendance: attendanceReducer,
 });
 
 const rootReducer = (state, action) => {
