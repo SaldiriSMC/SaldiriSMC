@@ -49,3 +49,7 @@ export const setNewPassword = Yup.object({
 export const emailTemplate = Yup.object({
   subject: Yup.string().min(3).max(100).required("Please enter subject"),
 });
+export const rollStatusSechmea = Yup.object({
+  modulesId: Yup.string().required("This field is required"),
+  status: Yup.string().required("This field is required"),
+});

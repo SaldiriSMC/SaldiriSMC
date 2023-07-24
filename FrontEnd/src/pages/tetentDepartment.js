@@ -3,13 +3,14 @@ import React, { useEffect,useState } from "react";
 import { pushNotification } from "../utils/notifications";
 import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
+import EditIcon from '@mui/icons-material/Edit';
 import "react-clock/dist/Clock.css";
 import MUITable from "../sharedComponents/MUITable";
 import { departmentConfig } from "../configs/tableConfig";
 import AddIcon from '@mui/icons-material/Add';
 import { loderTrue,loderFalse } from "../actions/Auth";
 import { useFormik } from "formik";
-import { getRoll, createRoll } from "../actions/AddRols";
+import { getRoll, createRoll,deleteRoll,updateRoll } from "../actions/AddRols";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
 import MUITextField from "../sharedComponents/textField";
@@ -41,12 +42,20 @@ export default function TetentDepartment() {
   useEffect(() => {
     if (dataUpdate){
       dispatch(getRoll({type:'department'}));
+      handleReset()
     }
 
   }, [dataUpdate]);
 
+
   const addRollFun =()=>{
-    dispatch(createRoll({data:{departmentName:values.designationId},type:'department'}));
+    if (action){
+      setAction(false)
+      dispatch(updateRoll({data:{departmentName:values.designationId},type:'department',id:action}));
+    } else{
+      dispatch(createRoll({data:{departmentName:values.designationId},type:'department'}));
+    }
+  
   }
   
   console.log("allRollsList-----------",allRollsList)
@@ -55,10 +64,6 @@ export default function TetentDepartment() {
     useFormik({
       initialValues,
       onSubmit: () => {
-
-      
-
-
 
       },
     });
@@ -80,12 +85,13 @@ export default function TetentDepartment() {
   const handleDropdownActionsupport= (data, val,index) => {
 
     if (val === 'delete' ) {
-
+      dispatch(deleteRoll({type:'department',id:data?.id}));
      
     }  
     
     if (val === 'edit' ) {
-     
+      setAction(data?.id)
+     setFieldValue('designationId',data.departmentName)
     }
 
   }
@@ -130,12 +136,15 @@ export default function TetentDepartment() {
             /> 
     <div style={{display:"flex", justifyContent:"flex-end"}}>
 
-      
-         <IconButton sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
-    addRollFun()
+    {!action ?      <IconButton sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
+          addRollFun();
           } }>
             <AddIcon />
-          </IconButton> 
+          </IconButton> :  <IconButton sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
+          addRollFun();
+          } }>
+            <EditIcon />
+          </IconButton>  }
          </div>
              </div>
 

@@ -8,6 +8,9 @@ import {
   DELETE_ROLE,
   DELETE_ROLE_SUCCESS,
   DELETE_ROLE_FAILURE,
+  UPDATE_ROLE,
+  UPDATE_ROLE_SUCCESS,
+  UPDATE_ROLE_FAILURE,
   } from "../actions/AddRols/actionTypes";
   
   const initialState = {
@@ -84,6 +87,29 @@ import {
     dataUpdate:false,
   });
   
+  const updateRoll = (state, action) => ({
+    ...state,
+    getListLoading: true,
+    dataUpdate:false,
+  });
+  
+  const updateRollSuccess = (state, action) => {
+    console.log("action.payload-------->>>>>>>>",action.payload)
+    return {
+      ...state,
+      getListLoading: false,
+      dataUpdate: true,
+      data: [],
+    };
+  };
+  
+  const updateRollFailed = (state, action) => ({
+    ...state,
+    getListLoading: false,
+    data: [],
+    dataUpdate:false,
+  });
+  
 
 
 
@@ -108,6 +134,12 @@ import {
         return createRollSuccess(state, action);
       case ADD_ROLE_FAILURE:
         return createRollFailed(state, action);
+      case UPDATE_ROLE:
+        return updateRoll(state, action);
+      case UPDATE_ROLE_SUCCESS:
+        return updateRollSuccess(state, action);
+      case UPDATE_ROLE_FAILURE:
+        return updateRollFailed(state, action);
       default:
         return state;
     }

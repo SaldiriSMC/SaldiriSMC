@@ -19,6 +19,8 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Header from '../components/navBar'
 import Footer from '../components/footer'
+import WorkIcon from '@mui/icons-material/Work';
+import CoPresentIcon from '@mui/icons-material/CoPresent';
 const drawerWidth = 200;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -191,7 +193,7 @@ export default function PersistentDrawerLeft() {
             <ListItem key={text} disablePadding   component={Link} to={text.path}  >
               <ListItemButton>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {index % 2 === 0 ? <CoPresentIcon /> : <WorkIcon />}
                 </ListItemIcon>
                 <div style={{display:'flex'}}>
                 <ListItemText  primary={text.name} /> {url == `${text.path}` && (<CircleIcon  className={classes.blueDotUrlist}/>)}
