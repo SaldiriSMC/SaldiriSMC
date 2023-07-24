@@ -57,7 +57,7 @@ function SignUp() {
     tanantName: "",
     fullName: "",
     phoneNumber: "",
-    designation: "",
+    designation: "admin",
     email: "",
     allies: "",
     type: "company",
@@ -231,6 +231,8 @@ useEffect(()=>{
               touched={touched.allies}
             /> 
                <MUITextField
+               readOnly
+               disabled
               noTitle
               sm={6}
               xs={6}
@@ -384,6 +386,8 @@ useEffect(()=>{
               touched={touched.allies}
             /> 
             <MUITextField
+              readOnly
+              disabled
               noTitle
               sm={12}
               xs={12}

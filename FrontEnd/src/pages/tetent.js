@@ -10,7 +10,6 @@ import AddIcon from '@mui/icons-material/Add';
 import { loderTrue,loderFalse } from "../actions/Auth";
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
-import { useDispatch, useSelector } from "react-redux";
 import MUITextField from "../sharedComponents/textField";
 import {
   getAllDepartment,
@@ -25,7 +24,8 @@ import IconButton from '@mui/material/IconButton';
 import Header from '../components/navBar'
 import Footer from '../components/footer'
 import SideMenu from '../pages/sideMenu'
-
+import { getRoll,createRoll } from "../actions/AddRols";
+import { useDispatch, useSelector } from "react-redux";
 
 
 export default function PersistentDrawerLeft() {
@@ -36,6 +36,15 @@ export default function PersistentDrawerLeft() {
     designationId: '',
   };
   const dispatch = useDispatch();
+  const allRollsList = useSelector(
+    (state) => state?.tenetRolls?.allRollsdata?.data
+  );
+  useEffect(() => {
+    dispatch(getRoll({type:'designation'}));
+  }, []);
+  
+  console.log("allRollsList-----------",allRollsList)
+  
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
     dirty } =
     useFormik({
@@ -112,14 +121,18 @@ export default function PersistentDrawerLeft() {
       },
     });
 
-  const sideList =[]
+
+
+const addRollFun =()=>{
+  dispatch(createRoll({designationName:values.designationId}));
+}
+
+
   const normalizeTableProgram= (source) => {
     const result = [];
     source.forEach((record,index) => {
       result.push({
-        name: record?.name,
-        designation: record?.designationName,
-        department: record?.departmentname,
+        name: record?.designationName,
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),
@@ -183,7 +196,7 @@ export default function PersistentDrawerLeft() {
 
       
          <IconButton sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
-            // setShowModal(true)
+          addRollFun();
           } }>
             <AddIcon />
           </IconButton> 
@@ -193,7 +206,7 @@ export default function PersistentDrawerLeft() {
          <MUITable
             
             column={designationConfig}
-            list={normalizeTableProgram([])}
+            list={normalizeTableProgram(allRollsList ?? [])}
 
           />
           <Grid

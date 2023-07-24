@@ -307,7 +307,7 @@ const continueWorkHandel = () =>{
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 45, height: 45, }}  src="/assets/2.jpg"  ></Avatar>
+            <Avatar sx={{ width: 45, height: 45, }}  ></Avatar>
           </IconButton>
         </Tooltip>
       </Box>

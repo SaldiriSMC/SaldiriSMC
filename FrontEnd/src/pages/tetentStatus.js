@@ -11,6 +11,7 @@ import { loderTrue,loderFalse } from "../actions/Auth";
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
+import { getRoll } from "../actions/AddRols";
 import MUITextField from "../sharedComponents/textField";
 import {
   getAllDepartment,
@@ -36,6 +37,15 @@ export default function TetentStatus() {
     designationId: '',
   };
   const dispatch = useDispatch();
+
+  const allRollsList = useSelector(
+    (state) => state?.tenetRolls?.allRollsdata?.data
+  );
+  useEffect(() => {
+    dispatch(getRoll({type:'status'}));
+  }, []);
+  
+  console.log("allRollsList-----------",allRollsList)
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
     dirty } =
     useFormik({
@@ -117,9 +127,7 @@ export default function TetentStatus() {
     const result = [];
     source.forEach((record,index) => {
       result.push({
-        name: record?.name,
-        designation: record?.designationName,
-        department: record?.departmentname,
+        name: record?.statusName,
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),
@@ -193,7 +201,7 @@ export default function TetentStatus() {
          <MUITable
             
             column={statusConfig}
-            list={normalizeTableProgram([])}
+            list={normalizeTableProgram(allRollsList ?? [])}
 
           />
           <Grid

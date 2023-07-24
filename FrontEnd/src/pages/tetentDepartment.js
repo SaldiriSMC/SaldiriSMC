@@ -9,6 +9,7 @@ import { departmentConfig } from "../configs/tableConfig";
 import AddIcon from '@mui/icons-material/Add';
 import { loderTrue,loderFalse } from "../actions/Auth";
 import { useFormik } from "formik";
+import { getRoll } from "../actions/AddRols";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
 import MUITextField from "../sharedComponents/textField";
@@ -36,6 +37,15 @@ export default function TetentDepartment() {
     designationId: '',
   };
   const dispatch = useDispatch();
+
+  const allRollsList = useSelector(
+    (state) => state?.tenetRolls?.allRollsdata?.data
+  );
+  useEffect(() => {
+    dispatch(getRoll({type:'department'}));
+  }, []);
+  
+  console.log("allRollsList-----------",allRollsList)
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
     dirty } =
     useFormik({
@@ -117,9 +127,7 @@ export default function TetentDepartment() {
     const result = [];
     source.forEach((record,index) => {
       result.push({
-        name: record?.name,
-        designation: record?.designationName,
-        department: record?.departmentname,
+        name: record?.departmentName,
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),
@@ -193,7 +201,7 @@ export default function TetentDepartment() {
          <MUITable
             
             column={departmentConfig}
-            list={normalizeTableProgram([])}
+            list={normalizeTableProgram(allRollsList ?? [])}
 
           />
           <Grid
