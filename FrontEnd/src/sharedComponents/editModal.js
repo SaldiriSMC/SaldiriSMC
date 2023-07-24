@@ -162,11 +162,6 @@ const MainModal = (props) => {
             .finally(() => {
               // setLoader(false);
           });
-  
-  
-  
-  
-  
             handleReset()
           }else{
             var data ={...values,id:userData.timeId, attendanceId:userData.attendenceid}
