@@ -94,7 +94,7 @@ const useStyles = makeStyles()((theme) => {
 });
 
 const MainModal = (props) => {
-  const { showModal, setShowModal, isEdit, setIsEdit, itemId } = props;
+  const { showModal, setShowModal, isEdit, setIsEdit, itemId, itemData } = props;
   const { classes } = useStyles();
   return (
     <div>
@@ -120,6 +120,7 @@ const MainModal = (props) => {
               setIsEdit={setIsEdit}
               itemId={itemId}
               setShowModal={setShowModal}
+              itemData={itemData}
             />
           </div>
         </Box>

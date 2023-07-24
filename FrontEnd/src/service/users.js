@@ -57,23 +57,6 @@ export const sandEmailInviteUser = (payload) => {
     ...headerWithToken
 })
 }
-
-export const deleteEmailTemplate = (id) => {
-    return instance({
-    url: `${URls.emailTemplate}/${id}`,
-    method: 'DELETE',
-    ...headerWithToken
-})
-}
-
-export const updateEmailTemplate = (payload,id) => {
-    return instance({
-    url: `${URls.emailTemplate}/${id}`,
-    method: 'patch',
-    data: payload,
-    ...headerWithToken
-})
-}
 export const userTokenExpire = (payload) => {
     return instance({
     url: URls.tokenRefrash,

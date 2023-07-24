@@ -33,6 +33,18 @@ export const patchRequest = async (requestUrl, data) =>
     .patch(requestUrl, data)
     .then((resp) => resp)
     .catch((error) => error.response);
+export const patchRequestWithTokenTenant = async (requestUrl, data) =>
+apiwithTokenTenant
+  .patch(requestUrl, data)
+  .then((resp) => resp)
+  .catch((error) => error.response);
+
+
+export const deleteRequestWithTokenTenant = async (requestUrl, data) =>
+apiwithTokenTenant
+  .delete(requestUrl, data)
+  .then((resp) => resp)
+  .catch((error) => error.response);
 
 export const putRequestWithTenant = async (requestUrl, data) =>
   apiwithTokenTenant

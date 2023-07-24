@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavBar from "../components/navBar";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -8,12 +8,11 @@ import Button from "@mui/material/Button";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { emailTemplate } from "../Yup Schema";
-import { createTemplate } from "../actions/EmailTemplate";
+import { createTemplate, updateTemplate } from "../actions/EmailTemplate";
 import { Link, useNavigate } from "react-router-dom";
-import { updateEmailTemplate } from "../service/users";
 import { loderTrue, loderFalse } from "../actions/Auth";
 import { getTemplate } from "../actions/EmailTemplate";
-const EmailTemplates = ({ isEdit, setIsEdit, itemId, setShowModal }) => {
+const EmailTemplates = ({ isEdit, setIsEdit, itemId, setShowModal, itemData }) => {
   Quill.register("modules/imageResize", ImageResize);
   const [value, setValue] = React.useState("");
   const modules = {
@@ -73,36 +72,39 @@ const EmailTemplates = ({ isEdit, setIsEdit, itemId, setShowModal }) => {
     handleSubmit,
     touched,
     setFieldValue,
+    setValues,
     handleChange,
   } = useFormik({
     initialValues: initialValues,
     validationSchema: emailTemplate,
     onSubmit: async (values, action) => {
       if (isEdit) {
-        updateEmailTemplate(
-          {
-            ...values,
-            body: value,
-          },
-          itemId
-        )
-          .then((response) => {
-            dispatch(getTemplate());
-            setShowModal(false);
-          })
-          .catch((err) => console.log(err))
-          .finally(() => loderFalse(true));
+        dispatch(
+          updateTemplate(
+            {
+              ...values,
+              body: value,
+              itemId: itemId
+            },
+          )
+          )
       } else {
         dispatch(
           createTemplate({
             ...values,
             body: value,
             navigate: navigate,
-          })
-        );
+          }))
       }
+      setShowModal(false)
     },
   });
+  useEffect(() =>{
+    if(isEdit){
+      setValue(itemData.body)
+      setValues({...values, ...itemData,})
+    }
+  },[itemData])
   return (
     <>
       {/* <NavBar /> */}
