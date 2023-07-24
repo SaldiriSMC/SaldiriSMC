@@ -1,19 +1,18 @@
 const express = require('express');
 const auth = require('../../middlewares/auth');
 const tenant = require("../../middlewares/v2/tenant")
-const {designationController} = require('../../controllers/v2/index');
+const {statusController} = require('../../controllers/v2/index');
 const checkRoles = require('../../middlewares/v2/checkRole')
-
 const router = express.Router();
 
 router
   .route('/')
-  .get(auth(), tenant(), checkRoles(["admin","hr"]), designationController.getDesignation)
-  .post(auth(), tenant(), checkRoles(["admin","hr"]), designationController.createDesignation);
+  .get(auth(), tenant(), checkRoles(["admin","hr"]), statusController.getStatuses)
+  .post(auth(), tenant(), checkRoles(["admin","hr"]), statusController.createStatus);
 router
-.route('/:designationId')
-.patch(auth(), tenant(), checkRoles(["admin","hr"]), designationController.updateDesignation)
-.delete(auth(), tenant(), checkRoles(["admin","hr"]), designationController.deleteDesignation)
+  .route('/:statusId')
+  .patch(auth(), tenant(), checkRoles(["admin","hr"]), statusController.updateStatus)
+  .delete(auth(), tenant(), checkRoles(["admin","hr"]), statusController.deleteStatus)
 
 
 module.exports = router;
@@ -21,16 +20,16 @@ module.exports = router;
 /**
  * @swagger
  * tags:
- *   name: Designations
- *   description: Designation management and retrieval
+ *   name: Statuses
+ *   description: Status management and retrieval
  */  
 /**
  * @swagger
- * /designation:
+ * /status:
  *   get:
- *     summary: Get all designation
+ *     summary: Get all status
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Designations]
+ *     tags: [Statuses]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -38,13 +37,17 @@ module.exports = router;
  *         in: header
  *         description: X-Tenent-Key
  *         required: true
+ *       - in: query
+ *         name: Module_Id
+ *         schema:
+ *           type: integer
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Department'
+ *                $ref: '#/components/schemas/Statuses'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -52,9 +55,9 @@ module.exports = router;
  *       "404":
  *         $ref: '#/components/responses/NotFound'
  *   post:
- *     summary: Create a designation
+ *     summary: Create a status
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Designations]
+ *     tags: [Statuses]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -69,17 +72,20 @@ module.exports = router;
  *           schema:
  *             type: object
  *             properties:
- *               designationName:
+ *               statusName:
  *                 type: string
+ *               moduleId:
+ *                 type: number
  *             example: 
- *               designationName: CEO
+ *               statusName: Break
+ *               moduleId: 1
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Designation'
+ *                $ref: '#/components/schemas/Statuses'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -88,14 +94,13 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  */
 
-
  /**
  * @swagger
- * /designation/{id}:
+ * /status/{id}:
  *   patch:
- *     summary: Update a designation
+ *     summary: Update a status
  *     description: Logged in users can only update their own information. Only admins can update other users.
- *     tags: [Designations]
+ *     tags: [Statuses]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -110,7 +115,7 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
- *         description: Designation id
+ *         description: Status id
  *     requestBody:
  *       required: true
  *       content:
@@ -118,17 +123,17 @@ module.exports = router;
  *           schema:
  *             type: object
  *             properties:
- *               designationName:
+ *               statusName:
  *                 type: string
  *             example:
- *               designationName: CEO
+ *               statusName: Break
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Designation'
+ *                $ref: '#/components/schemas/Statuses'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -139,9 +144,9 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
- *     summary: Delete a designation
+ *     summary: Delete a status
  *     description: Logged in users can delete only themselves. Only admins can delete other users.
- *     tags: [Designations]
+ *     tags: [Statuses]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -156,7 +161,7 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
- *         description: Designation id
+ *         description: Status id
  *     responses:
  *       "200":
  *         description: No content

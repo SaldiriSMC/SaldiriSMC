@@ -1,8 +1,9 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../../utils/catchAsync');
-const { User, Tenant, Attendance } = require('../../models/v2/index');
+const { User, Tenant, Attendance, Token, Time } = require('../../models/v2/index');
 const { authService, userService, tokenService, emailService, tenantService, attendanceService } = require('../../services/v2');
-const {response} = require("../../utils/response")
+const {response} = require("../../utils/response");
+const { tokenTypes } = require('../../config/tokens');
 
 const register = catchAsync(async (req, res) => {
   try {
@@ -43,7 +44,19 @@ const register = catchAsync(async (req, res) => {
 const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
   const user = await authService.loginUserWithEmailAndPassword(email, password);
+  const attendance = await Attendance.findOne({ where: { userId: user.id, Date: new Date() } });
   const tenant = await Tenant.findOne({where:{id:user.tenantId}})
+  const token = await Token.findOne({where:{type:tokenTypes.AUTH, user:user.id}})
+  console.log("tokens in login call ",token)
+  if(token){
+    const time = await Time.findOne({where:{timeOut:null, attendanceId:attendance.id}})
+    console.log("time in login call --------->>>>>>>", time)
+    if(time){
+      
+      await attendanceService.markTimeOut(time.id, attendance,  res)
+    }
+
+  }
   const tokens = await tokenService.generateAuthTokens(user);
   const timeDoc = await attendanceService.markAttendance(user, res)
   response(res,{ user, tenant, tokens, timeDoc }, 'User loged in successfully', 200)
@@ -53,20 +66,7 @@ const logout = catchAsync(async (req, res) => {
   await authService.logout(req.body.refreshToken);
   const tokenDoc = await authService.logout(req.body.refreshToken); 
   let attendanceDoc = await Attendance.findOne({where:{id:req.body.attendanceId}})
-  let totalWorkedHours = attendanceDoc.workedHours
-  const timeInTimeOut = await attendanceService.markTimeOut(req.body.timeId, res)
-  const timeOutMiliSeconds = timeInTimeOut.timeOut.getTime()
-  const timeInMiliSeconds = timeInTimeOut.timeIn.getTime()
-  const sessionMiliSeconds = timeOutMiliSeconds - timeInMiliSeconds
-  const sessionWorkedHours = sessionMiliSeconds / (1000 * 60 * 60);
-  totalWorkedHours += sessionWorkedHours
-  attendanceDoc.workedHours = totalWorkedHours.toFixed(2)
-  if(attendanceDoc.workedHours < 8){
-    attendanceDoc.statusId = 1
-  }else{
-    attendanceDoc.statusId = 2
-  }
-  attendanceDoc.save()
+  await attendanceService.markTimeOut(req.body.timeId, attendanceDoc, res)
   await tokenDoc.destroy()
   response(res, "", "User loged out successfully", 200)
 });

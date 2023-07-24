@@ -10,6 +10,13 @@ const Status = sequelize.define('statuses', {
       },
       allowNull:false
     },
+    tenantId:{
+      type: DataTypes.INTEGER,
+      references:{
+          model:"tenants",
+          key:"id"
+      },
+  },
     statusName: {
         type:DataTypes.STRING,
       },

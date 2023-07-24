@@ -19,17 +19,29 @@ const markAttendance = async (user, res) => {
     } else {
       timeDoc = await Time.create({ timeIn: new Date(), timeOut: null, attendanceId: attendance.id });
     }
-    return timeDoc
+    return timeDoc;
   } catch (err) {
     res.send(err);
   }
 };
 
-const markTimeOut = async ( id, res) => {
+const markTimeOut = async (id, attendanceDoc, res) => {
   try {
-    await Time.update({ timeOut: new Date() },{where: { id: id }});
-    const timeOut = await Time.findOne({ where: { id: id }});
-    return timeOut
+    await Time.update({ timeOut: new Date() }, { where: { id: id } });
+    const timeInTimeOut = await Time.findOne({ where: { id: id } });
+    const timeOutMiliSeconds = timeInTimeOut.timeOut.getTime();
+    const timeInMiliSeconds = timeInTimeOut.timeIn.getTime();
+    const sessionMiliSeconds = timeOutMiliSeconds - timeInMiliSeconds;
+    const sessionWorkedHours = sessionMiliSeconds / (1000 * 60 * 60);
+    let totalWorkedHours = attendanceDoc.workedHours;
+    totalWorkedHours += sessionWorkedHours;
+    attendanceDoc.workedHours = totalWorkedHours.toFixed(2);
+    if (attendanceDoc.workedHours < 8) {
+      attendanceDoc.statusId = 1;
+    } else {
+      attendanceDoc.statusId = 2;
+    }
+    attendanceDoc.save();
   } catch (err) {
     console.log('err--------->>>>>>>>>>', err);
     res.send(err);
@@ -91,9 +103,8 @@ const updateWorkedHours = async (attendanceId, totalHours) => {
   }
 };
 
-
 // const updateAttendance = async (attendanceId, updateBody) => {
-//  try{ 
+//  try{
 //   const attendance = await Attendance.findOne({ where: { id: attendanceId } });
 //   if (attendance === null) {
 //     throw new ApiError(httpStatus.NOT_FOUND, 'Attendance record not found');
@@ -105,7 +116,7 @@ const updateWorkedHours = async (attendanceId, totalHours) => {
 //   if (updateBody.time.length > 0) {
 //     const updateTime = updateBody.time.map(async (item) => {
 //       let timeCondition = {};
-    
+
 //       if (item.timeIn && item.timeOut) {
 //         timeCondition.timeIn = `${todayDate} ${item.timeIn}`;
 //         timeCondition.timeOut = `${todayDate} ${item.timeOut}`;
