@@ -99,6 +99,7 @@ const EmailTemplates = ({ isEdit, setIsEdit, itemId, setShowModal, itemData }) =
       setShowModal(false)
     },
   });
+  console.log("values------>>>>>", values, "itemDate------->>>>>",itemData)
   useEffect(() =>{
     if(isEdit){
       setValue(itemData.body)

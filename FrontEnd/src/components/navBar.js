@@ -120,7 +120,7 @@ function NavScrollExample({ setLoader,}) {
   currentTime.setMinutes(currentTime.getMinutes() - 10);
   const url = window.location.pathname
   const currentTimeFormet = format((new Date(currentTime)), "yyyy-MM-dd'T'HH:mm:ss'Z'")
-  const tokenExpirey = user ? format((new Date(user?.data?.tokens?.access?.expires)), "yyyy-MM-dd'T'HH:mm:ss'Z'"): ''
+  // const tokenExpirey = user ? format((new Date(user?.data?.tokens?.access?.expires)), "yyyy-MM-dd'T'HH:mm:ss'Z'"): ''
   const userRole =  user?.data?.user?.role
     const logOutToken = user?.data?.tokens?.access?.refreshToken
     const timeId = user?.data?.timeDoc?.id
