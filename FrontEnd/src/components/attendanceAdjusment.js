@@ -85,7 +85,6 @@ const AttendanceAdjusment = () => {
   const { handleChange,values,setFieldValue } =
     useFormik({
       initialValues,
-
       onSubmit: async (data) => {
         dispatch();
       },
@@ -95,7 +94,8 @@ const AttendanceAdjusment = () => {
   }, []);
 
   useEffect(() => {
-   setFieldValue("user",data?.length > 0 ? data[0]?.id : "1")
+    console.log("data of users --> ",data)
+   setFieldValue("user",data?.length > 0 ? data[0]?.id : "")
   }, [data]);
 
   console.log("useruseruser----------------",values.user)
@@ -187,7 +187,7 @@ const AttendanceAdjusment = () => {
                     },
                   },
                 }}
-                defaultValue={`${values.user}`}
+                value={`${values.user}`}
               >
                 {data?.map((item) => (
                   <MenuItem key={item?.id} value={item?.id}>
