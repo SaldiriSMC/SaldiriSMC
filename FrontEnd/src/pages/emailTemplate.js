@@ -11,6 +11,8 @@ import Grid from "@mui/material/Grid";
 import { IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteModal from "../sharedComponents/deleteModal"
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+
 const EmailTemplate = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
@@ -40,7 +42,7 @@ const EmailTemplate = () => {
         result.push({
           created_date: created_date,
           subject: record?.subject,
-          body: record?.body,
+          body: ReactHtmlParser(record?.body),
           action: {
             change: (val) => handleDropdownActionsupport(record, val, index),
           },

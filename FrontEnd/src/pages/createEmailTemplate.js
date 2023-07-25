@@ -11,8 +11,6 @@ import { emailTemplate } from "../Yup Schema";
 import { createTemplate, updateTemplate } from "../actions/EmailTemplate";
 import { Link, useNavigate } from "react-router-dom";
 import he from "he"
-import { loderTrue, loderFalse } from "../actions/Auth";
-import { getTemplate } from "../actions/EmailTemplate";
 const EmailTemplates = ({ isEdit, setIsEdit, itemId, setShowModal, itemData }) => {
   // Quill.register("modules/imageResize", ImageResize);
   const [value, setValue] = React.useState("");
@@ -96,7 +94,7 @@ const EmailTemplates = ({ isEdit, setIsEdit, itemId, setShowModal, itemData }) =
         <div className="mb-5">
           <MUITextField
             noTitle
-            sm={3}
+            sm={6}
             id="subject"
             name="subject"
             placeholder="Enter Email Subject"
@@ -112,8 +110,8 @@ const EmailTemplates = ({ isEdit, setIsEdit, itemId, setShowModal, itemData }) =
           value={values.body}
           htmlValue={values.body}
           onChange={(value, delta, source, Editor)=>{
-            console.log("value in edotor ",he.decode(he))
-            setFieldValue("body",value)
+            const parseValue = he.decode(value)
+            setFieldValue("body",parseValue)
           }}
           modules={modules}
           formats={formats}
