@@ -19,6 +19,12 @@
   position: unset !important;
 }
 
+.css-x5fgd4-MuiTable-root{
+  min-width: auto !important;
+}
+.css-49hksj-MuiPaper-root-MuiTableContainer-root{
+  overflow-x: hidden !important;
+}
 .social_wrap{
   display: flex;
   justify-content: center;
