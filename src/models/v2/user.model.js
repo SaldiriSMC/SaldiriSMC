@@ -38,6 +38,7 @@ const User = sequelize.define('users', {
       model:"tenants",
       key:"id"
     },
+  
   },
   departmentId:{
     type: DataTypes.INTEGER,
@@ -45,6 +46,7 @@ const User = sequelize.define('users', {
       model:"departments",
       key:"id"
     },
+    onDelete: 'SET NULL'
   },
   designationId:{
     type: DataTypes.INTEGER,
@@ -52,6 +54,7 @@ const User = sequelize.define('users', {
       model:"designations",
       key:"id"
     },
+    onDelete: 'SET NULL'
   },
   isSignedIn:{
     type: DataTypes.BOOLEAN,

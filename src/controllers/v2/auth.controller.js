@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../../utils/catchAsync');
-const { User, Tenant, Attendance, Token, Time } = require('../../models/v2/index');
+const { User, Tenant, Attendance, Token, Time, Module } = require('../../models/v2/index');
 const { authService, userService, tokenService, emailService, tenantService, attendanceService } = require('../../services/v2');
 const {response} = require("../../utils/response");
 const { tokenTypes } = require('../../config/tokens');
@@ -17,6 +17,10 @@ const register = catchAsync(async (req, res) => {
         const tenant = await tenantService.createTenant(req.body, res);
         if (tenant) {
           const user = await userService.createUser(req.body, tenant.id, null);
+          const moduleArray = ['Attendance']
+          moduleArray.map((item) => {
+            const module =  Module.create({moduleName:item, tenantId: tenant.id})
+          })
           if (user) {
             const tokens = await tokenService.generateAuthTokens(user);
             response(res, { tenant, user, tokens }, 'User created successfully', httpStatus.CREATED)
@@ -45,17 +49,17 @@ const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
   const user = await authService.loginUserWithEmailAndPassword(email, password);
   const attendance = await Attendance.findOne({ where: { userId: user.id, Date: new Date() } });
+  console.log("attendanceId------------->>>>>>>>", attendance)
   const tenant = await Tenant.findOne({where:{id:user.tenantId}})
   const token = await Token.findOne({where:{type:tokenTypes.AUTH, user:user.id}})
   console.log("tokens in login call ",token)
   if(token){
-    const time = await Time.findOne({where:{timeOut:null, attendanceId:attendance.id}})
-    console.log("time in login call --------->>>>>>>", time)
-    if(time){
-      
-      await attendanceService.markTimeOut(time.id, attendance,  res)
+    if(attendance){
+      const time = await Time.findOne({where:{timeOut:null, attendanceId:attendance?.id}})
+      if(time){
+        await attendanceService.markTimeOut(time.id, attendance,  res)
+      }
     }
-
   }
   const tokens = await tokenService.generateAuthTokens(user);
   const timeDoc = await attendanceService.markAttendance(user, res)

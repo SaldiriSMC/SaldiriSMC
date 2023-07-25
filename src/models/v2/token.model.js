@@ -16,6 +16,7 @@ const Token = sequelize.define('tokens', {
             model:"users",
             key:"id"
           },
+          onDelete: 'CASCADE',
           allowNull: false,
         },
         type: {

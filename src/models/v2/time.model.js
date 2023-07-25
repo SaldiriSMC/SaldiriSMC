@@ -8,7 +8,8 @@ const Time = sequelize.define('time', {
         model:"attendances",
         key:"id"
       },
-      allowNull:false
+      allowNull:false,
+      onDelete: 'SET NULL'
     },
     timeIn: {
         type:DataTypes.DATE,
