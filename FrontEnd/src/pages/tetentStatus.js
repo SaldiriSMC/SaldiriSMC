@@ -26,12 +26,14 @@ import Header from '../components/navBar'
 import Footer from '../components/footer'
 import SideMenu from '../pages/sideMenu'
 import { rollStatusSechmea } from "../Yup Schema";
-
+import DeleteModal from "../sharedComponents/deleteModal";
 
 export default function TetentStatus() {
   const theme = useTheme();
 
   const [action, setAction] = React.useState(null);
+  const [showDeleteModal, setShowDeleteModal] = React.useState(false);
+  const [userDeleteId, setUserDeleteId] = React.useState(null);
   const [allmodulesList, setallmodulesList] = useState([])
   const initialValues = {
     status: '',
@@ -99,8 +101,9 @@ export default function TetentStatus() {
   const handleDropdownActionsupport= (data, val,index) => {
 
     if (val === 'delete' ) {
-
-      dispatch(deleteRoll({type:'status',id:data?.id}));
+      setShowDeleteModal(true)
+      setUserDeleteId(data?.id)
+    
     }  
     
     if (val === 'edit' ) {
@@ -142,7 +145,9 @@ export default function TetentStatus() {
     });
   
     }
-
+    const handleDeleteModel = () => {
+      dispatch(deleteRoll({type:'status',id:userDeleteId}));
+    }
   return (
     <>
     <Header/>
@@ -251,6 +256,12 @@ export default function TetentStatus() {
       </Grid>
   
     </Box>
+    <DeleteModal
+        showDeleteModal={showDeleteModal}
+        setShowDeleteModal={setShowDeleteModal}
+        handleDeleteModel={handleDeleteModel}
+
+      />
     </>
   );
 }

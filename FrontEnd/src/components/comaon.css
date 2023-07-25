@@ -21,9 +21,17 @@
 .css-bzv0vy-MuiPaper-root-MuiDrawer-paper{
   position: unset !important;
 }
-
+.css-421vol{
+  position: unset !important;
+}
 .css-x5fgd4-MuiTable-root{
   min-width: auto !important;
+}
+.css-8nvx0t{
+  min-width: auto !important;
+}
+.css-1jdkjdn{
+  overflow-x: hidden !important;
 }
 .css-49hksj-MuiPaper-root-MuiTableContainer-root{
   overflow-x: hidden !important;

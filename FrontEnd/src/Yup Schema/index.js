@@ -19,7 +19,11 @@ export const signupSchemaCompany = Yup.object({
     .min(3)
     .max(25)
     .required("Please enter your full name"),
-    domain: Yup.string().url('Please enter a valid URL') .required("Please enter your domain name"),
+    domain: Yup.string().matches(
+      // Regular expression for URL validation
+      /^(https?:\/\/)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})(:[0-9]{1,5})?([\/?].*)?$/,
+      'Invalid URL'
+    ) .required("Please enter your domain name"),
     tanantName: Yup.string().test('no-numbers-or-special-chars', 'Comapny name should only contain letters and spaces', value =>
     noNumbersOrSpecialChars(value)
   ).min(3).max(25).required("Please enter your Comapny name"),
