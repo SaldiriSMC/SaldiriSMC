@@ -21,13 +21,17 @@ import IconButton from '@mui/material/IconButton';
 import Header from '../components/navBar'
 import Footer from '../components/footer'
 import SideMenu from '../pages/sideMenu'
-
+import * as Yup from "yup";
 
 
 export default function TetentDepartment() {
   const theme = useTheme();
 
   const [action, setAction] = React.useState(null);
+
+  const designationScema = Yup.object({
+    designationId: Yup.string().required("Field is required"),
+  })
   const initialValues = {
     designationId: '',
   };
@@ -48,23 +52,20 @@ export default function TetentDepartment() {
   }, [dataUpdate]);
 
 
-  const addRollFun =()=>{
-    if (action){
-      setAction(false)
-      dispatch(updateRoll({data:{departmentName:values.designationId},type:'department',id:action}));
-    } else{
-      dispatch(createRoll({data:{departmentName:values.designationId},type:'department'}));
-    }
+
   
-  }
-  
-  console.log("allRollsList-----------",allRollsList)
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
     dirty } =
     useFormik({
       initialValues,
+      validationSchema: designationScema,
       onSubmit: () => {
-
+        if (action){
+          setAction(false)
+          dispatch(updateRoll({data:{departmentName:values.designationId},type:'department',id:action}));
+        } else{
+          dispatch(createRoll({data:{departmentName:values.designationId},type:'department'}));
+        }
       },
     });
 
@@ -95,7 +96,7 @@ export default function TetentDepartment() {
     }
 
   }
-
+  console.log( dirty,"errors------------------",errors)
 
   return (
     <>
@@ -119,8 +120,9 @@ export default function TetentDepartment() {
           sm={12}
           md={6}
         >
+           <form onSubmit={handleSubmit}>
              <div style={{display:"flex",
-          alignItems:"center",  marginBottom:"15px"}}>
+          alignItems:"center",  marginBottom:"25px"}}>
 
              <MUITextField
                noTitle
@@ -132,22 +134,20 @@ export default function TetentDepartment() {
               onBlur={handleBlur}
               id="designationId"
               placeholder='Department Name'
+              errors={errors.designationId}
+              touched={touched.designationId}
 
             /> 
     <div style={{display:"flex", justifyContent:"flex-end"}}>
 
-    {!action ?      <IconButton sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
-          addRollFun();
-          } }>
+    {!action ?      <IconButton sx={{mt:3,ml:1}} type="submit" size="medium" style={{backgroundColor:"#0075FF", color:"white",}}>
             <AddIcon />
-          </IconButton> :  <IconButton sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
-          addRollFun();
-          } }>
+          </IconButton> :  <IconButton sx={{mt:3,ml:1}} type="submit"  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} >
             <EditIcon />
           </IconButton>  }
          </div>
              </div>
-
+             </form>
          <MUITable
             
             column={departmentConfig}

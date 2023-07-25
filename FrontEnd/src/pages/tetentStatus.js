@@ -25,7 +25,7 @@ import IconButton from '@mui/material/IconButton';
 import Header from '../components/navBar'
 import Footer from '../components/footer'
 import SideMenu from '../pages/sideMenu'
-import { chnagePasswordSechmea } from "../Yup Schema";
+import { rollStatusSechmea } from "../Yup Schema";
 
 
 export default function TetentStatus() {
@@ -52,20 +52,31 @@ export default function TetentStatus() {
 
 
   
-  console.log("allRollsList-----------",allRollsList)
-  const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   valid,
+
+  const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   isValid,
     dirty } =
     useFormik({
       initialValues,
-      validationSchema: chnagePasswordSechmea,
+      validationSchema: rollStatusSechmea,
       onSubmit: () => {
-
+        if (action){
+          setAction(false)
+          dispatch(updateRoll({data:{statusName:values.status,moduleId :values.modulesId},type:'status',id:action}));
+          // setFieldValue('status','')
+        } else{
+          dispatch(createRoll({data:{statusName:values.status,moduleId :values.modulesId},type:'status'}));
+          // setFieldValue('status','')
+        }
       },
     });
 
     useEffect(() => {
       if (dataUpdate){
-        dispatch(getRoll({type:'status',id:values.modulesId}));
+        if (values.modulesId){
+          dispatch(getRoll({type:'status',id:values.modulesId}));
+          setFieldValue('status','')
+        }
+        
       }
          
         }, [dataUpdate,values.modulesId]);
@@ -99,15 +110,8 @@ export default function TetentStatus() {
 
   const addRollFun =()=>{
 
-    if (valid && dirty){
-      if (action){
-        setAction(false)
-        dispatch(updateRoll({data:{statusName:values.status,moduleId :values.modulesId},type:'status',id:action}));
-        handleReset()
-      } else{
-        dispatch(createRoll({data:{statusName:values.status,moduleId :values.modulesId},type:'status'}));
-        handleReset()
-      }
+    if (isValid && dirty){
+     
     }
 
   
@@ -124,6 +128,10 @@ export default function TetentStatus() {
       .then((response) => {
         if (response.data) {
           setallmodulesList(response.data.data)
+          if (response.data.data.length > 0){
+            setFieldValue('modulesId',response.data.data[0].id)
+          }
+          
         }
       })
       .catch((error) => console.log(error.message))
@@ -136,12 +144,18 @@ export default function TetentStatus() {
   
     }
 
+
+
+    console.log(isValid, dirty,"errors------------------",errors)
   return (
     <>
     <Header/>
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <SideMenu />
+     
+
+     
       <Grid
         container
         flexDirection="row"
@@ -149,6 +163,7 @@ export default function TetentStatus() {
         justifyContent=""
         sx={{ p: 1 }}
       >
+          
         <Grid
           sx={{ pl: 3 }}
           spacing={2}
@@ -158,7 +173,7 @@ export default function TetentStatus() {
           sm={12}
           md={6}
         >
-          
+          <form onSubmit={handleSubmit}>
              <div style={{display:"flex",
           alignItems:"center"}}>
               <Grid  container  spacing={2} sx={{p:1}}>
@@ -170,10 +185,9 @@ export default function TetentStatus() {
               handleChange={handleChange}
               onBlur={handleBlur}
               id="modulesId"
-              
-              placeholder='department'
-              errors={errors.departmentId}
-              touched={touched.departmentId}
+              placeholder='module'
+              errors={errors.modulesId}
+              touched={touched.modulesId}
               type="select"
               options={allmodulesList}
               pass="module"
@@ -188,7 +202,8 @@ export default function TetentStatus() {
               onBlur={handleBlur}
               id="status"
               placeholder='Status Name'
-
+              errors={errors.status}
+              touched={touched.status}
             /> 
 
 
@@ -197,16 +212,15 @@ export default function TetentStatus() {
              </div>
              <div style={{display:"flex", justifyContent:"flex-end"}}>
 
-             {!action ?      <IconButton sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",marginBottom:10}} onClick={()=>{
-          addRollFun();
-          } }>
+             {!action ?      <IconButton sx={{mt:3,ml:1}}  type="submit"  size="medium" style={{backgroundColor:"#0075FF", color:"white",marginBottom:10}} >
             <AddIcon />
-          </IconButton> :  <IconButton sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",marginBottom:10}} onClick={()=>{
-          addRollFun();
-          } }>
+          </IconButton> :  <IconButton sx={{mt:3,ml:1}}  type="submit"  size="medium" style={{backgroundColor:"#0075FF", color:"white",marginBottom:10}} >
             <EditIcon />
           </IconButton>  }
 </div>
+
+</form>
+
          <MUITable
             
             column={statusConfig}
@@ -237,7 +251,9 @@ export default function TetentStatus() {
             <div style={{ display: "flex", justifyContent: "flex-end" }}></div>
           </>
         </Grid>
+        
       </Grid>
+  
     </Box>
     </>
   );

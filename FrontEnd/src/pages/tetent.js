@@ -12,12 +12,7 @@ import { loderTrue,loderFalse } from "../actions/Auth";
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
 import MUITextField from "../sharedComponents/textField";
-import {
-  getAllDepartment,
-  getAllDesignation,
-  createInviteUser,
-  updateInviteUser
-} from "../service/users";
+import * as Yup from "yup";
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -33,6 +28,9 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
 
   const [action, setAction] = React.useState(null);
+  const designationScema = Yup.object({
+    designationId: Yup.string().required("Field is required"),
+  })
   const initialValues = {
     designationId: '',
   };
@@ -57,19 +55,22 @@ export default function PersistentDrawerLeft() {
     dirty } =
     useFormik({
       initialValues,
+      validationSchema: designationScema,
       onSubmit: () => {
+
+        if (action){
+          setAction(false)
+          dispatch(updateRoll({data:{designationName:values.designationId},type:'designation',id:action}));
+        } else{
+          dispatch(createRoll({data:{designationName:values.designationId},type:'designation'}));
+        }
       },
     });
 
 
 
 const addRollFun =()=>{
-  if (action){
-    setAction(false)
-    dispatch(updateRoll({data:{designationName:values.designationId},type:'designation',id:action}));
-  } else{
-    dispatch(createRoll({data:{designationName:values.designationId},type:'designation'}));
-  }
+ 
 
 }
 
@@ -124,8 +125,9 @@ const addRollFun =()=>{
           sm={12}
           md={6}
         >
+           <form onSubmit={handleSubmit}>
              <div style={{display:"flex",
-          alignItems:"center",  marginBottom:"15px"}}>
+          alignItems:"center",  marginBottom:"25px"}}>
 
              <MUITextField
                noTitle
@@ -137,24 +139,22 @@ const addRollFun =()=>{
               onBlur={handleBlur}
               id="designationId"
               placeholder='Designation Name'
+              errors={errors.designationId}
+              touched={touched.designationId}
 
             /> 
     <div style={{display:"flex", justifyContent:"flex-end"}}>
 
-      {!action ?      <IconButton sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
-          addRollFun();
-          } }>
+      {!action ?      <IconButton type="submit" sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} >
             <AddIcon />
-          </IconButton> :  <IconButton sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
-          addRollFun();
-          } }>
+          </IconButton> :  <IconButton type="submit" sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} >
             <EditIcon />
           </IconButton>  }
      
        
          </div>
              </div>
-
+             </form>
          <MUITable
             
             column={designationConfig}
