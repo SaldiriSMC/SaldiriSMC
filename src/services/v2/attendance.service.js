@@ -12,7 +12,7 @@ const markAttendance = async (user, res) => {
       const attendance = await Attendance.create({
         employeeName: user.name,
         userId: user.id,
-        statusId: 4,
+        statusId: null,
         Date: new Date(),
       });
       timeDoc = await Time.create({ timeIn: new Date(), timeOut: null, attendanceId: attendance.id });
@@ -38,9 +38,9 @@ const markTimeOut = async (id, attendanceDoc, res) => {
     totalWorkedHours += sessionWorkedHours;
     attendanceDoc.workedHours = totalWorkedHours.toFixed(2);
     if (attendanceDoc.workedHours < 8) {
-      attendanceDoc.statusId = 1;
+      attendanceDoc.statusId = null;
     } else {
-      attendanceDoc.statusId = 2;
+      attendanceDoc.statusId = null;
     }
     attendanceDoc.save();
   } catch (err) {
@@ -98,9 +98,9 @@ const queryAttendance = async (filter, option) => {
 
 const updateWorkedHours = async (attendanceId, totalHours) => {
   if (totalHours < 8) {
-    await Attendance.update({ workedHours: totalHours, statusId: 1 }, { where: { id: attendanceId } });
+    await Attendance.update({ workedHours: totalHours, statusId: null }, { where: { id: attendanceId } });
   } else {
-    await Attendance.update({ workedHours: totalHours, statusId: 2 }, { where: { id: attendanceId } });
+    await Attendance.update({ workedHours: totalHours, statusId: null }, { where: { id: attendanceId } });
   }
 };
 

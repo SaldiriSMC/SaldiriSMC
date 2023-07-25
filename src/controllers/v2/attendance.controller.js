@@ -51,9 +51,9 @@ const updateWorkedHours = async (id) => {
   const result = await callDBRoutine("get_AttendanceSumByID", {'attendanceId':id,})
   const totalHours = result[0].Difference
   if (totalHours < 8) {
-    await Attendance.update({ workedHours: totalHours, statusId: 1 }, { where: { id: id } });
+    await Attendance.update({ workedHours: totalHours, statusId: null }, { where: { id: id } });
   } else {
-    await Attendance.update({ workedHours: totalHours, statusId: 2 }, { where: { id: id } });
+    await Attendance.update({ workedHours: totalHours, statusId: null }, { where: { id: id } });
   }
 }
 const getAttendanceByHours = catchAsync(async(req, res) =>{

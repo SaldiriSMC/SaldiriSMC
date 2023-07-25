@@ -33,7 +33,7 @@ const Attendance = sequelize.define('attendances', {
       model:"statuses",
       key:"id"
     },
-    allowNull:false
+    // allowNull:false
   },
 },);
 
