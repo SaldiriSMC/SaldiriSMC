@@ -66,7 +66,7 @@ const AttendanceAdjusment = () => {
 
     
   };
-  console.log("data------------data----------->>>>>>>>>>>>>  data", data);
+
   const calculateTotalWorkedHours = () => {
     const total = workedHours
       ?.map((item) => Number(item.Difference))
@@ -100,11 +100,10 @@ const AttendanceAdjusment = () => {
   }, []);
 
   useEffect(() => {
-    console.log("data of users --> ",data)
    setFieldValue("user",data?.length > 0 ? data[0]?.id : "")
   }, [data]);
 
-  console.log("useruseruser----------------",values.user)
+
 
   useEffect(() => {
     if ((values.user && !(userRole === 'employee'))) {

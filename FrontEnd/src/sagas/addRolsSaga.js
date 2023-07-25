@@ -27,10 +27,9 @@ import URls from "../constants/urls";
 // //course category generator function
 function* createRollsCall(action) {
 
-  console.log("createRollsCall-------------kkkk------ ",action.payload.type)
   try {
     const response = yield call(postRequestWithTenat, action.payload.type == 'designation'? URls.designation : action.payload.type == 'department' ?  URls.department :  URls.status,action.payload.data);
-    console.log(response);
+
     if (response?.status === 200) {
       yield takeLatest(GET_ROLE, getAllRollsCall);
       pushNotification(
@@ -51,7 +50,7 @@ function* createRollsCall(action) {
 function* getAllRollsCall(action) {
   try {
     const response = yield call(getRequestWithTenant, action.payload.type == 'designation'? URls.designation : action.payload.type == 'department' ?  URls.department :  `${URls.status}?Module_Id=${action.payload.id}`);
-    console.log(response);
+
     if (response?.status === 200) {
       yield put(getRollSuccess(response.data));
     }
@@ -60,10 +59,10 @@ function* getAllRollsCall(action) {
   }
 }
 function* updateRollCall(action) {
-  console.log("createRollsCall-------------kkkk------ ",action.payload.type)
+
   try {
     const response = yield call(patchRequestWithTokenTenant,  action.payload.type == 'designation'? `${URls.designation}/${ action.payload.id}` : action.payload.type == 'department' ?  `${URls.department}/${ action.payload.id}` :  `${URls.status}/${ action.payload.id}`,action.payload.data);
-    console.log(response);
+
     if (response?.status === 200) {
       pushNotification(
         `${response?.data.message}`,
@@ -82,7 +81,7 @@ function* updateRollCall(action) {
 function* deleteRollsCall(action) {
   try {
     const response = yield call(deleteRequestWithTokenTenant, action.payload.type == 'designation'? `${URls.designation}/${ action.payload.id}` : action.payload.type == 'department' ?  `${URls.department}/${ action.payload.id}` :  `${URls.status}/${ action.payload.id}`);
-    console.log(response);
+  
     if (response?.status === 200) {
       yield put(deleteRollSuccess(response.data));
     }

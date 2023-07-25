@@ -40,10 +40,10 @@ function App({data}) {
   const url = window.location.href.split( '/' )[3];
   const [loader, setLoader] = useState(false)
 
-  console.log('user------------->appppppp>>>>>>>>>>',user)
+
 
 useEffect(()=>{
-  console.log('user------------->appppp   kkkkkk  pp>>>>>>>>>>',user)
+
 },[localStorage])
 
 //   const PrivateRoute = ({loader,setLoader}) => {

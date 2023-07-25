@@ -16,7 +16,7 @@ const appReducer = combineReducers({
 });
 
 const rootReducer = (state, action) => {
-  // console.log("RESET_ALL_DATA action", action)
+
   if (action.type === "RESET_ALL_DATA") {
     state = {
       auth: state.auth,

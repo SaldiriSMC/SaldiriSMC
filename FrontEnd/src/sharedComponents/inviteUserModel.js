@@ -238,8 +238,6 @@ const InviteUserModel = (props) => {
     
       },[])
 
-
-console.log("userData----------",userData)
       useEffect(()=>{
         if (action === 'update'){
           setValues({

@@ -128,7 +128,6 @@ function NavScrollExample({ setLoader,}) {
     const logOutToken = user?.data?.tokens?.access?.refreshToken
     const timeId = user?.data?.timeDoc?.id
     const attendanceid = user?.data?.timeDoc?.attendanceId
-    console.log('user------------->>>>>>>>>>>',user)
   const initialValues = {
     email: "",
     password: "",

@@ -26,7 +26,7 @@ import {
   });
   
   const getRollsSuccess = (state, action) => {
-    console.log("reducer action------>>>>>>",action)
+
     return {
       ...state,
       getListLoading: false,
@@ -47,7 +47,7 @@ import {
   });
   
   const createRollSuccess = (state, action) => {
-    console.log("action.payload-------->>>>>>>>",action.payload)
+
     return {
       ...state,
       getListLoading: false,
@@ -71,7 +71,6 @@ import {
   });
   
   const deleteRollSuccess = (state, action) => {
-    console.log("action.payload-------->>>>>>>>",action.payload)
     return {
       ...state,
       getListLoading: false,
@@ -94,7 +93,7 @@ import {
   });
   
   const updateRollSuccess = (state, action) => {
-    console.log("action.payload-------->>>>>>>>",action.payload)
+
     return {
       ...state,
       getListLoading: false,

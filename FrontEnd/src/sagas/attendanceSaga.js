@@ -22,10 +22,10 @@ import URls from "../constants/urls";
 
 // //course category generator function
 function* getUserList(action) {
-    console.log("actionaction", action);
+
    try {
      const response = yield call(getRequestWithTenant, URls.getAllUsers);
-     console.log(response)
+
      if (response?.status === 200) {     
        //navigate("/Login")
        localStorage.setItem("data",JSON.stringify(response.data))
@@ -39,10 +39,10 @@ function* getUserList(action) {
 
  //course generator function
  function* getAttendanceCall(action) {
-  console.log("course", action);
+
  try {
    const response = yield call(getRequestWithTenant, `${URls.attendanceAdjustment}?limit=10&page=1`);
-   console.log(response)
+
    if (response?.status === 200) {     
      
 
@@ -56,10 +56,10 @@ function* getUserList(action) {
 
 // //get attendace by hours generator function
 function* getAttendanceByHoursCall(action) {
-  console.log("action------>>>>>>>",action.payload)
+
  try {
    const response = yield call(getRequestWithTenant, URls.getAttendanceByHours+`/${action.payload}`);
-   console.log(response)
+
    if (response?.status === 200) {     
      //navigate("/Login")
      yield put(getAttendanceByHoursSuccess(response.data));
@@ -73,7 +73,7 @@ function* getAttendanceByHoursCall(action) {
 // //update  generator function
 
 function* updateTime(action) {
-  console.log("updateTime fun add ",action.payload)
+
  try {
    const response = yield call(putRequestWithTenant, URls.attendanceAdjustment+`/${action?.payload?.time[0].attendanceid}`, action.payload);
    if (response?.status === 200) {     
@@ -87,11 +87,9 @@ function* updateTime(action) {
 }
 
 // function* deleteTime(action) {
-//   console.log("updateTime fun add ",action.payload)
 //   let data = localStorage.getItem("accessToken")
 //   data = JSON.parse(data)
 //   const id = data?.data?.user?.id
-//   console.log("action--------->>>>>>>>",action.payload)
 //  try {
 //    const response = yield call(putRequestWithTenant, URls.attendanceAdjustment+`/${action?.payload?.attendanceid}`, action.payload);
 //    if (response?.status === 200) {     

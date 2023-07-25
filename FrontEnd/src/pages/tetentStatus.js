@@ -143,9 +143,6 @@ export default function TetentStatus() {
   
     }
 
-
-
-    console.log(isValid, dirty,"errors------------------",errors)
   return (
     <>
     <Header/>

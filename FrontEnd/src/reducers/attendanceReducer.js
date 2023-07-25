@@ -67,7 +67,7 @@ const getAttendanceByHours = (state, action) => ({
 });
 
 const getAttendanceByHoursSuccess = (state, action) => {
-  console.log("success",action)
+
   return {
     ...state,
     getListLoading: false,
@@ -76,7 +76,7 @@ const getAttendanceByHoursSuccess = (state, action) => {
 };
 
 const getAttendanceByHoursFailed = (state, action) => {
-  console.log("failure",action)
+ 
   return {
     ...state,
     getListLoading: false,
@@ -86,7 +86,7 @@ const getAttendanceByHoursFailed = (state, action) => {
 };
 const removeAttendenceOnIndex = (state, action) => {
   var data = state?.attendance?.data
-  console.log("data-->> ",state?.attendance)
+
   data.splice(action.payload.index, 1);
   return {
     ...state,

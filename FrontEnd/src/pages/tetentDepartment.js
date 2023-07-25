@@ -96,7 +96,7 @@ export default function TetentDepartment() {
     }
 
   }
-  console.log( dirty,"errors------------------",errors)
+
 
   return (
     <>

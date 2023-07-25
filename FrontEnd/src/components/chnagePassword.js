@@ -46,7 +46,7 @@ function ForgetPassword() {
 
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
-    console.log(token);
+
     // Use the token for further processing or state management
 
 

@@ -45,7 +45,7 @@ const rows = [
 
 export default function CustomizedTables({attendanceRecord}) {
     const [showModal,setShowModal] = React.useState(false)
-    console.log(showModal)
+
   return (
     <>
     <TableContainer component={Paper} className='px-4'>

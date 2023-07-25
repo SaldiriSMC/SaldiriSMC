@@ -71,7 +71,6 @@ const MUITable = (props) => {
   const { column, list, isLoading, pagination, onSelect, variant, onCheckAll, checkedValue } = props
   const { classes } = useStyles();
   const listToRender = isLoading ? [{}, {}, {}, {}, {}] : list;
-  console.log(checkedValue?.length, column?.length)
   return (
     <div style={{ width: '100%' }}>
       <TableContainer component={Paper}>

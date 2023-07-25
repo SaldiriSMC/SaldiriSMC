@@ -3,7 +3,6 @@ import URls from "../constants/urls";
 import apiWithToken from "../service/apiWithToken";
 import {headerWithToken} from "../service/apiWithTokenLookUp";
 const instance = axios.create()
-console.log("URls.getAllUsers----------",URls.getAllUsers)
 export const getAllDepartment = () => {
     return instance({
         url: URls.getDepartment,

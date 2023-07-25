@@ -14,13 +14,12 @@ import URls from "../constants/urls";
 
 
 function* signInCall(action) {
-  console.log("actionaction", action);
   yield put(loderTrue());
 
   try {
     const response = yield call(postRequest, URls.loginurl, action?.payload?.credentials);
     yield put(loderFalse());
-    console.log(response)
+
     if (response?.status == '200') {
         localStorage.setItem("accessToken", JSON.stringify(response?.data))
         pushNotification(
@@ -46,25 +45,25 @@ function* signInCall(action) {
 
 // signup call
 function* signUpCall(action) {
-  // console.log("actionaction", action);
+
   yield put(loderTrue());
   try {
     const response = yield call(postRequest, URls.signupUrl, action?.payload?.credentials);
     yield put(loderFalse());
-    console.log("response catch",response)
+
     if (response?.data?.data?.user) {
       pushNotification(`${response?.data.message}`, "success", "TOP_CENTER", 1000);
       yield put(signUpSuccess(response.data));
       action.payload.navigate("/")
     } else {
-      console.log("response eeeeeeeee catch",response?.data.message )
+  
       pushNotification(
         `${response?.data.message}`,
         "error",
       );
     }
   } catch (error) {
-    console.log("error catch",error)
+
     pushNotification("Get data failure", "error", "TOP_CENTER", 1000);
     yield put(signUpFailure());
     yield put(loderFalse());
@@ -72,12 +71,12 @@ function* signUpCall(action) {
 }
 // logOut call
 function* logOutCall(action) {
-  console.log(action?.payload?.refreshToken,"actionaction", action);
+
   yield put(loderTrue());
   try {
     const response = yield call(postRequest, URls.logOut, action?.payload.data);
     yield put(loderFalse());
-    console.log("response catch",response)
+
     if (response?.data.message == 'User loged out successfully') {
       localStorage.removeItem("accessToken"); 
       // window.location.reload()
@@ -90,7 +89,7 @@ function* logOutCall(action) {
       action.payload.navigate("/")
     }
   } catch (error) {
-    console.log("error catch",error)
+
     pushNotification("Get data failure", "error", "TOP_CENTER", 1000);
     yield put(signUpFailure());
     yield put(loderFalse());

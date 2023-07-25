@@ -28,7 +28,7 @@ import URls from "../constants/urls";
 function* createEmailTemplateCall(action) {
   try {
     const response = yield call(postRequestWithTenat, URls.emailTemplate, {body:action.payload.body, subject:action.payload.subject});
-    console.log(response);
+
     if (response?.status === 200) {
       pushNotification(
         `${response?.data.message}`,
@@ -68,7 +68,7 @@ function* updateEmailTemplateCall(action) {
 function* deleteEmailTemplateCall(action) {
   try {
     const response = yield call(deleteRequestWithTokenTenant, `${URls.emailTemplate}/${action.payload.itemId}`);
-    console.log(response);
+  
     if (response?.status === 200) {
       pushNotification(
         `${response?.data.message}`,
@@ -88,7 +88,7 @@ function* deleteEmailTemplateCall(action) {
 function* getEmailTemplateCall(action) {
   try {
     const response = yield call(getRequestWithTenant, URls.emailTemplate);
-    console.log(response);
+
     if (response?.status === 200) {
       yield put(getTemplateSuccess(response.data));
     }

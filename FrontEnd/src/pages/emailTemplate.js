@@ -24,7 +24,7 @@ const EmailTemplate = () => {
     (state) => state?.emailTemplate?.data?.data
   );
   const isLoading = useSelector((state) => state?.emailTemplate?.getListLoading)
-  console.log("isEdit----------->>>>>>>>>", isLoading)
+
   useEffect(() => {
     if(!isLoading){
       dispatch(getTemplate());

@@ -76,7 +76,7 @@ function ForgetPassword() {
       },
     });
 
-    console.log("forget password",values)
+  
 
   return (
 <>

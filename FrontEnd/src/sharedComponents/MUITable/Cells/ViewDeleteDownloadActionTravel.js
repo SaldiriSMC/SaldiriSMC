@@ -12,8 +12,6 @@ const ViewDeleteDownloadAction = ({ value: { change, isView  } }) => {
     change(val)
   }
 
-console.log("isView------------------",isView)
-
   return (
     <>
     {isView && (<Stack direction="row" alignItems="center" spacing={1}>

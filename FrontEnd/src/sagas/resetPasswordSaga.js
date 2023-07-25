@@ -14,10 +14,10 @@ import { pushNotification } from "../utils/notifications";
 import URls from "../constants/urls";
 
 function* emailVerificationCall(action) {
-     console.log("actionaction", action);
+
     try {
       const response = yield call(postRequest, URls.emailVerificationUrl, action?.payload);
-      console.log(response)
+
       if (response?.data?.message?.success) {     
         //navigate("/Login")
         localStorage.setItem("data",JSON.stringify(response.data))
@@ -40,10 +40,10 @@ function* emailVerificationCall(action) {
   }
 
   function* resetPasswordCall(action) {
-    console.log("actionaction", action);
+  
    try {
      const response = yield call(postRequest, `${URls.resetPassword}?token=${action?.payload?.LogIntoken}`, action?.payload?.credentials);
-     console.log(response)
+
      if (response?.status === 200) {      
        pushNotification(
          "Password Change Successfully",
@@ -66,10 +66,10 @@ function* emailVerificationCall(action) {
  }
 
  function* emailStatusdCall(action) {
-  console.log("actionaction", action);
+
  try {
    const response = yield call(patchRequest, URls.emailStatus, action?.payload);
-   console.log(response)
+
    if (response?.data?.message?.success) {     
      localStorage.setItem("data",JSON.stringify(response.data))
      pushNotification(

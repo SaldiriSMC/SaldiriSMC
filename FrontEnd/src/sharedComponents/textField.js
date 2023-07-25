@@ -106,9 +106,6 @@ const MUITextField = (props) => {
     return result
   }
 
-
-console.log("erroe-------------------in fiels",errors)
-
   return (
     <Grid
       container

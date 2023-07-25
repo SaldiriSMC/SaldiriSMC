@@ -71,7 +71,7 @@ export default function CustomizedTables({
         },
       ],
     };
-    console.log("payloadpayload------------",payload)
+
     dispatch(updateTime(payload));
     setTimeout(() => {
       dispatch(getAttendanceByHours(value));

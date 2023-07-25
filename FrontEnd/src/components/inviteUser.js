@@ -38,8 +38,6 @@ useEffect(()=>{
   getAllUser()
 },[])
 
-console.log("logInUserId---------",logInUserId)
-
   const getAllUser=()=>{
     dispatch(
       loderTrue(true)
@@ -162,7 +160,7 @@ console.log("logInUserId---------",logInUserId)
     }
   }
 
-  console.log("checkedValue----------",checkedValue)
+
   return (
     <div>
          <NavBar />

@@ -26,7 +26,7 @@ import {
   });
   
   const createEmailTemplateSuccess = (state, action) => {
-    console.log("reducer action------>>>>>>",action)
+
     return {
       ...state,
       getListLoading: false,
@@ -46,7 +46,7 @@ import {
   });
   
   const getEmailTemplateSuccess = (state, action) => {
-    console.log("action.payload-------->>>>>>>>",action.payload)
+   
     return {
       ...state,
       // getListLoading: false,
@@ -66,7 +66,7 @@ import {
   });
   
   const updateEmailTemplateSuccess = (state, action) => {
-    console.log("action.payload-------->>>>>>>>",action.payload)
+
     return {
       ...state,
       getListLoading: false,
@@ -85,7 +85,7 @@ import {
   });
   
   const deleteEmailTemplateSuccess = (state, action) => {
-    console.log("action.payload-------->>>>>>>>",action.payload)
+    
     return {
       ...state,
       getListLoading: false,
