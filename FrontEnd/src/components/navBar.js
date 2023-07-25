@@ -61,7 +61,7 @@ const useStyles = makeStyles()((theme) => {
     //  marginTop:'-1rem',
     },
     textAreaContainer: {
-      // paddingTop:'4px !important',
+      lineHeight:'2.4rem',
       '& > label': {
         lineHeight:'2.4rem',
         fontWeight:'unset',
@@ -75,6 +75,9 @@ const useStyles = makeStyles()((theme) => {
         '& .MuiInputLabel-root': {
          lineHeight:'2rem',
         }
+      },
+      '& > p':{
+        fontSize: "0.65rem", fontWeight: 600, lineHeight: 2.65 
       }
     },
     selectBox: {
@@ -234,13 +237,9 @@ const continueWorkHandel = () =>{
             <Nav.Link as={Link}  to="/">Home {url == '/' && (<CircleIcon  className={classes.blueDotUrl}/>)}</Nav.Link>
             <Nav.Link as={Link} to="/services">  Services {url == '/services' && (<CircleIcon  className={classes.blueDotUrl}/>)}</Nav.Link>
             <NavDropdown title="Company" id="navbarScrollingDropdown">
-              {/* <NavDropdown.Item href="#portfolio"> Portfolio</NavDropdown.Item> */}
               <NavDropdown.Item as={Link} to="/technologies" >
               Technologies {url == '/technologies' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
-              {/* <NavDropdown.Item  as={Link} to="/#clients">
-              Clients
-              </NavDropdown.Item> */}
               <NavDropdown.Item as={Link} to="/careers">
               Careers {url == '/careers' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
@@ -259,7 +258,7 @@ const continueWorkHandel = () =>{
                <NavDropdown.Item as={Link} to="/dashboard" >
               Dashboard {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
-              <NavDropdown title=" Attendance" id="navbarScrollingDropdown">
+              <NavDropdown className='submenu' title=" Attendance" id="navbarScrollingDropdown">
               <NavDropdown.Item as={Link} to="/attendance" >
               Attendance List {url == '/attendance' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
