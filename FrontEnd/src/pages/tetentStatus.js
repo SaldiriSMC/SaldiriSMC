@@ -121,9 +121,7 @@ export default function TetentStatus() {
   },[])
   
     const getAllUser=()=>{
-      dispatch(
-        loderTrue(true)
-      );
+
       getAllModules()
       .then((response) => {
         if (response.data) {
@@ -136,9 +134,7 @@ export default function TetentStatus() {
       })
       .catch((error) => console.log(error.message))
       .finally(() => {
-        dispatch(
-          loderFalse(true)
-        );
+
   
     });
   

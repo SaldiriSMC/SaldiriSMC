@@ -57,7 +57,7 @@ function SignUp() {
     tanantName: "",
     fullName: "",
     phoneNumber: "",
-    designation: "admin",
+    // designation: "admin",
     email: "",
     allies: "",
     type: "company",
@@ -87,7 +87,7 @@ function SignUp() {
               type: values.type,
               email: values.email,
               alias: values.allies,
-              designation: values.designation,
+              // designation: values.designation,
               phoneNumber: values.phoneNumber,
               password: values.password},
               navigate:navigate,
@@ -102,7 +102,7 @@ function SignUp() {
               type: values.type,
               email: values.email,
               alias: values.allies,
-              designation: values.designation,
+              // designation: values.designation,
               domain: values.domain,
               phoneNumber: values.phoneNumber,
               password: values.password},
@@ -219,7 +219,7 @@ useEffect(()=>{
             
             <MUITextField
               noTitle
-              sm={6}
+              sm={12}
               xs={12}
               id="allies"
               name="allies"
@@ -230,7 +230,7 @@ useEffect(()=>{
               errors={errors.allies}
               touched={touched.allies}
             /> 
-               <MUITextField
+               {/* <MUITextField
                readOnly
                disabled
               noTitle
@@ -245,7 +245,7 @@ useEffect(()=>{
               errors={errors.designation}
               touched={touched.designation}
               
-            /> 
+            />  */}
              <Grid
                     container
                     direction="row"
@@ -385,7 +385,7 @@ useEffect(()=>{
               errors={errors.allies}
               touched={touched.allies}
             /> 
-            <MUITextField
+            {/* <MUITextField
               readOnly
               disabled
               noTitle
@@ -399,7 +399,7 @@ useEffect(()=>{
               onBlur={handleBlur}
               errors={errors.designation}
               touched={touched.designation}
-            /> 
+            />  */}
             <Grid
                     container
                     direction="row"

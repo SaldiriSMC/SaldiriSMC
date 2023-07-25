@@ -17,7 +17,7 @@ import {
 
 } from "../actions/Attendance/index";
 
-import { getRequest, getRequestWithTenant , putRequestWithTenant, getRequest2, getRequestWithOutToken } from "./request";
+import { getRequestWithTenant , putRequestWithTenant, getRequest2 } from "./request";
 import URls from "../constants/urls";
 
 // //course category generator function
