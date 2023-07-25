@@ -282,7 +282,7 @@ const continueWorkHandel = () =>{
               <NavDropdown.Item as={Link} to="/dashboard" >
               Dashboard  {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
-              <NavDropdown title=" Attendance" id="navbarScrollingDropdown">
+              <NavDropdown  title=" Attendance" id="navbarScrollingDropdown">
               {/* <NavDropdown.Item as={Link} to="/attendance" >
               Attendance List
               </NavDropdown.Item> */}
@@ -291,7 +291,17 @@ const continueWorkHandel = () =>{
             <NavDropdown.Item as={Link} to="/inviteUser" >
               Invite User {url == '/inviteUser' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
-             </> : <> </>  
+             </> : <> 
+              <NavDropdown.Item as={Link} to="/dashboard" >
+              Dashboard  {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
+              </NavDropdown.Item>
+              <NavDropdown title=" Attendance" className='submenu' id="navbarScrollingDropdown">
+              <NavDropdown.Item as={Link}  to="/attendance" >
+              Attendance List
+              </NavDropdown.Item>
+             
+            </NavDropdown>
+       </>  
            }
            
             </NavDropdown>}
