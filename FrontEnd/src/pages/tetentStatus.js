@@ -74,7 +74,10 @@ export default function TetentStatus() {
       if (dataUpdate){
         if (values.modulesId){
           dispatch(getRoll({type:'status',id:values.modulesId}));
-          setFieldValue('status','')
+          setTimeout(() => {
+            setFieldValue('status','')
+          }, 1000);
+         
         }
         
       }
