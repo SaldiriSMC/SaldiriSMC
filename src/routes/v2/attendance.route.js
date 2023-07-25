@@ -17,7 +17,7 @@ router
     .delete(auth(), tenant(), checkRoles(["admin"]), attendanceController.deleteAttendance);
 router
     .route('/by-hours/:userId')
-    .get(auth(), tenant(), checkRoles(["admin"]), attendanceController.getAttendanceByHours);
+    .get(auth(), tenant(), checkRoles(["admin","hr","employee"]), attendanceController.getAttendanceByHours);
 
 
 module.exports = router

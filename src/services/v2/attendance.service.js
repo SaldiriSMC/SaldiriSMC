@@ -21,7 +21,8 @@ const markAttendance = async (user, res) => {
     }
     return timeDoc;
   } catch (err) {
-    res.send(err);
+    console.log("err---------->>>>>>",err)
+    //res.send(err);
   }
 };
 
@@ -44,7 +45,7 @@ const markTimeOut = async (id, attendanceDoc, res) => {
     attendanceDoc.save();
   } catch (err) {
     console.log('err--------->>>>>>>>>>', err);
-    res.send(err);
+    //res.send(err);
   }
 };
 

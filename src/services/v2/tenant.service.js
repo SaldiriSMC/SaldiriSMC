@@ -14,7 +14,7 @@ const createTenant = async (userBody,res) => {
     }
     catch(err){
       console.log("err----->>>>>>>",err)
-      res.send(err)
+      //res.send(err)
     }
   };
 

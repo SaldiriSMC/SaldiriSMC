@@ -14,27 +14,32 @@ const register = catchAsync(async (req, res) => {
         if(req.body.type === "user"){
           response(res, "", 'No tenant found against this alias', httpStatus.BAD_REQUEST)
         } 
-        const tenant = await tenantService.createTenant(req.body, res);
-        if (tenant) {
-          const user = await userService.createUser(req.body, tenant.id, null);
-          const moduleArray = ['Attendance']
-          moduleArray.map((item) => {
-            const module =  Module.create({moduleName:item, tenantId: tenant.id})
-          })
-          if (user) {
-            const tokens = await tokenService.generateAuthTokens(user);
-            response(res, { tenant, user, tokens }, 'User created successfully', httpStatus.CREATED)
+        else{
+          const tenant = await tenantService.createTenant(req.body, res);
+          if (tenant) {
+            const user = await userService.createUser(req.body, tenant.id, null);
+            const moduleArray = ['Attendance']
+            moduleArray.map((item) => {
+              const module =  Module.create({moduleName:item, tenantId: tenant.id})
+            })
+            if (user) {
+              const tokens = await tokenService.generateAuthTokens(user);
+              response(res, { tenant, user, tokens }, 'User created successfully', httpStatus.CREATED)
+            }
           }
         }
       } else {
         if(req.body.type === "company"){
           response(res, "", 'Alias already taken', httpStatus.BAD_REQUEST)
         }
-        const user = await userService.createUser(req.body, alias.id, 'user');
-        if (user) {
-          const tokens = await tokenService.generateAuthTokens(user);
-          response(res, { user, tokens }, 'User created successfully', httpStatus.CREATED)
+        else{
+          const user = await userService.createUser(req.body, alias.id, 'user');
+          if (user) {
+            const tokens = await tokenService.generateAuthTokens(user);
+            response(res, { user, tokens }, 'User created successfully', httpStatus.CREATED)
+          }
         }
+        
       }
     }else {
       response(res, "", 'Email already taken', httpStatus.BAD_REQUEST)
@@ -48,6 +53,9 @@ const register = catchAsync(async (req, res) => {
 const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
   const user = await authService.loginUserWithEmailAndPassword(email, password);
+  if(!user.isSignedIn){
+    await User.update({isSignedIn:1},{where:{id:user.id}})
+  }
   const attendance = await Attendance.findOne({ where: { userId: user.id, Date: new Date() } });
   console.log("attendanceId------------->>>>>>>>", attendance)
   const tenant = await Tenant.findOne({where:{id:user.tenantId}})

@@ -14,7 +14,6 @@ const getEmailTempate = catchAsync(async (req, res) => {
 const createEmailTemplate = catchAsync(async (req, res) => {
     const key = req.get('X-Tenent-Key');
     const html = he.decode(req.body.body)
-    console.log("html--------->>>>>>>>>", html)
     const tenant = await Tenant.findOne({ where: { key: key } });
     if(tenant === null){
         response(res, "", "Tenant not found", 400)

@@ -7,7 +7,7 @@ const Attendance = sequelize.define('attendances', {
         model:"users",
         key:"id"
       },
-      allowNull:false,
+      // allowNull:false,
       onDelete: 'SET NULL'
   },
   serialNo: {
