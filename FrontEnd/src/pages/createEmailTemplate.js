@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import NavBar from "../components/navBar";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import ImageResize from "quill-image-resize-module-react";
+// import ImageResize from "quill-image-resize-module-react";
 import MUITextField from "../sharedComponents/textField";
 import Button from "@mui/material/Button";
 import { useFormik } from "formik";
@@ -10,55 +10,39 @@ import { useDispatch } from "react-redux";
 import { emailTemplate } from "../Yup Schema";
 import { createTemplate, updateTemplate } from "../actions/EmailTemplate";
 import { Link, useNavigate } from "react-router-dom";
+import he from "he"
 import { loderTrue, loderFalse } from "../actions/Auth";
 import { getTemplate } from "../actions/EmailTemplate";
 const EmailTemplates = ({ isEdit, setIsEdit, itemId, setShowModal, itemData }) => {
-  Quill.register("modules/imageResize", ImageResize);
+  // Quill.register("modules/imageResize", ImageResize);
   const [value, setValue] = React.useState("");
   const modules = {
     toolbar: [
-      [{ header: "1" }, { header: "2" }, { font: [] }],
-      [{ size: [] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [
-        {
-          color: ["red", "blue", "yellow", "green", "gray", "pink", "navyblue"],
-        },
-      ],
-      [
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" },
-      ],
-      ["link", "image", "video"],
-      ["clean"],
+      [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+      [{size: []}],
+      ['blockquote'],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{'list': 'ordered'}, {'list': 'bullet'},
+       {'indent': '-1'}, {'indent': '+1'}],
+       [{ 'script': 'sub'}, { 'script': 'super' }],
+      ['link', 'image', 'video'],
+      ['clean']
     ],
     clipboard: {
+      // toggle to add extra line breaks when pasting HTML:
       matchVisual: false,
-    },
-    imageResize: {
-      parchment: Quill.import("parchment"),
-      modules: ["Resize", "DisplaySize"],
-    },
-  };
+    }
+  }
+  /*
+   * Quill editor formats
+   * See https://quilljs.com/docs/formats/
+   */
   const formats = [
-    "header",
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "video",
-    "color",
-  ];
+    'header', 'font', 'size',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet', 'indent',
+    'link', 'image', 'video'
+  ]
   const initialValues = {
     subject: "",
     body: "",
@@ -83,7 +67,7 @@ const EmailTemplates = ({ isEdit, setIsEdit, itemId, setShowModal, itemData }) =
           updateTemplate(
             {
               ...values,
-              body: value,
+              // body: value,
               itemId: itemId
             },
           )
@@ -92,7 +76,7 @@ const EmailTemplates = ({ isEdit, setIsEdit, itemId, setShowModal, itemData }) =
         dispatch(
           createTemplate({
             ...values,
-            body: value,
+            // body: value,
             navigate: navigate,
           }))
       }
@@ -125,11 +109,15 @@ const EmailTemplates = ({ isEdit, setIsEdit, itemId, setShowModal, itemData }) =
         </div>
         <ReactQuill
           theme="snow"
-          value={value}
-          onChange={setValue}
+          value={values.body}
+          htmlValue={values.body}
+          onChange={(value, delta, source, Editor)=>{
+            console.log("value in edotor ",he.decode(he))
+            setFieldValue("body",value)
+          }}
           modules={modules}
           formats={formats}
-          bounds={"#root"}
+          // bounds={".app"}
           placeholder="type someting"
         />
         <div className="d-flex justify-content-end my-5">

@@ -191,7 +191,7 @@ const AttendanceAdjusment = () => {
               >
                 {data?.map((item) => (
                   <MenuItem key={item?.id} value={item?.id}>
-                    {`${item.name} / ${item.designationName} / ${item.departmentname}`}
+                    {`${item.name?? "-"} / ${item.designationName ?? "-"} / ${item.departmentname ?? "-"}`}
                   </MenuItem>
                 ))}
               </TextField>
