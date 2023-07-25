@@ -65,6 +65,29 @@ export const UserAttendanceeConfig = [
     label: "Actions",
   },
 ];
+export const UserAttendanceeEmpolyeConfig = [
+  {
+    id: "timeIn",
+    name: "timeIn",
+    renderer: "Text",
+    align: "left",
+    label: "Time In",
+  },
+  {
+    id: "timeOut",
+    name: "timeOut",
+    renderer: "Text",
+    align: "left",
+    label: "Time Out",
+  },
+  {
+    id: "hours",
+    name: "hours",
+    renderer: "Text",
+    align: "left",
+    label: "Hours",
+  }
+];
 export const EmailTemplateConfig = [
   {
     id: "created_date",

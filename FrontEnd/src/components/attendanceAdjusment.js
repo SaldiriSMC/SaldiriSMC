@@ -4,7 +4,7 @@ import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import { format } from "date-fns";
 import Table from "../sharedComponents/table";
-import { UserAttendanceeConfig } from "../configs/tableConfig";
+import { UserAttendanceeConfig, UserAttendanceeEmpolyeConfig } from "../configs/tableConfig";
 import MUITable from "../sharedComponents/MUITable";
 import "./comaon.css";
 import { IconButton } from '@mui/material';
@@ -29,6 +29,9 @@ const AttendanceAdjusment = () => {
   const [isCreate, setIsCreate] = React.useState(false)
   const [showModal,setShowModal] = React.useState(false)
   const [userData,setUserData] = React.useState({})
+  const user = JSON.parse(localStorage.getItem("accessToken"))
+  const userRole =  user?.data?.user?.role
+  const userId =  user?.data?.user?.id
   const data = useSelector((state) => state.attendance?.allUsers?.data);
   const attendanceData = useSelector((state) => state?.attendance?.attendance?.data);
   const workedHours = useSelector(
@@ -63,7 +66,7 @@ const AttendanceAdjusment = () => {
 
     
   };
-  console.log("data----------------------->>>>>>>>>>>>>  data", data);
+  console.log("data------------data----------->>>>>>>>>>>>>  data", data);
   const calculateTotalWorkedHours = () => {
     const total = workedHours
       ?.map((item) => Number(item.Difference))
@@ -90,7 +93,10 @@ const AttendanceAdjusment = () => {
       },
     });
   useEffect(() => {
-    dispatch(getAllUser());
+    if ( !(userRole === 'employee')){
+      dispatch(getAllUser());
+    }
+   
   }, []);
 
   useEffect(() => {
@@ -101,11 +107,16 @@ const AttendanceAdjusment = () => {
   console.log("useruseruser----------------",values.user)
 
   useEffect(() => {
-    if (values.user) {
+    if ((values.user && !(userRole === 'employee'))) {
       dispatch(getAttendanceByHours(values.user));
       calculateTotalWorkedHours();
     }
-  }, [values.user]);
+
+    if (userRole === 'employee'){
+      dispatch(getAttendanceByHours(userId));
+      calculateTotalWorkedHours();
+    }
+  }, [values.user,userId]);
 
 
   const normalizeTableProgram= (source) => {
@@ -153,6 +164,7 @@ const AttendanceAdjusment = () => {
         spacing={1}
         sx={{ p: 1 }}
       >
+      
         <Grid
           display="flex"
           justifyContent="space-between"
@@ -161,42 +173,68 @@ const AttendanceAdjusment = () => {
           sm={12}
           md={6}
         >
-          <Box
-            component="form"
-            sx={{
-              "& .MuiTextField-root": {
-                m: 1,
-                pl: 3,
-                width: "40ch",
-                textAlign: "start",
+            { !(userRole === 'employee') ? 
+      (
+        <Box
+        component="form"
+        sx={{
+          "& .MuiTextField-root": {
+            m: 1,
+            pl: 3,
+            width: "40ch",
+            textAlign: "start",
+          },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <div>
+          <TextField
+            id="user"
+            name="user"
+            onChange={handleChange}
+            select
+            InputProps={{
+              sx: {
+                "& input": {
+                  textAlign: "left",
+                },
               },
             }}
-            noValidate
-            autoComplete="off"
+            value={`${values.user}`}
           >
-            <div>
-              <TextField
-                id="user"
-                name="user"
-                onChange={handleChange}
-                select
-                InputProps={{
-                  sx: {
-                    "& input": {
-                      textAlign: "left",
-                    },
-                  },
-                }}
-                value={`${values.user}`}
-              >
-                {data?.map((item) => (
-                  <MenuItem key={item?.id} value={item?.id}>
-                    {`${item.name?? "-"} / ${item.designationName ?? "-"} / ${item.departmentname ?? "-"}`}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-          </Box>
+            {data?.map((item) => (
+              <MenuItem key={item?.id} value={item?.id}>
+                {`${item.name?? "-"} / ${item.designationName ?? "-"} / ${item.departmentname ?? "-"}`}
+              </MenuItem>
+            ))}
+          </TextField>
+        </div>
+      </Box>
+
+      ) 
+      :
+      (
+        <>
+         <Box
+        component="form"
+        sx={{
+          "& .MuiTextField-root": {
+            m: 1,
+            pl: 3,
+            width: "40ch",
+            textAlign: "start",
+          },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        
+      </Box>
+        </>
+      ) 
+      }
+         
 
           <div style={{ textAlign: "end" }}>
             <h6>
@@ -249,20 +287,23 @@ const AttendanceAdjusment = () => {
           sm={12}
           md={6}
         >
-         <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"15px"}}>
-         <IconButton size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
-          if(attendanceData?.length > 0){
-            setUserData(workedHours[0])
-            setShowModal(true)
-            setIsCreate(true)
-          }
-         
-          } }>
-            <AddIcon />
-          </IconButton> 
-         </div>
+          { !(userRole === 'employee')  && (
+   <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"15px"}}>
+   <IconButton size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
+    if(attendanceData?.length > 0){
+      setUserData(workedHours[0])
+      setShowModal(true)
+      setIsCreate(true)
+    }
+   
+    } }>
+      <AddIcon />
+    </IconButton> 
+   </div>
+          )}
+      
          <MUITable
-            column={UserAttendanceeConfig}
+            column={ userRole === 'employee' ? UserAttendanceeEmpolyeConfig : UserAttendanceeConfig}
             list={normalizeTableProgram(attendanceData ?? [])}
 
           />

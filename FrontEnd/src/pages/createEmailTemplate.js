@@ -112,7 +112,7 @@ const EmailTemplates = ({ isEdit, setIsEdit, itemId, setShowModal, itemData }) =
           value={values.body}
           htmlValue={values.body}
           onChange={(value, delta, source, Editor)=>{
-            console.log("value in edotor ",he.decode(he))
+            // console.log("value in edotor ",he.decode(he))
             setFieldValue("body",value)
           }}
           modules={modules}
