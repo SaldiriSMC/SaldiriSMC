@@ -211,29 +211,6 @@ const continueWorkHandel = () =>{
     setLoader(false);
 });
 }
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      // Customize your modal or alert message here
-      const message = 'Are you sure you want to leave this page?';
-
-      // Display the message in a modal or alert
-      event.preventDefault();
-      event.returnValue = message;
-
-      // Modern browsers may not display the custom message, but it will still prompt the user
-      return message;
-    };
-
-    // Add the event listener when the component mounts
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    // Clean up by removing the event listener when the component unmounts
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      // logOut()
-    };
-  }, []);
-
 
 
   return (
