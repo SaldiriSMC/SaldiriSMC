@@ -9,7 +9,7 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import { Link, Outlet } from 'react-router-dom';
-import MenuIcon from '@mui/icons-material/Menu';
+import BadgeIcon from '@mui/icons-material/Badge';
 import CircleIcon from '@mui/icons-material/Circle';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -21,10 +21,14 @@ import Header from '../components/navBar'
 import Footer from '../components/footer'
 import WorkIcon from '@mui/icons-material/Work';
 import CoPresentIcon from '@mui/icons-material/CoPresent';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import Collapse from '@mui/material/Collapse';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 const drawerWidth = 200;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -155,16 +159,16 @@ export default function PersistentDrawerLeft() {
     setOpenList(!openList);
   };
 
-  const sideListTenet =[{name:'Designation',id:1,path:'/tenant'},
-  {name:'Department',id:1,path:'/tetentDepartment'},
-  {name:'Status',id:1,path:'/tenantStatus'},
+  const sideListTenet =[{name:'Designation',id:1,path:'/tenant',icon:<BadgeIcon/>},
+  {name:'Department',id:1,path:'/tetentDepartment',icon:<WorkIcon/>},
+  {name:'Status',id:1,path:'/tenantStatus',icon:<AccountCircleIcon/>},
 ]
-  const sideList = (userRole === 'employee') ? [{name:'Dashboard',id:1,path:'/dashboard'},
-  {name:'Attendance',id:1,path:'/attendance'},
-]: [{name:'Dashboard',id:1,path:'/dashboard'},
-{name:'Attendance',id:1,path:'/attendance'},
-{name:'Inivte User',id:1,path:'/inviteUser'},
-{name:'Template',id:1,path:'/emailTemplate'},
+  const sideList = (userRole === 'employee') ? [{name:'Dashboard',id:1,path:'/dashboard',icon:<DashboardIcon/>},
+  {name:'Attendance',id:1,path:'/attendance',icon:<ListAltIcon/>},
+]: [{name:'Dashboard',id:1,path:'/dashboard',icon:<DashboardIcon/>},
+{name:'Attendance',id:1,path:'/attendance',icon:<ListAltIcon/>},
+{name:'Inivte User',id:1,path:'/inviteUser',icon:<PersonAddIcon/>},
+{name:'Template',id:1,path:'/emailTemplate',icon:<MailIcon/>},
 ]
 
 
@@ -200,7 +204,7 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader> */}
         {/* <Divider /> */}
         <List>
-          {!(userRole === 'employee') && (
+          {(userRole === 'admin') && (
 <>
 <ListItemButton onClick={handleClick}>
         <ListItemIcon>
@@ -215,7 +219,7 @@ export default function PersistentDrawerLeft() {
             <ListItem key={text} disablePadding   component={Link} to={text.path}  >
               <ListItemButton>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <CoPresentIcon /> : <WorkIcon />}
+                {text.icon}
                 </ListItemIcon>
                 <div style={{display:'flex'}}>
                 <ListItemText  primary={text.name} /> {url == `${text.path}` && (<CircleIcon  className={classes.blueDotUrlist}/>)}
@@ -232,7 +236,7 @@ export default function PersistentDrawerLeft() {
             <ListItem key={text} disablePadding   component={Link} to={text.path}  >
               <ListItemButton>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <CoPresentIcon /> : <WorkIcon />}
+                  {text.icon}
                 </ListItemIcon>
                 <div style={{display:'flex'}}>
                 <ListItemText  primary={text.name} /> {url == `${text.path}` && (<CircleIcon  className={classes.blueDotUrlist}/>)}
