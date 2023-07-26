@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { User } = require('../../models/v2/index');
+const { User, Designation } = require('../../models/v2/index');
 const ApiError = require('../../utils/ApiError');
 const paginate = require("../../models/plugins/v2/paginate.plugin")
 /**
@@ -8,29 +8,24 @@ const paginate = require("../../models/plugins/v2/paginate.plugin")
  * @returns {Promise<User>}
  */
 const createUser = async (userBody,tenantId, user) => {
-  if(user){
-    if( userBody.designation === "hr"){
-      return User.create({...userBody, tenantId: tenantId, role:"hr"});
-    }else{
-      return User.create({...userBody, tenantId: tenantId, role:"employee"});
-    }
+  if(user === "user"){
+    return User.create({...userBody, tenantId: tenantId, role:"employee"});
   }else{
-    return User.create({...userBody, tenantId: tenantId
-    });
+    return User.create({...userBody, tenantId: tenantId, designationId:5, departmentId:4});
   }
 };
 
 
 const createUserByDepartmentAndDesignation = async (userBody,tenantId, user) => {
-  const randomPassword = Math.random().toString(36).slice(-8);   
-  if(user){
-    if( userBody.designation === "hr"){
+  const randomPassword = Math.random().toString(36).slice(-8);
+  const designation = await Designation.findOne({where:{id:userBody.designationId}})
+  if(designation){
+    if(designation.designationName === "Hr"){
       return User.create({...userBody, tenantId: tenantId, role:"hr", password: randomPassword});
-    }else{
+    }
+    else{
       return User.create({...userBody, tenantId: tenantId, role:"employee", password: randomPassword});
     }
-  }else{
-    return User.create({...userBody, tenantId: tenantId, password: randomPassword});
   }
 };
 /**

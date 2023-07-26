@@ -1,5 +1,5 @@
 const express = require('express');
-const auth = require('../../middlewares/auth');
+const auth = require('../../middlewares/v2/auth');
 const tenant = require("../../middlewares/v2/tenant")
 const emailTemplateController = require('../../controllers/v2/emailTemplate.controller');
 const checkRoles = require('../../middlewares/v2/checkRole')

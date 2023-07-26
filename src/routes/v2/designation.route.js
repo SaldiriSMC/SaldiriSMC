@@ -2,13 +2,14 @@ const express = require('express');
 const auth = require('../../middlewares/auth');
 const tenant = require("../../middlewares/v2/tenant")
 const {designationController} = require('../../controllers/v2/index');
+const noTenant = require("../../middlewares/v2/tenantNotRequired")
 const checkRoles = require('../../middlewares/v2/checkRole')
 
 const router = express.Router();
 
 router
   .route('/')
-  .get(auth(), tenant(), checkRoles(["admin","hr"]), designationController.getDesignation)
+  .get( noTenant(), designationController.getDesignation)
   .post(auth(), tenant(), checkRoles(["admin","hr"]), designationController.createDesignation);
 router
 .route('/:designationId')
@@ -31,13 +32,10 @@ module.exports = router;
  *     summary: Get all designation
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
  *     tags: [Designations]
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - name: X-Tenent-Key
  *         in: header
  *         description: X-Tenent-Key
- *         required: true
  *     responses:
  *       "200":
  *         description: OK

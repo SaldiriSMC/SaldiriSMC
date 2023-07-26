@@ -4,6 +4,7 @@ const { DataTypes } = require('sequelize');
 const Designation = sequelize.define('designations', {
     designationName: {
         type:DataTypes.STRING,
+        unique: true,
       },
     tenantId:{
         type: DataTypes.INTEGER,

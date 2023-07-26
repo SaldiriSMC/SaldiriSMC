@@ -32,11 +32,11 @@ const { callDBRoutine } = require('../../config/helperMethods');
         const key = req.get('X-Tenent-Key');
         const tenant = await Tenant.findOne({ where: { key: key } });
         const user = await userService.createUserByDepartmentAndDesignation(req.body, tenant.id);
-        console.log("user---------->>>>>>>>>>", user)
+        console.log("user----------->>>>>>>>>>", user)
         if (user) {
           const emailArray = [{id: user.id,email: user.email}]
           const resetPasswordTokenArray = await tokenService.generateEmailIvitationToken(emailArray);
-          await emailService.sendInviteEmail(resetPasswordTokenArray);
+          await emailService.sendInviteEmail(resetPasswordTokenArray, user);
           response(res, {user}, "User created succesfully", httpStatus.CREATED)
         }
       } else {
@@ -44,7 +44,7 @@ const { callDBRoutine } = require('../../config/helperMethods');
       }
     } catch (err) {
       console.log(err);
-      res.send(err);
+      //res.send(err);
     }
   });
 

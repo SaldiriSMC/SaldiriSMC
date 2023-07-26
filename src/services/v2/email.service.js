@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const config = require('../../config/config');
 const logger = require('../../config/logger');
-const emailTemplate = require('../../models/v2/emailTemplates.module');
+const { EmailTemplate, Tenant, Department, Designation } = require('../../models/v2/index');
 
 const transport = nodemailer.createTransport(config.email.smtp);
 /* istanbul ignore next */
@@ -25,7 +25,7 @@ const sendEmail = async (to, subject, text) => {
 };
 
 const sendHtmlTemplateEmail = async (to, subject, text) => {
-  const msg = { from: config.email.from, to, subject, html:text };
+  const msg = { from: config.email.from, to, subject, html: text };
   await transport.sendMail(msg);
 };
 
@@ -38,48 +38,51 @@ const sendHtmlTemplateEmail = async (to, subject, text) => {
 const sendResetPasswordEmail = async (to, token) => {
   const subject = 'Reset password';
   // replace this url with the link to the reset password page of your front-end app
-  const resetPasswordUrl = `http://localhost:3000/chanagePassword/?token=${token}`;
+  const resetPasswordUrl = `http://saldir.s3-website-us-east-1.amazonaws.com/chanagePassword/?token=${token}`;
   const text = `Dear user,
   To reset your password, click on this link: ${resetPasswordUrl}
   If you did not request any password resets, then ignore this email.`;
   await sendEmail(to, subject, text);
 };
 
-const sendInviteEmail = async (tokenArray) => {
-  const subject = 'Invitation';
-  // replace this url with the link to the reset password page of your front-end app
-  tokenArray.map(async (item) =>{
-    const resetPasswordUrl = `http://localhost:3000/chanagePassword/?token=${item.token}`;
-    const text = ` Congratulations! To get onboard with Saldiri SMC PVT LTD (company name) in 
-    #Department as a #Designation. you are requested to get signup on our official portal by
-    clicking here. Signing up to the Saldiri website is very important for further support, operations
-    and official documentation. You are requested to contact the HR department for any queries you
-    may have.
-
-    To reset your password, click on this link: ${resetPasswordUrl}
-    If you did not request any password resets, then ignore this email.
-
-    We wish you best of luck and a bright future with our company.
-
-  
-    Regards,
-    Management,
-    #CompanyName
-`;
-    await sendEmail(item.email, subject, text);
-  })
+const sendInviteEmail = async (tokenArray, user) => {
+  const tenant = await Tenant.findOne({ where: { id: user.tenantId } });
+  const department = await Department.findOne({ where: { id: user.departmentId } });
+  const designation = await Designation.findOne({ where: { id: user.designationId } });
+  const emailTemplate = await EmailTemplate.findOne({ where: { subject: 'Reset Password' } });
+  if (emailTemplate) {
+    const subject = emailTemplate.subject;
+    tokenArray.map(async (item) => {
+      const resetPasswordUrl = `http://saldir.s3-website-us-east-1.amazonaws.com/chanagePassword/?token=${item.token}`;
+      const text = emailTemplate.body
+        .replace(/#FullName/g, user.name)
+        .replace(/#CompanyName/g, tenant.tanantName)
+        .replace(/#Domain/g, tenant.domain)
+        .replace(/#ResetPasswordLink/g, resetPasswordUrl)
+        .replace(/#Department/g, department.departmentName)
+        .replace(/#Designation/g, designation.designationName);
+      await sendHtmlTemplateEmail(item.email, subject, text);
+    });
+  }
 };
-const sendTemplateEmail = async (tokenArray) => {
-  let template = await emailTemplate.findOne({where:{id:9}})
-  const subject = template.subject;
-  // replace this url with the link to the reset password page of your front-end app
-  tokenArray.map(async (item) =>{
-    const customizedTemplate = template.body
-  .replace(/{{name}}/g, "safyan")
-  .replace(/{{company}}/g, "saldir smc");
-    const text = template.body
-    await sendHtmlTemplateEmail(item.email, subject, customizedTemplate);
-  })
+const sendTemplateEmail = async (user) => {
+  const emailArray = [{ id: user.id, email: user.email }];
+  const tenant = await Tenant.findOne({ where: { id: user.tenantId } });
+  const department = await Department.findOne({ where: { id: user.departmentId } });
+  const designation = await Designation.findOne({ where: { id: user.designationId } });
+  const emailTemplate = await EmailTemplate.findOne({ where: { subject: 'Invitation' } });
+  if (emailTemplate) {
+    const subject = emailTemplate.subject;
+    const text = emailTemplate.body
+      .replace(/#FullName/g, user.name)
+      .replace(/#CompanyName/g, tenant.tanantName)
+      .replace(/#Domain/g, tenant.domain)
+      .replace(/#Department/g, department.departmentName)
+      .replace(/#Designation/g, designation.designationName);
+    emailArray.map(async (item) => {
+      await sendHtmlTemplateEmail(item.email, subject, text);
+    });
+  }
 };
 
 /**
@@ -104,5 +107,5 @@ module.exports = {
   sendResetPasswordEmail,
   sendInviteEmail,
   sendVerificationEmail,
-  sendTemplateEmail
+  sendTemplateEmail,
 };

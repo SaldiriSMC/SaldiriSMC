@@ -31,7 +31,7 @@ const Attendance = sequelize.define('attendances', {
     type: DataTypes.INTEGER,
     references:{
       model:"statuses",
-      key:"id"
+      key:"id" 
     },
     // allowNull:false
   },

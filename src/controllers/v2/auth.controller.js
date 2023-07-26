@@ -12,17 +12,18 @@ const register = catchAsync(async (req, res) => {
     if (isEmail === null) {
       if (alias === null) {
         if(req.body.type === "user"){
-          response(res, "", 'No tenant found against this alias', httpStatus.BAD_REQUEST)
+          response(res, "", 'No such domain found against this alias', httpStatus.BAD_REQUEST)
         } 
         else{
           const tenant = await tenantService.createTenant(req.body, res);
           if (tenant) {
-            const user = await userService.createUser(req.body, tenant.id, null);
+            const user = await userService.createUser(req.body, tenant.id, 'tenant');
             const moduleArray = ['Attendance']
             moduleArray.map((item) => {
               const module =  Module.create({moduleName:item, tenantId: tenant.id})
             })
             if (user) {
+              await emailService.sendTemplateEmail(user);
               const tokens = await tokenService.generateAuthTokens(user);
               response(res, { tenant, user, tokens }, 'User created successfully', httpStatus.CREATED)
             }
@@ -35,6 +36,7 @@ const register = catchAsync(async (req, res) => {
         else{
           const user = await userService.createUser(req.body, alias.id, 'user');
           if (user) {
+            await emailService.sendTemplateEmail(user);
             const tokens = await tokenService.generateAuthTokens(user);
             response(res, { user, tokens }, 'User created successfully', httpStatus.CREATED)
           }
@@ -57,10 +59,8 @@ const login = catchAsync(async (req, res) => {
     await User.update({isSignedIn:1},{where:{id:user.id}})
   }
   const attendance = await Attendance.findOne({ where: { userId: user.id, Date: new Date() } });
-  console.log("attendanceId------------->>>>>>>>", attendance)
   const tenant = await Tenant.findOne({where:{id:user.tenantId}})
   const token = await Token.findOne({where:{type:tokenTypes.AUTH, user:user.id}})
-  console.log("tokens in login call ",token)
   if(token){
     if(attendance){
       const time = await Time.findOne({where:{timeOut:null, attendanceId:attendance?.id}})
