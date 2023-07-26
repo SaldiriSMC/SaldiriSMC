@@ -11,7 +11,7 @@ const EditDeleteAction = ({ value: { change,hideDelete,hideDelteEdit } }) => {
   }
   return (
     <>
-    {hideDelteEdit ? "--" :  <Stack direction="row" alignItems="center" spacing={1}>
+    {hideDelteEdit ? "-" :  <Stack direction="row" alignItems="center" spacing={1}>
         
         <Tooltip
             classes={{

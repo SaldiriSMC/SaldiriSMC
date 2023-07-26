@@ -48,6 +48,7 @@ const EmailTemplate = () => {
           body: ReactHtmlParser(record?.body),
           action: {
             change: (val) => handleDropdownActionsupport(record, val, index),
+            hideDelteEdit:record?.tenantId == null ? true : false,
           },
         });
       });

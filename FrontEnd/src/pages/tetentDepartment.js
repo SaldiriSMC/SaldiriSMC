@@ -77,7 +77,7 @@ export default function TetentDepartment() {
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),
-          hideDelteEdit:record?.tenetId ? true : false,
+          hideDelteEdit:record?.tenantId == null ? true : false,
         },
       });
     });
