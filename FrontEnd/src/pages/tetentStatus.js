@@ -147,6 +147,7 @@ export default function TetentStatus() {
     }
     const handleDeleteModel = () => {
       dispatch(deleteRoll({type:'status',id:userDeleteId}));
+      setShowDeleteModal(false)
     }
   return (
     <>

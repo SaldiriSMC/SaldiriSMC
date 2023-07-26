@@ -37,6 +37,8 @@ import { pushNotification } from "../utils/notifications";
 import {
   userTokenExpire
 } from "../service/users";
+import { DropdownSubmenu, NavDropdownMenu } from "react-bootstrap-submenu";
+import "react-bootstrap-submenu/dist/index.css";
 const useStyles = makeStyles()((theme) => {
   return {
     btn: {
@@ -257,12 +259,11 @@ const continueWorkHandel = () =>{
                <NavDropdown.Item as={Link} to="/dashboard" >
               Dashboard {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
-              <NavDropdown className='submenu' title=" Attendance" id="navbarScrollingDropdown">
-              <NavDropdown.Item as={Link} to="/attendance" >
+            <DropdownSubmenu  title="Attendance">
+            <NavDropdown.Item as={Link} to="/attendance" >
               Attendance List {url == '/attendance' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
-              
-            </NavDropdown>
+            </DropdownSubmenu>
             <NavDropdown.Item as={Link} to="/inviteUser" >
               Invite User {url == '/inviteUser' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
@@ -281,12 +282,11 @@ const continueWorkHandel = () =>{
               <NavDropdown.Item as={Link} to="/dashboard" >
               Dashboard  {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
-              <NavDropdown  title=" Attendance" id="navbarScrollingDropdown">
-              {/* <NavDropdown.Item as={Link} to="/attendance" >
-              Attendance List
-              </NavDropdown.Item> */}
-             
-            </NavDropdown>
+              <DropdownSubmenu  title="Attendance">
+            <NavDropdown.Item as={Link} to="/attendance" >
+              Attendance List {url == '/attendance' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
+              </NavDropdown.Item>
+            </DropdownSubmenu>
             <NavDropdown.Item as={Link} to="/inviteUser" >
               Invite User {url == '/inviteUser' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
@@ -294,12 +294,11 @@ const continueWorkHandel = () =>{
               <NavDropdown.Item as={Link} to="/dashboard" >
               Dashboard  {url == '/dashboard' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
-              <NavDropdown title=" Attendance" className='submenu' id="navbarScrollingDropdown">
-              <NavDropdown.Item as={Link}  to="/attendance" >
-              Attendance List
+              <DropdownSubmenu  title="Attendance">
+            <NavDropdown.Item as={Link} to="/attendance" >
+              Attendance List {url == '/attendance' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
-             
-            </NavDropdown>
+            </DropdownSubmenu>
        </>  
            }
            

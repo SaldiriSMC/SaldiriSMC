@@ -144,17 +144,17 @@ export default function PersistentDrawerLeft() {
   const { classes } = useStyles();
   const [open, setOpen] = React.useState(true);
   const url = window.location.pathname
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+  const [openList, setOpenList] = React.useState(true);
 
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleClick = () => {
+    setOpenList(!openList);
   };
 
   const sideList =[{name:'Designation',id:1,path:'/tenant'},
   {name:'Department',id:1,path:'/tetentDepartment'},
-  {name:'Status',id:1,path:'/tenantStatus'}
+  {name:'Status',id:1,path:'/tenantStatus'},
+  {name:'Status',id:1,path:'/tenantStatus'},
+  {name:'Status',id:1,path:'/tenantStatus'},
 ]
 
   return (
@@ -189,6 +189,23 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader> */}
         {/* <Divider /> */}
         <List>
+        <ListItemButton onClick={handleClick}>
+        <ListItemIcon>
+          <InboxIcon />
+        </ListItemIcon>
+        <ListItemText primary="Inbox" />
+        {openList ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={openList} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItemButton sx={{ pl: 4 }}>
+            <ListItemIcon>
+              <StarBorder />
+            </ListItemIcon>
+            <ListItemText primary="Starred" />
+          </ListItemButton>
+        </List>
+      </Collapse>
           {sideList.map((text, index) => (
             <ListItem key={text} disablePadding   component={Link} to={text.path}  >
               <ListItemButton>

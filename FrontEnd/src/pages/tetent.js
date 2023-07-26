@@ -22,12 +22,14 @@ import Footer from '../components/footer'
 import SideMenu from '../pages/sideMenu'
 import { getRoll,createRoll ,deleteRoll, updateRoll} from "../actions/AddRols";
 import { useDispatch, useSelector } from "react-redux";
-
+import DeleteModal from "../sharedComponents/deleteModal";
 
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
 
-  const [action, setAction] = React.useState(null);
+  const [action, setAction] = React.useState(null); 
+   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
+  const [userDeleteId, setUserDeleteId] = React.useState(null);
   const designationScema = Yup.object({
     designationId: Yup.string().required("Field is required"),
   })
@@ -91,8 +93,9 @@ const addRollFun =()=>{
   const handleDropdownActionsupport= (data, val,index) => {
 
     if (val === 'delete' ) {
-
-      dispatch(deleteRoll({type:'designation',id:data?.id}));
+      setShowDeleteModal(true)
+      setUserDeleteId(data?.id)
+     
     }  
     
     if (val === 'edit' ) {
@@ -102,6 +105,10 @@ const addRollFun =()=>{
 
   }
 
+  const handleDeleteModel = () => {
+    dispatch(deleteRoll({type:'designation',id:userDeleteId}));
+    setShowDeleteModal(false)
+  }
 
   return (
     <>
@@ -187,6 +194,12 @@ const addRollFun =()=>{
         </Grid>
       </Grid>
     </Box>
+    <DeleteModal
+        showDeleteModal={showDeleteModal}
+        setShowDeleteModal={setShowDeleteModal}
+        handleDeleteModel={handleDeleteModel}
+
+      />
     </>
   );
 }

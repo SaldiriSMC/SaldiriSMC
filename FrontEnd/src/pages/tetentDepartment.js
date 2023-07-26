@@ -22,13 +22,14 @@ import Header from '../components/navBar'
 import Footer from '../components/footer'
 import SideMenu from '../pages/sideMenu'
 import * as Yup from "yup";
-
+import DeleteModal from "../sharedComponents/deleteModal";
 
 export default function TetentDepartment() {
   const theme = useTheme();
 
   const [action, setAction] = React.useState(null);
-
+  const [showDeleteModal, setShowDeleteModal] = React.useState(false);
+  const [userDeleteId, setUserDeleteId] = React.useState(null);
   const designationScema = Yup.object({
     designationId: Yup.string().required("Field is required"),
   })
@@ -86,8 +87,9 @@ export default function TetentDepartment() {
   const handleDropdownActionsupport= (data, val,index) => {
 
     if (val === 'delete' ) {
-      dispatch(deleteRoll({type:'department',id:data?.id}));
-     
+
+      setShowDeleteModal(true)
+      setUserDeleteId(data?.id)
     }  
     
     if (val === 'edit' ) {
@@ -96,7 +98,10 @@ export default function TetentDepartment() {
     }
 
   }
-
+  const handleDeleteModel = () => {
+    dispatch(deleteRoll({type:'department',id:userDeleteId}));
+    setShowDeleteModal(false)
+  }
 
   return (
     <>
@@ -180,6 +185,12 @@ export default function TetentDepartment() {
         </Grid>
       </Grid>
     </Box>
+    <DeleteModal
+        showDeleteModal={showDeleteModal}
+        setShowDeleteModal={setShowDeleteModal}
+        handleDeleteModel={handleDeleteModel}
+
+      />
     </>
   );
 }
