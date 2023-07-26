@@ -27,12 +27,13 @@ import Footer from '../components/footer'
 import SideMenu from '../pages/sideMenu'
 import { rollStatusSechmea } from "../Yup Schema";
 import DeleteModal from "../sharedComponents/deleteModal";
-
+import UpdateModel from "../sharedComponents/tenentModel";
 export default function TetentStatus() {
   const theme = useTheme();
 
   const [action, setAction] = React.useState(null);
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
+  const [showUpdateModal, setShowUpdateModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
   const [allmodulesList, setallmodulesList] = useState([])
   const initialValues = {
@@ -149,6 +150,11 @@ export default function TetentStatus() {
       dispatch(deleteRoll({type:'status',id:userDeleteId}));
       setShowDeleteModal(false)
     }
+
+    const handleUpdateModel = () => {
+      dispatch(updateRoll({data:{designationName:values.designationId},type:'designation',id:action}));
+      setShowUpdateModal(false)
+    }
   return (
     <>
     <Header/>
@@ -261,6 +267,18 @@ export default function TetentStatus() {
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
         handleDeleteModel={handleDeleteModel}
+
+      />
+      <UpdateModel
+        showUpdateModal={showUpdateModal}
+        setShowUpdateModal={setShowUpdateModal}
+        values={values.designationId}
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        touched={touched}
+        errors={errors}
+        id={'designationId'}
+        handleUpdateModel={handleUpdateModel}
 
       />
     </>

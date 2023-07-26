@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
-import NavBar from "../components/navBar";
+import Box from "@mui/material/Box";
+import SideMenu from '../pages/sideMenu'
+import NavBar from "../components/navBar"
+import CssBaseline from '@mui/material/CssBaseline';
 import MUITable from "../sharedComponents/MUITable";
 import { EmailTemplateConfig } from "../configs/tableConfig";
 import { getTemplate, deleteTemplate } from "../actions/EmailTemplate";
@@ -66,6 +69,9 @@ const EmailTemplate = () => {
   return (
     <div>
       <NavBar />
+      <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <SideMenu />
       <Grid
         container
         flexDirection="row"
@@ -120,6 +126,8 @@ const EmailTemplate = () => {
           </>
         </Grid>
       </Grid>
+    </Box>
+      
       
       <EmailTemplateEditModal showModal={showModal} setShowModal={setShowModal} isEdit={isEdit} setIsEdit={setIsEdit} itemId={itemId} itemData={itemData} />
       <DeleteModal showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} handleDeleteModel={handleDeleteModel} /> 

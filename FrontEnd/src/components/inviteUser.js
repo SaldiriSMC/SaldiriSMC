@@ -4,7 +4,10 @@ import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import MUITable from "../sharedComponents/MUITable";
+import Box from "@mui/material/Box";
+import SideMenu from '../pages/sideMenu'
 import NavBar from "../components/navBar"
+import CssBaseline from '@mui/material/CssBaseline';
 import InviteUserModel from "../sharedComponents/inviteUserModel";
 import { UserInviteConfig } from "../configs/tableConfig";
 import "./comaon.css";
@@ -164,6 +167,9 @@ useEffect(()=>{
   return (
     <div>
          <NavBar />
+         <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <SideMenu />
       <Grid
         container
         flexDirection="row"
@@ -225,6 +231,8 @@ sandEmailsUser()
           </>
         </Grid>
       </Grid>
+    </Box>
+      
       <InviteUserModel
         showModal={showModal}
         setLoader={setLoader}

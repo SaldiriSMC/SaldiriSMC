@@ -21,6 +21,10 @@ import Header from '../components/navBar'
 import Footer from '../components/footer'
 import WorkIcon from '@mui/icons-material/Work';
 import CoPresentIcon from '@mui/icons-material/CoPresent';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import StarBorder from '@mui/icons-material/StarBorder';
+import Collapse from '@mui/material/Collapse';
 const drawerWidth = 200;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -150,11 +154,14 @@ export default function PersistentDrawerLeft() {
     setOpenList(!openList);
   };
 
-  const sideList =[{name:'Designation',id:1,path:'/tenant'},
+  const sideListTenet =[{name:'Designation',id:1,path:'/tenant'},
   {name:'Department',id:1,path:'/tetentDepartment'},
   {name:'Status',id:1,path:'/tenantStatus'},
-  {name:'Status',id:1,path:'/tenantStatus'},
-  {name:'Status',id:1,path:'/tenantStatus'},
+]
+  const sideList =[{name:'Dashboard',id:1,path:'/dashboard'},
+  {name:'Attendance',id:1,path:'/attendance'},
+  {name:'Inivte User',id:1,path:'/inviteUser'},
+  {name:'Template',id:1,path:'/emailTemplate'},
 ]
 
   return (
@@ -193,17 +200,23 @@ export default function PersistentDrawerLeft() {
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>
-        <ListItemText primary="Inbox" />
+        <ListItemText primary="Tenant" />
         {openList ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={openList} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Starred" />
-          </ListItemButton>
+        {sideListTenet.map((text, index) => (
+            <ListItem key={text} disablePadding   component={Link} to={text.path}  >
+              <ListItemButton>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <CoPresentIcon /> : <WorkIcon />}
+                </ListItemIcon>
+                <div style={{display:'flex'}}>
+                <ListItemText  primary={text.name} /> {url == `${text.path}` && (<CircleIcon  className={classes.blueDotUrlist}/>)}
+                </div>              
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
       </Collapse>
           {sideList.map((text, index) => (

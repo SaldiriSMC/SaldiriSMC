@@ -19,11 +19,15 @@ import {
   sandEmailInviteUser,
   getAllUserByDeptDes
 } from "../service/users";
+import NavBar from "../components/navBar"
 import Box from "@mui/material/Box";
+import SideMenu from '../pages/sideMenu'
+import CssBaseline from '@mui/material/CssBaseline';
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { updateTime } from "../actions/Attendance";
 import { getAllUser, getAttendanceByHours } from "../actions/Attendance";
+import { getAttendance } from '../actions/Attendance'
 const AttendanceAdjusment = () => {
   const [deleteTimeInOut, setDeleteTimeInOut] = React.useState({ time: [] });
   const [isCreate, setIsCreate] = React.useState(false)
@@ -34,6 +38,12 @@ const AttendanceAdjusment = () => {
   const userId =  user?.data?.user?.id
   const data = useSelector((state) => state.attendance?.allUsers?.data);
   const attendanceData = useSelector((state) => state?.attendance?.attendance?.data);
+  const attendanceRecord = useSelector((state)=> state?.attendance?.data?.results)
+  useEffect(()=>{
+    dispatch(
+      getAttendance())
+  },[])
+
   const workedHours = useSelector(
     (state) => state?.attendance?.attendance?.data
   );  
@@ -155,7 +165,12 @@ const AttendanceAdjusment = () => {
   }
   return (
     <div>
-      <Grid
+      <NavBar/>
+       <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <SideMenu />
+   <Box sx={{width:'100%'}}>
+   <Grid
         container
         flexDirection="row"
         display="flex"
@@ -331,6 +346,12 @@ const AttendanceAdjusment = () => {
           </>
         </Grid>
       </Grid>
+   </Box>
+    </Box>
+      
+
+
+
       <EditModal
         showModal={showModal}
         userData={userData}

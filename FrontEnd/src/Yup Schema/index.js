@@ -19,6 +19,8 @@ export const signupSchemaCompany = Yup.object({
     .min(3)
     .max(25)
     .required("Please enter your full name"),
+    designationId: Yup.string().required("Please enter your designation"),
+    departmentId: Yup.string().required("Please enter your department"),
     domain: Yup.string().matches(
       // Regular expression for URL validation
       /^(https?:\/\/)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})(:[0-9]{1,5})?([\/?].*)?$/,

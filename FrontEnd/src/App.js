@@ -16,7 +16,7 @@ import Careers from './components/career'
 import Footer from './components/footer'
 import Dashboard from './components/dashboard';
 import InviteUser from './components/inviteUser';
-import Attendance from './pages/attendance';
+import Attendance from './components/attendanceAdjusment';
 import Tenant from './pages/tetent';
 import TetentStatus from './pages/tetentStatus';
 import TetentDepartment from './pages/tetentDepartment';

@@ -23,18 +23,21 @@ import SideMenu from '../pages/sideMenu'
 import { getRoll,createRoll ,deleteRoll, updateRoll} from "../actions/AddRols";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteModal from "../sharedComponents/deleteModal";
+import UpdateModel from "../sharedComponents/tenentModel";
 
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
 
   const [action, setAction] = React.useState(null); 
    const [showDeleteModal, setShowDeleteModal] = React.useState(false);
+   const [showUpdateModal, setShowUpdateModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
   const designationScema = Yup.object({
-    designationId: Yup.string().required("Field is required"),
+    designationIdCreate: Yup.string().required("Field is required"),
   })
   const initialValues = {
     designationId: '',
+    designationIdCreate: '',
   };
   const dispatch = useDispatch();
   const allRollsList = useSelector(
@@ -59,13 +62,8 @@ export default function PersistentDrawerLeft() {
       initialValues,
       validationSchema: designationScema,
       onSubmit: () => {
-
-        if (action){
-          setAction(false)
-          dispatch(updateRoll({data:{designationName:values.designationId},type:'designation',id:action}));
-        } else{
-          dispatch(createRoll({data:{designationName:values.designationId},type:'designation'}));
-        }
+          dispatch(createRoll({data:{designationName:values.designationIdCreate},type:'designation'}));
+        
       },
     });
 
@@ -100,6 +98,7 @@ const addRollFun =()=>{
     
     if (val === 'edit' ) {
       setAction(data?.id)
+      setShowUpdateModal(true)
      setFieldValue('designationId',data.designationName)
     }
 
@@ -108,6 +107,11 @@ const addRollFun =()=>{
   const handleDeleteModel = () => {
     dispatch(deleteRoll({type:'designation',id:userDeleteId}));
     setShowDeleteModal(false)
+  }
+
+  const handleUpdateModel = () => {
+    dispatch(updateRoll({data:{designationName:values.designationId},type:'designation',id:action}));
+    setShowUpdateModal(false)
   }
 
   return (
@@ -140,23 +144,21 @@ const addRollFun =()=>{
                noTitle
               sm={6}
               xs={6}
-              name="designationId"
-              value={values.designationId}
+              name="designationIdCreate"
+              value={values.designationIdCreate}
               handleChange={handleChange}
               onBlur={handleBlur}
-              id="designationId"
+              id="designationIdCreate"
               placeholder='Designation Name'
-              errors={errors.designationId}
-              touched={touched.designationId}
+              errors={errors.designationIdCreate}
+              touched={touched.designationIdCreate}
 
             /> 
     <div style={{display:"flex", justifyContent:"flex-end"}}>
 
-      {!action ?      <IconButton type="submit" sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} >
+     <IconButton type="submit" sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} >
             <AddIcon />
-          </IconButton> :  <IconButton type="submit" sx={{mt:3,ml:1}}  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} >
-            <EditIcon />
-          </IconButton>  }
+          </IconButton>
      
        
          </div>
@@ -198,6 +200,18 @@ const addRollFun =()=>{
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
         handleDeleteModel={handleDeleteModel}
+
+      />
+    <UpdateModel
+        showUpdateModal={showUpdateModal}
+        setShowUpdateModal={setShowUpdateModal}
+        values={values.designationId}
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        touched={touched}
+        errors={errors}
+        id={'designationId'}
+        handleUpdateModel={handleUpdateModel}
 
       />
     </>

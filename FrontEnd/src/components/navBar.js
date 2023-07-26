@@ -249,7 +249,7 @@ const continueWorkHandel = () =>{
               </NavDropdown.Item>
             </NavDropdown>
            
-            {user && 
+            {/* {user && 
              <NavDropdown title="Operations" id="navbarScrollingDropdown">
             {
             userRole == 'admin' ?(<>
@@ -267,14 +267,10 @@ const continueWorkHandel = () =>{
             <NavDropdown.Item as={Link} to="/inviteUser" >
               Invite User {url == '/inviteUser' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
               </NavDropdown.Item>
-            {/* <NavDropdown title=" EmailTemplate" id="navbarScrollingDropdown1"> */}
               <NavDropdown.Item as={Link} to="/emailTemplate" >
               Email Template 
               </NavDropdown.Item>
-              {/* <NavDropdown.Item as={Link} to="/createEmailTemplate" >
-              Create Template {url == '/createEmailTemplate' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
-              </NavDropdown.Item> */}
-            {/* </NavDropdown> */}
+
             </>) : userRole == 'hr' ? <>  
             <NavDropdown.Item as={Link} to="/tenant" >
                Tenant {url == '/tenant' && (<CircleIcon  className={classes.blueDotUrlist}/>)}
@@ -302,7 +298,7 @@ const continueWorkHandel = () =>{
        </>  
            }
            
-            </NavDropdown>}
+            </NavDropdown>} */}
           </Nav>
           {user ? <>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -357,11 +353,11 @@ const continueWorkHandel = () =>{
         <MenuItem onClick={handleClose}>
           <Avatar /> {user?.data?.user?.name.toUpperCase()}
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
+        <MenuItem component={Link} to="/dashboard">
+          <Avatar /> My Dashboard
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
+        <MenuItem component={Link} to="/tenant" >
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>

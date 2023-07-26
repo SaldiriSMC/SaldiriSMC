@@ -23,12 +23,13 @@ import Footer from '../components/footer'
 import SideMenu from '../pages/sideMenu'
 import * as Yup from "yup";
 import DeleteModal from "../sharedComponents/deleteModal";
-
+import UpdateModel from "../sharedComponents/tenentModel";
 export default function TetentDepartment() {
   const theme = useTheme();
 
   const [action, setAction] = React.useState(null);
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
+  const [showUpdateModal, setShowUpdateModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
   const designationScema = Yup.object({
     designationId: Yup.string().required("Field is required"),
@@ -101,6 +102,10 @@ export default function TetentDepartment() {
   const handleDeleteModel = () => {
     dispatch(deleteRoll({type:'department',id:userDeleteId}));
     setShowDeleteModal(false)
+  }
+  const handleUpdateModel = () => {
+    dispatch(updateRoll({data:{designationName:values.designationId},type:'designation',id:action}));
+    setShowUpdateModal(false)
   }
 
   return (
@@ -189,6 +194,18 @@ export default function TetentDepartment() {
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
         handleDeleteModel={handleDeleteModel}
+
+      />
+      <UpdateModel
+        showUpdateModal={showUpdateModal}
+        setShowUpdateModal={setShowUpdateModal}
+        values={values.designationId}
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        touched={touched}
+        errors={errors}
+        id={'designationId'}
+        handleUpdateModel={handleUpdateModel}
 
       />
     </>

@@ -15,8 +15,10 @@ import { useDispatch } from "react-redux";
 import { signUp } from "../actions/Auth";
 import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+import {
+  getAllDepartment,
+  getAllDesignation
+} from "../service/users";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 const useStyles = makeStyles()((theme) => {
@@ -53,11 +55,14 @@ function SignUp() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword)
   const handleMouseDownConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword)
+  const [designationList, setDesignationList] = useState([])
+  const [departmentList, setDepartmentList] = useState([])
   const initialValues = {
     tanantName: "",
     fullName: "",
     phoneNumber: "",
-    // designation: "admin",
+    designationId: '',
+    departmentId:'',
     email: "",
     allies: "",
     type: "company",
@@ -87,6 +92,8 @@ function SignUp() {
               type: values.type,
               email: values.email,
               alias: values.allies,
+              departmentId: values.departmentId,
+              designationId: values.designationId,
               // designation: values.designation,
               phoneNumber: values.phoneNumber,
               password: values.password},
@@ -101,6 +108,8 @@ function SignUp() {
               tanantName: values.tanantName,
               type: values.type,
               email: values.email,
+              departmentId: values.departmentId,
+              designationId: values.designationId,
               alias: values.allies,
               // designation: values.designation,
               domain: values.domain,
@@ -119,6 +128,35 @@ useEffect(()=>{
   }
 
 },[values.type])
+
+
+
+useEffect(()=>{
+        
+  getAllDepartment()
+  .then((response) => {
+    if (response.data) {
+      setDepartmentList(response.data.data)
+    }
+  })
+  .catch((error) => console.log(error.message))
+  .finally(() => {
+
+});
+
+
+  getAllDesignation()
+  .then((response) => {
+    if (response.data) {
+      setDesignationList(response.data.data)
+    }
+  })
+  .catch((error) => console.log(error.message))
+  .finally(() => {
+
+});
+
+},[])
   return (
 <>
 <section >
@@ -216,7 +254,38 @@ useEffect(()=>{
               errors={errors.domain}
               touched={touched.domain}
             />
-            
+                <MUITextField
+                 noTitle
+              sm={6}
+              xs={12}
+              name="departmentId"
+              value={values.departmentId}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              id="departmentId"
+              placeholder='department'
+              errors={errors.departmentId}
+              touched={touched.departmentId}
+              type="select"
+              options={departmentList}
+              pass="department"
+            />  
+               <MUITextField
+               sm={6}
+               xs={12}
+               noTitle
+              id="designationId"
+              name="designationId"
+              placeholder='Designation'
+              value={values.designationId}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              errors={errors.designationId}
+              type="select"
+              options={designationList}
+              pass="designation"
+              touched={touched.designationId}
+            />
             <MUITextField
               noTitle
               sm={12}
@@ -385,21 +454,38 @@ useEffect(()=>{
               errors={errors.allies}
               touched={touched.allies}
             /> 
-            {/* <MUITextField
-              readOnly
-              disabled
-              noTitle
-              sm={12}
+           <MUITextField
+                 noTitle
+              sm={6}
               xs={12}
-              id="designation"
-              name="designation"
-              placeholder='Designation'
-              value={values.designation}
+              name="departmentId"
+              value={values.departmentId}
               handleChange={handleChange}
               onBlur={handleBlur}
-              errors={errors.designation}
-              touched={touched.designation}
-            />  */}
+              id="departmentId"
+              placeholder='department'
+              errors={errors.departmentId}
+              touched={touched.departmentId}
+              type="select"
+              options={departmentList}
+              pass="department"
+            />  
+               <MUITextField
+               sm={6}
+               xs={12}
+               noTitle
+              id="designationId"
+              name="designationId"
+              placeholder='Designation'
+              value={values.designationId}
+              handleChange={handleChange}
+              onBlur={handleBlur}
+              errors={errors.designationId}
+              type="select"
+              options={designationList}
+              pass="designation"
+              touched={touched.designationId}
+            />
             <Grid
                     container
                     direction="row"

@@ -10,9 +10,9 @@ import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
+import SideMenu from '../pages/sideMenu'
 import NavBar from "../components/navBar"
+import CssBaseline from '@mui/material/CssBaseline';
 import { getAllUser, getAttendanceByHours } from "../actions/Attendance";
 const Dashboard = () => {
   
@@ -20,10 +20,16 @@ const Dashboard = () => {
 
   
   return (
-    <div>
-      <NavBar />
-  <h6>Dashboard Cooming Soon</h6>
-    </div>
+    <>
+    <NavBar/>
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <SideMenu />
+      <h6 className="p-5">Dashboard Cooming Soon</h6>
+    </Box>
+    
+    </>
+
   );
 };
 
