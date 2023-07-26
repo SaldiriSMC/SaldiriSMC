@@ -108,8 +108,6 @@ function SignUp() {
               tanantName: values.tanantName,
               type: values.type,
               email: values.email,
-              departmentId: values.departmentId,
-              designationId: values.designationId,
               alias: values.allies,
               // designation: values.designation,
               domain: values.domain,
@@ -253,38 +251,6 @@ useEffect(()=>{
               onBlur={handleBlur}
               errors={errors.domain}
               touched={touched.domain}
-            />
-                <MUITextField
-                 noTitle
-              sm={6}
-              xs={12}
-              name="departmentId"
-              value={values.departmentId}
-              handleChange={handleChange}
-              onBlur={handleBlur}
-              id="departmentId"
-              placeholder='department'
-              errors={errors.departmentId}
-              touched={touched.departmentId}
-              type="select"
-              options={departmentList}
-              pass="department"
-            />  
-               <MUITextField
-               sm={6}
-               xs={12}
-               noTitle
-              id="designationId"
-              name="designationId"
-              placeholder='Designation'
-              value={values.designationId}
-              handleChange={handleChange}
-              onBlur={handleBlur}
-              errors={errors.designationId}
-              type="select"
-              options={designationList}
-              pass="designation"
-              touched={touched.designationId}
             />
             <MUITextField
               noTitle

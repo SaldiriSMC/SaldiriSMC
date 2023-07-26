@@ -95,6 +95,7 @@ const MainModal = (props) => {
     handleDeleteModel,
     deleteId,
     value,
+    noTimeOut,
     calculateTotalWorkedHours,
   } = props;
   const { classes } = useStyles();
@@ -121,7 +122,8 @@ const MainModal = (props) => {
             </IconButton>
           </div>
           <div className={classes.innerContainer}>
-            <h4>Are you sure you want to delete</h4>
+            {noTimeOut ?  <h5> The time out  is not available if you delete attendance time it will effect on one's Attendance.</h5> :   <h4>Are you sure you want to delete</h4> }
+          
             <Grid
               item
               sx={{

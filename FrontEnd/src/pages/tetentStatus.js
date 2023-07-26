@@ -39,6 +39,7 @@ export default function TetentStatus() {
   const initialValues = {
     status: '',
     modulesId: '',
+    statusEdit: '',
   };
   const dispatch = useDispatch();
 
@@ -50,26 +51,13 @@ export default function TetentStatus() {
     (state) => state?.tenetRolls?.dataUpdate
   );
 
-  
-
-
-
-  
-
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   isValid,
     dirty } =
     useFormik({
       initialValues,
       validationSchema: rollStatusSechmea,
       onSubmit: () => {
-        if (action){
-          setAction(false)
-          dispatch(updateRoll({data:{statusName:values.status,moduleId :values.modulesId},type:'status',id:action}));
-          // setFieldValue('status','')
-        } else{
-          dispatch(createRoll({data:{statusName:values.status,moduleId :values.modulesId},type:'status'}));
-          // setFieldValue('status','')
-        }
+          dispatch(createRoll({data:{statusName:values.status,moduleId :values.modulesId},type:'status'}));     
       },
     });
 
@@ -94,6 +82,7 @@ export default function TetentStatus() {
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),
+          hideDelteEdit:record?.tenetId ? true : false,
         },
       });
     });
@@ -109,7 +98,8 @@ export default function TetentStatus() {
     
     if (val === 'edit' ) {
       setAction(data?.id)
-     setFieldValue('status',data.statusName)
+      setShowUpdateModal(true)
+     setFieldValue('statusEdit',data.statusName)
      setFieldValue('modulesId',data.moduleId)
     }
 
@@ -152,7 +142,7 @@ export default function TetentStatus() {
     }
 
     const handleUpdateModel = () => {
-      dispatch(updateRoll({data:{designationName:values.designationId},type:'designation',id:action}));
+      dispatch(updateRoll({data:{statusName:values.statusEdit,moduleId :values.modulesId},type:'status',id:action}));
       setShowUpdateModal(false)
     }
   return (
@@ -200,8 +190,7 @@ export default function TetentStatus() {
               options={allmodulesList}
               pass="module"
             /> 
-             <MUITextField
-               
+             <MUITextField          
               sm={6}
               xs={6}
               name="status"
@@ -213,18 +202,13 @@ export default function TetentStatus() {
               errors={errors.status}
               touched={touched.status}
             /> 
-
-
               </Grid>
-
              </div>
              <div style={{display:"flex", justifyContent:"flex-end"}}>
 
-             {!action ?      <IconButton sx={{mt:3,ml:1}}  type="submit"  size="medium" style={{backgroundColor:"#0075FF", color:"white",marginBottom:10}} >
+              <IconButton sx={{mt:3,ml:1}}  type="submit"  size="medium" style={{backgroundColor:"#0075FF", color:"white",marginBottom:10}} >
             <AddIcon />
-          </IconButton> :  <IconButton sx={{mt:3,ml:1}}  type="submit"  size="medium" style={{backgroundColor:"#0075FF", color:"white",marginBottom:10}} >
-            <EditIcon />
-          </IconButton>  }
+          </IconButton> 
 </div>
 
 </form>
@@ -272,12 +256,13 @@ export default function TetentStatus() {
       <UpdateModel
         showUpdateModal={showUpdateModal}
         setShowUpdateModal={setShowUpdateModal}
-        values={values.designationId}
+        values={values.statusEdit}
         handleChange={handleChange}
         handleBlur={handleBlur}
         touched={touched}
         errors={errors}
-        id={'designationId'}
+        id={'statusEdit'}
+        title='Status'
         handleUpdateModel={handleUpdateModel}
 
       />

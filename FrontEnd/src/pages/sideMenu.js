@@ -149,7 +149,8 @@ export default function PersistentDrawerLeft() {
   const [open, setOpen] = React.useState(true);
   const url = window.location.pathname
   const [openList, setOpenList] = React.useState(true);
-
+  const user = JSON.parse(localStorage.getItem("accessToken"))
+  const userRole =  user?.data?.user?.role
   const handleClick = () => {
     setOpenList(!openList);
   };
@@ -158,11 +159,14 @@ export default function PersistentDrawerLeft() {
   {name:'Department',id:1,path:'/tetentDepartment'},
   {name:'Status',id:1,path:'/tenantStatus'},
 ]
-  const sideList =[{name:'Dashboard',id:1,path:'/dashboard'},
+  const sideList = (userRole === 'employee') ? [{name:'Dashboard',id:1,path:'/dashboard'},
   {name:'Attendance',id:1,path:'/attendance'},
-  {name:'Inivte User',id:1,path:'/inviteUser'},
-  {name:'Template',id:1,path:'/emailTemplate'},
+]: [{name:'Dashboard',id:1,path:'/dashboard'},
+{name:'Attendance',id:1,path:'/attendance'},
+{name:'Inivte User',id:1,path:'/inviteUser'},
+{name:'Template',id:1,path:'/emailTemplate'},
 ]
+
 
   return (
     <>
@@ -196,7 +200,9 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader> */}
         {/* <Divider /> */}
         <List>
-        <ListItemButton onClick={handleClick}>
+          {!(userRole === 'employee') && (
+<>
+<ListItemButton onClick={handleClick}>
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>
@@ -219,7 +225,10 @@ export default function PersistentDrawerLeft() {
           ))}
         </List>
       </Collapse>
-          {sideList.map((text, index) => (
+</>
+          )}
+       
+          {  sideList.map((text, index) => (
             <ListItem key={text} disablePadding   component={Link} to={text.path}  >
               <ListItemButton>
                 <ListItemIcon>

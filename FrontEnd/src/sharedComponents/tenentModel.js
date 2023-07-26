@@ -98,13 +98,14 @@ const MainModal = (props) => {
     touched,
     handleChange,
     values,
-    id
+    id,
+    title
   } = props;
   const { classes } = useStyles();
 
 
   
-console.log(values,"values-----------",id)
+console.log(values,"title-----------",title)
   return (
     <div>
       <Modal
@@ -130,6 +131,7 @@ console.log(values,"values-----------",id)
               xs={6}
               name={`${id}`}
               value={values}
+              label={title}
               handleChange={handleChange}
               onBlur={handleBlur}
               id={`${id}`}

@@ -5,13 +5,13 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const EditDeleteAction = ({ value: { change,hideDelete } }) => {
+const EditDeleteAction = ({ value: { change,hideDelete,hideDelteEdit } }) => {
   const handleClick = (val) => {
     change(val)
   }
   return (
     <>
-    <Stack direction="row" alignItems="center" spacing={1}>
+    {hideDelteEdit ? "--" :  <Stack direction="row" alignItems="center" spacing={1}>
         
         <Tooltip
             classes={{
@@ -40,7 +40,8 @@ const EditDeleteAction = ({ value: { change,hideDelete } }) => {
             </IconButton>
         </Tooltip>}
        
-    </Stack>
+    </Stack>}
+   
     </>
   );
 };

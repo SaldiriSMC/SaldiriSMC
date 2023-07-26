@@ -83,6 +83,7 @@ const addRollFun =()=>{
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),
+          hideDelteEdit:record?.tenetId ? true : false,
         },
       });
     });
@@ -211,6 +212,7 @@ const addRollFun =()=>{
         touched={touched}
         errors={errors}
         id={'designationId'}
+        title='Designation'
         handleUpdateModel={handleUpdateModel}
 
       />

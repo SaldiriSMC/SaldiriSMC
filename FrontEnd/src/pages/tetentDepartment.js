@@ -32,10 +32,11 @@ export default function TetentDepartment() {
   const [showUpdateModal, setShowUpdateModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
   const designationScema = Yup.object({
-    designationId: Yup.string().required("Field is required"),
+    designationIdCreate: Yup.string().required("Field is required"),
   })
   const initialValues = {
     designationId: '',
+    designationIdCreate: '',
   };
   const dispatch = useDispatch();
 
@@ -62,12 +63,8 @@ export default function TetentDepartment() {
       initialValues,
       validationSchema: designationScema,
       onSubmit: () => {
-        if (action){
-          setAction(false)
-          dispatch(updateRoll({data:{departmentName:values.designationId},type:'department',id:action}));
-        } else{
-          dispatch(createRoll({data:{departmentName:values.designationId},type:'department'}));
-        }
+          dispatch(createRoll({data:{departmentName:values.designationIdCreate},type:'department'}));
+        
       },
     });
 
@@ -80,6 +77,7 @@ export default function TetentDepartment() {
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),
+          hideDelteEdit:record?.tenetId ? true : false,
         },
       });
     });
@@ -96,6 +94,8 @@ export default function TetentDepartment() {
     if (val === 'edit' ) {
       setAction(data?.id)
      setFieldValue('designationId',data.departmentName)
+     setAction(data?.id)
+     setShowUpdateModal(true)
     }
 
   }
@@ -104,7 +104,7 @@ export default function TetentDepartment() {
     setShowDeleteModal(false)
   }
   const handleUpdateModel = () => {
-    dispatch(updateRoll({data:{designationName:values.designationId},type:'designation',id:action}));
+    dispatch(updateRoll({data:{departmentName:values.designationId},type:'department',id:action}));
     setShowUpdateModal(false)
   }
 
@@ -138,23 +138,21 @@ export default function TetentDepartment() {
                noTitle
               sm={6}
               xs={6}
-              name="designationId"
-              value={values.designationId}
+              name="designationIdCreate"
+              value={values.designationIdCreate}
               handleChange={handleChange}
               onBlur={handleBlur}
-              id="designationId"
+              id="designationIdCreate"
               placeholder='Department Name'
-              errors={errors.designationId}
-              touched={touched.designationId}
+              errors={errors.designationIdCreate}
+              touched={touched.designationIdCreate}
 
             /> 
     <div style={{display:"flex", justifyContent:"flex-end"}}>
 
-    {!action ?      <IconButton sx={{mt:3,ml:1}} type="submit" size="medium" style={{backgroundColor:"#0075FF", color:"white",}}>
+   <IconButton sx={{mt:3,ml:1}} type="submit" size="medium" style={{backgroundColor:"#0075FF", color:"white",}}>
             <AddIcon />
-          </IconButton> :  <IconButton sx={{mt:3,ml:1}} type="submit"  size="medium" style={{backgroundColor:"#0075FF", color:"white",}} >
-            <EditIcon />
-          </IconButton>  }
+          </IconButton>
          </div>
              </div>
              </form>
@@ -196,7 +194,7 @@ export default function TetentDepartment() {
         handleDeleteModel={handleDeleteModel}
 
       />
-      <UpdateModel
+       <UpdateModel
         showUpdateModal={showUpdateModal}
         setShowUpdateModal={setShowUpdateModal}
         values={values.designationId}
@@ -205,6 +203,7 @@ export default function TetentDepartment() {
         touched={touched}
         errors={errors}
         id={'designationId'}
+        title='Department'
         handleUpdateModel={handleUpdateModel}
 
       />

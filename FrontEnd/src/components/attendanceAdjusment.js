@@ -31,6 +31,7 @@ import { getAttendance } from '../actions/Attendance'
 const AttendanceAdjusment = () => {
   const [deleteTimeInOut, setDeleteTimeInOut] = React.useState({ time: [] });
   const [isCreate, setIsCreate] = React.useState(false)
+  const [noTimeOut, setNoTimeOut] = React.useState(false)
   const [showModal,setShowModal] = React.useState(false)
   const [userData,setUserData] = React.useState({})
   const user = JSON.parse(localStorage.getItem("accessToken"))
@@ -44,6 +45,7 @@ const AttendanceAdjusment = () => {
       getAttendance())
   },[])
 
+  console.log("attendanceData------------",attendanceData)
   const workedHours = useSelector(
     (state) => state?.attendance?.attendance?.data
   );  
@@ -142,7 +144,7 @@ const AttendanceAdjusment = () => {
           hours: record.Difference ? record.Difference : "-",
           action: {
             change: (val) =>
-            handleDropdownActionsupport(record, val,index),
+            handleDropdownActionsupport(record, val,index)
           },
         });
       }
@@ -154,6 +156,7 @@ const AttendanceAdjusment = () => {
 
     if (val === 'delete' ) {
       handleDelete(data)
+      setNoTimeOut(data?.timeOut ? false : true)
     }  
     
     if (val === 'edit' ) {
@@ -364,6 +367,7 @@ const AttendanceAdjusment = () => {
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
         handleDeleteModel={handleDeleteModel}
+        noTimeOut={noTimeOut}
 
       />
     </div>
