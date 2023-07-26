@@ -37,8 +37,6 @@ import { pushNotification } from "../utils/notifications";
 import {
   userTokenExpire
 } from "../service/users";
-import { DropdownSubmenu, NavDropdownMenu } from "react-bootstrap-submenu";
-import "react-bootstrap-submenu/dist/index.css";
 const useStyles = makeStyles()((theme) => {
   return {
     btn: {
