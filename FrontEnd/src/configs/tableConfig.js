@@ -94,7 +94,7 @@ export const EmailTemplateConfig = [
     name: "created_date",
     renderer: "Text",
     align: "left",
-    label: "Created Date",
+    label: "Date",
   },
   {
     id: "subject",
