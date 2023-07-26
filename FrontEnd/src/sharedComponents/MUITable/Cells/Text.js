@@ -2,9 +2,15 @@ import React from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
-const Text = ({ value }) => {
+const Text = ({ value, hideTooltip}) => {
+  console.log("hidetoolti------->>>>>>>",hideTooltip)
   return (
-    <Tooltip
+    <>
+    { hideTooltip ? 
+      <Typography variant="body2" color="textSecondary">
+        {value} 
+      </Typography>
+     : <Tooltip
       classes={{
         tooltip: 'capitalize',
       }}
@@ -13,9 +19,10 @@ const Text = ({ value }) => {
       enterDelay={100}
     >
       <Typography variant="body2" color="textSecondary">
-        {value}
+        {value} 
       </Typography>
-    </Tooltip>
+    </Tooltip>}
+    </>
   );
 };
 
