@@ -46,6 +46,7 @@ const EmailTemplate = () => {
           created_date: created_date,
           subject: record?.subject,
           body: ReactHtmlParser(record?.body),
+          hideTooltip:true,
           action: {
             change: (val) => handleDropdownActionsupport(record, val, index),
             hideDelteEdit:record?.tenantId == null ? true : false,
