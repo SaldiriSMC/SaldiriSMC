@@ -57,7 +57,6 @@ const sendInviteEmail = async (tokenArray, user) => {
       const text = emailTemplate.body
         .replace(/#FullName/g, user.name)
         .replace(/#CompanyName/g, tenant.tanantName)
-        .replace(/#Domain/g, tenant.domain)
         .replace(/#ResetPasswordLink/g, resetPasswordUrl)
         .replace(/#Department/g, department.departmentName)
         .replace(/#Designation/g, designation.designationName);

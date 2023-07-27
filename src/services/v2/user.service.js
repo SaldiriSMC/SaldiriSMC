@@ -84,12 +84,11 @@ const updateUserById = async (updateBody,userId) => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  // const emialTaken = await getUserByEmail(updateBody?.email)
-  // console.log("taken email----->>>>>",emialTaken)
-  // if (updateBody.email && emialTaken) {
-  //   throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
-  // }
-  const user_ = await User.update(updateBody,{where:{id:userId}})
+  if(updateBody?.designationId === 1 ){
+    const user_ = await User.update({...updateBody, role:"hr"},{where:{id:userId}})
+  }else{
+    const user_ = await User.update(updateBody,{where:{id:userId}})
+  }
 };
 
 /**

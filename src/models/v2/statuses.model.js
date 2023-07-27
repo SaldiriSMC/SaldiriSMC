@@ -1,7 +1,7 @@
 const {sequelize} = require('../../config/mySqlConnection')
 const { DataTypes } = require('sequelize');
 
-const Status = sequelize.define('statuses', {
+const Status = sequelize.define('status', {
     moduleId:{
     type: DataTypes.INTEGER,
       references:{

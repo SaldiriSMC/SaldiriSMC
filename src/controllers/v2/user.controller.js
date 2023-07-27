@@ -79,6 +79,7 @@ const { callDBRoutine } = require('../../config/helperMethods');
   });
 
   const updateUser = catchAsync(async (req, res) => {
+    console.log("update user api call--------------->>>>>>>")
     const user = await userService.updateUserById(req.body, req.params.userId.toString());
     response(res, "", "user updated successfully", 200)
   });

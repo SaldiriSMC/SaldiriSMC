@@ -1,6 +1,6 @@
 const {sequelize} = require('../../config/mySqlConnection')
 const { DataTypes } = require('sequelize');
-const Tenant = sequelize.define('tenant', {
+const Tenant = sequelize.define('tenants', {
   key:{
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
