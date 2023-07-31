@@ -29,7 +29,7 @@ export const signupSchemaCompany = Yup.object({
   ).min(3).max(25).required("Please enter your Comapny name"),
   allies: Yup.string().matches(/^[a-zA-Z0-9]+$/, 'Input must not contain special characters').min(3).max(25).required("Please enter your Allies"),
   password: Yup.string().min(8).required("Please enter your password")
-  .matches(/^(?=.*[A-Za-z])(?=.*\d)/, 'Password must contain at least 1 letter and 1 number'),
+  .matches(/^(?=.*[A-Za-z])(?=.*\d)/, 'Password at least 1 letter and 1 number'),
   confirmPassword: Yup.string()
     .required('Confrim Password is required')
     .oneOf([Yup.ref("password"), null], "Password must match"),

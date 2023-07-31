@@ -17,6 +17,7 @@ const URLs = {
   department: "/department",
   status: "/status",
   modules: "/modules",
+  userLogInStatus: "/user-login-status",
   emailTemplate: "email-templates",
   tokenRefrash:'/auth/refresh-tokens',
   user:'/users',

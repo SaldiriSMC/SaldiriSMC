@@ -166,3 +166,40 @@ export const statusConfig = [
     label: "Actions",
   },
 ];
+export const queuesConfig = [
+  {
+    id: "name",
+    name: "name",
+    renderer: "Text",
+    align: "left",
+    label: "Status Name",
+  },
+  {
+    id: "type",
+    name: "name",
+    renderer: "Text",
+    align: "left",
+    label: "Type",
+  },
+  {
+    id: "timeLeft",
+    name: "timeLeft",
+    renderer: "Text",
+    align: "left",
+    label: "Time Left",
+  },
+  {
+    id: "timePass",
+    name: "timePass",
+    renderer: "Text",
+    align: "left",
+    label: "Time Pass",
+  },
+  {
+    id: "Status",
+    name: "Status",
+    renderer: "Text",
+    align: "left",
+    label: "Status",
+  },
+];

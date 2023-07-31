@@ -86,7 +86,6 @@ function SignUp() {
       onSubmit: async (values, action) => {
         if (values.type == 'user'){
 
-          console.log("types 999999999")
           dispatch(
             signUp({
               credentials:{
@@ -104,7 +103,6 @@ function SignUp() {
           );
         } else{
 
-          console.log("types kkkkkkkkkkkk")
           dispatch(
             signUp({
               credentials:{
@@ -160,8 +158,6 @@ useEffect(()=>{
 
 },[])
 
-
-console.log("values---------------",values)
   return (
 <>
 <section >

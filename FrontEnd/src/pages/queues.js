@@ -1,12 +1,9 @@
 
 import React, { useEffect,useState } from "react";
-import { pushNotification } from "../utils/notifications";
-import EditIcon from '@mui/icons-material/Edit';
-import "react-datetime-picker/dist/DateTimePicker.css";
-import "react-calendar/dist/Calendar.css";
-import "react-clock/dist/Clock.css";
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import MUITable from "../sharedComponents/MUITable";
-import { statusConfig } from "../configs/tableConfig";
+import { queuesConfig } from "../configs/tableConfig";
 import AddIcon from '@mui/icons-material/Add';
 import { loderTrue,loderFalse } from "../actions/Auth";
 import { useFormik } from "formik";
@@ -27,7 +24,7 @@ import SideMenu from '../pages/sideMenu'
 import { rollStatusSechmea } from "../Yup Schema";
 import DeleteModal from "../sharedComponents/deleteModal";
 import UpdateModel from "../sharedComponents/tenentModel";
-export default function TetentStatus() {
+export default function Queues() {
   const theme = useTheme();
 
   const [action, setAction] = React.useState(null);
@@ -50,6 +47,14 @@ export default function TetentStatus() {
     (state) => state?.tenetRolls?.dataUpdate
   );
 
+
+  console.log("allRollsList---------->>>>>>>",allRollsList)
+
+  const [value, setValue] = React.useState('one');
+
+  const handleChangeTab = (event, newValue) => {
+    setValue(newValue);
+  };
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   isValid,
     dirty } =
     useFormik({
@@ -108,42 +113,11 @@ export default function TetentStatus() {
   }
  
   useEffect(()=>{
-    getAllUser()
+  
   },[])
   
-    const getAllUser=()=>{
+   
 
-      getAllModules()
-      .then((response) => {
-        if (response.data) {
-          setallmodulesList(response.data.data)
-          if (response.data.data.length > 0){
-            setFieldValue('modulesId',response.data.data[0].id)
-          }
-          
-        }
-      })
-      .catch((error) =>{
-        if (error.response.data.message === 'Please Provide Correct Tenant Key' || error.response.data.message === 'Please authenticate' ){
-          localStorage.removeItem("accessToken"); 
-          window.location.reload()
-        }
-      })
-      .finally(() => {
-
-  
-    });
-  
-    }
-    const handleDeleteModel = () => {
-      dispatch(deleteRoll({type:'status',id:userDeleteId}));
-      setShowDeleteModal(false)
-    }
-
-    const handleUpdateModel = () => {
-      dispatch(updateRoll({data:{statusName:values.statusEdit,moduleId :values.modulesId},type:'status',id:action}));
-      setShowUpdateModal(false)
-    }
   return (
     <>
     <Header/>
@@ -163,59 +137,26 @@ export default function TetentStatus() {
           
         <Grid
           sx={{ pl: 3 }}
-          spacing={2}
+   
           justifyContent="flex-end"
           alignItems="center"
           item
           sm={12}
           md={6}
         >
-          <form onSubmit={handleSubmit}>
-             <div style={{display:"flex",
-          alignItems:"center"}}>
-              <Grid  container  spacing={2} sx={{p:1}}>
-              <MUITextField
-              sm={6}
-              xs={12}
-              name="modulesId"
-              value={values.modulesId}
-              handleChange={handleChange}
-              onBlur={handleBlur}
-              id="modulesId"
-              placeholder='module'
-              errors={errors.modulesId}
-              touched={touched.modulesId}
-              type="select"
-              options={allmodulesList}
-              pass="module"
-            /> 
-             <MUITextField          
-              sm={6}
-              xs={6}
-              name="status"
-              value={values.status}
-              handleChange={handleChange}
-              onBlur={handleBlur}
-              id="status"
-              placeholder='Status Name'
-              errors={errors.status}
-              touched={touched.status}
-            /> 
-              </Grid>
-             </div>
-             <div style={{display:"flex", justifyContent:"flex-end"}}>
-
-              <IconButton sx={{mt:3,ml:1}}  type="submit"  size="medium" style={{backgroundColor:"#0075FF", color:"white",marginBottom:10}} >
-            <AddIcon />
-          </IconButton> 
-</div>
-
-</form>
-
+ <Tabs
+        value={value}
+        onChange={handleChangeTab}
+        aria-label="wrapped label tabs example"
+      >
+        <Tab value="one" label="Active" wrapped/>
+        <Tab value="two" label="Inactive" />
+      </Tabs>
+<br></br>
          <MUITable
             
-            column={statusConfig}
-            list={normalizeTableProgram(allRollsList ?? [])}
+            column={queuesConfig}
+            list={normalizeTableProgram([])}
 
           />
           <Grid
@@ -246,26 +187,7 @@ export default function TetentStatus() {
       </Grid>
   
     </Box>
-    
-    <DeleteModal
-        showDeleteModal={showDeleteModal}
-        setShowDeleteModal={setShowDeleteModal}
-        handleDeleteModel={handleDeleteModel}
 
-      />
-      <UpdateModel
-        showUpdateModal={showUpdateModal}
-        setShowUpdateModal={setShowUpdateModal}
-        values={values.statusEdit}
-        handleChange={handleChange}
-        handleBlur={handleBlur}
-        touched={touched}
-        errors={errors}
-        id={'statusEdit'}
-        title='Status'
-        handleUpdateModel={handleUpdateModel}
-
-      />
     </>
   );
 }

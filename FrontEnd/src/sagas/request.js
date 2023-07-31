@@ -18,9 +18,8 @@ export const getRequestWithTenant = async (requestUrl) => {
     return response; // Return the original response to the caller
   } catch (error) {
     // Handle errors here if needed
-    console.log("error.response.data.message -----------",error.response.data.message )
     // For example, you can log the error or throw it again to be handled by the caller
-    if (error.response.data.message === 'Please Provide Correct Tenant Key'){
+    if (error.response.data.message === 'Please Provide Correct Tenant Key' || error.response.data.message === 'Please authenticate' ){
       localStorage.removeItem("accessToken"); 
       window.location.reload()
     }

@@ -100,3 +100,11 @@ export const getAllModules = () => {
         ...headerWithToken
     })
 }
+
+export const checkUserStatus = () => {
+    return instance({
+        url: URls.userLogInStatus,
+        method: 'get',
+        ...headerWithToken
+    })
+}

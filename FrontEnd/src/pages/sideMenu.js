@@ -6,6 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import MuiAppBar from '@mui/material/AppBar';
 import { makeStyles } from "tss-react/mui";
 import List from '@mui/material/List';
+import ChecklistIcon from '@mui/icons-material/Checklist';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import { Link, Outlet } from 'react-router-dom';
@@ -162,6 +163,7 @@ export default function PersistentDrawerLeft() {
   const sideListTenet =[{name:'Designation',id:1,path:'/tenant',icon:<BadgeIcon/>},
   {name:'Department',id:1,path:'/tetentDepartment',icon:<WorkIcon/>},
   {name:'Status',id:1,path:'/tenantStatus',icon:<AccountCircleIcon/>},
+  {name:'Queues',id:1,path:'/queues',icon:<ChecklistIcon/>},
 ]
   const sideList = (userRole === 'employee') ? [{name:'Dashboard',id:1,path:'/dashboard',icon:<DashboardIcon/>},
   {name:'Attendance',id:1,path:'/attendance',icon:<ListAltIcon/>},

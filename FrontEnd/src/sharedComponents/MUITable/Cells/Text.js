@@ -3,7 +3,6 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
 const Text = ({ value, hideTooltip}) => {
-  console.log(hideTooltip,"hidetoolti------->>>>>>>",value)
   return (
     <>
     { hideTooltip ? 

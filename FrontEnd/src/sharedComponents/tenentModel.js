@@ -103,9 +103,6 @@ const MainModal = (props) => {
   } = props;
   const { classes } = useStyles();
 
-
-  
-console.log(values,"title-----------",title)
   return (
     <div>
       <Modal

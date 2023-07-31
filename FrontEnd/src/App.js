@@ -19,13 +19,16 @@ import InviteUser from './components/inviteUser';
 import Attendance from './components/attendanceAdjusment';
 import Tenant from './pages/tetent';
 import TetentStatus from './pages/tetentStatus';
+import Queues from './pages/queues';
 import TetentDepartment from './pages/tetentDepartment';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from './components/privateRoute';
 import SignUp from './components/SignUp'
 import ForgetPassword from './components/forgetPassword'
-// import { useDispatch, useSelector } from "react-redux";
+import {
+  checkUserStatus,
+} from "./service/users";
 import ChnagePassword from './components/chnagePassword'
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../src/theme';
@@ -46,10 +49,36 @@ useEffect(()=>{
 
 },[localStorage])
 
-//   const PrivateRoute = ({loader,setLoader}) => {
-//     return user ? <Outlet loader={loader} setLoader={setLoader}  /> : <Navigate to="/" />;
-// }
+useEffect(() => {
+  // Fetch data immediately when the component mounts
+  // fetchData();
 
+  // Set up the interval to fetch data every 5 seconds
+  // const interval = setInterval(fetchData, 5000);
+
+  // Clean up the interval when the component unmounts
+  // return () => clearInterval(interval);
+}, []); //
+
+
+const fetchData=()=>{
+
+  checkUserStatus()
+  .then((response) => {
+    if (response.data) {
+
+      
+    }
+  })
+  .catch((error) =>{
+
+  })
+  .finally(() => {
+
+
+});
+
+}
   return (
     <FeedbackProvider data={data}>
     <ThemeProvider theme={theme}>
@@ -92,6 +121,9 @@ useEffect(()=>{
         </Route>
         <Route exact path='/tetentDepartment' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
             <Route exact path='/tetentDepartment' element={<TetentDepartment  loader={loader} setLoader={setLoader} />}/>
+        </Route>
+        <Route exact path='/queues' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
+            <Route exact path='/queues' element={<Queues  loader={loader} setLoader={setLoader} />}/>
         </Route>
        
       </Routes>

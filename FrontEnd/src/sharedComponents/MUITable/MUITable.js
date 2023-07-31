@@ -131,7 +131,7 @@ const MUITable = (props) => {
                 </TableRow>
               );
             })}
-            {listToRender.length < 1 && (  <h5 className='py-3 mx-auto'> Data not available</h5>
+            {listToRender.length < 1 && (  <TableCell className='py-3 mx-auto'> Data not available</TableCell>
             ) }
           
           </TableBody>
