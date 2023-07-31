@@ -45,7 +45,6 @@ const AttendanceAdjusment = () => {
       getAttendance())
   },[])
 
-  console.log("attendanceData------------",attendanceData)
   const workedHours = useSelector(
     (state) => state?.attendance?.attendance?.data
   );  

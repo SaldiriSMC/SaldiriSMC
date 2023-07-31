@@ -106,7 +106,7 @@ export const EmailTemplateConfig = [
   {
     id: "body",
     name: "body",
-    renderer: "Text",
+    renderer: "TextTemplate",
     align: "left",
     label: "Body",
   },

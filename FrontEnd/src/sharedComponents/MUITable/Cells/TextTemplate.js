@@ -2,13 +2,14 @@ import React from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
-const Text = ({ value, hideTooltip}) => {
-  console.log(hideTooltip,"hidetoolti------->>>>>>>",value)
+const TextTemplate = ({ value }) => {
+
+
   return (
     <>
-    { hideTooltip ? 
+    { value?.hideTooltip ? 
       <Typography variant="body2" color="textSecondary">
-        {value} 
+        {value?.body} 
       </Typography>
      : <Tooltip
       classes={{
@@ -19,11 +20,11 @@ const Text = ({ value, hideTooltip}) => {
       enterDelay={100}
     >
       <Typography variant="body2" color="textSecondary">
-        {value} 
+      {value?.body} 
       </Typography>
     </Tooltip>}
     </>
   );
 };
 
-export default Text;
+export default TextTemplate;
