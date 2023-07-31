@@ -84,7 +84,8 @@ const AttendanceAdjusment = () => {
       .reduce((acc, curr) => {
         return acc + curr;
       }, 0);
-    const fixed = total?.toFixed(2);
+    const fixed = total?.toFixed(4);
+    console.log("fixed-------->>>>>>>>", fixed)
     return fixed;
   };
   const totalWorkedHours = calculateTotalWorkedHours();

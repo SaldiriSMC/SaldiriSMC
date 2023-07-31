@@ -15,6 +15,7 @@ import { IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteModal from "../sharedComponents/deleteModal"
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import he from "he"
 
 const EmailTemplate = () => {
   const [showModal, setShowModal] = React.useState(false);
@@ -46,7 +47,7 @@ const EmailTemplate = () => {
           created_date: created_date,
           subject: record?.subject,
           body:{
-            body: ReactHtmlParser(record?.body),
+            body: record?.body?ReactHtmlParser(he.decode(record?.body)):"",
             hideTooltip:true
           },
           action: {
