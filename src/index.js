@@ -15,6 +15,7 @@ const designation = require("./models/v2/designation.model")
 const contact = require("./models/v2/contact.model")
 const emailTemplate = require("./models/v2/emailTemplates.module")
 const type = require("./models/v2/type.model")
+const {queue} = require("./config/queue")
 let server;
 
 
@@ -118,6 +119,7 @@ const mySqlConnection = async() =>{
   return true
 } 
 mySqlConnection()
+queue()
 const exitHandler = () => {
   if (server) {
     server.close(() => {

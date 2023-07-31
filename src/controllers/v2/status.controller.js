@@ -5,7 +5,6 @@ const { response } = require("../../utils/response")
 const ApiError = require('../../utils/ApiError');
 
 const getStatuses = catchAsync(async (req, res) => {
-    console.log("query--------->>>>>>>", req.query)
     const key = req.get("X-Tenent-Key")
     const tenant = await Tenant.findOne({where:{key:key}})
     let status;

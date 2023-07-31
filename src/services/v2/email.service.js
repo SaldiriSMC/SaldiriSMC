@@ -58,6 +58,7 @@ const sendInviteEmail = async (tokenArray, user) => {
         .replace(/#FullName/g, user.name)
         .replace(/#CompanyName/g, tenant.tanantName)
         .replace(/#ResetPasswordLink/g, resetPasswordUrl)
+        .replace(/#Domain/g, tenant.domain)
         .replace(/#Department/g, department.departmentName)
         .replace(/#Designation/g, designation.designationName);
       await sendHtmlTemplateEmail(item.email, subject, text);

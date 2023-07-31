@@ -21,7 +21,6 @@ const tenant = () => async (req, res, next) => {
     }
   })
     .then((res) => {
-      console.log(res);
       next();
     })
     .catch((err) => {

@@ -4,7 +4,7 @@ const { User, Tenant, Attendance, Token, Time, Module } = require('../../models/
 const { authService, userService, tokenService, emailService, tenantService, attendanceService } = require('../../services/v2');
 const {response} = require("../../utils/response");
 const { tokenTypes } = require('../../config/tokens');
-
+const Queue = require('bull');
 const register = catchAsync(async (req, res) => {
   try {
     const alias = await Tenant.findOne({ where: { alias: req.body.alias } });
@@ -90,7 +90,6 @@ const refreshTokens = catchAsync(async (req, res) => {
 
 const forgotPassword = catchAsync(async (req, res) => {
   const resetPasswordToken = await tokenService.generateResetPasswordToken(req.body.email);
-  console.log("resetPasswordToken", resetPasswordToken)
   await emailService.sendResetPasswordEmail(req.body.email, resetPasswordToken);
   res.status(200).send({message:"We send you a email to reset your password. Please check your email address."});
 });
@@ -111,6 +110,12 @@ const verifyEmail = catchAsync(async (req, res) => {
   res.send(verify_email);
 });
 
+const verifyLoginStatus = catchAsync(async (req, res) => {
+  const queue = new Queue('myQueue', 'redis://localhost:6379');
+  queue.add(req.body);
+  res.send(req.body)
+});
+
 module.exports = {
   register,
   login,
@@ -120,4 +125,5 @@ module.exports = {
   resetPassword,
   sendVerificationEmail,
   verifyEmail,
+  verifyLoginStatus
 };

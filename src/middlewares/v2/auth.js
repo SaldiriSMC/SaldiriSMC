@@ -5,7 +5,6 @@ const { roleRights } = require('../../config/roles');
 const { Token } = require('../../models/v2/index');
 
 const verifyCallback = (req, resolve, reject, requiredRights) => async (err, user, info) => {
-  // console.log("call back for verify===>> ",err, info , user)
   const authToken = req.headers.authorization.split(' ')[1];
   const token = await Token.findOne({ where: { token: authToken } });
   if(token === null){
@@ -19,7 +18,6 @@ const verifyCallback = (req, resolve, reject, requiredRights) => async (err, use
 };
 
 const auth = (...requiredRights) => async (req, res, next) => {
-  console.log("i am in auth ",req, res, next)
   return new Promise((resolve, reject) => {
     passport.authenticate('jwt', { session: false }, verifyCallback(req, resolve, reject, requiredRights))(req, res, next)})
     .then(() => next())

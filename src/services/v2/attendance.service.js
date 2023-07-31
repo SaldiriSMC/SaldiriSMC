@@ -129,9 +129,7 @@ const updateWorkedHours = async (attendanceId, totalHours) => {
 //       if (!item.id) {
 //         await Time.create({ ...timeCondition, attendanceId: attendanceId });
 //       } else if (item.id && item.isUpdate) {
-//         console.log("id---------->>>>>>>>>>", item.id)
 //         const update = await Time.update(timeCondition, { where: { id: item.id } });
-//         console.log("update---------->>>>>>>>>>", update)
 //       } else if (item.id && item.isDeleted) {
 //         await Time.destroy({ where: { id: item.id } });
 //       }

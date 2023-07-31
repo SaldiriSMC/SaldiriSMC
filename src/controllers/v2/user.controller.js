@@ -32,7 +32,6 @@ const { callDBRoutine } = require('../../config/helperMethods');
         const key = req.get('X-Tenent-Key');
         const tenant = await Tenant.findOne({ where: { key: key } });
         const user = await userService.createUserByDepartmentAndDesignation(req.body, tenant.id);
-        console.log("user----------->>>>>>>>>>", user)
         if (user) {
           const emailArray = [{id: user.id,email: user.email}]
           const resetPasswordTokenArray = await tokenService.generateEmailIvitationToken(emailArray);
@@ -79,7 +78,6 @@ const { callDBRoutine } = require('../../config/helperMethods');
   });
 
   const updateUser = catchAsync(async (req, res) => {
-    console.log("update user api call--------------->>>>>>>")
     const user = await userService.updateUserById(req.body, req.params.userId.toString());
     response(res, "", "user updated successfully", 200)
   });

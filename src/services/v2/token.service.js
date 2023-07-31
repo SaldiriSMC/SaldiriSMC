@@ -100,13 +100,11 @@ const generateAuthTokens = async (user) => {
  */
 const generateResetPasswordToken = async (email) => {
   const user = await userService.getUserByEmail(email);
-  console.log("user------>", user)
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'No users found with this email');
   }
   const expires = moment().add(config.jwt.resetPasswordExpirationMinutes, 'minutes');
   const resetPasswordToken = generateToken(user.id, expires, tokenTypes.RESET_PASSWORD);
-  console.log("resetPasswordToken------->>>>>>>", resetPasswordToken)
   await saveToken(resetPasswordToken, "", user.id, expires, tokenTypes.RESET_PASSWORD);
   return resetPasswordToken;
 };

@@ -17,8 +17,7 @@ const checkRoles = (roles) => async (req, res, next) => {
       return new ApiError(httpStatus.UNAUTHORIZED, 'Token not found');
     }
   })
-    .then((res) => {
-      console.log(res);
+    .then(() => {
       next();
     })
     .catch((err) => {

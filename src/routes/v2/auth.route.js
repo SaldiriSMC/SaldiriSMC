@@ -13,7 +13,8 @@ router.post('/refresh-tokens', validate(authValidation.refreshTokens), authContr
 router.post('/forgot-password', validate(authValidation.forgotPassword), authController.forgotPassword);
 router.post('/reset-password', validate(authValidation.resetPassword), authController.resetPassword);
 router.post('/send-verification-email', auth(), authController.sendVerificationEmail);
-router.post('/verify-email', validate(authValidation.verifyEmail), authController.verifyEmail);
+router.post('/verify-email', validate(authValidation.verifyEmail), authController.verifyEmail)
+router.post('/verify-login-status', authController.verifyLoginStatus);
 
 module.exports = router;
 
@@ -311,4 +312,41 @@ module.exports = router;
  *             example:
  *               code: 401
  *               message: verify email failed
+ */
+
+
+
+/**
+ * @swagger
+ * /auth/verify-login-status:
+ *   post:
+ *     summary: Verify login status of user
+ *     description: Verify login status of user continously
+ *     tags: [Auth]
+ *     parameters:
+ *       - name: X-Tenent-Key
+ *         in: header
+ *         description: X-Tenent-Key
+ *         required: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               token:
+ *                 type: string
+ *               time:
+ *                 type: date
+ *             example: 
+ *               token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTY5MDc5NTk2MSwiZXhwIjoxNjkzMzg3OTYxfQ.uEMuKlaWypzX4htMFWyzWnV2fvO33vHAixCxJ6wQlBg
+ *               time: "6:37:49"
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       "204":
+ *         description: No content
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
  */

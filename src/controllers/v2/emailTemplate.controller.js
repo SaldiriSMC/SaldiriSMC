@@ -6,7 +6,6 @@ const he = require('he');
 const { Op } = require('sequelize');
 
 const getEmailTempate = catchAsync(async (req, res) => {
-    console.log("i am in controller for get ")
     const key = req.get('X-Tenent-Key');
     const tenant = await Tenant.findOne({ where: { key: key } });
     const emailTemplate = await EmailTemplate.findAll({ where: { [Op.or]: [{ tenantId: tenant.id }, { tenantId: null }] } });

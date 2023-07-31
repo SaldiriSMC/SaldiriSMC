@@ -7,7 +7,6 @@ const { Op } = require('sequelize');
 const getDesignation = catchAsync(async (req, res) => {
   const key = req.get('X-Tenent-Key');
   if (key) {
-    console.log('key majood ha------------->>>>>>>', key);
     const tenant = await Tenant.findOne({ where: { key: key } });
     const designation = await Designation.findAll({ where: { [Op.or]: [{ tenantId: tenant.id }, { tenantId: null }] } });
     if (designation === null) {
