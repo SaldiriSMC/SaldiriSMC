@@ -36,8 +36,11 @@ import { BrowserRouter, Routes, Route, Navigate ,Outlet } from 'react-router-dom
 import configureStore from "./store";
 import { Provider,useSelector } from "react-redux";
 import { FeedbackProvider } from "./context/FeedbackContext";
+import HackTimer from "./HackTimer";
 function App({data}) {
   var user = JSON.parse(localStorage.getItem("accessToken"))
+  const token = user?.data?.tokens?.access?.token
+  const userId = user?.data?.user?.id
   // const isLoading = useSelector((state) => state.loder?.isLoading);
   const store = configureStore();
   const url = window.location.href.split( '/' )[3];
@@ -50,20 +53,26 @@ useEffect(()=>{
 },[localStorage])
 
 useEffect(() => {
+  if (user){
   // Fetch data immediately when the component mounts
-  // fetchData();
+  fetchData();
 
   // Set up the interval to fetch data every 5 seconds
-  // const interval = setInterval(fetchData, 5000);
+  const interval = setInterval(fetchData, 120000);
 
   // Clean up the interval when the component unmounts
-  // return () => clearInterval(interval);
+  return () => clearInterval(interval);
+  }
+
 }, []); //
+
+
+
 
 
 const fetchData=()=>{
 
-  checkUserStatus()
+  checkUserStatus({token:token,id:userId})
   .then((response) => {
     if (response.data) {
 

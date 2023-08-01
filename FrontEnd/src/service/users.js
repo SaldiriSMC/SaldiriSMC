@@ -101,10 +101,11 @@ export const getAllModules = () => {
     })
 }
 
-export const checkUserStatus = () => {
+export const checkUserStatus = (payload) => {
     return instance({
         url: URls.userLogInStatus,
-        method: 'get',
+        method: 'post',
+        data: payload,
         ...headerWithToken
     })
 }

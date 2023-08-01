@@ -9,7 +9,7 @@ export const UserInviteConfig = [
   {
     id: "name",
     name: "name",
-    renderer: "Text",
+    renderer: "UserStatus",
     align: "left",
     label: "Name",
   },

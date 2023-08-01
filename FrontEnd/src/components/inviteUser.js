@@ -117,7 +117,10 @@ useEffect(()=>{
           disabled:((record.isSignedIn) || (!record.isSignedIn && ! record.is_token))
 
         },
-        name: record?.name,
+        name: {
+          name: record?.name,
+          isOnline:true
+        },
         designation: record?.designationName,
         department: record?.departmentname,
         action: {
