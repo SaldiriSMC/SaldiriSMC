@@ -228,7 +228,7 @@ const InviteUserModel = (props) => {
         getAllDesignation()
         .then((response) => {
           if (response.data) {
-            setDesignationList(response.data.data)
+            setDesignationList(response.data.data.filter(item=> item.designationName !=='CEO'))
           }
         })
         .catch((error) => console.log(error.message))
