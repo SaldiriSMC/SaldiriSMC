@@ -345,8 +345,18 @@ module.exports = router;
  *     security:
  *       - bearerAuth: []
  *     responses:
- *       "204":
- *         description: No content
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Auth'
+ *       "400":
+ *         $ref: '#/components/responses/Auth'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
  */

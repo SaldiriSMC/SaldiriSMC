@@ -887,6 +887,62 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@redis/bloom@npm:1.2.0":
+  version: 1.2.0
+  resolution: "@redis/bloom@npm:1.2.0"
+  peerDependencies:
+    "@redis/client": ^1.0.0
+  checksum: 8c214227287d6b278109098bca00afc601cf84f7da9c6c24f4fa7d3854b946170e5893aa86ed607ba017a4198231d570541c79931b98b6d50b262971022d1d6c
+  languageName: node
+  linkType: hard
+
+"@redis/client@npm:1.5.8":
+  version: 1.5.8
+  resolution: "@redis/client@npm:1.5.8"
+  dependencies:
+    cluster-key-slot: 1.1.2
+    generic-pool: 3.9.0
+    yallist: 4.0.0
+  checksum: ff4a6cbf4f132baad7e481cd4a60af7031a3528e290a646695a9a3be704ed5818f50e9676070c8bad5e4b18d99369b46fcdc052ef6c023fa2391be8696808ff1
+  languageName: node
+  linkType: hard
+
+"@redis/graph@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@redis/graph@npm:1.1.0"
+  peerDependencies:
+    "@redis/client": ^1.0.0
+  checksum: d3df807108a42929ed65269c691fe6ab7eda55de91318f02a22b2d637c1bfef8817fccd17025904f5a0be8cf1cea5941334ec9f10719336da5d8f1c54cd4997e
+  languageName: node
+  linkType: hard
+
+"@redis/json@npm:1.0.4":
+  version: 1.0.4
+  resolution: "@redis/json@npm:1.0.4"
+  peerDependencies:
+    "@redis/client": ^1.0.0
+  checksum: de07f9c37abed603dec352593eb69fc8a94475e7f86b4f65b9805394492d448a1e4181db74269d80eb9dba6f3ae8a41804204821db36bb801cd7c1e30ac7ec80
+  languageName: node
+  linkType: hard
+
+"@redis/search@npm:1.1.3":
+  version: 1.1.3
+  resolution: "@redis/search@npm:1.1.3"
+  peerDependencies:
+    "@redis/client": ^1.0.0
+  checksum: 5f82616d1a868ebaf6cce46a7b6f7f53f0e92a299958ccf6d3ea099687c2f309d586e0bec9f25aa5174301f8508b54ebbec8835c1642cdb67b8b4d2f81a15872
+  languageName: node
+  linkType: hard
+
+"@redis/time-series@npm:1.0.4":
+  version: 1.0.4
+  resolution: "@redis/time-series@npm:1.0.4"
+  peerDependencies:
+    "@redis/client": ^1.0.0
+  checksum: a5fca079deb04a2f204a7f9a375a6ff698a119d5dd53f7581fa8fd9e3bacacf1ecb0253b97fada484a012fea7a98014bc0f4f79707d4e92ff61c00318f2bfe04
+  languageName: node
+  linkType: hard
+
 "@sideway/address@npm:^4.1.3":
   version: 4.1.4
   resolution: "@sideway/address@npm:4.1.4"
@@ -1119,9 +1175,9 @@ __metadata:
   linkType: hard
 
 "@types/validator@npm:^13.7.17":
-  version: 13.7.17
-  resolution: "@types/validator@npm:13.7.17"
-  checksum: a827e480c09b957fe1e773e15a18e79930c546c21044ca99d9fb832268d85536cd3577391b6a3c6ebdb38eee244439056ebeed0886123e248d6b8be318c8374e
+  version: 13.9.0
+  resolution: "@types/validator@npm:13.9.0"
+  checksum: ff766e3241225b8e2dc06c90bf3a789bd24e44eb3b4cf534fdf67110615668e2bbf5d461ea42c6aec80bb0fe1dcd9624bcb3af699e3190a5e0a50b4ac24a3d9f
   languageName: node
   linkType: hard
 
@@ -2405,6 +2461,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cluster-key-slot@npm:1.1.2":
+  version: 1.1.2
+  resolution: "cluster-key-slot@npm:1.1.2"
+  checksum: be0ad2d262502adc998597e83f9ded1b80f827f0452127c5a37b22dfca36bab8edf393f7b25bb626006fb9fb2436106939ede6d2d6ecf4229b96a47f27edd681
+  languageName: node
+  linkType: hard
+
 "co@npm:^4.6.0":
   version: 4.6.0
   resolution: "co@npm:4.6.0"
@@ -2782,6 +2845,7 @@ __metadata:
     passport-jwt: ^4.0.0
     pm2: ^2.10.4
     prettier: ^2.0.5
+    redis: ^4.6.7
     sequelize: ^6.31.1
     sqlite3: ^5.1.6
     supertest: ^6.0.1
@@ -3341,12 +3405,12 @@ __metadata:
   linkType: hard
 
 "enquirer@npm:^2.3.5, enquirer@npm:^2.3.6":
-  version: 2.4.0
-  resolution: "enquirer@npm:2.4.0"
+  version: 2.4.1
+  resolution: "enquirer@npm:2.4.1"
   dependencies:
     ansi-colors: ^4.1.1
     strip-ansi: ^6.0.1
-  checksum: bbdecde92679ed847c751dc5337ff39ce0c32d85e76fb2e47245e831e9cc7f84c12bd35b70f7b1de9b9e1c730d90cccd04201e69f1ecf7986a7a70d8d39349db
+  checksum: f080f11a74209647dbf347a7c6a83c8a47ae1ebf1e75073a808bc1088eb780aa54075bfecd1bcdb3e3c724520edb8e6ee05da031529436b421b71066fcc48cb5
   languageName: node
   linkType: hard
 
@@ -3529,13 +3593,13 @@ __metadata:
   linkType: hard
 
 "eslint-config-prettier@npm:^8.1.0":
-  version: 8.8.0
-  resolution: "eslint-config-prettier@npm:8.8.0"
+  version: 8.9.0
+  resolution: "eslint-config-prettier@npm:8.9.0"
   peerDependencies:
     eslint: ">=7.0.0"
   bin:
     eslint-config-prettier: bin/cli.js
-  checksum: 1e94c3882c4d5e41e1dcfa2c368dbccbfe3134f6ac7d40101644d3bfbe3eb2f2ffac757f3145910b5eacf20c0e85e02b91293d3126d770cbf3dc390b3564681c
+  checksum: a675d0dabd76b700ef2d062b5ec6a634e105a8e8c070f95281fd2ccb614527fac60b4c758132058c50f0521fd19313f1f5be45ce9ebf081f2e5f77ae6eb7d8db
   languageName: node
   linkType: hard
 
@@ -4491,6 +4555,13 @@ __metadata:
   dependencies:
     is-property: ^1.0.2
   checksum: 652f083de206ead2bae4caf9c7eeb465e8d98c0b8ed2a29c6afc538cef0785b5c6eea10548f1e13cc586d3afd796c13c830c2cb3dc612ec2457b2aadda5f57c9
+  languageName: node
+  linkType: hard
+
+"generic-pool@npm:3.9.0":
+  version: 3.9.0
+  resolution: "generic-pool@npm:3.9.0"
+  checksum: 3d89e9b2018d2e3bbf44fec78c76b2b7d56d6a484237aa9daf6ff6eedb14b0899dadd703b5d810219baab2eb28e5128fb18b29e91e602deb2eccac14492d8ca8
   languageName: node
   linkType: hard
 
@@ -8145,9 +8216,9 @@ __metadata:
   linkType: hard
 
 "pg-connection-string@npm:^2.6.0":
-  version: 2.6.1
-  resolution: "pg-connection-string@npm:2.6.1"
-  checksum: 882344a47e1ecf3a91383e0809bf2ac48facea97fcec0358d6e060e1cbcb8737acde419b4c86f05da4ce4a16634ee50fff1d2bb787d73b52ccbfde697243ad8a
+  version: 2.6.2
+  resolution: "pg-connection-string@npm:2.6.2"
+  checksum: 22265882c3b6f2320785378d0760b051294a684989163d5a1cde4009e64e84448d7bf67d9a7b9e7f69440c3ee9e2212f9aa10dd17ad6773f6143c6020cebbcb5
   languageName: node
   linkType: hard
 
@@ -8637,6 +8708,20 @@ __metadata:
   dependencies:
     resolve: ^1.1.6
   checksum: fe76bf9c21875ac16e235defedd7cbd34f333c02a92546142b7911a0f7c7059d2e16f441fe6fb9ae203f459c05a31b2bcf26202896d89e390eda7514d5d2702b
+  languageName: node
+  linkType: hard
+
+"redis@npm:^4.6.7":
+  version: 4.6.7
+  resolution: "redis@npm:4.6.7"
+  dependencies:
+    "@redis/bloom": 1.2.0
+    "@redis/client": 1.5.8
+    "@redis/graph": 1.1.0
+    "@redis/json": 1.0.4
+    "@redis/search": 1.1.3
+    "@redis/time-series": 1.0.4
+  checksum: d48ff22269d9f22962b40ecd7623c10ad18a26aaffea0987cf80d9ba4f5d72708c6d2782062e6fc1f4255e6aa111b3356e48f636ef26aa0cc75864470d1e60f8
   languageName: node
   linkType: hard
 
@@ -9338,9 +9423,9 @@ __metadata:
   linkType: hard
 
 "signal-exit@npm:^4.0.1":
-  version: 4.0.2
-  resolution: "signal-exit@npm:4.0.2"
-  checksum: 41f5928431cc6e91087bf0343db786a6313dd7c6fd7e551dbc141c95bb5fb26663444fd9df8ea47c5d7fc202f60aa7468c3162a9365cbb0615fc5e1b1328fe31
+  version: 4.1.0
+  resolution: "signal-exit@npm:4.1.0"
+  checksum: 64c757b498cb8629ffa5f75485340594d2f8189e9b08700e69199069c8e3070fb3e255f7ab873c05dc0b3cec412aea7402e10a5990cb6a050bd33ba062a6c549
   languageName: node
   linkType: hard
 
@@ -10999,6 +11084,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"yallist@npm:4.0.0, yallist@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "yallist@npm:4.0.0"
+  checksum: 343617202af32df2a15a3be36a5a8c0c8545208f3d3dfbc6bb7c3e3b7e8c6f8e7485432e4f3b88da3031a6e20afa7c711eded32ddfb122896ac5d914e75848d5
+  languageName: node
+  linkType: hard
+
 "yallist@npm:^2.1.2":
   version: 2.1.2
   resolution: "yallist@npm:2.1.2"
@@ -11010,13 +11102,6 @@ __metadata:
   version: 3.1.1
   resolution: "yallist@npm:3.1.1"
   checksum: 48f7bb00dc19fc635a13a39fe547f527b10c9290e7b3e836b9a8f1ca04d4d342e85714416b3c2ab74949c9c66f9cebb0473e6bc353b79035356103b47641285d
-  languageName: node
-  linkType: hard
-
-"yallist@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "yallist@npm:4.0.0"
-  checksum: 343617202af32df2a15a3be36a5a8c0c8545208f3d3dfbc6bb7c3e3b7e8c6f8e7485432e4f3b88da3031a6e20afa7c711eded32ddfb122896ac5d914e75848d5
   languageName: node
   linkType: hard
 

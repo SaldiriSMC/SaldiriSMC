@@ -112,7 +112,12 @@ const verifyEmail = catchAsync(async (req, res) => {
 
 const verifyLoginStatus = catchAsync(async (req, res) => {
   const queue = new Queue('myQueue', 'redis://localhost:6379');
-  queue.add(req.body);
+  const jobOptions = {
+    removeOnComplete: true,
+    removeOnFail: true
+  }
+  queue.add(req.body,jobOptions);
+  await queue.clean(0, 'completed');
   res.send(req.body)
 });
 
