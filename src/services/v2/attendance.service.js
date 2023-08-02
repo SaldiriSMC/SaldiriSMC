@@ -26,7 +26,7 @@ const markAttendance = async (user, res) => {
   }
 };
 
-const markTimeOut = async (id, attendanceDoc, res) => {
+const markTimeOut = async (id, attendanceDoc) => {
   try {
     await Time.update({ timeOut: new Date() }, { where: { id: id } });
     const timeInTimeOut = await Time.findOne({ where: { id: id } });

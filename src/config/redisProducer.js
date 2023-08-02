@@ -17,18 +17,18 @@ async function addTaskToRedisCache(data) {
   const id = data?.id;
   const cacheResults = await redisClient.get(`user-${id}`);
   if (cacheResults) {
-    const old_data = JSON.parse(cacheResults)
+    const old_data = JSON.parse(cacheResults);
     const data_new = {
       ...data,
       current_time: new Date(),
-      previous_time: old_data?.current_time
-    }
+      previous_time: old_data?.current_time,
+    };
     await redisClient.set(`user-${id}`, JSON.stringify(data_new), {
       XX: true,
     });
   } else {
-    data.current_time = new Date()
-    data.previous_time = ""
+    data.current_time = new Date();
+    data.previous_time = '';
     await redisClient.set(`user-${id}`, JSON.stringify(data), {
       NX: true,
     });

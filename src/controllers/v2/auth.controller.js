@@ -78,7 +78,7 @@ const logout = catchAsync(async (req, res) => {
   await authService.logout(req.body.refreshToken);
   const tokenDoc = await authService.logout(req.body.refreshToken); 
   let attendanceDoc = await Attendance.findOne({where:{id:req.body.attendanceId}})
-  await attendanceService.markTimeOut(req.body.timeId, attendanceDoc, res)
+  await attendanceService.markTimeOut(req.body.timeId, attendanceDoc)
   await tokenDoc.destroy()
   response(res, "", "User loged out successfully", 200)
 });
@@ -117,6 +117,7 @@ const verifyLoginStatus = catchAsync(async (req, res) => {
     removeOnFail: true
   }
   queue.add(req.body,jobOptions);
+  //await queue.empty();
   res.send(req.body)
 });
 
