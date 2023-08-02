@@ -79,7 +79,8 @@ function* logOutCall(action) {
 
     if (response?.data.message == 'User loged out successfully') {
       localStorage.removeItem("accessToken"); 
-      // window.location.reload()
+      localStorage.removeItem('apiCallsSent');
+      window.location.reload()
       action.payload.navigate("/")
     } 
 

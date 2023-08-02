@@ -41,6 +41,8 @@ function App({data}) {
   var user = JSON.parse(localStorage.getItem("accessToken"))
   const token = user?.data?.tokens?.access?.token
   const userId = user?.data?.user?.id
+  const timeId = user?.data?.timeDoc?.id
+  const attendanceid = user?.data?.timeDoc?.attendanceId
   // const isLoading = useSelector((state) => state.loder?.isLoading);
   const store = configureStore();
   const url = window.location.href.split( '/' )[3];
@@ -73,13 +75,13 @@ useEffect(() => {
   fetchData();
 
   // Set up the interval to fetch data every 5 seconds
-  const interval = setInterval(fetchData, 120000);
+  const interval = setInterval(fetchData,120000);
 
   // Clean up the interval when the component unmounts
   return () => clearInterval(interval);
   }
   }
-}, []); //
+}, [localStorage]); //
 
 
 
@@ -87,7 +89,8 @@ useEffect(() => {
 
 const fetchData=()=>{
 
-  checkUserStatus({token:token,id:userId})
+  checkUserStatus({token:token,id:userId, attendanceId:attendanceid,
+    timeId:timeId})
   .then((response) => {
     if (response.data) {
       markAPICallsAsSent();
@@ -95,7 +98,10 @@ const fetchData=()=>{
     }
   })
   .catch((error) =>{
-
+    if (error.response.data.message === 'Please Provide Correct Tenant Key' || error.response.data.message === 'Please authenticate' ){
+      localStorage.removeItem("accessToken"); 
+      window.location.reload()
+    }
   })
   .finally(() => {
 

@@ -43,7 +43,7 @@ export default function TetentStatus() {
   const dispatch = useDispatch();
 
   const allRollsList = useSelector(
-    (state) => state?.tenetRolls?.allRollsdata?.data
+    (state) => state?.tenetRolls?.allRollsdata
   );
 
   const dataUpdate = useSelector(
@@ -112,7 +112,6 @@ export default function TetentStatus() {
   },[])
   
     const getAllUser=()=>{
-
       getAllModules()
       .then((response) => {
         if (response.data) {
@@ -133,6 +132,7 @@ export default function TetentStatus() {
 
   
     });
+   
   
     }
     const handleDeleteModel = () => {
@@ -215,7 +215,7 @@ export default function TetentStatus() {
          <MUITable
             
             column={statusConfig}
-            list={normalizeTableProgram(allRollsList ?? [])}
+            list={normalizeTableProgram(allRollsList?.data ? allRollsList?.data : [])}
 
           />
           <Grid

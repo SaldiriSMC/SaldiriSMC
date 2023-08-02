@@ -28,7 +28,7 @@ function* getUserList(action) {
 
      if (response?.status === 200) {     
        //navigate("/Login")
-       localStorage.setItem("data",JSON.stringify(response.data))
+      //  localStorage.setItem("data",JSON.stringify(response.data))
        yield put(getAllUserSuccess(response.data));
      }
    } catch (error) {

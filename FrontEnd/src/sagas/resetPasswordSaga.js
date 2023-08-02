@@ -20,7 +20,7 @@ function* emailVerificationCall(action) {
 
       if (response?.data?.message?.success) {     
         //navigate("/Login")
-        localStorage.setItem("data",JSON.stringify(response.data))
+        // localStorage.setItem("data",JSON.stringify(response.data))
         pushNotification(
           "We send the verification link on your email please check your email",
           "success",
@@ -71,7 +71,7 @@ function* emailVerificationCall(action) {
    const response = yield call(patchRequest, URls.emailStatus, action?.payload);
 
    if (response?.data?.message?.success) {     
-     localStorage.setItem("data",JSON.stringify(response.data))
+    //  localStorage.setItem("data",JSON.stringify(response.data))
      pushNotification(
        "Your email has been verified",
        "success",
