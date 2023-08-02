@@ -46,13 +46,28 @@ function App({data}) {
   const url = window.location.href.split( '/' )[3];
   const [loader, setLoader] = useState(false)
 
+  function areAPICallsAlreadySent() {
+    return localStorage.getItem('apiCallsSent') === 'true';
+  }
+  
+  // Function to mark API calls as sent
+  function markAPICallsAsSent() {
+    localStorage.setItem('apiCallsSent', 'true');
+  }
+// Function to remove API calls flag when the tab is closed
+function clearAPICallsFlagOnTabClose() {
+  localStorage.removeItem('apiCallsSent');
+}
 
+  // Attach the clearAPICallsFlagOnTabClose function to the beforeunload event
+window.addEventListener('beforeunload', clearAPICallsFlagOnTabClose);
 
 useEffect(()=>{
 
 },[localStorage])
 
 useEffect(() => {
+  if (!areAPICallsAlreadySent()) {
   if (user){
   // Fetch data immediately when the component mounts
   fetchData();
@@ -63,7 +78,7 @@ useEffect(() => {
   // Clean up the interval when the component unmounts
   return () => clearInterval(interval);
   }
-
+  }
 }, []); //
 
 
@@ -75,7 +90,7 @@ const fetchData=()=>{
   checkUserStatus({token:token,id:userId})
   .then((response) => {
     if (response.data) {
-
+      markAPICallsAsSent();
       
     }
   })

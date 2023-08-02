@@ -67,7 +67,7 @@ function Portfolio() {
   flexDirection: "column",
   justifyContent: "space-around"}}>
             <div className="portfolio-wrap">
-              <img src='/assets/portfolio/p3.png' className=" poltfolio-img" alt="website template image" />
+              <img src='/assets/portfolio/p3.png' className=" poltfolio-img w-100" alt="website template image" />
               <div className="portfolio-info">
           
                 <div>
@@ -76,7 +76,7 @@ function Portfolio() {
               </div>
             </div>
             <div className="portfolio-wrap mt-3">
-              <img src='/assets/portfolio/p4.png' className=" poltfolio-img" alt="website template image" />
+              <img src='/assets/portfolio/p4.png' className=" poltfolio-img w-100" alt="website template image" />
               <div className="portfolio-info">
           
                 <div>
