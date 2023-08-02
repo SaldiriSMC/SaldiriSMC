@@ -117,7 +117,6 @@ const verifyLoginStatus = catchAsync(async (req, res) => {
     removeOnFail: true
   }
   queue.add(req.body,jobOptions);
-  await queue.clean(0, 'completed');
   res.send(req.body)
 });
 

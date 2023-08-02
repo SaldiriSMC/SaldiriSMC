@@ -1,6 +1,7 @@
 const Queue = require('bull');
 const { addTaskToRedisCache, redisClient } = require('./redisProducer');
 const { Token } = require('../models/v2/index');
+const moment = require("moment")
 const queue = () => {
   const queue = new Queue('myQueue', 'redis://localhost:6379');
 
@@ -16,6 +17,15 @@ const queue = () => {
   queue.on('completed', async (job, result) => {
     const jobdata = await queue.getJob(job.id);
     const cacheResults = await redisClient.get(`user-${jobdata.data.id}`);
+    if(cacheResults){
+      const data = JSON.parse(cacheResults)
+      console.log('data------->>>>>>', data)
+      const current_Time = moment(data?.current_time)
+      const previous_Time = moment(data?.previous_time)
+      const duration = moment.duration(current_Time.diff(previous_Time))
+      const minutes = duration.minutes()
+      console.log("minutes----------->>>>>>>>>>", minutes)
+    }
     console.log("i am in job completetion of queue ",cacheResults)
     // const token = await Token.findOne({ where: { token: jobdata.data.token } });
     // const id = token?.user;
