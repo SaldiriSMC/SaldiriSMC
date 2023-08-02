@@ -7,21 +7,23 @@ const queue = () => {
 
   // Process the job when it's added to the queue
   queue.process(async (job) => {
-    console.log(`Processing job ${job.id}: ${job.data}`);
+    console.log(`Processing job ${job.id}: ${job.data.token}`);
      addTaskToRedisCache({ ...job.data, isOnline: true });
-    await new Promise((resolve) => setTimeout(resolve, 180000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     console.log(`Job ${job.id} completed.`);
   });
 
   // Event handler when a new job is added to the queue
   queue.on('completed', async (job, result) => {
     const jobdata = await queue.getJob(job.id);
-    const cacheResults = await redisClient.get(`user-${jobdata.data.id}`);
-    if(cacheResults){
-      const data = JSON.parse(cacheResults)
-      console.log('data------->>>>>>', data)
-      const current_Time = moment(data?.current_time)
-      const previous_Time = moment(data?.previous_time)
+    console.log()
+    const cacheResults = await redisClient.get(`user-${jobdata?.data.id}`);
+    console.log(cacheResults)
+    const cacheObject = JSON.parse(cacheResults)
+    console.log('data------->>>>>>', cacheObject)
+    if(cacheObject){
+      const current_Time = moment(cacheObject?.current_time)
+      const previous_Time = moment(cacheObject?.previous_time)
       const duration = moment.duration(current_Time.diff(previous_Time))
       const minutes = duration.minutes()
       console.log("minutes----------->>>>>>>>>>", minutes)
