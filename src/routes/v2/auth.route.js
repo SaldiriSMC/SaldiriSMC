@@ -15,6 +15,7 @@ router.post('/reset-password', validate(authValidation.resetPassword), authContr
 router.post('/send-verification-email', auth(), authController.sendVerificationEmail);
 router.post('/verify-email', validate(authValidation.verifyEmail), authController.verifyEmail)
 router.post('/verify-login-status', auth(), authController.verifyLoginStatus);
+router.get('/get-queues', auth(), authController.getQueues);
 
 module.exports = router;
 
@@ -342,6 +343,38 @@ module.exports = router;
  *             example: 
  *               token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTY5MDc5NTk2MSwiZXhwIjoxNjkzMzg3OTYxfQ.uEMuKlaWypzX4htMFWyzWnV2fvO33vHAixCxJ6wQlBg
  *               time: "6:37:49"
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Auth'
+ *       "400":
+ *         $ref: '#/components/responses/Auth'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+
+/**
+ * @swagger
+ * /auth/get-queues:
+ *   get:
+ *     summary: get all queues
+ *     description: get all queues
+ *     tags: [Auth]
+ *     parameters:
+ *       - name: X-Tenent-Key
+ *         in: header
+ *         description: X-Tenent-Key
+ *         required: true
  *     security:
  *       - bearerAuth: []
  *     responses:

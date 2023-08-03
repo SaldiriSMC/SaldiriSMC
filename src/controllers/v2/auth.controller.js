@@ -116,11 +116,17 @@ const verifyLoginStatus = catchAsync(async (req, res) => {
     removeOnComplete: true,
     removeOnFail: true
   }
-  queue.add(req.body,jobOptions);
-  //await queue.empty();
+  await queue.add(req.body,jobOptions);
   res.send(req.body)
 });
-
+const getQueues = catchAsync(async (req, res) =>{
+  const queue = new Queue('myQueue', 'redis://localhost:6379');
+  const processingJobs = await queue.getJobs(['active']);
+  const completedJobs = await queue.getJobs(['completed']);
+  const allJobs = {"prcessingQueue":processingJobs, "processedQueue":completedJobs };
+  
+  response(res, allJobs, "Get Queues data successfully", 200)
+})
 module.exports = {
   register,
   login,
@@ -130,5 +136,6 @@ module.exports = {
   resetPassword,
   sendVerificationEmail,
   verifyEmail,
-  verifyLoginStatus
+  verifyLoginStatus,
+  getQueues
 };
