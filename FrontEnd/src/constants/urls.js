@@ -20,6 +20,7 @@ const URLs = {
   userLogInStatus: "/auth/verify-login-status",
   emailTemplate: "email-templates",
   tokenRefrash:'/auth/refresh-tokens',
+  getQueues:"/auth/get-queues",
   user:'/users',
   course: "courses/all/",
   topics: "courses/topics/",

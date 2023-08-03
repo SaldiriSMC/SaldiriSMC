@@ -166,40 +166,73 @@ export const statusConfig = [
     label: "Actions",
   },
 ];
-export const queuesConfig = [
+
+export const processingQueuesConfig = [
   {
-    id: "name",
-    name: "name",
+    id: "date",
+    name: "date",
     renderer: "Text",
     align: "left",
-    label: "Status Name",
+    label: "Date",
   },
   {
-    id: "type",
-    name: "name",
+    id: "id",
+    name: "id",
     renderer: "Text",
     align: "left",
-    label: "Type",
+    label: "id",
   },
   {
-    id: "timeLeft",
-    name: "timeLeft",
+    id: "userId",
+    name: "userId",
     renderer: "Text",
     align: "left",
-    label: "Time Left",
+    label: "userId",
   },
   {
-    id: "timePass",
-    name: "timePass",
+    id: "processedOn",
+    name: "processedOn",
     renderer: "Text",
     align: "left",
-    label: "Time Pass",
+    label: "Processed On",
+  },
+];
+
+
+export const processedQueuesConfig = [
+  {
+    id: "date",
+    name: "date",
+    renderer: "Text",
+    align: "left",
+    label: "Date",
   },
   {
-    id: "Status",
-    name: "Status",
+    id: "id",
+    name: "id",
     renderer: "Text",
     align: "left",
-    label: "Status",
+    label: "id",
+  },
+  {
+    id: "userId",
+    name: "userId",
+    renderer: "Text",
+    align: "left",
+    label: "userId",
+  },
+  {
+    id: "processedOn",
+    name: "processedOn",
+    renderer: "Text",
+    align: "left",
+    label: "Processed On",
+  },
+  {
+    id: "finishedOn",
+    name: "finishedOn",
+    renderer: "Text",
+    align: "left",
+    label: "Finished On",
   },
 ];

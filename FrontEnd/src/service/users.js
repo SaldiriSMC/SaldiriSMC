@@ -109,3 +109,11 @@ export const checkUserStatus = (payload) => {
         ...headerWithToken
     })
 }
+
+export const getAllQueues = () => {
+    return instance({
+        url: URls.getQueues,
+        method: 'get',
+        ...headerWithToken
+    })
+}
