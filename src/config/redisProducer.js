@@ -11,6 +11,8 @@ let redisClient = redis.createClient(redisPort, redisHost);
 
   await redisClient.connect();
 })();
+
+
 // Function to add a task to the Redis queue
 async function addTaskToRedisCache(data) {
   // const token = await Token.findOne({ where: { token: data.token } });

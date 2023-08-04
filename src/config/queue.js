@@ -3,9 +3,7 @@ const { addTaskToRedisCache, redisClient } = require('./redisProducer');
 const { Token, Attendance } = require('../models/v2/index');
 const { attendanceService } = require('../services/v2');
 const moment = require('moment');
-
-const queue = async () => {
-  const queue = new Queue('myQueue', 'redis://localhost:6379', {limiter: {
+const myQueue = new Queue('myQueue', 'redis://localhost:6379', {limiter: {
     max: 1000 , // Adjust this value based on your needs
     duration: 5000, // Adjust this value based on your needs
   },
@@ -14,14 +12,16 @@ const queue = async () => {
       maxCompletedJobs: 1000, // Adjust this value based on your needs
     },
   },});
-  queue.process(200, async (job) => {
+const queue = async () => {
+  
+  myQueue.process(200, async (job) => {
     console.log(`Processing job ${job.id}: ${job.data.token}`);
     await addTaskToRedisCache({ ...job.data, isOnline: true });
     await new Promise((resolve) => setTimeout(resolve, 150000));
   });
 
   // Event handler when a new job is added to the queue
-  queue.on('completed', async (job, result) => {
+  myQueue.on('completed', async (job, result) => {
 
     const cacheResults = await redisClient.get(`user-${job?.data.id}`);
     const cacheObject = JSON.parse(cacheResults);
@@ -40,12 +40,12 @@ const queue = async () => {
         let attendanceDoc = await Attendance.findOne({ where: { id: job?.data?.attendanceId } });
         await attendanceService.markTimeOut(job?.data?.timeId, attendanceDoc);
       }
-      job.finished()
+      await job.finished( )
+      //await myQueue.close()
     }
   });
-
   // Event handler when a job failed
-  queue.on('failed', (job, err) => {
+  myQueue.on('failed', (job, err) => {
     console.error(`Job ${job.id} failed with error: ${err.message}`);
   });
 
@@ -53,4 +53,4 @@ const queue = async () => {
 
 };
 
-module.exports = { queue };
+module.exports = { queue, myQueue };

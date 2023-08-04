@@ -4,7 +4,7 @@ const { User, Tenant, Attendance, Token, Time, Module } = require('../../models/
 const { authService, userService, tokenService, emailService, tenantService, attendanceService } = require('../../services/v2');
 const {response} = require("../../utils/response");
 const { tokenTypes } = require('../../config/tokens');
-const Queue = require('bull');
+const { myQueue } = require("../../config/queue")
 const register = catchAsync(async (req, res) => {
   try {
     const alias = await Tenant.findOne({ where: { alias: req.body.alias } });
@@ -111,28 +111,18 @@ const verifyEmail = catchAsync(async (req, res) => {
 });
 
 const verifyLoginStatus = catchAsync(async (req, res) => {
-  const queue = new Queue('myQueue', 'redis://localhost:6379');
   const jobOptions = {
-    removeOnComplete: true,
-    removeOnFail: true
+    // removeOnComplete: true,
+    // removeOnFail: true
   }
-  await queue.add(req.body,jobOptions);
+  await myQueue.add(req.body,jobOptions);
   res.send(req.body)
 });
 const getQueues = catchAsync(async (req, res) =>{
-  const queue = new Queue('myQueue', 'redis://localhost:6379',{limiter: {
-    max: 1000, // Adjust this value based on your needs
-    duration: 5000, // Adjust this value based on your needs
-  },
-  store: {
-    redis: {
-      maxCompletedJobs: 1000, // Adjust this value based on your needs
-    },
-  },});
-  const processingJobs = await queue.getJobs(['active']);
-  const completedJobs = await queue.getCompleted();
-  const failedJobs = await queue.getFailed();
-  const delayedJobs = await queue.getDelayed(); 
+  const processingJobs = await myQueue.getJobs(['active']);
+  const completedJobs = await myQueue.getCompleted();
+  const failedJobs = await myQueue.getFailed();
+  const delayedJobs = await myQueue.getDelayed(); 
   const allJobs = {"prcessingQueue":processingJobs, "processedQueue":completedJobs, "failedQueue":failedJobs, "delayedQueue":delayedJobs};
   response(res, allJobs, "Get Queues data successfully", 200)
 })
