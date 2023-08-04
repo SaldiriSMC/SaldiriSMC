@@ -5,7 +5,15 @@ const { attendanceService } = require('../services/v2');
 const moment = require('moment');
 
 const queue = async () => {
-  const queue = new Queue('myQueue', 'redis://localhost:6379');
+  const queue = new Queue('myQueue', 'redis://localhost:6379', {limiter: {
+    max: 1000 , // Adjust this value based on your needs
+    duration: 5000, // Adjust this value based on your needs
+  },
+  store: {
+    redis: {
+      maxCompletedJobs: 1000, // Adjust this value based on your needs
+    },
+  },});
   queue.process(200, async (job) => {
     console.log(`Processing job ${job.id}: ${job.data.token}`);
     await addTaskToRedisCache({ ...job.data, isOnline: true });
@@ -32,6 +40,7 @@ const queue = async () => {
         let attendanceDoc = await Attendance.findOne({ where: { id: job?.data?.attendanceId } });
         await attendanceService.markTimeOut(job?.data?.timeId, attendanceDoc);
       }
+      job.finished()
     }
   });
 

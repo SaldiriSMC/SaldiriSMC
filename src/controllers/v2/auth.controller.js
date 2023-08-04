@@ -120,11 +120,20 @@ const verifyLoginStatus = catchAsync(async (req, res) => {
   res.send(req.body)
 });
 const getQueues = catchAsync(async (req, res) =>{
-  const queue = new Queue('myQueue', 'redis://localhost:6379');
+  const queue = new Queue('myQueue', 'redis://localhost:6379',{limiter: {
+    max: 1000, // Adjust this value based on your needs
+    duration: 5000, // Adjust this value based on your needs
+  },
+  store: {
+    redis: {
+      maxCompletedJobs: 1000, // Adjust this value based on your needs
+    },
+  },});
   const processingJobs = await queue.getJobs(['active']);
-  const completedJobs = await queue.getJobs(['completed']);
-  const allJobs = {"prcessingQueue":processingJobs, "processedQueue":completedJobs };
-  
+  const completedJobs = await queue.getCompleted();
+  const failedJobs = await queue.getFailed();
+  const delayedJobs = await queue.getDelayed(); 
+  const allJobs = {"prcessingQueue":processingJobs, "processedQueue":completedJobs, "failedQueue":failedJobs, "delayedQueue":delayedJobs};
   response(res, allJobs, "Get Queues data successfully", 200)
 })
 module.exports = {

@@ -22,7 +22,6 @@ const markAttendance = async (user, res) => {
     return timeDoc;
   } catch (err) {
     console.log("err---------->>>>>>",err)
-    //res.send(err);
   }
 };
 
