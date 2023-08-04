@@ -53,7 +53,6 @@ export default function Queues() {
 
   const [value, setValue] = React.useState("one");
   const [reload, setReload] = React.useState(0);
-  console.log(value)
   const handleChangeTab = (event, newValue) => {
     setValue(newValue);
     setRowsPerPage(rowsPerPageOptions[0])
@@ -95,7 +94,7 @@ export default function Queues() {
   }, [queues,value]);
 
 
-console.log("totalRecords-------------->>>>>>>>>.",totalRecords)
+
 
   const normalizeTableProgram = (source, value) => {
     const result = [];
@@ -124,7 +123,7 @@ console.log("totalRecords-------------->>>>>>>>>.",totalRecords)
     });
     }
     if (value === "three"){
-      source?.delayedQueue.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      source?.delayedQueue?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     .forEach((record, index) => {
       result.push({
         date: record.processedOn ? new Date(record.processedOn).toLocaleDateString() : "-",
