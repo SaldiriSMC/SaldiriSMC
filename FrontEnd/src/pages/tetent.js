@@ -41,8 +41,9 @@ export default function PersistentDrawerLeft() {
   };
   const dispatch = useDispatch();
   const allRollsList = useSelector(
-    (state) => state?.tenetRolls?.allRollsdata?.data
+    (state) => state?.tenetRolls?.allRollsdata
   );
+
   const dataUpdate = useSelector(
     (state) => state?.tenetRolls?.dataUpdate
   );
@@ -168,7 +169,7 @@ const addRollFun =()=>{
          <MUITable
             
             column={designationConfig}
-            list={normalizeTableProgram(allRollsList ?? [])}
+            list={normalizeTableProgram(allRollsList?.data ? allRollsList?.data : [])}
 
           />
           <Grid

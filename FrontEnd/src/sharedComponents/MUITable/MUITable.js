@@ -141,7 +141,7 @@ const MUITable = (props) => {
                 <TablePagination
                   className={classes.paginationWrapper}
                   labelRowsPerPage="Rows per page"
-                  rowsPerPageOptions={[5, 10, 20]}
+                  rowsPerPageOptions={pagination.rowsPerPageOptions}
                   dir="ltr"
                   count={pagination.totalRecords || 0}
                   rowsPerPage={pagination.pageSize}

@@ -180,7 +180,7 @@ export const processingQueuesConfig = [
     name: "id",
     renderer: "Text",
     align: "left",
-    label: "id",
+    label: "Id",
   },
   {
     id: "userId",
@@ -212,7 +212,7 @@ export const processedQueuesConfig = [
     name: "id",
     renderer: "Text",
     align: "left",
-    label: "id",
+    label: "Id",
   },
   {
     id: "userId",

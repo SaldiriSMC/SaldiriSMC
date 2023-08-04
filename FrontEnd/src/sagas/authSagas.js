@@ -86,7 +86,7 @@ function* logOutCall(action) {
 
     if (response?.data.message == 'Token Not found' ){
       localStorage.removeItem("accessToken"); 
-      // window.location.reload()
+      window.location.reload()
       action.payload.navigate("/")
     }
   } catch (error) {
