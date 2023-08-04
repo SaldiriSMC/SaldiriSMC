@@ -104,6 +104,7 @@ export default function Queues() {
         result.push({
           date: record.processedOn ? new Date(record.processedOn).toLocaleDateString() : "-",
           id: record?.id ? record?.id : "-",
+          name: record?.data?.name ? record?.data?.name : "-",
           userId: record.data.id ? record.data.id : "-",
           processedOn: record.processedOn ? `${ new Date(record.processedOn).toLocaleTimeString()} ${new Date(record.processedOn).toLocaleDateString()}` : "-",
 
@@ -116,6 +117,7 @@ export default function Queues() {
       result.push({
         date: record.processedOn ? new Date(record.processedOn).toLocaleDateString() : "-",
         id: record?.id ? record?.id : "-",
+        name: record?.data?.name ? record?.data?.name : "-",
         userId: record.data.id ? record.data.id : "-",
         processedOn: record.processedOn ? `${ new Date(record.processedOn).toLocaleTimeString()} ${new Date(record.processedOn).toLocaleDateString()}` : "-",
         finishedOn: record.finishedOn ? `${ new Date(record.finishedOn).toLocaleTimeString()} ${new Date(record.finishedOn).toLocaleDateString()}` : "-",
@@ -128,6 +130,7 @@ export default function Queues() {
       result.push({
         date: record.processedOn ? new Date(record.processedOn).toLocaleDateString() : "-",
         id: record?.id ? record?.id : "-",
+        name: record?.data?.name ? record?.data?.name : "-",
         userId: record.data.id ? record.data.id : "-",
         processedOn: record.processedOn ? `${ new Date(record.processedOn).toLocaleTimeString()} ${new Date(record.processedOn).toLocaleDateString()}` : "-",
         finishedOn: record.finishedOn ? `${ new Date(record.finishedOn).toLocaleTimeString()} ${new Date(record.finishedOn).toLocaleDateString()}` : "-",

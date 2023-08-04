@@ -41,9 +41,12 @@ function App({data}) {
   var user = JSON.parse(localStorage.getItem("accessToken"))
   const token = user?.data?.tokens?.access?.token
   const userId = user?.data?.user?.id
+  const Name = user?.data?.user?.name
   const timeId = user?.data?.timeDoc?.id
   const attendanceid = user?.data?.timeDoc?.attendanceId
   // const isLoading = useSelector((state) => state.loder?.isLoading);
+
+  console.log("Name--------------",Name)
   const store = configureStore();
   const url = window.location.href.split( '/' )[3];
   const [loader, setLoader] = useState(false)
@@ -77,6 +80,7 @@ useEffect(() => {
   // Function to fetch data from the API
   const fetchData = () => {
     checkUserStatus({token:token,id:userId, attendanceId:attendanceid,
+      name:Name,
       timeId:timeId})
     .then((response) => {
       if (response.data) {

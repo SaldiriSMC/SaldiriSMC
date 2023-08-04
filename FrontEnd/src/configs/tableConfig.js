@@ -183,6 +183,13 @@ export const processingQueuesConfig = [
     label: "Id",
   },
   {
+    id: "name",
+    name: "name",
+    renderer: "Text",
+    align: "left",
+    label: "User Name",
+  },
+  {
     id: "userId",
     name: "userId",
     renderer: "Text",
@@ -196,6 +203,7 @@ export const processingQueuesConfig = [
     align: "left",
     label: "Processed On",
   },
+
 ];
 
 
@@ -213,6 +221,13 @@ export const processedQueuesConfig = [
     renderer: "Text",
     align: "left",
     label: "Id",
+  },
+  {
+    id: "name",
+    name: "name",
+    renderer: "Text",
+    align: "left",
+    label: "User Name",
   },
   {
     id: "userId",
@@ -257,6 +272,13 @@ export const faildQueuesConfig = [
     renderer: "Text",
     align: "left",
     label: "Id",
+  },
+  {
+    id: "name",
+    name: "name",
+    renderer: "Text",
+    align: "left",
+    label: "User Name",
   },
   {
     id: "userId",
