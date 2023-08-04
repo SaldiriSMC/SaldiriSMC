@@ -31,7 +31,7 @@ export default function Queues() {
   console.log('queues------->>>>>>>', queues)
 
   const dispatch = useDispatch();
-  const rowsPerPageOptions = [5, 10, 25]; 
+  const rowsPerPageOptions = [5, 10, 20]; 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
 
@@ -103,7 +103,7 @@ console.log("totalRecords-------------->>>>>>>>>.",totalRecords)
           date: record.processedOn ? new Date(record.processedOn).toLocaleDateString() : "-",
           id: record?.id ? record?.id : "-",
           userId: record.data.id ? record.data.id : "-",
-          processedOn: record.processedOn ? new Date(record.processedOn).toLocaleTimeString() : "-",
+          processedOn: record.processedOn ? `${ new Date(record.processedOn).toLocaleTimeString()} ${new Date(record.processedOn).toLocaleDateString()}` : "-",
 
         });
       });
@@ -114,8 +114,8 @@ console.log("totalRecords-------------->>>>>>>>>.",totalRecords)
         date: record.processedOn ? new Date(record.processedOn).toLocaleDateString() : "-",
         id: record?.id ? record?.id : "-",
         userId: record.data.id ? record.data.id : "-",
-        processedOn: record.processedOn ? new Date(record.processedOn).toLocaleTimeString() : "-",
-        finishedOn: record.finishedOn ? new Date(record.finishedOn).toLocaleDateString() : "-",
+        processedOn: record.processedOn ? `${ new Date(record.processedOn).toLocaleTimeString()} ${new Date(record.processedOn).toLocaleDateString()}` : "-",
+        finishedOn: record.finishedOn ? `${ new Date(record.finishedOn).toLocaleTimeString()} ${new Date(record.finishedOn).toLocaleDateString()}` : "-",
       });
     });
     }
