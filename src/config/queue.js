@@ -9,7 +9,7 @@ const queue = async () => {
   queue.process(100, async (job) => {
     console.log(`Processing job ${job.id}: ${job.data.token}`);
     await addTaskToRedisCache({ ...job.data, isOnline: true });
-    await new Promise((resolve) => setTimeout(resolve, 90000));
+    await new Promise((resolve) => setTimeout(resolve, 150000));
   });
 
   // Event handler when a new job is added to the queue
@@ -39,7 +39,9 @@ const queue = async () => {
   queue.on('failed', (job, err) => {
     console.error(`Job ${job.id} failed with error: ${err.message}`);
   });
+
   console.log('Queue server started.');
+
 };
 
 module.exports = { queue };
