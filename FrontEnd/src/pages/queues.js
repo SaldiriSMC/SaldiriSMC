@@ -93,9 +93,11 @@ export default function Queues() {
       }
     }
   }, [dataUpdate, values.modulesId]);
-  useEffect(async()=>{
-    const queues = await getAllQueues()
-    setQueues(queues.data)
+  useEffect(()=>{
+    getAllQueues().then((res) =>{
+      setQueues(res.data)
+    })
+    
   }, [])
   const normalizeTableProgram = (source, value) => {
     const result = [];

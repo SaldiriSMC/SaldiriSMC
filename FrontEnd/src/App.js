@@ -75,7 +75,7 @@ useEffect(() => {
   fetchData();
 
   // Set up the interval to fetch data every 5 seconds
-  const interval = setInterval(fetchData,60000);
+  const interval = setInterval(fetchData,120000);
 
   // Clean up the interval when the component unmounts
   return () => clearInterval(interval);
@@ -94,7 +94,6 @@ const fetchData=()=>{
   .then((response) => {
     if (response.data) {
       markAPICallsAsSent();
-      
     }
   })
   .catch((error) =>{
