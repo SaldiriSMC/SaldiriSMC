@@ -114,7 +114,7 @@ export default function TetentStatus() {
     const getAllUser=()=>{
       getAllModules()
       .then((response) => {
-        if (response.data) {
+        if (response?.data) {
           setallmodulesList(response.data.data)
           if (response.data.data.length > 0){
             setFieldValue('modulesId',response.data.data[0].id)
@@ -123,7 +123,7 @@ export default function TetentStatus() {
         }
       })
       .catch((error) =>{
-        if (error.response.data.message === 'Please Provide Correct Tenant Key' || error.response.data.message === 'Please authenticate' ){
+        if (error?.response?.data?.message === 'Please Provide Correct Tenant Key' || error?.response?.data?.message === 'Please authenticate' ){
           localStorage.removeItem("accessToken"); 
           window.location.reload()
         }

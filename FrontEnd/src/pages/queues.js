@@ -68,7 +68,7 @@ export default function Queues() {
       try {
         const queues = await getAllQueues();
         setQueues(queues.data);
-        setTotalRecords(queues?.data?.data.prcessingQueue.length);
+      
       } catch (error) {
         // Handle any error that occurred during the API call
         console.error('Error fetching queues:', error);
@@ -78,6 +78,19 @@ export default function Queues() {
     fetchData(); // Call the fetchData function to fetch data when the component mounts
   }, []);
   
+
+  useEffect(() => {
+    if(value === "one"){
+      setTotalRecords(queues?.data?.prcessingQueue?.length);
+    } else{
+      console.log("totalRecords----2222222222222222222---------->>>>>>>>>.",totalRecords)
+      setTotalRecords(queues?.data?.processedQueue?.length);
+    }
+
+  }, [queues,value]);
+
+
+console.log("totalRecords-------------->>>>>>>>>.",totalRecords)
 
   const normalizeTableProgram = (source, value) => {
     const result = [];
@@ -154,7 +167,7 @@ export default function Queues() {
             </Tabs>
             <br></br>
             <MUITable column={value === "one" ? processingQueuesConfig : processedQueuesConfig } list={normalizeTableProgram(queues?.data, value)} 
-             pagination={{
+          pagination={{
               totalRecords: totalRecords,
               pageNumber: page,
               pageSize: rowsPerPage,
