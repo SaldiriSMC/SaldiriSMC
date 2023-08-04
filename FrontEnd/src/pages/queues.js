@@ -15,6 +15,7 @@ import {
   updateRoll,
 } from "../actions/AddRols";
 import { styled, useTheme } from "@mui/material/styles";
+import CachedIcon from '@mui/icons-material/Cached';
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";
@@ -56,6 +57,7 @@ export default function Queues() {
 
 
   const [value, setValue] = React.useState("one");
+  const [reload, setReload] = React.useState(0);
   console.log(value)
   const handleChangeTab = (event, newValue) => {
     setValue(newValue);
@@ -76,7 +78,7 @@ export default function Queues() {
     };
   
     fetchData(); // Call the fetchData function to fetch data when the component mounts
-  }, []);
+  }, [reload]);
   
 
   useEffect(() => {
@@ -157,6 +159,7 @@ console.log("totalRecords-------------->>>>>>>>>.",totalRecords)
             sm={12}
             md={6}
           >
+            <div style={{display:"flex",justifyContent:'space-between'}} >
             <Tabs
               value={value}
               onChange={handleChangeTab}
@@ -165,7 +168,15 @@ console.log("totalRecords-------------->>>>>>>>>.",totalRecords)
               <Tab value="one" label="Processing Queue" wrapped />
               <Tab value="two" label="Processed Queue" />
             </Tabs>
-            <br></br>
+           
+            <div style={{display:"flex", justifyContent:"flex-end"}}>
+
+<IconButton onClick={()=>setReload(reload+1)} sx={{ml:1}}  type="submit"  size="medium" style={{backgroundColor:"#0075FF", color:"white",marginBottom:10}} >
+<CachedIcon />
+</IconButton> 
+</div>
+</div>
+<br></br>
             <MUITable column={value === "one" ? processingQueuesConfig : processedQueuesConfig } list={normalizeTableProgram(queues?.data, value)} 
           pagination={{
               totalRecords: totalRecords,
