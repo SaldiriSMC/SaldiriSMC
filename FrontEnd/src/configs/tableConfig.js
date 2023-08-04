@@ -180,7 +180,14 @@ export const processingQueuesConfig = [
     name: "id",
     renderer: "Text",
     align: "left",
-    label: "id",
+    label: "Id",
+  },
+  {
+    id: "name",
+    name: "name",
+    renderer: "Text",
+    align: "left",
+    label: "User Name",
   },
   {
     id: "userId",
@@ -196,6 +203,7 @@ export const processingQueuesConfig = [
     align: "left",
     label: "Processed On",
   },
+
 ];
 
 
@@ -212,7 +220,14 @@ export const processedQueuesConfig = [
     name: "id",
     renderer: "Text",
     align: "left",
-    label: "id",
+    label: "Id",
+  },
+  {
+    id: "name",
+    name: "name",
+    renderer: "Text",
+    align: "left",
+    label: "User Name",
   },
   {
     id: "userId",
@@ -234,5 +249,49 @@ export const processedQueuesConfig = [
     renderer: "Text",
     align: "left",
     label: "Finished On",
+  },
+];
+export const faildQueuesConfig = [
+  {
+    id: "reason",
+    name: "reason",
+    renderer: "Text",
+    align: "left",
+    label: "Reason",
+  },
+  {
+    id: "date",
+    name: "date",
+    renderer: "Text",
+    align: "left",
+    label: "Date",
+  },
+  {
+    id: "id",
+    name: "id",
+    renderer: "Text",
+    align: "left",
+    label: "Id",
+  },
+  {
+    id: "name",
+    name: "name",
+    renderer: "Text",
+    align: "left",
+    label: "User Name",
+  },
+  {
+    id: "userId",
+    name: "userId",
+    renderer: "Text",
+    align: "left",
+    label: "userId",
+  },
+  {
+    id: "processedOn",
+    name: "processedOn",
+    renderer: "Text",
+    align: "left",
+    label: "Processed On",
   },
 ];

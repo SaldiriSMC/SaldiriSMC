@@ -38,7 +38,7 @@ const AttendanceAdjusment = () => {
   const userRole =  user?.data?.user?.role
   const userId =  user?.data?.user?.id
   const data = useSelector((state) => state.attendance?.allUsers?.data);
-  const attendanceData = useSelector((state) => state?.attendance?.attendance?.data);
+  const attendanceData = useSelector((state) => state?.attendance?.attendance);
   const attendanceRecord = useSelector((state)=> state?.attendance?.data?.results)
   useEffect(()=>{
     dispatch(
@@ -321,7 +321,7 @@ const AttendanceAdjusment = () => {
       
          <MUITable
             column={ userRole === 'employee' ? UserAttendanceeEmpolyeConfig : UserAttendanceeConfig}
-            list={normalizeTableProgram(attendanceData ?? [])}
+            list={normalizeTableProgram(attendanceData?.data ? attendanceData?.data : [])}
 
           />
           <Grid

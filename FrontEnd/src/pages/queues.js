@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import MUITable from "../sharedComponents/MUITable";
-import { processedQueuesConfig, processingQueuesConfig } from "../configs/tableConfig";
+import { processedQueuesConfig, processingQueuesConfig, faildQueuesConfig } from "../configs/tableConfig";
 import AddIcon from "@mui/icons-material/Add";
 import { loderTrue, loderFalse } from "../actions/Auth";
 import { useFormik } from "formik";
@@ -14,140 +14,160 @@ import {
   deleteRoll,
   updateRoll,
 } from "../actions/AddRols";
-import MUITextField from "../sharedComponents/textField";
-import { getAllModules } from "../service/users";
 import { styled, useTheme } from "@mui/material/styles";
+import CachedIcon from '@mui/icons-material/Cached';
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";
 import Header from "../components/navBar";
 import Footer from "../components/footer";
 import SideMenu from "../pages/sideMenu";
-import { rollStatusSechmea } from "../Yup Schema";
-import DeleteModal from "../sharedComponents/deleteModal";
-import UpdateModel from "../sharedComponents/tenentModel";
 import {
   getAllQueues,
 } from "../service/users";
 export default function Queues() {
   const theme = useTheme();
-
-  const [action, setAction] = React.useState(null);
-  const [showDeleteModal, setShowDeleteModal] = React.useState(false);
-  const [showUpdateModal, setShowUpdateModal] = React.useState(false);
-  const [userDeleteId, setUserDeleteId] = React.useState(null);
-  const [allmodulesList, setallmodulesList] = useState([]);
   const [queues, setQueues] = useState({})
-  console.log('queues------->>>>>>>', queues)
-  const initialValues = {
-    status: "",
-    modulesId: "",
-    statusEdit: "",
-  };
   const dispatch = useDispatch();
+  const rowsPerPageOptions = [5, 10, 20]; 
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
 
-  const allRollsList = useSelector(
-    (state) => state?.tenetRolls?.allRollsdata?.data
-  );
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
-  const dataUpdate = useSelector((state) => state?.tenetRolls?.dataUpdate);
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
-  console.log("allRollsList---------->>>>>>>", allRollsList);
+
+  const [filter, setFilter] = useState({
+    pageNumber: 1,
+    pageSize: 5,
+    descending: true,
+  });
+  const [totalRecords, setTotalRecords] = useState(0);
+
 
   const [value, setValue] = React.useState("one");
-  console.log(value)
+  const [reload, setReload] = React.useState(0);
   const handleChangeTab = (event, newValue) => {
     setValue(newValue);
+    setRowsPerPage(rowsPerPageOptions[0])
   };
-  const {
-    handleChange,
-    handleSubmit,
-    handleBlur,
-    setFieldValue,
-    handleReset,
-    errors,
-    values,
-    touched,
-    isValid,
-    dirty,
-  } = useFormik({
-    initialValues,
-    validationSchema: rollStatusSechmea,
-    onSubmit: () => {
-      dispatch(
-        createRoll({
-          data: { statusName: values.status, moduleId: values.modulesId },
-          type: "status",
-        })
-      );
-    },
-  });
+
 
   useEffect(() => {
-    if (dataUpdate) {
-      if (values.modulesId) {
-        dispatch(getRoll({ type: "status", id: values.modulesId }));
-        setTimeout(() => {
-          setFieldValue("status", "");
-        }, 1000);
+    const fetchData = async () => {
+      try {
+        const queues = await getAllQueues();
+        setQueues(queues.data);
+      
+      } catch (error) {
+        // Handle any error that occurred during the API call
+        console.error('Error fetching queues:', error);
       }
+    };
+  
+    fetchData(); // Call the fetchData function to fetch data when the component mounts
+  }, [reload]);
+  
+  console.log("queues----queues---------->>>>>>>>>.",queues)
+  useEffect(() => {
+    if(value === "one"){
+      setTotalRecords(queues?.data?.prcessingQueue?.length);
+    }  
+     if(value === "two"){
+
+      setTotalRecords(queues?.data?.processedQueue?.length);
     }
-  }, [dataUpdate, values.modulesId]);
-  useEffect(()=>{
-    getAllQueues().then((res) =>{
-      setQueues(res.data)
-    })
-    
-  }, [])
+     if(value === "three"){
+
+      setTotalRecords(queues?.data?.delayedQueue?.length);
+    }
+    if (value === "four"){
+      setTotalRecords(queues?.data?.failedQueue?.length);
+    }
+
+  }, [queues,value]);
+
+
+
+
   const normalizeTableProgram = (source, value) => {
     const result = [];
     if(value === "one"){
-      source?.prcessingQueue
+      source?.prcessingQueue?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
       .forEach((record, index) => {
         result.push({
           date: record.processedOn ? new Date(record.processedOn).toLocaleDateString() : "-",
           id: record?.id ? record?.id : "-",
+          name: record?.data?.name ? record?.data?.name : "-",
           userId: record.data.id ? record.data.id : "-",
-          processedOn: record.processedOn ? new Date(record.processedOn).toLocaleTimeString() : "-",
-          action: {
-            change: (val) => handleDropdownActionsupport(record, val, index),
-            hideDelteEdit: record?.tenantId == null ? true : false,
-          },
+          processedOn: record.processedOn ? `${ new Date(record.processedOn).toLocaleTimeString()} ${new Date(record.processedOn).toLocaleDateString()}` : "-",
+
         });
       });
-    }else{
-      source?.processedQueue
+    }
+    if (value === "two"){
+      source?.processedQueue.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    .forEach((record, index) => {
+      result.push({
+        date: record.processedOn ? new Date(record.processedOn).toLocaleDateString() : "-",
+        id: record?.id ? record?.id : "-",
+        name: record?.data?.name ? record?.data?.name : "-",
+        userId: record.data.id ? record.data.id : "-",
+        processedOn: record.processedOn ? `${ new Date(record.processedOn).toLocaleTimeString()} ${new Date(record.processedOn).toLocaleDateString()}` : "-",
+        finishedOn: record.finishedOn ? `${ new Date(record.finishedOn).toLocaleTimeString()} ${new Date(record.finishedOn).toLocaleDateString()}` : "-",
+      });
+    });
+    }
+    if (value === "three"){
+      source?.delayedQueue?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    .forEach((record, index) => {
+      result.push({
+        date: record.processedOn ? new Date(record.processedOn).toLocaleDateString() : "-",
+        id: record?.id ? record?.id : "-",
+        name: record?.data?.name ? record?.data?.name : "-",
+        userId: record.data.id ? record.data.id : "-",
+        processedOn: record.processedOn ? `${ new Date(record.processedOn).toLocaleTimeString()} ${new Date(record.processedOn).toLocaleDateString()}` : "-",
+        finishedOn: record.finishedOn ? `${ new Date(record.finishedOn).toLocaleTimeString()} ${new Date(record.finishedOn).toLocaleDateString()}` : "-",
+      });
+    });
+    }
+    if (value === "four"){
+      source?.failedQueue.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     .forEach((record, index) => {
       result.push({
         date: record.processedOn ? new Date(record.processedOn).toLocaleDateString() : "-",
         id: record?.id ? record?.id : "-",
         userId: record.data.id ? record.data.id : "-",
-        processedOn: record.processedOn ? new Date(record.processedOn).toLocaleTimeString() : "-",
-        finishedOn: record.finishedOn ? new Date(record.finishedOn).toLocaleDateString() : "-",
-        action: {
-          change: (val) => handleDropdownActionsupport(record, val, index),
-          hideDelteEdit: record?.tenantId == null ? true : false,
-        },
+        processedOn: record.processedOn ? `${ new Date(record.processedOn).toLocaleTimeString()} ${new Date(record.processedOn).toLocaleDateString()}` : "-",
+        finishedOn: record.finishedOn ? `${ new Date(record.finishedOn).toLocaleTimeString()} ${new Date(record.finishedOn).toLocaleDateString()}` : "-",
+        reason: record.failedReason ? record.failedReason : "-",
       });
     });
     }
     return result;
   };
-  const handleDropdownActionsupport = (data, val, index) => {
-    if (val === "delete") {
-      setShowDeleteModal(true);
-      setUserDeleteId(data?.id);
-    }
 
-    if (val === "edit") {
-      setAction(data?.id);
-      setShowUpdateModal(true);
-      setFieldValue("statusEdit", data.statusName);
-      setFieldValue("modulesId", data.moduleId);
-    }
+  const handlePageChange = (e, newPage) => {
+    setFilter({
+      ...filter,
+      pageNumber: newPage + 1,
+    });
   };
 
-  useEffect(() => {}, []);
+  const handlePageSizeChange = (e) => {
+    setFilter({
+      ...filter,
+      pageNumber: 1,
+      pageSize: e.target.value,
+    });
+  };
+
 
   return (
     <>
@@ -170,6 +190,7 @@ export default function Queues() {
             sm={12}
             md={6}
           >
+            <div style={{display:"flex",justifyContent:'space-between'}} >
             <Tabs
               value={value}
               onChange={handleChangeTab}
@@ -177,9 +198,28 @@ export default function Queues() {
             >
               <Tab value="one" label="Processing Queue" wrapped />
               <Tab value="two" label="Processed Queue" />
+              <Tab value="three" label="Delayed Queue"  />
+              <Tab value="four" label="Failed Queue" />
             </Tabs>
-            <br></br>
-            <MUITable column={value === "one" ? processingQueuesConfig : processedQueuesConfig } list={normalizeTableProgram(queues.data, value)} />
+           
+            <div style={{display:"flex", justifyContent:"flex-end"}}>
+
+<IconButton onClick={()=>setReload(reload+1)} sx={{ml:1}}  type="submit"  size="medium" style={{backgroundColor:"#0075FF", color:"white",marginBottom:10}} >
+<CachedIcon />
+</IconButton> 
+</div>
+</div>
+<br></br>
+            <MUITable column={value === "one" ? processingQueuesConfig : value === "four" ? faildQueuesConfig : processedQueuesConfig } list={normalizeTableProgram(queues?.data, value)} 
+          pagination={{
+              totalRecords: totalRecords,
+              pageNumber: page,
+              pageSize: rowsPerPage,
+              onChangePageNumber: handleChangePage,
+              onChangePageSize: handleChangeRowsPerPage,
+              rowsPerPageOptions:rowsPerPageOptions
+            }}
+            />
             <Grid
               item
               sx={{

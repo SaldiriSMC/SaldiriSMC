@@ -41,9 +41,12 @@ function App({data}) {
   var user = JSON.parse(localStorage.getItem("accessToken"))
   const token = user?.data?.tokens?.access?.token
   const userId = user?.data?.user?.id
+  const Name = user?.data?.user?.name
   const timeId = user?.data?.timeDoc?.id
   const attendanceid = user?.data?.timeDoc?.attendanceId
   // const isLoading = useSelector((state) => state.loder?.isLoading);
+
+  console.log("Name--------------",Name)
   const store = configureStore();
   const url = window.location.href.split( '/' )[3];
   const [loader, setLoader] = useState(false)
@@ -68,46 +71,54 @@ useEffect(()=>{
 
 },[localStorage])
 
+
+
 useEffect(() => {
+  // Function to check if API calls are already sent
+
+
+  // Function to fetch data from the API
+  const fetchData = () => {
+    checkUserStatus({token:token,id:userId, attendanceId:attendanceid,
+      name:Name,
+      timeId:timeId})
+    .then((response) => {
+      if (response.data) {
+        markAPICallsAsSent();
+        
+      }
+    })
+    .catch((error) =>{
+      if (error.response?.data?.message === 'Please Provide Correct Tenant Key' || error?.response?.data?.message === 'Please authenticate' ){
+        localStorage.removeItem("accessToken"); 
+        window.location.reload()
+      }
+    })
+    .finally(() => {
+  
+  
+  });
+  };
+
   if (!areAPICallsAlreadySent()) {
-  if (user){
-  // Fetch data immediately when the component mounts
-  fetchData();
+    if (user) {
+      // Fetch data immediately when the component mounts
+      fetchData();
 
-  // Set up the interval to fetch data every 5 seconds
-  const interval = setInterval(fetchData,120000);
+      // Set up the interval to fetch data every 5 seconds (60000 milliseconds)
+      const interval = setInterval(fetchData, 120000);
 
-  // Clean up the interval when the component unmounts
-  return () => clearInterval(interval);
-  }
-  }
-}, [localStorage]); //
-
-
-
-
-
-const fetchData=()=>{
-
-  checkUserStatus({token:token,id:userId, attendanceId:attendanceid,
-    timeId:timeId})
-  .then((response) => {
-    if (response.data) {
-      markAPICallsAsSent();
+      // Clean up the interval when the component unmounts
+      // return () => {
+      //   clearInterval(interval);
+      // };
     }
-  })
-  .catch((error) =>{
-    if (error.response?.data?.message === 'Please Provide Correct Tenant Key' || error.response.data.message === 'Please authenticate' ){
-      localStorage.removeItem("accessToken"); 
-      window.location.reload()
-    }
-  })
-  .finally(() => {
+  }
+}, [user]);
 
 
-});
 
-}
+
   return (
     <FeedbackProvider data={data}>
     <ThemeProvider theme={theme}>
