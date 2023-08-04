@@ -6,7 +6,7 @@ const moment = require('moment');
 
 const queue = async () => {
   const queue = new Queue('myQueue', 'redis://localhost:6379');
-  queue.process(100, async (job) => {
+  queue.process(200, async (job) => {
     console.log(`Processing job ${job.id}: ${job.data.token}`);
     await addTaskToRedisCache({ ...job.data, isOnline: true });
     await new Promise((resolve) => setTimeout(resolve, 150000));
