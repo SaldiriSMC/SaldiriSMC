@@ -87,7 +87,7 @@ useEffect(() => {
     .catch((error) =>{
       if (error.response?.data?.message === 'Please Provide Correct Tenant Key' || error?.response?.data?.message === 'Please authenticate' ){
         localStorage.removeItem("accessToken"); 
-        // window.location.reload()
+        window.location.reload()
       }
     })
     .finally(() => {

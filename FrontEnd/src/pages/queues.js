@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import MUITable from "../sharedComponents/MUITable";
-import { processedQueuesConfig, processingQueuesConfig } from "../configs/tableConfig";
+import { processedQueuesConfig, processingQueuesConfig, faildQueuesConfig } from "../configs/tableConfig";
 import AddIcon from "@mui/icons-material/Add";
 import { loderTrue, loderFalse } from "../actions/Auth";
 import { useFormik } from "formik";
@@ -28,8 +28,6 @@ import {
 export default function Queues() {
   const theme = useTheme();
   const [queues, setQueues] = useState({})
-  console.log('queues------->>>>>>>', queues)
-
   const dispatch = useDispatch();
   const rowsPerPageOptions = [5, 10, 20]; 
   const [page, setPage] = useState(0);
@@ -43,9 +41,6 @@ export default function Queues() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-
-
 
 
   const [filter, setFilter] = useState({
@@ -80,13 +75,21 @@ export default function Queues() {
     fetchData(); // Call the fetchData function to fetch data when the component mounts
   }, [reload]);
   
-
+  console.log("queues----queues---------->>>>>>>>>.",queues)
   useEffect(() => {
     if(value === "one"){
       setTotalRecords(queues?.data?.prcessingQueue?.length);
-    } else{
-      console.log("totalRecords----2222222222222222222---------->>>>>>>>>.",totalRecords)
+    }  
+     if(value === "two"){
+
       setTotalRecords(queues?.data?.processedQueue?.length);
+    }
+     if(value === "three"){
+
+      setTotalRecords(queues?.data?.delayedQueue?.length);
+    }
+    if (value === "four"){
+      setTotalRecords(queues?.data?.failedQueue?.length);
     }
 
   }, [queues,value]);
@@ -107,7 +110,8 @@ console.log("totalRecords-------------->>>>>>>>>.",totalRecords)
 
         });
       });
-    }else{
+    }
+    if (value === "two"){
       source?.processedQueue.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     .forEach((record, index) => {
       result.push({
@@ -116,6 +120,31 @@ console.log("totalRecords-------------->>>>>>>>>.",totalRecords)
         userId: record.data.id ? record.data.id : "-",
         processedOn: record.processedOn ? `${ new Date(record.processedOn).toLocaleTimeString()} ${new Date(record.processedOn).toLocaleDateString()}` : "-",
         finishedOn: record.finishedOn ? `${ new Date(record.finishedOn).toLocaleTimeString()} ${new Date(record.finishedOn).toLocaleDateString()}` : "-",
+      });
+    });
+    }
+    if (value === "three"){
+      source?.delayedQueue.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    .forEach((record, index) => {
+      result.push({
+        date: record.processedOn ? new Date(record.processedOn).toLocaleDateString() : "-",
+        id: record?.id ? record?.id : "-",
+        userId: record.data.id ? record.data.id : "-",
+        processedOn: record.processedOn ? `${ new Date(record.processedOn).toLocaleTimeString()} ${new Date(record.processedOn).toLocaleDateString()}` : "-",
+        finishedOn: record.finishedOn ? `${ new Date(record.finishedOn).toLocaleTimeString()} ${new Date(record.finishedOn).toLocaleDateString()}` : "-",
+      });
+    });
+    }
+    if (value === "four"){
+      source?.failedQueue.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    .forEach((record, index) => {
+      result.push({
+        date: record.processedOn ? new Date(record.processedOn).toLocaleDateString() : "-",
+        id: record?.id ? record?.id : "-",
+        userId: record.data.id ? record.data.id : "-",
+        processedOn: record.processedOn ? `${ new Date(record.processedOn).toLocaleTimeString()} ${new Date(record.processedOn).toLocaleDateString()}` : "-",
+        finishedOn: record.finishedOn ? `${ new Date(record.finishedOn).toLocaleTimeString()} ${new Date(record.finishedOn).toLocaleDateString()}` : "-",
+        reason: record.failedReason ? record.failedReason : "-",
       });
     });
     }
@@ -167,6 +196,8 @@ console.log("totalRecords-------------->>>>>>>>>.",totalRecords)
             >
               <Tab value="one" label="Processing Queue" wrapped />
               <Tab value="two" label="Processed Queue" />
+              <Tab value="three" label="Delayed Queue"  />
+              <Tab value="four" label="Failed Queue" />
             </Tabs>
            
             <div style={{display:"flex", justifyContent:"flex-end"}}>
@@ -177,7 +208,7 @@ console.log("totalRecords-------------->>>>>>>>>.",totalRecords)
 </div>
 </div>
 <br></br>
-            <MUITable column={value === "one" ? processingQueuesConfig : processedQueuesConfig } list={normalizeTableProgram(queues?.data, value)} 
+            <MUITable column={value === "one" ? processingQueuesConfig : value === "four" ? faildQueuesConfig : processedQueuesConfig } list={normalizeTableProgram(queues?.data, value)} 
           pagination={{
               totalRecords: totalRecords,
               pageNumber: page,

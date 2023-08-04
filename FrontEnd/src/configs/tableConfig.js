@@ -236,3 +236,40 @@ export const processedQueuesConfig = [
     label: "Finished On",
   },
 ];
+export const faildQueuesConfig = [
+  {
+    id: "reason",
+    name: "reason",
+    renderer: "Text",
+    align: "left",
+    label: "Reason",
+  },
+  {
+    id: "date",
+    name: "date",
+    renderer: "Text",
+    align: "left",
+    label: "Date",
+  },
+  {
+    id: "id",
+    name: "id",
+    renderer: "Text",
+    align: "left",
+    label: "Id",
+  },
+  {
+    id: "userId",
+    name: "userId",
+    renderer: "Text",
+    align: "left",
+    label: "userId",
+  },
+  {
+    id: "processedOn",
+    name: "processedOn",
+    renderer: "Text",
+    align: "left",
+    label: "Processed On",
+  },
+];
