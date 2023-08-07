@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
@@ -34,6 +34,12 @@ const AttendanceAdjusment = () => {
   const [noTimeOut, setNoTimeOut] = React.useState(false)
   const [showModal,setShowModal] = React.useState(false)
   const [userData,setUserData] = React.useState({})
+  const [filter, setFilter] = useState({
+    pageNumber: 1,
+    pageSize: 5,
+    descending: true,
+  });
+  const [totalRecords, setTotalRecords] = useState(0);
   const user = JSON.parse(localStorage.getItem("accessToken"))
   const userRole =  user?.data?.user?.role
   const userId =  user?.data?.user?.id
@@ -166,6 +172,23 @@ const AttendanceAdjusment = () => {
     }
 
   }
+
+
+  const handlePageChange = (e, newPage) => {
+    setFilter({
+      ...filter,
+      pageNumber: newPage + 1,
+    });
+  };
+
+  const handlePageSizeChange = (e) => {
+    setFilter({
+      ...filter,
+      pageNumber: 1,
+      pageSize: e.target.value,
+    });
+  };
+
   return (
     <div>
       <NavBar/>
@@ -322,7 +345,15 @@ const AttendanceAdjusment = () => {
          <MUITable
             column={ userRole === 'employee' ? UserAttendanceeEmpolyeConfig : UserAttendanceeConfig}
             list={normalizeTableProgram(attendanceData?.data ? attendanceData?.data : [])}
-
+            pagination={attendanceData?.data?.length > 0 ? (
+              {
+                totalRecords: totalRecords,
+                pageNumber: filter.pageNumber - 1,
+                pageSize: filter.pageSize,
+                onChangePageNumber: handlePageChange,
+                onChangePageSize: handlePageSizeChange,
+              }
+            ) : null}
           />
           <Grid
             item

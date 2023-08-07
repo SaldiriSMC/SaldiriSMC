@@ -5,7 +5,7 @@ import { makeStyles } from 'tss-react/mui';
 import PortfolioModel from './modal'
 import './comaon.css';
 import { FeedbackContext } from "../context/FeedbackContext";
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { Grid } from '@mui/material';
 const useStyles = makeStyles()((theme) => {
   return {
@@ -53,18 +53,67 @@ services to the clients.</p>
         <div className="row portfolio-container mt-3" >
         
                    <div className="col-lg-3 col-md-6  mb-2 whyUs_card" >
-   <div style={{backgroundColor:'#EF7C8E'}}> </div>
+   <div style={{backgroundColor:'#EF7C8E'}}> 
+   <div>
+   <CheckCircleOutlineIcon style={{width:'4rem',height:'4rem',color:'white'}} />
+   <h5 className='text-white text-left mt-2 '>RESPONSIVE</h5>
+   </div>
+
+   
+   <div className='ps-3 pe-3  text-white'>
+   <hr style={{ opacity: 'unset',borderBottomColor:'white' }} />
+   <p className='text-white'>
+Quick and appreciated response based on improvisation comes with practice and keeping ourselves updated in real-time.
+</p>
+   </div>
+
+   </div>
           </div>
           
                    <div className="col-lg-3 col-md-6   mb-2 whyUs_card" >
-                   <div style={{backgroundColor:'#FFBD59'}}> </div>
+                   <div style={{backgroundColor:'#FFBD59'}}> 
+                   <div>
+   <CheckCircleOutlineIcon style={{width:'4rem',height:'4rem',color:'white'}} />
+   <h5 className='text-white text-left mt-2 '>AFFORDABLE</h5>
+   </div>
+
+   
+   <div className='ps-3 pe-3  text-white'>
+   <hr style={{ opacity: 'unset',borderBottomColor:'white' }} />
+   <p className='text-white'>
+   Without compromising on quality we come up with customized and budget-friendly services for our clients.
+</p>
+   </div>
+                   </div>
           </div>
           
                    <div className="col-lg-3 col-md-6  mb-2 whyUs_card" >
-                   <div style={{backgroundColor:'#38B6FF'}}> </div>
+                   <div style={{backgroundColor:'#38B6FF'}}>   <div>
+   <CheckCircleOutlineIcon style={{width:'4rem',height:'4rem',color:'white'}} />
+   <h5 className='text-white text-left mt-2 '>AGILE</h5>
+   </div>
+
+   
+   <div className='ps-3 pe-3  text-white'>
+   <hr style={{ opacity: 'unset',borderBottomColor:'white' }} />
+   <p className='text-white'>
+   A staunch approach is not appreciated on our platform.
+</p>
+   </div> </div>
           </div>
                    <div className="col-lg-3 col-md-6   mb-2 whyUs_card" >
-                   <div style={{backgroundColor:'#8351E5'}}></div>
+                   <div style={{backgroundColor:'#8351E5'}}>   <div>
+   <CheckCircleOutlineIcon style={{width:'4rem',height:'4rem',color:'white'}} />
+   <h5 className='text-white text-left mt-2 '>EMPATHETIC</h5>
+   </div>
+
+   
+   <div className='ps-3 pe-3  text-white'>
+   <hr style={{ opacity: 'unset',borderBottomColor:'white' }} />
+   <p className='text-white'>
+   Internal and external stakeholders are treated empathetically.
+</p>
+   </div></div>
           </div>
           
           

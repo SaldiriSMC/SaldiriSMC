@@ -22,7 +22,7 @@ const EditDeleteAction = ({ value: { change,hideDelete,hideDelteEdit } }) => {
             enterDelay={100}
         >
             <IconButton aria-label="delete" size="small" onClick={()=>handleClick('edit')}>
-                <EditIcon fontSize="inherit" />
+                <EditIcon fontSize="inherit"  sx={{color:'#3b5999'}} />
             </IconButton>
         </Tooltip>
         {hideDelete ? '' :  <Tooltip
@@ -35,7 +35,7 @@ const EditDeleteAction = ({ value: { change,hideDelete,hideDelteEdit } }) => {
         >
             <IconButton aria-label="delete" size="small">
                 <IconButton aria-label="delete" size="small" onClick={()=>handleClick('delete')}>
-                    <DeleteIcon fontSize="small" />
+                    <DeleteIcon fontSize="small" sx={{color:'maroon'}}/>
                 </IconButton>
             </IconButton>
         </Tooltip>}

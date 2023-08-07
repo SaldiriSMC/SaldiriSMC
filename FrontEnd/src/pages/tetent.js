@@ -32,6 +32,11 @@ export default function PersistentDrawerLeft() {
    const [showDeleteModal, setShowDeleteModal] = React.useState(false);
    const [showUpdateModal, setShowUpdateModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
+  const [filter, setFilter] = useState({
+    pageNumber: 1,
+    pageSize: 5
+  });
+  const [totalRecords, setTotalRecords] = useState(0);
   const designationScema = Yup.object({
     designationIdCreate: Yup.string().required("Field is required"),
   })
@@ -115,6 +120,21 @@ const addRollFun =()=>{
     dispatch(updateRoll({data:{designationName:values.designationId},type:'designation',id:action}));
     setShowUpdateModal(false)
   }
+  const handlePageChange = (e, newPage) => {
+    setFilter({
+      ...filter,
+      pageNumber: newPage + 1,
+    });
+  };
+
+  const handlePageSizeChange = (e) => {
+    setFilter({
+      ...filter,
+      pageNumber: 1,
+      pageSize: e.target.value,
+    });
+  };
+
 
   return (
     <>
@@ -170,7 +190,13 @@ const addRollFun =()=>{
             
             column={designationConfig}
             list={normalizeTableProgram(allRollsList?.data ? allRollsList?.data : [])}
-
+            pagination={{
+              totalRecords: totalRecords,
+              pageNumber: filter.pageNumber - 1,
+              pageSize: filter.pageSize,
+              onChangePageNumber: handlePageChange,
+              onChangePageSize: handlePageSizeChange,
+            }}
           />
           <Grid
             item

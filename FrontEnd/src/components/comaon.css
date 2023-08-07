@@ -4,16 +4,24 @@
 .foterForm{
  padding: 1rem;
   background-color: #043F75;
-  position: absolute;
+  /* position: absolute; */
   bottom: 0;
   width: 100%;
 }
 .foter_title{
   font-weight: 900;
   color: white;
-  margin-top: 4%;
+  /* margin-top: 4%; */
 
 }
+.footer_first{
+  padding: 50px 50px 0px 0px;
+  background-image: url("/public/assets/foterimgnew2.png");
+  height: auto;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+} 
+
 
 .css-bzv0vy-MuiPaper-root-MuiDrawer-paper{
   position: unset !important;
@@ -50,7 +58,7 @@
   padding: 10px;
 }
 .whyUs_card > div {
-  height: 303px;
+  height: 273px;
 }
 .imgk {
   width: 100px;
@@ -120,7 +128,7 @@ align-items: center;
 .about_img_2{
   position: absolute;
   top: 30%;
-  left: 27%;
+  left: 24%;
   /* height: 27vh; */
 }
 .services_icon{

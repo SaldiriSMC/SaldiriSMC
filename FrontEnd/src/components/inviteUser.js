@@ -37,6 +37,12 @@ const InviteUser = ({ setLoader }) => {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("accessToken"));
   const logInUserId = user?.data?.user?.id;
+  const [filter, setFilter] = useState({
+    pageNumber: 1,
+    pageSize: 5,
+    descending: true,
+  });
+  const [totalRecords, setTotalRecords] = useState(0);
   useEffect(() => {
     getAllUser();
   }, []);
@@ -151,6 +157,22 @@ const InviteUser = ({ setLoader }) => {
     }
   };
 
+
+  const handlePageChange = (e, newPage) => {
+    setFilter({
+      ...filter,
+      pageNumber: newPage + 1,
+    });
+  };
+
+  const handlePageSizeChange = (e) => {
+    setFilter({
+      ...filter,
+      pageNumber: 1,
+      pageSize: e.target.value,
+    });
+  };
+
   return (
     <div>
       <NavBar />
@@ -211,6 +233,15 @@ const InviteUser = ({ setLoader }) => {
               }
               column={UserInviteConfig}
               list={normalizeTableProgram(allUserList)}
+              pagination={allUserList?.length > 0 ? (
+                {
+                  totalRecords: totalRecords,
+                  pageNumber: filter.pageNumber - 1,
+                  pageSize: filter.pageSize,
+                  onChangePageNumber: handlePageChange,
+                  onChangePageSize: handlePageSizeChange,
+                }
+              ) : null}
             />
             <Grid
               item

@@ -9,15 +9,11 @@ function Footer() {
 
   return (
 <>
-<div style={{position:'relative'}} > 
-<img className='newFooter' src='/assets/foterimg.png' style={{ 
- backgroundSize: "cover",
- width:'100%',
- position:'relative',
-               backgroundRepeat: "no-repeat", }}/>
-<div style={{position:'absolute',top:0,width:'100%',overflow:'hidden',height:'100%'}}>
+<div  > 
+<div >
 
 <section className='mt-5' id="">
+<div className="footer_first" >
 <div className="row" >
    
    <div className="col-lg-4 col-md-4">
@@ -50,7 +46,8 @@ function Footer() {
    </div>
 
  </div>
-  <div className="foterForm mt-5">
+ </div>
+  <div className="foterForm">
     
   <div className="row" >
    
