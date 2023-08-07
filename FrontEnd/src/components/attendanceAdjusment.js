@@ -37,7 +37,7 @@ const AttendanceAdjusment = () => {
   const user = JSON.parse(localStorage.getItem("accessToken"))
   const userRole =  user?.data?.user?.role
   const userId =  user?.data?.user?.id
-  const data = useSelector((state) => state.attendance?.allUsers?.data);
+  const data = useSelector((state) => state.attendance?.allUsers?.data.result);
   const attendanceData = useSelector((state) => state?.attendance?.attendance);
   console.log("attendaceData------>>>>", attendanceData)
   const attendanceRecord = useSelector((state)=> state?.attendance?.data?.results)
@@ -45,7 +45,6 @@ const AttendanceAdjusment = () => {
     dispatch(
       getAttendance())
   },[])
-
   const workedHours = useSelector(
     (state) => state?.attendance?.attendance?.data.result
   );  
@@ -167,6 +166,8 @@ const AttendanceAdjusment = () => {
     }
 
   }
+  console.log("values-------->>>>>>", values)
+
   return (
     <div>
       <NavBar/>

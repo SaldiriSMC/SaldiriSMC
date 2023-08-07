@@ -23,7 +23,7 @@ import URls from "../constants/urls";
 // //course category generator function
 function* getUserList(action) {
    try {
-     const response = yield call(getRequestWithTenant, URls.getAllUsers);
+     const response = yield call(getRequestWithTenant, `${URls.getAllUsers}?limit=1000&page=0`);
 
      if (response?.status === 200) {     
        //navigate("/Login")
@@ -57,7 +57,7 @@ function* getUserList(action) {
 function* getAttendanceByHoursCall(action) {
 
  try {
-   const response = yield call(getRequestWithTenant, URls.getAttendanceByHours+`/${action.payload}?limit=3&page=1`);
+   const response = yield call(getRequestWithTenant, URls.getAttendanceByHours+`/${action.payload}?limit=5&page=2`);
 
    if (response?.status === 200) {     
      //navigate("/Login")

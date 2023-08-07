@@ -104,7 +104,7 @@ const EmailTemplate = () => {
          </div>
          <MUITable
         column={EmailTemplateConfig}
-        list={normalizeTableProgram(emailTemplateData)}
+        list={normalizeTableProgram(emailTemplateData?.results ? emailTemplateData?.results : [] )}
       />
           <Grid
             item

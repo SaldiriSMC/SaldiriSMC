@@ -87,7 +87,7 @@ function* deleteEmailTemplateCall(action) {
 
 function* getEmailTemplateCall(action) {
   try {
-    const response = yield call(getRequestWithTenant, URls.emailTemplate);
+    const response = yield call(getRequestWithTenant, `${URls.emailTemplate}?limit=5&page=1`);
 
     if (response?.status === 200) {
       yield put(getTemplateSuccess(response.data));

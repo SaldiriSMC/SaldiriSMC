@@ -46,7 +46,7 @@ const InviteUser = ({ setLoader }) => {
     getAllUserByDeptDes()
       .then((response) => {
         if (response.data) {
-          setAllUserList(response.data.data);
+          setAllUserList(response.data.data.result);
         }
       })
       .catch((error) => console.log(error.message))
