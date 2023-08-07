@@ -49,7 +49,7 @@ export default function TetentStatus() {
   const dispatch = useDispatch();
 
   const allRollsList = useSelector(
-    (state) => state?.tenetRolls?.allRollsdata
+    (state) => state?.tenetRolls?.allRollsdata.data
   );
 
   const dataUpdate = useSelector(

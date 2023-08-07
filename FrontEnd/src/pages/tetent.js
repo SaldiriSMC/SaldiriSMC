@@ -46,11 +46,11 @@ export default function PersistentDrawerLeft() {
   };
   const dispatch = useDispatch();
   const allRollsList = useSelector(
-    (state) => state?.tenetRolls?.allRollsdata
+    (state) => state?.tenetRolls?.allRollsdata?.data
   );
 
 
-  
+  console.log("allRollsList---------",allRollsList)
   const dataUpdate = useSelector(
     (state) => state?.tenetRolls?.dataUpdate
   );
@@ -195,9 +195,9 @@ const addRollFun =()=>{
          <MUITable
             
             column={designationConfig}
-            list={normalizeTableProgram(allRollsList?.data ? allRollsList?.data : [])}
+            list={normalizeTableProgram(allRollsList?.results ? allRollsList?.results : [])}
             pagination={{
-              totalRecords: totalRecords,
+              totalRecords: allRollsList?.totalResults,
               pageNumber: filter.pageNumber - 1,
               pageSize: filter.pageSize,
               onChangePageNumber: handlePageChange,

@@ -47,7 +47,7 @@ export default function TetentDepartment() {
   const dispatch = useDispatch();
 
   const allRollsList = useSelector(
-    (state) => state?.tenetRolls?.allRollsdata
+    (state) => state?.tenetRolls?.allRollsdata?.data
   );
 
   const dataUpdate = useSelector(
@@ -59,7 +59,7 @@ export default function TetentDepartment() {
       handleReset()
     }
 
-  }, [dataUpdate]);
+  }, [dataUpdate,filter]);
 
 
   console.log("datata-----allRollsList-----",allRollsList)
@@ -179,9 +179,9 @@ export default function TetentDepartment() {
          <MUITable
             
             column={departmentConfig}
-            list={normalizeTableProgram(allRollsList?.data ? allRollsList?.data : [])}
+            list={normalizeTableProgram(allRollsList?.results ? allRollsList?.results : [])}
             pagination={{
-              totalRecords: totalRecords,
+              totalRecords: allRollsList?.totalResults,
               pageNumber: filter.pageNumber - 1,
               pageSize: filter.pageSize,
               onChangePageNumber: handlePageChange,
