@@ -44,19 +44,19 @@ const AttendanceAdjusment = () => {
   const userId =  user?.data?.user?.id
   const data = useSelector((state) => state.attendance?.allUsers?.data?.result);
   const attendanceData = useSelector((state) => state?.attendance?.attendance);
-  console.log("attendaceData------>>>>", data)
+  console.log(data,"attendaceData------>>>>",attendanceData?.data)
   const attendanceRecord = useSelector((state)=> state?.attendance?.data?.results)
   useEffect(()=>{
     dispatch(
       getAttendance(filter))
-  },[filter])
+  },[])
 
   useEffect(()=>{
     setTotalRecords(attendanceData?.data?.totalResults)
   },[attendanceData])
 
   const workedHours = useSelector(
-    (state) => state?.attendance?.attendance?.data.result
+    (state) => state?.attendance?.attendance?.data?.result
   );  
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [deleteId, setDeleteId] = React.useState({});
@@ -75,7 +75,7 @@ const AttendanceAdjusment = () => {
     deleteAttendance(payload)
     .then((response) => {
       if (response.data) {
-        dispatch(getAttendanceByHours(values.user));
+        dispatch(getAttendanceByHours({value:values.user,filter:filter}));
         setShowDeleteModal(false);
       }
     })
@@ -129,15 +129,15 @@ const AttendanceAdjusment = () => {
 
   useEffect(() => {
     if ((values.user && !(userRole === 'employee'))) {
-      dispatch(getAttendanceByHours(values.user));
+      dispatch(getAttendanceByHours({value:values.user,filter:filter}));
       calculateTotalWorkedHours();
     }
 
     if (userRole === 'employee'){
-      dispatch(getAttendanceByHours(userId));
+      dispatch(getAttendanceByHours({value:userId,filter:filter}));
       calculateTotalWorkedHours();
     }
-  }, [values.user,userId]);
+  }, [values.user,userId,filter]);
 
 
   const normalizeTableProgram= (source) => {
