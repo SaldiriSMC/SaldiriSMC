@@ -22,7 +22,6 @@ import URls from "../constants/urls";
 
 // //course category generator function
 function* getUserList(action) {
-
    try {
      const response = yield call(getRequestWithTenant, URls.getAllUsers);
 
@@ -58,7 +57,7 @@ function* getUserList(action) {
 function* getAttendanceByHoursCall(action) {
 
  try {
-   const response = yield call(getRequestWithTenant, URls.getAttendanceByHours+`/${action.payload}`);
+   const response = yield call(getRequestWithTenant, URls.getAttendanceByHours+`/${action.payload}?limit=3&page=1`);
 
    if (response?.status === 200) {     
      //navigate("/Login")
