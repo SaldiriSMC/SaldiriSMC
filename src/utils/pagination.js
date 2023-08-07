@@ -1,0 +1,30 @@
+const pick = require('./pick');
+const { Op } = require('sequelize');
+const pagination = async (req, tenantId, Modal, from) => {
+  const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  let data;
+  if (from === 'statuses') {
+    if(req.query.Module_Id){
+        data = await Modal.findAndCountAll({where:{moduleId:req.query.Module_Id, tenantId:tenantId}})
+    }else{
+        data = await Modal.findAndCountAll({where:{tenantId:tenantId}})
+    }
+  } else {
+    data = await Modal.findAndCountAll({
+      limit: parseInt(options.limit),
+      offset: (options.page - 1) * options.limit,
+      where: { [Op.or]: [{ tenantId: tenantId }, { tenantId: null }] },
+    });
+  }
+  const totalResults = data.count;
+  const totalPages = Math.ceil(totalResults / options.limit);
+  return {
+    results: data.rows,
+    page: options.page,
+    limit: options.limit,
+    totalPages: totalPages,
+    totalResults: totalResults,
+  };
+};
+
+module.exports = { pagination };

@@ -2,17 +2,14 @@ const catchAsync = require('../../utils/catchAsync');
 const { Tenant, Designation } = require('../../models/v2/index');
 const { response } = require('../../utils/response');
 const ApiError = require('../../utils/ApiError');
-const { Op } = require('sequelize');
+const {pagination} = require("../../utils/pagination")
 
 const getDesignation = catchAsync(async (req, res) => {
   const key = req.get('X-Tenent-Key');
   if (key) {
     const tenant = await Tenant.findOne({ where: { key: key } });
-    const designation = await Designation.findAll({ where: { [Op.or]: [{ tenantId: tenant.id }, { tenantId: null }] } });
-    if (designation === null) {
-      throw new ApiError(httpStatus.NOT_FOUND, 'No designation found');
-    }
-    response(res, designation, 'Get departments successfully', 200);
+    const result = await pagination(req, tenant.id, Designation)
+    response(res, result, 'Get departments successfully', 200);
   } else {
     const designation = await Designation.findAll({ where: { tenantId: null } });
     console.log('key majood nahi ha------------->>>>>>>');

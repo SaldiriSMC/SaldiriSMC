@@ -1,7 +1,7 @@
 const {response} = require("../utils/response")
 const { sequelize } = require('./mySqlConnection');
 const { QueryTypes } = require('sequelize');
-const callDBRoutine = async (SpName, params, res) =>{
+const callDBRoutine = async (SpName, params) =>{
     let strPassingParams ="";
     const keys = Object.keys(params)
     keys.map((prop)=> {
@@ -13,14 +13,7 @@ const callDBRoutine = async (SpName, params, res) =>{
     });
     results = results[0]
     const data = Object.values(results)
-    if(res){
-        response(res, data, "Record found succesfully", 200)
-    }
-    else{
-        return data;
-    }
-    
-
+    return data
 }
 
 module.exports = {callDBRoutine}

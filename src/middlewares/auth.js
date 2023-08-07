@@ -4,7 +4,9 @@ const ApiError = require('../utils/ApiError');
 const { roleRights } = require('../config/roles');
 const { Token } = require('../models/v2/index');
 const verifyCallback = (req, resolve, reject, requiredRights) => async (err, user, info) => {
+  console.log("authorization-------->>>>>>>>", req.headers.authorization)
   const authToken = req.headers.authorization.split(' ')[1];
+
   const token = await Token.findOne({ where: { token: authToken } });
   if(token === null){
     return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate'));

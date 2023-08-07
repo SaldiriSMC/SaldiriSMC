@@ -2,16 +2,13 @@ const catchAsync = require('../../utils/catchAsync');
 const { Tenant, Department } = require('../../models/v2/index');
 const { response } = require('../../utils/response');
 const ApiError = require('../../utils/ApiError');
-const { Op } = require('sequelize');
+const { pagination } = require('../../utils/pagination');
 const getDepartments = catchAsync(async (req, res) => {
   const key = req.get('X-Tenent-Key');
   if (key) {
     const tenant = await Tenant.findOne({ where: { key: key } });
-    const department = await Department.findAll({ where: { [Op.or]: [{ tenantId: tenant.id }, { tenantId: null }] } });
-    if (department === null) {
-      throw new ApiError(httpStatus.NOT_FOUND, 'No deparment found');
-    }
-    response(res, department, 'Get departments successfully', 200);
+    const result = await pagination(req, tenant.id, Department);
+    response(res, result, 'Get departments successfully', 200);
   } else {
     const department = await Department.findAll({ where: { tenantId: null } });
     response(res, department, 'Get departments successfully', 200);

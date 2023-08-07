@@ -6,11 +6,6 @@ const moment = require('moment');
 const myQueue = new Queue('myQueue', 'redis://localhost:6379', {limiter: {
     max: 1000 , // Adjust this value based on your needs
     duration: 5000, // Adjust this value based on your needs
-  },
-  store: {
-    redis: {
-      maxCompletedJobs: 1000, // Adjust this value based on your needs
-    },
   },});
 const queue = async () => {
   
@@ -36,9 +31,12 @@ const queue = async () => {
         redisClient.set(`user-${job.data.id}`, JSON.stringify(cacheObject), {
           XX: true,
         });
-        await Token.destroy({ where: { user: job?.data.id, type: 'auth' } });
+        if(job.data){
+          await Token.destroy({ where: { token: job?.data.token, type: 'auth' } });
         let attendanceDoc = await Attendance.findOne({ where: { id: job?.data?.attendanceId } });
-        await attendanceService.markTimeOut(job?.data?.timeId, attendanceDoc);
+        await attendanceService.markTimeOut(job?.data?.timeId, attendanceDoc, current_Time);
+        }
+        
       }
       await job.finished( )
       //await myQueue.close()
