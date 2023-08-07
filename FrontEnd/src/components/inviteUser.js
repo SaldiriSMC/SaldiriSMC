@@ -105,7 +105,7 @@ const InviteUser = ({ setLoader }) => {
         },
         name: {
           name: record?.name,
-          isOnline: record.is_online == 0 ? true : false,
+          isOnline:record.is_online == 0 ? true :false
         },
         designation: record?.designationName,
         department: record?.departmentname,

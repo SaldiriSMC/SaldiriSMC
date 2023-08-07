@@ -14,7 +14,7 @@ const UserStatus = ({ value}) => {
       enterDelay={100}
     >
       <Typography sx={{display:'flex', alignItems:'center'}} variant="body2" color="textSecondary">
-        {value?.isOnline && (
+        {value?.isOnline ? (
           <div 
                     style={{  border: "1px solid",
                     width: "10px",
@@ -28,6 +28,20 @@ const UserStatus = ({ value}) => {
                     padding: "1px 0px 1px 5px"}} >
                         
                         </div> 
+        ):(
+          <div 
+          style={{  border: "1px solid",
+          width: "10px",
+          marginRight:4,
+          height: "10px",
+          backgroundColor: "red",
+          borderRadius: "50%",
+          color: "white",
+          fontSize: "small",
+          cursor:'pointer',
+          padding: "1px 0px 1px 5px"}} >
+              
+              </div> 
         )}
        {value?.name} 
       </Typography>
