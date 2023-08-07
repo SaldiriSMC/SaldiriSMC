@@ -37,20 +37,23 @@ const AttendanceAdjusment = () => {
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
-    descending: true,
   });
   const [totalRecords, setTotalRecords] = useState(0);
   const user = JSON.parse(localStorage.getItem("accessToken"))
   const userRole =  user?.data?.user?.role
   const userId =  user?.data?.user?.id
-  const data = useSelector((state) => state.attendance?.allUsers?.data);
+  const data = useSelector((state) => state.attendance?.allUsers?.data?.result);
   const attendanceData = useSelector((state) => state?.attendance?.attendance);
-  console.log("attendaceData------>>>>", attendanceData)
+  console.log("attendaceData------>>>>", data)
   const attendanceRecord = useSelector((state)=> state?.attendance?.data?.results)
   useEffect(()=>{
     dispatch(
-      getAttendance())
-  },[])
+      getAttendance(filter))
+  },[filter])
+
+  useEffect(()=>{
+    setTotalRecords(attendanceData?.data?.totalResults)
+  },[attendanceData])
 
   const workedHours = useSelector(
     (state) => state?.attendance?.attendance?.data.result
@@ -331,7 +334,7 @@ const AttendanceAdjusment = () => {
           { !(userRole === 'employee')  && (
    <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"15px"}}>
    <IconButton size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
-    if(attendanceData?.result?.length > 0){
+    if(attendanceData?.result?.data?.length > 0){
       setUserData(workedHours[0])
       setShowModal(true)
       setIsCreate(true)
@@ -346,7 +349,7 @@ const AttendanceAdjusment = () => {
          <MUITable
             column={ userRole === 'employee' ? UserAttendanceeEmpolyeConfig : UserAttendanceeConfig}
             list={normalizeTableProgram(attendanceData?.data?.result ? attendanceData?.data?.result : [])}
-            pagination={attendanceData?.data?.result  > 0 ? (
+            pagination={attendanceData?.data?.result.length > 0 ? (
               {
                 totalRecords: totalRecords,
                 pageNumber: filter.pageNumber - 1,

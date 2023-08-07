@@ -49,16 +49,22 @@ export default function PersistentDrawerLeft() {
     (state) => state?.tenetRolls?.allRollsdata
   );
 
+
+  
   const dataUpdate = useSelector(
     (state) => state?.tenetRolls?.dataUpdate
   );
   useEffect(() => {
     if (dataUpdate){
-      dispatch(getRoll({type:'designation'}));
+      dispatch(getRoll({type:'designation',filter:filter}));
       handleReset()
     }
    
-  }, [dataUpdate]);
+  }, [dataUpdate,filter]);
+  
+  useEffect(() => {  
+    setTotalRecords(allRollsList?.data?.totalResults)
+  }, [allRollsList]);
   
 
   

@@ -55,7 +55,7 @@ export default function TetentDepartment() {
   );
   useEffect(() => {
     if (dataUpdate){
-      dispatch(getRoll({type:'department'}));
+      dispatch(getRoll({type:'department',filter:filter}));
       handleReset()
     }
 

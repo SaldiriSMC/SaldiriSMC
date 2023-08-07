@@ -32,14 +32,14 @@ export default function Queues() {
   const dispatch = useDispatch();
   const rowsPerPageOptions = [5, 10, 20]; 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
+  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[2]);
   const [allUserList, setAllUserList] = useState([]);
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
-    descending: true,
   });
   const [totalRecords, setTotalRecords] = useState(0);
+  const [totalRecordsUser, setTotalRecordsUser] = useState(0);
   const [value, setValue] = React.useState("one");
   const [reload, setReload] = React.useState(0);
   const handleChangePage = (event, newPage) => {
@@ -53,14 +53,15 @@ export default function Queues() {
 
   useEffect(() => {
     getAllUser();
-  }, [reload]);
+  }, [reload,filter]);
 
   const getAllUser = () => {
     dispatch(loderTrue(true));
-    getAllUserByDeptDes()
+    getAllUserByDeptDes(filter)
       .then((response) => {
         if (response.data) {
-          setAllUserList(response.data.data);
+          setAllUserList(response?.data?.data?.result);
+          setTotalRecordsUser(response?.data?.data?.totalResults)
         }
       })
       .catch((error) => console.log(error.message))
@@ -68,10 +69,9 @@ export default function Queues() {
         dispatch(loderFalse(true));
       });
   };
-
   const handleChangeTab = (event, newValue) => {
     setValue(newValue);
-    setRowsPerPage(rowsPerPageOptions[0])
+    setRowsPerPage(rowsPerPageOptions[2])
   };
 
 
@@ -241,7 +241,7 @@ export default function Queues() {
 </div>
 <br></br>
             <MUITable column={value === "one" ? processingQueuesConfig : value === "four" ? faildQueuesConfig : processedQueuesConfig } list={normalizeTableProgram(queues?.data, value)} 
-          pagination={{
+             pagination={{
               totalRecords: totalRecords,
               pageNumber: page,
               pageSize: rowsPerPage,
@@ -279,6 +279,16 @@ export default function Queues() {
             
               column={UserStatusConfig}
               list={normalizeTableUser(allUserList)}
+              pagination={allUserList?.length > 0 ? (
+                {
+                  totalRecords: totalRecordsUser,
+                  pageNumber: filter.pageNumber - 1,
+                  pageSize: filter.pageSize,
+                  onChangePageNumber: handlePageChange,
+                  onChangePageSize: handlePageSizeChange,
+                  rowsPerPageOptions:[]
+                }
+              ) : null}
             />
 
               </div>

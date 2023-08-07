@@ -69,7 +69,7 @@ export default function TetentStatus() {
     useEffect(() => {
       if (dataUpdate){
         if (values.modulesId){
-          dispatch(getRoll({type:'status',id:values.modulesId}));
+          dispatch(getRoll({type:'status',id:values.modulesId,filter:filter}));
           setTimeout(() => {
             setFieldValue('status','')
           }, 1000);

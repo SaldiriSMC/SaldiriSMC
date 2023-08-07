@@ -40,19 +40,19 @@ const InviteUser = ({ setLoader }) => {
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
-    descending: true,
   });
   const [totalRecords, setTotalRecords] = useState(0);
   useEffect(() => {
     getAllUser();
-  }, []);
+  }, [filter]);
 
   const getAllUser = () => {
     dispatch(loderTrue(true));
-    getAllUserByDeptDes()
+    getAllUserByDeptDes(filter)
       .then((response) => {
         if (response.data) {
-          setAllUserList(response.data.data);
+          setAllUserList(response?.data?.data?.result);
+          setTotalRecords(response?.data?.data?.totalResults)
         }
       })
       .catch((error) => console.log(error.message))
