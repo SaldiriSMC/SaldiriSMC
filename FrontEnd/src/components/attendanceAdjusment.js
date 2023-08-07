@@ -39,6 +39,7 @@ const AttendanceAdjusment = () => {
   const userId =  user?.data?.user?.id
   const data = useSelector((state) => state.attendance?.allUsers?.data);
   const attendanceData = useSelector((state) => state?.attendance?.attendance);
+  console.log("attendaceData------>>>>", attendanceData)
   const attendanceRecord = useSelector((state)=> state?.attendance?.data?.results)
   useEffect(()=>{
     dispatch(
@@ -46,7 +47,7 @@ const AttendanceAdjusment = () => {
   },[])
 
   const workedHours = useSelector(
-    (state) => state?.attendance?.attendance?.data
+    (state) => state?.attendance?.attendance?.data.result
   );  
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [deleteId, setDeleteId] = React.useState({});
@@ -307,7 +308,7 @@ const AttendanceAdjusment = () => {
           { !(userRole === 'employee')  && (
    <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"15px"}}>
    <IconButton size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
-    if(attendanceData?.length > 0){
+    if(attendanceData?.result?.length > 0){
       setUserData(workedHours[0])
       setShowModal(true)
       setIsCreate(true)
@@ -321,7 +322,7 @@ const AttendanceAdjusment = () => {
       
          <MUITable
             column={ userRole === 'employee' ? UserAttendanceeEmpolyeConfig : UserAttendanceeConfig}
-            list={normalizeTableProgram(attendanceData?.data ? attendanceData?.data : [])}
+            list={normalizeTableProgram(attendanceData?.data?.result ? attendanceData?.data?.result : [])}
 
           />
           <Grid
