@@ -20,6 +20,7 @@ import Attendance from './components/attendanceAdjusment';
 import Tenant from './pages/tetent';
 import TetentStatus from './pages/tetentStatus';
 import Queues from './pages/queues';
+import DynamicTable from './pages/dynamicTable';
 import TetentDepartment from './pages/tetentDepartment';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -103,14 +104,14 @@ useEffect(() => {
   if (!areAPICallsAlreadySent()) {
     if (user) {
       // Fetch data immediately when the component mounts
-      fetchData();
+      // fetchData();
 
       // Set up the interval to fetch data every 5 seconds (60000 milliseconds)
-      const interval = setInterval(fetchData, 120000);
+      // const interval = setInterval(fetchData, 120000);
 
       // Clean up the interval when the component unmounts
       return () => {
-        clearInterval(interval);
+        // clearInterval(interval);
       };
     }
   }
@@ -164,6 +165,9 @@ useEffect(() => {
         </Route>
         <Route exact path='/queues' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
             <Route exact path='/queues' element={<Queues  loader={loader} setLoader={setLoader} />}/>
+        </Route>
+        <Route exact path='/dynamicTable' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
+            <Route exact path='/dynamicTable' element={<DynamicTable  loader={loader} setLoader={setLoader} />}/>
         </Route>
        
       </Routes>

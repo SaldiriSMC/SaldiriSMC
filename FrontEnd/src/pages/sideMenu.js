@@ -7,7 +7,7 @@ import MuiAppBar from '@mui/material/AppBar';
 import { makeStyles } from "tss-react/mui";
 import List from '@mui/material/List';
 import ChecklistIcon from '@mui/icons-material/Checklist';
-import Typography from '@mui/material/Typography';
+import TableViewIcon from '@mui/icons-material/TableView';
 import Divider from '@mui/material/Divider';
 import { Link, Outlet } from 'react-router-dom';
 import BadgeIcon from '@mui/icons-material/Badge';
@@ -160,7 +160,9 @@ export default function PersistentDrawerLeft() {
     setOpenList(!openList);
   };
 
-  const sideListTenet =[{name:'Designation',id:1,path:'/tenant',icon:<BadgeIcon/>},
+  const sideListTenet =[
+    {name:'Table',id:1,path:'/dynamicTable',icon:<TableViewIcon/>},
+    {name:'Designation',id:1,path:'/tenant',icon:<BadgeIcon/>},
   {name:'Department',id:1,path:'/tetentDepartment',icon:<WorkIcon/>},
   {name:'Status',id:1,path:'/tenantStatus',icon:<AccountCircleIcon/>},
   {name:'Queues',id:1,path:'/queues',icon:<ChecklistIcon/>},

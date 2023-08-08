@@ -216,7 +216,7 @@ const InviteUserModel = (props) => {
         getAllDepartment()
         .then((response) => {
           if (response.data) {
-            setDepartmentList(response.data.data)
+            setDepartmentList(response?.data?.data?.results)
           }
         })
         .catch((error) => console.log(error.message))
@@ -228,7 +228,7 @@ const InviteUserModel = (props) => {
         getAllDesignation()
         .then((response) => {
           if (response.data) {
-            setDesignationList(response.data.data.filter(item=> item.designationName !=='CEO'))
+            setDesignationList(response?.data?.data?.results.filter(item=> item.designationName !=='CEO'))
           }
         })
         .catch((error) => console.log(error.message))
@@ -250,6 +250,9 @@ const InviteUserModel = (props) => {
 
       },[action])
   
+console.log("userData-----------",userData)
+
+
   return (
     <div>
       <Modal
