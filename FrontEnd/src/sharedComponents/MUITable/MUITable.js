@@ -90,7 +90,7 @@ const MUITable = (props) => {
                 </TableCell>
               } */}
               {
-                column.map(item => <TableCell key={item.id} className={item.display === 'none' && classes.hideRow}>
+                column.map(item => <TableCell key={item.id}  className={item.display === 'none' && classes.hideRow}>
                   {item.id === 'check' ? (
                     <Checkbox 
                     style={{
@@ -122,6 +122,7 @@ const MUITable = (props) => {
                         value={row[cell.name]}
                         renderer={cell.renderer}
                         props={cell.props}
+                        
                         highlighted={row.suspicious}
                         striked={row.striked}
                         colour={cell.coloured}

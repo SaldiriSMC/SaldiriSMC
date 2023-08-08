@@ -38,7 +38,7 @@ const EmailTemplate = () => {
     if(!isLoading){
       dispatch(getTemplate(filter));
     }
-  }, [isLoading]);
+  }, [isLoading,filter]);
   const handleDeleteModel = ()=>{
     dispatch(deleteTemplate({itemId:itemId}))
     setShowDeleteModal(false)
