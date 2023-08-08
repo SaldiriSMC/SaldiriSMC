@@ -109,9 +109,9 @@ useEffect(() => {
       const interval = setInterval(fetchData, 120000);
 
       // Clean up the interval when the component unmounts
-      // return () => {
-      //   clearInterval(interval);
-      // };
+      return () => {
+        clearInterval(interval);
+      };
     }
   }
 }, [user]);

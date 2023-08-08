@@ -5,14 +5,14 @@ import {headerWithToken} from "../service/apiWithTokenLookUp";
 const instance = axios.create()
 export const getAllDepartment = () => {
     return instance({
-        url: URls.getDepartment,
+        url: `${URls.getDepartment}?limit=10000&page=1`,
         method: 'get',
         ...headerWithToken
     })
 }
 export const getAllDesignation = () => {
     return instance({
-        url: URls.getDesignation,
+        url: `${URls.getDesignation}?limit=10000&page=1`,
         method: 'get',
         ...headerWithToken
     })
