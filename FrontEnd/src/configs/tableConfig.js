@@ -35,6 +35,29 @@ export const UserInviteConfig = [
     label: "Actions",
   },
 ];
+export const UserStatusConfig = [
+  {
+    id: "name",
+    name: "name",
+    renderer: "UserStatus",
+    align: "left",
+    label: "Name",
+  },
+  {
+    id: "department",
+    name: "department",
+    renderer: "Text",
+    align: "left",
+    label: "Department",
+  },
+  {
+    id: "designation",
+    name: "designation",
+    renderer: "Text",
+    align: "left",
+    label: "Designation",
+  }
+];
 export const UserAttendanceeConfig = [
   {
     id: "timeIn",

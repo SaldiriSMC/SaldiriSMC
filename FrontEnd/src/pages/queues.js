@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import MUITable from "../sharedComponents/MUITable";
-import { processedQueuesConfig, processingQueuesConfig, faildQueuesConfig } from "../configs/tableConfig";
+import { processedQueuesConfig, processingQueuesConfig, faildQueuesConfig,UserStatusConfig } from "../configs/tableConfig";
 import AddIcon from "@mui/icons-material/Add";
 import { loderTrue, loderFalse } from "../actions/Auth";
 import { useFormik } from "formik";
@@ -24,6 +24,7 @@ import Footer from "../components/footer";
 import SideMenu from "../pages/sideMenu";
 import {
   getAllQueues,
+  getAllUserByDeptDes
 } from "../service/users";
 export default function Queues() {
   const theme = useTheme();
@@ -31,8 +32,16 @@ export default function Queues() {
   const dispatch = useDispatch();
   const rowsPerPageOptions = [5, 10, 20]; 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
-
+  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[2]);
+  const [allUserList, setAllUserList] = useState([]);
+  const [filter, setFilter] = useState({
+    pageNumber: 1,
+    pageSize: 5,
+  });
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [totalRecordsUser, setTotalRecordsUser] = useState(0);
+  const [value, setValue] = React.useState("one");
+  const [reload, setReload] = React.useState(0);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -42,20 +51,27 @@ export default function Queues() {
     setPage(0);
   };
 
+  useEffect(() => {
+    getAllUser();
+  }, [reload,filter]);
 
-  const [filter, setFilter] = useState({
-    pageNumber: 1,
-    pageSize: 5,
-    descending: true,
-  });
-  const [totalRecords, setTotalRecords] = useState(0);
-
-
-  const [value, setValue] = React.useState("one");
-  const [reload, setReload] = React.useState(0);
+  const getAllUser = () => {
+    dispatch(loderTrue(true));
+    getAllUserByDeptDes(filter)
+      .then((response) => {
+        if (response.data) {
+          setAllUserList(response?.data?.data?.result);
+          setTotalRecordsUser(response?.data?.data?.totalResults)
+        }
+      })
+      .catch((error) => console.log(error.message))
+      .finally(() => {
+        dispatch(loderFalse(true));
+      });
+  };
   const handleChangeTab = (event, newValue) => {
     setValue(newValue);
-    setRowsPerPage(rowsPerPageOptions[0])
+    setRowsPerPage(rowsPerPageOptions[2])
   };
 
 
@@ -153,6 +169,20 @@ export default function Queues() {
     return result;
   };
 
+  const normalizeTableUser = (source) => {
+    const result = [];
+    source.forEach((record, index) => {
+      result.push({
+        name: {
+          name: record?.name,
+          isOnline:record.is_online == 0 ? true :false
+        },
+        designation: record?.designationName,
+        department: record?.departmentname,
+      });
+    });
+    return result;
+  };
   const handlePageChange = (e, newPage) => {
     setFilter({
       ...filter,
@@ -211,7 +241,7 @@ export default function Queues() {
 </div>
 <br></br>
             <MUITable column={value === "one" ? processingQueuesConfig : value === "four" ? faildQueuesConfig : processedQueuesConfig } list={normalizeTableProgram(queues?.data, value)} 
-          pagination={{
+             pagination={{
               totalRecords: totalRecords,
               pageNumber: page,
               pageSize: rowsPerPage,
@@ -241,9 +271,27 @@ export default function Queues() {
             sm={12}
           >
             <>
+            
               <div
-                style={{ display: "flex", justifyContent: "flex-end" }}
-              ></div>
+                style={{ marginTop:'5.5rem'}}
+              >
+                  <MUITable
+            
+              column={UserStatusConfig}
+              list={normalizeTableUser(allUserList)}
+              pagination={allUserList?.length > 0 ? (
+                {
+                  totalRecords: totalRecordsUser,
+                  pageNumber: filter.pageNumber - 1,
+                  pageSize: filter.pageSize,
+                  onChangePageNumber: handlePageChange,
+                  onChangePageSize: handlePageSizeChange,
+                  rowsPerPageOptions:[]
+                }
+              ) : null}
+            />
+
+              </div>
             </>
           </Grid>
         </Grid>

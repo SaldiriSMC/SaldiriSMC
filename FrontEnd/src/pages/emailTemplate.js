@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import Box from "@mui/material/Box";
 import SideMenu from '../pages/sideMenu'
 import NavBar from "../components/navBar"
@@ -27,11 +27,16 @@ const EmailTemplate = () => {
   const emailTemplateData = useSelector(
     (state) => state?.emailTemplate?.data?.data
   );
+  const [filter, setFilter] = useState({
+    pageNumber: 1,
+    pageSize: 5,
+  });
+  const [totalRecords, setTotalRecords] = useState(0);
   const isLoading = useSelector((state) => state?.emailTemplate?.getListLoading)
 
   useEffect(() => {
     if(!isLoading){
-      dispatch(getTemplate());
+      dispatch(getTemplate(filter));
     }
   }, [isLoading]);
   const handleDeleteModel = ()=>{
@@ -71,6 +76,21 @@ const EmailTemplate = () => {
       setItemData(data)
     }
   };
+
+  const handlePageChange = (e, newPage) => {
+    setFilter({
+      ...filter,
+      pageNumber: newPage + 1,
+    });
+  };
+
+  const handlePageSizeChange = (e) => {
+    setFilter({
+      ...filter,
+      pageNumber: 1,
+      pageSize: e.target.value,
+    });
+  };
   return (
     <div>
       <NavBar />
@@ -104,7 +124,16 @@ const EmailTemplate = () => {
          </div>
          <MUITable
         column={EmailTemplateConfig}
-        list={normalizeTableProgram(emailTemplateData?.results ? emailTemplateData?.results : [] )}
+        list={normalizeTableProgram(emailTemplateData?.results ?? [])}
+        pagination={emailTemplateData?.results?.length > 0 ? (
+          {
+            totalRecords: emailTemplateData?.totalResults,
+            pageNumber: filter.pageNumber - 1,
+            pageSize: filter.pageSize,
+            onChangePageNumber: handlePageChange,
+            onChangePageSize: handlePageSizeChange,
+          }
+        ) : null}
       />
           <Grid
             item

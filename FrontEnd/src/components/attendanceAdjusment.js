@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
@@ -34,19 +34,29 @@ const AttendanceAdjusment = () => {
   const [noTimeOut, setNoTimeOut] = React.useState(false)
   const [showModal,setShowModal] = React.useState(false)
   const [userData,setUserData] = React.useState({})
+  const [filter, setFilter] = useState({
+    pageNumber: 1,
+    pageSize: 5,
+  });
+  const [totalRecords, setTotalRecords] = useState(0);
   const user = JSON.parse(localStorage.getItem("accessToken"))
   const userRole =  user?.data?.user?.role
   const userId =  user?.data?.user?.id
-  const data = useSelector((state) => state.attendance?.allUsers?.data.result);
+  const data = useSelector((state) => state.attendance?.allUsers?.data?.result);
   const attendanceData = useSelector((state) => state?.attendance?.attendance);
-  console.log("attendaceData------>>>>", attendanceData)
+  console.log(data,"attendaceData------>>>>",attendanceData?.data)
   const attendanceRecord = useSelector((state)=> state?.attendance?.data?.results)
   useEffect(()=>{
     dispatch(
-      getAttendance())
+      getAttendance(filter))
   },[])
+
+  useEffect(()=>{
+    setTotalRecords(attendanceData?.data?.totalResults)
+  },[attendanceData])
+
   const workedHours = useSelector(
-    (state) => state?.attendance?.attendance?.data.result
+    (state) => state?.attendance?.attendance?.data?.result
   );  
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [deleteId, setDeleteId] = React.useState({});
@@ -65,7 +75,7 @@ const AttendanceAdjusment = () => {
     deleteAttendance(payload)
     .then((response) => {
       if (response.data) {
-        dispatch(getAttendanceByHours(values.user));
+        dispatch(getAttendanceByHours({value:values.user,filter:filter}));
         setShowDeleteModal(false);
       }
     })
@@ -119,15 +129,15 @@ const AttendanceAdjusment = () => {
 
   useEffect(() => {
     if ((values.user && !(userRole === 'employee'))) {
-      dispatch(getAttendanceByHours(values.user));
+      dispatch(getAttendanceByHours({value:values.user,filter:filter}));
       calculateTotalWorkedHours();
     }
 
     if (userRole === 'employee'){
-      dispatch(getAttendanceByHours(userId));
+      dispatch(getAttendanceByHours({value:userId,filter:filter}));
       calculateTotalWorkedHours();
     }
-  }, [values.user,userId]);
+  }, [values.user,userId,filter]);
 
 
   const normalizeTableProgram= (source) => {
@@ -166,7 +176,22 @@ const AttendanceAdjusment = () => {
     }
 
   }
-  console.log("values-------->>>>>>", values)
+
+
+  const handlePageChange = (e, newPage) => {
+    setFilter({
+      ...filter,
+      pageNumber: newPage + 1,
+    });
+  };
+
+  const handlePageSizeChange = (e) => {
+    setFilter({
+      ...filter,
+      pageNumber: 1,
+      pageSize: e.target.value,
+    });
+  };
 
   return (
     <div>
@@ -309,7 +334,7 @@ const AttendanceAdjusment = () => {
           { !(userRole === 'employee')  && (
    <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"15px"}}>
    <IconButton size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
-    if(attendanceData?.result?.length > 0){
+    if(attendanceData?.result?.data?.length > 0){
       setUserData(workedHours[0])
       setShowModal(true)
       setIsCreate(true)
@@ -324,7 +349,15 @@ const AttendanceAdjusment = () => {
          <MUITable
             column={ userRole === 'employee' ? UserAttendanceeEmpolyeConfig : UserAttendanceeConfig}
             list={normalizeTableProgram(attendanceData?.data?.result ? attendanceData?.data?.result : [])}
-
+            pagination={attendanceData?.data?.result.length > 0 ? (
+              {
+                totalRecords: totalRecords,
+                pageNumber: filter.pageNumber - 1,
+                pageSize: filter.pageSize,
+                onChangePageNumber: handlePageChange,
+                onChangePageSize: handlePageSizeChange,
+              }
+            ) : null}
           />
           <Grid
             item
