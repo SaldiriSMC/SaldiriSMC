@@ -38,7 +38,6 @@ export default function TetentStatus() {
     const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
-    descending: true,
   });
   const [totalRecords, setTotalRecords] = useState(0);
   const initialValues = {
@@ -78,7 +77,7 @@ export default function TetentStatus() {
         
       }
          
-        }, [dataUpdate,values.modulesId]);
+        }, [dataUpdate,values.modulesId,filter]);
 
 
 
@@ -236,10 +235,10 @@ export default function TetentStatus() {
          <MUITable
             
             column={statusConfig}
-            list={normalizeTableProgram(allRollsList?.data ? allRollsList?.data : [])}
-            pagination={allRollsList?.data?.length > 0 ? (
+            list={normalizeTableProgram(allRollsList?.results ? allRollsList?.results : [])}
+            pagination={allRollsList?.totalResults > 0 ? (
               {
-                totalRecords: totalRecords,
+                totalRecords: allRollsList?.totalResults,
                 pageNumber: filter.pageNumber - 1,
                 pageSize: filter.pageSize,
                 onChangePageNumber: handlePageChange,

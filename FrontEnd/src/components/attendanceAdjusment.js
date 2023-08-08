@@ -334,7 +334,7 @@ const AttendanceAdjusment = () => {
           { !(userRole === 'employee')  && (
    <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"15px"}}>
    <IconButton size="medium" style={{backgroundColor:"#0075FF", color:"white",}} onClick={()=>{
-    if(attendanceData?.result?.data?.length > 0){
+    if(attendanceData?.data?.result?.length > 0){
       setUserData(workedHours[0])
       setShowModal(true)
       setIsCreate(true)
