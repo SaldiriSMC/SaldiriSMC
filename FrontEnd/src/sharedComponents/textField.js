@@ -100,7 +100,11 @@ const MUITextField = (props) => {
       result = list.map(item => <MenuItem value={item.id} key={item.id}>{item.moduleName}</MenuItem>)
     } else if(pass === 'code') {
       result = list.map(item => <MenuItem value={item.code} key={item.id}>{item.name}</MenuItem>)
-    } else {
+    } else if(pass === 'column') {
+      result = list.map(item => <MenuItem value={item.value} key={item.id}>{item.name}</MenuItem>)
+    } else if(pass === 'primaryKeys') {
+      result = list.map(item => <MenuItem value={item.Tables_in_techteam} key={item.id}>{item.Tables_in_techteam}</MenuItem>)
+    }else {
       result = list.map(item => <MenuItem value={item.id} key={item.id}>{item.name}</MenuItem>)
     }
     return result

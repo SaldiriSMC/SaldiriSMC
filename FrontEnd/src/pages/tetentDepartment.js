@@ -61,8 +61,6 @@ export default function TetentDepartment() {
 
   }, [dataUpdate,filter]);
 
-
-  console.log("datata-----allRollsList-----",allRollsList)
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
     dirty } =
     useFormik({

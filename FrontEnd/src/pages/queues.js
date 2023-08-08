@@ -90,7 +90,6 @@ export default function Queues() {
     fetchData(); // Call the fetchData function to fetch data when the component mounts
   }, [reload]);
   
-  console.log("queues----queues---------->>>>>>>>>.",queues)
   useEffect(() => {
     if(value === "one"){
       setTotalRecords(queues?.data?.prcessingQueue?.length);

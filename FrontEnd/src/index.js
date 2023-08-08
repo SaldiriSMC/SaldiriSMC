@@ -5,7 +5,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 fetch("/data/data.json").then((response) => {
-  // console.log("------------------>\n", "Andar", response)
   response.json().then((data) => {
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(

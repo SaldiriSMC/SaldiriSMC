@@ -47,7 +47,6 @@ function App({data}) {
   const attendanceid = user?.data?.timeDoc?.attendanceId
   // const isLoading = useSelector((state) => state.loder?.isLoading);
 
-  console.log("Name--------------",Name)
   const store = configureStore();
   const url = window.location.href.split( '/' )[3];
   const [loader, setLoader] = useState(false)

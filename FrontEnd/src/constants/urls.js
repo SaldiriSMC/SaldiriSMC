@@ -11,6 +11,7 @@ const URLs = {
   getAllUsers:'users/by/department-and-designation',
   getDepartment:'/department',
   getDesignation:'/designation',
+  table_url:'/table',
   getUserDepartmentDesignation:'/users/by/department-and-designation',
   sandUsersEmails:'/users/send-invite-emails',
   designation: "/designation",
