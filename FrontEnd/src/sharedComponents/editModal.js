@@ -145,7 +145,7 @@ const MainModal = (props) => {
             createAttendance(data)
             .then((response) => {
               if (response.data) {
-                dispatch(getAttendanceByHours({value:values.user,filter:filter}));
+                dispatch(getAttendanceByHours({value:value,filter:filter}));
                 pushNotification(
                   `${response?.data?.message}`,
                   "success",

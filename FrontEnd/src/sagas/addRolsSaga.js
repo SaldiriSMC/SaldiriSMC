@@ -51,7 +51,7 @@ function* getAllRollsCall(action) {
   console.log("action------ payload ",action.payload)
  
   try {
-    const response = yield call(getRequestWithTenant, action.payload.type == 'designation'? `${URls.designation}?limit=${action.payload.filter.pageSize}&page=${action.payload.filter.pageNumber}` : action.payload.type == 'department' ? `${URls.department}?limit=${action.payload.filter.pageSize}&page=${action.payload.filter.pageNumber}` :  `${URls.status}?Module_Id=${action.payload.id}?limit=${action.payload.filter.pageSize}&page=${action.payload.filter.pageNumber}`);
+    const response = yield call(getRequestWithTenant, action.payload.type == 'designation'? `${URls.designation}?limit=${action.payload.filter.pageSize}&page=${action.payload.filter.pageNumber}` : action.payload.type == 'department' ? `${URls.department}?limit=${action.payload.filter.pageSize}&page=${action.payload.filter.pageNumber}` :  `${URls.status}?Module_Id=${action.payload.id}&limit=${action.payload.filter.pageSize}&page=${action.payload.filter.pageNumber}`);
 
     if (response?.status === 200) {
       yield put(getRollSuccess(response.data));
