@@ -61,7 +61,6 @@ const updateWorkedHours = async (id) => {
   } else {
     await Attendance.update({ workedHours: totalHours, statusId: null }, { where: { id: id } });
   }
-  response(res, result, 'Record found succesfully', 200);
 };
 const getAttendanceByHours = catchAsync(async (req, res) => {
   const options = pick(req.query, ['sortBy', 'limit', 'page']);

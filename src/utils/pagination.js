@@ -4,15 +4,47 @@ const pagination = async (req, tenantId, Modal, from) => {
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   let data;
   if (from === 'statuses') {
-    if(req.query.Module_Id){
-        data = await Modal.findAndCountAll({where:{moduleId:req.query.Module_Id, tenantId:tenantId}})
-    }else{
-        data = await Modal.findAndCountAll({where:{tenantId:tenantId}})
+    if (req.query.Module_Id) {
+      req.query.sortBy ? 
+      data = await Modal.findAndCountAll({
+        limit: parseInt(options.limit),
+        offset: (options.page - 1) * options.limit,    
+        order:[["createdAt", req.query.sortBy]],
+        where: { moduleId: req.query.Module_Id, tenantId: tenantId },
+      }) : 
+      data = await Modal.findAndCountAll({
+        limit: parseInt(options.limit),
+        offset: (options.page - 1) * options.limit,    
+        order:[["createdAt", "DESC"]],
+        where: { moduleId: req.query.Module_Id, tenantId: tenantId },
+      });
+    } else {
+      req.query.sortBy ? 
+      data = await Modal.findAndCountAll({
+        limit: parseInt(options.limit),
+        offset: (options.page - 1) * options.limit,
+        order:[["createdAt", req.query.sortBy]],
+        where: { tenantId: tenantId },
+      }) :
+      data = await Modal.findAndCountAll({
+        limit: parseInt(options.limit),
+        offset: (options.page - 1) * options.limit,
+        order:[["createdAt", "DESC"]],
+        where: { tenantId: tenantId },
+      })
     }
   } else {
+    req.query.sortBy ?
     data = await Modal.findAndCountAll({
       limit: parseInt(options.limit),
       offset: (options.page - 1) * options.limit,
+      order:[["createdAt", req.query.sortBy]],
+      where: { [Op.or]: [{ tenantId: tenantId }, { tenantId: null }] },
+    }) : 
+    data = await Modal.findAndCountAll({
+      limit: parseInt(options.limit),
+      offset: (options.page - 1) * options.limit,
+      order:[["createdAt", "DESC"]],
       where: { [Op.or]: [{ tenantId: tenantId }, { tenantId: null }] },
     });
   }

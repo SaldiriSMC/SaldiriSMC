@@ -3,13 +3,15 @@ const { addTaskToRedisCache, redisClient } = require('./redisProducer');
 const { Token, Attendance } = require('../models/v2/index');
 const { attendanceService } = require('../services/v2');
 const moment = require('moment');
-const myQueue = new Queue('myQueue', 'redis://localhost:6379', {limiter: {
-    max: 1000 , // Adjust this value based on your needs
-    duration: 5000, // Adjust this value based on your needs
-  },});
+const myQueue = new Queue('myQueue', 'redis://localhost:6379', {
+  limiter: {
+    max: 100, // Maximum number of jobs processed concurrently
+    duration: 150000, // Time window in milliseconds
+  },  
+  });
 const queue = async () => {
   
-  myQueue.process(200, async (job) => {
+  myQueue.process(300, async (job) => {
     console.log(`Processing job ${job.id}: ${job.data.token}`);
     await addTaskToRedisCache({ ...job.data, isOnline: true });
     await new Promise((resolve) => setTimeout(resolve, 150000));
@@ -17,9 +19,9 @@ const queue = async () => {
 
   // Event handler when a new job is added to the queue
   myQueue.on('completed', async (job, result) => {
-
     const cacheResults = await redisClient.get(`user-${job?.data.id}`);
     const cacheObject = JSON.parse(cacheResults);
+    console.log("cacheObject------->>>>>>>",cacheObject)
     if (cacheObject) {
       const time = moment(new Date());
       const current_Time = moment(cacheObject?.current_time);
@@ -36,7 +38,6 @@ const queue = async () => {
         let attendanceDoc = await Attendance.findOne({ where: { id: job?.data?.attendanceId } });
         await attendanceService.markTimeOut(job?.data?.timeId, attendanceDoc, current_Time);
         }
-        
       }
       await job.finished( )
       //await myQueue.close()
