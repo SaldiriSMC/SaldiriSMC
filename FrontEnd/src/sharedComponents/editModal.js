@@ -104,7 +104,8 @@ const MainModal = (props) => {
       userData,
       value,
       calculateTotalWorkedHours,
-      isCreate
+      isCreate,
+      filter
     } = props
     const { classes } = useStyles();
     const initialValues = {
@@ -144,7 +145,7 @@ const MainModal = (props) => {
             createAttendance(data)
             .then((response) => {
               if (response.data) {
-                dispatch(getAttendanceByHours(value));
+                dispatch(getAttendanceByHours({value:value,filter:filter}));
                 pushNotification(
                   `${response?.data?.message}`,
                   "success",
