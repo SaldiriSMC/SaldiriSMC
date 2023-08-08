@@ -397,6 +397,7 @@ const AttendanceAdjusment = () => {
         value={values.user}
         calculateTotalWorkedHours={calculateTotalWorkedHours}
         isCreate={isCreate}
+        filter={filter}
       />
       <DeleteModal
         showDeleteModal={showDeleteModal}
