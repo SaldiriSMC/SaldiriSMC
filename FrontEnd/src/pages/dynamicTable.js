@@ -9,6 +9,8 @@ import Header from "../components/navBar";
 import Footer from "../components/footer";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 import SideMenu from "../pages/sideMenu";
 import { useFormik } from "formik";
 import Button from '@mui/material/Button';
@@ -30,9 +32,9 @@ export default function DynamicTable() {
   ]);
   const [columnTypes, setColumnTypes] = useState([
     { name: 'Int', value: 'int' },
-    { name: 'VARCHAR', value: 'VARCHAR' },
+    { name: 'VARCHAR', value: 'VARCHAR(255)' },
     { name: 'Boolean', value: 'boolean' },
-    { name: 'Primary key', value: 'int' },
+    { name: 'FOREIGN KEY', value: 'FOREIGN KEY' },
     // Initial input sets
   ]);
   const [primaryKeys, setprimaryKeys] = useState([])
@@ -60,7 +62,7 @@ export default function DynamicTable() {
 
   
   },[])
-  console.log("inputSets-------->>>>...",inputSets)
+  // console.log("inputSets-------->>>>...",inputSets)
 
     const handleInputChange = (index, event) => {
 
@@ -96,6 +98,64 @@ export default function DynamicTable() {
       .finally(() => {
     });
     };
+    const generateAndDownloadZip = () => {
+      const fileData = [
+        { path: '/tempFiles/routingStep1.js', newName: 'abdullah_routingStep1.js' },
+        { path: '/tempFiles/routingStep2.js', newName: 'abdullah_routingStep2.js' },
+        { path: '/tempFiles/addInMenu.js', newName: 'addInMenu.js' },
+        // Add more file paths and new names as needed
+      ];
+    
+      const replacements = [
+        { placeholder: '#tableName', replacement: name },
+        { placeholder: '#tableTitle', replacement: name.toUpperCase() },
+        // Add more replacements as needed
+      ];
+
+      console.log("replacements------------",replacements)
+      const zip = new JSZip();
+    
+      const fetchAndProcessFiles = fileData.map(fileInfo => {
+        const { path, newName } = fileInfo;
+    
+        return fetch(path)
+          .then(response => response.text())
+          .then(jsCode => {
+            let newCode = jsCode;
+            replacements.forEach(replacement => {
+              newCode = newCode.replaceAll(replacement.placeholder, replacement.replacement);
+            });
+            zip.file(newName, newCode);
+          });
+      });
+    
+      Promise.all(fetchAndProcessFiles)
+        .then(() => {
+          return zip.generateAsync({ type: 'blob' });
+        })
+        .then(zipBlob => {
+          saveAs(zipBlob, 'downloaded_files.zip');
+        })
+        .catch(error => {
+          console.error('Error generating and downloading zip archive:', error);
+        });
+    };
+    
+    
+    function createAndDownloadFile(content, filename) {
+      const blob = new Blob([content], { type: 'application/javascript' });
+      const url = URL.createObjectURL(blob);
+    
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      link.click();
+    
+      URL.revokeObjectURL(url);
+    }
+    
+
+
 
   return (
     <>
@@ -110,7 +170,7 @@ export default function DynamicTable() {
         justifyContent=""
         sx={{ p: 1 }}
       >
-          
+          <button onClick={generateAndDownloadZip}>files</button>
         <Grid
           sx={{ pl: 3 }}
           spacing={2}
@@ -178,16 +238,16 @@ export default function DynamicTable() {
               options={columnTypes}
               pass="column"
             /> 
-            {inputSet.dataType === 'int' && (    <MUITextField
+            {inputSet.dataType === 'FOREIGN KEY' && (    <MUITextField
               sm={3}
               xs={12}
-              label='Primary Keys'
+              label='Foreign Key'
               name="primaryKey"
               value={inputSet.primaryKey}
               handleChange={(event) => handleInputChange(index, event)}
                variant='inner'
               id="primaryKey"
-              placeholder='Column Type'
+              placeholder='Foreign Key'
 
               type="select"
               options={primaryKeys}
@@ -201,7 +261,7 @@ export default function DynamicTable() {
             <DeleteIcon />
           </IconButton> ) }
  
- {!(inputSet.dataType === 'int') && (
+ {!(inputSet.dataType === 'FOREIGN KEY') && (
   <Grid item sm={4}></Grid>
  )}
               </>))}
