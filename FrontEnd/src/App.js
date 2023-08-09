@@ -30,6 +30,7 @@ import ForgetPassword from './components/forgetPassword'
 import {
   checkUserStatus,
 } from "./service/users";
+import DOCTOR from './pages/doctor';
 import ChnagePassword from './components/chnagePassword'
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../src/theme';
@@ -168,7 +169,9 @@ useEffect(() => {
         <Route exact path='/dynamicTable' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
             <Route exact path='/dynamicTable' element={<DynamicTable  loader={loader} setLoader={setLoader} />}/>
         </Route>
-       
+        <Route exact path='/doctor' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
+<Route exact path='/doctor' element={< DOCTOR  loader={loader} setLoader={setLoader} />}/>
+</Route>
       </Routes>
 
     </BrowserRouter>

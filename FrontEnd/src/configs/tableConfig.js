@@ -318,3 +318,37 @@ export const faildQueuesConfig = [
     label: "Processed On",
   },
 ];
+
+
+export const doctor = [
+      
+  {
+    id: "test",
+    name: "test",
+    renderer: 'Text',
+    align: "left",
+    label: "test",
+  },
+  {
+    id: "age",
+    name: "age",
+    renderer: 'Text',
+    align: "left",
+    label: "age",
+  },
+  {
+    id: "desise",
+    name: "desise",
+    renderer: 'Text',
+    align: "left",
+    label: "desise",
+  },
+  {
+    id: "action",
+    name: "action",
+    renderer: "EditDeleteAction",
+    align: "right",
+    label: "Actions",
+  },
+];
+  

@@ -166,13 +166,16 @@ export default function PersistentDrawerLeft() {
   {name:'Department',id:1,path:'/tetentDepartment',icon:<WorkIcon/>},
   {name:'Status',id:1,path:'/tenantStatus',icon:<AccountCircleIcon/>},
   {name:'Queues',id:1,path:'/queues',icon:<ChecklistIcon/>},
+  {name:'DOCTOR',id:1,path:'/doctor',icon:<MailIcon/>},
 ]
   const sideList = (userRole === 'employee') ? [{name:'Dashboard',id:1,path:'/dashboard',icon:<DashboardIcon/>},
   {name:'Attendance',id:1,path:'/attendance',icon:<ListAltIcon/>},
+  
 ]: [{name:'Dashboard',id:1,path:'/dashboard',icon:<DashboardIcon/>},
 {name:'Attendance',id:1,path:'/attendance',icon:<ListAltIcon/>},
 {name:'Inivte User',id:1,path:'/inviteUser',icon:<PersonAddIcon/>},
 {name:'Template',id:1,path:'/emailTemplate',icon:<MailIcon/>},
+
 ]
 
 

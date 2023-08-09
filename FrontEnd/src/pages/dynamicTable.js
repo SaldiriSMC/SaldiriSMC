@@ -62,7 +62,7 @@ export default function DynamicTable() {
 
   
   },[])
-  // console.log("inputSets-------->>>>...",inputSets)
+
 
     const handleInputChange = (index, event) => {
 
@@ -100,15 +100,22 @@ export default function DynamicTable() {
     };
     const generateAndDownloadZip = () => {
       const fileData = [
-        { path: '/tempFiles/routingStep1.js', newName: 'abdullah_routingStep1.js' },
-        { path: '/tempFiles/routingStep2.js', newName: 'abdullah_routingStep2.js' },
-        { path: '/tempFiles/addInMenu.js', newName: 'addInMenu.js' },
+        { path: '/tempFiles/routingStep1.js', newName: 'src/abdullah_routingStep1.js' },
+        { path: '/tempFiles/routingStep2.js', newName: 'src/abdullah_routingStep2.js' },
+        { path: '/tempFiles/addInMenu.js', newName: 'pages/addInMenu.js' },
+        { path: '/tempFiles/tableFile.js', newName: `pages/${name}.js` },
+        { path: '/tempFiles/tableConfig.js', newName: 'constants/tableConfig.js' },
+        { path: '/tempFiles/tableConfig.js', newName: 'constants/tableConfig.js' },
+        { path: '/tempFiles/action/actionTypes.js', newName: `${name}/${name}.js` },
         // Add more file paths and new names as needed
       ];
-    
+
       const replacements = [
         { placeholder: '#tableName', replacement: name },
         { placeholder: '#tableTitle', replacement: name.toUpperCase() },
+        { placeholder: '#tableTitle', replacement: name.toUpperCase() },
+        // { placeholder: '#columName', replacement: name },
+        // { placeholder: '#columTitle', replacement: name.toUpperCase() },
         // Add more replacements as needed
       ];
 
@@ -117,15 +124,27 @@ export default function DynamicTable() {
     
       const fetchAndProcessFiles = fileData.map(fileInfo => {
         const { path, newName } = fileInfo;
-    
+        const folderPath = newName.substring(0, newName.lastIndexOf('/'));
+        const folder = zip.folder(folderPath); //
         return fetch(path)
           .then(response => response.text())
           .then(jsCode => {
             let newCode = jsCode;
-            replacements.forEach(replacement => {
-              newCode = newCode.replaceAll(replacement.placeholder, replacement.replacement);
-            });
-            zip.file(newName, newCode);
+         
+              replacements.forEach(replacement => {
+                if (path == '/tempFiles/tableConfig.js'){
+                  const jsCodea = convertToJavascript(inputSets, name);
+                  
+                  newCode = newCode.replace('#tableName', jsCodea);
+
+                } else {
+                  newCode = newCode.replaceAll(replacement.placeholder, replacement.replacement);
+                }
+
+              });
+   
+        
+              folder.file(newName.substring(newName.lastIndexOf('/') + 1), newCode); // Add the file to the folder
           });
       });
     
@@ -141,21 +160,32 @@ export default function DynamicTable() {
         });
     };
     
+  
+    function convertToJavascript(data, tableName) {
+      const columnEntries = data.map(item => `
+      {
+        id: "${item.columnName}",
+        name: "${item.columnName}",
+        renderer: 'Text',
+        align: "left",
+        label: "${item.columnName}",
+      }`).join(',');
     
-    function createAndDownloadFile(content, filename) {
-      const blob = new Blob([content], { type: 'application/javascript' });
-      const url = URL.createObjectURL(blob);
+      const jsCode = `
+    export const ${tableName} = [
+      ${columnEntries},
+      {
+        id: "action",
+        name: "action",
+        renderer: "EditDeleteAction",
+        align: "right",
+        label: "Actions",
+      },
+    ];
+      `;
     
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = filename;
-      link.click();
-    
-      URL.revokeObjectURL(url);
+      return jsCode;
     }
-    
-
-
 
   return (
     <>
