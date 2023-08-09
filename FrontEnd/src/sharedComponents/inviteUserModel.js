@@ -250,9 +250,6 @@ const InviteUserModel = (props) => {
 
       },[action])
   
-console.log("userData-----------",userData)
-
-
   return (
     <div>
       <Modal

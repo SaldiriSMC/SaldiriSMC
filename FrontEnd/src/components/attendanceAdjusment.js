@@ -44,7 +44,6 @@ const AttendanceAdjusment = () => {
   const userId =  user?.data?.user?.id
   const data = useSelector((state) => state.attendance?.allUsers?.data?.result);
   const attendanceData = useSelector((state) => state?.attendance?.attendance);
-  console.log(data,"attendaceData------>>>>",attendanceData?.data)
   const attendanceRecord = useSelector((state)=> state?.attendance?.data?.results)
   useEffect(()=>{
     dispatch(
@@ -95,7 +94,6 @@ const AttendanceAdjusment = () => {
         return acc + curr;
       }, 0);
     const fixed = total?.toFixed(4);
-    console.log("fixed-------->>>>>>>>", fixed)
     return fixed;
   };
   const totalWorkedHours = calculateTotalWorkedHours();

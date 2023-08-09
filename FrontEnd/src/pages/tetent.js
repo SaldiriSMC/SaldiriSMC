@@ -49,8 +49,6 @@ export default function PersistentDrawerLeft() {
     (state) => state?.tenetRolls?.allRollsdata?.data
   );
 
-
-  console.log("allRollsList---------",allRollsList)
   const dataUpdate = useSelector(
     (state) => state?.tenetRolls?.dataUpdate
   );

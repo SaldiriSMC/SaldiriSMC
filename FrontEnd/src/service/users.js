@@ -117,3 +117,18 @@ export const getAllQueues = () => {
         ...headerWithToken
     })
 }
+export const getAllPrimaryKey = () => {
+    return instance({
+        url: `${URls.table_url}`,
+        method: 'get',
+        ...headerWithToken
+    })
+}
+export const addTable = (payload) => {
+    return instance({
+        url: `${URls.table_url}`,
+        method: 'post',
+        data: payload,
+        ...headerWithToken
+    })
+}

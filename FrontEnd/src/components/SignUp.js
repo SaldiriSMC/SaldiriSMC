@@ -141,10 +141,7 @@ useEffect(()=>{
   })
   .catch((error) => console.log(error.message))
   .finally(() => {
-
 });
-
-
   getAllDesignation()
   .then((response) => {
     if (response.data) {

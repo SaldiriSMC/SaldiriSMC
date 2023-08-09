@@ -38,8 +38,6 @@ function* getUserList(action) {
 
  //course generator function
  function* getAttendanceCall(action) {
-  console.log("action------ payload ",action.payload)
-
  try {
    const response = yield call(getRequestWithTenant, `${URls.attendanceAdjustment}?limit=${action.payload.pageSize}&page=${action.payload.pageNumber}`);
 
@@ -56,7 +54,6 @@ function* getUserList(action) {
 
 // //get attendace by hours generator function
 function* getAttendanceByHoursCall(action) {
-console.log("action.payload-------------ssssssss---",action.payload)
  try {
    const response = yield call(getRequestWithTenant, URls.getAttendanceByHours+`/${action.payload?.value}?limit=${action?.payload?.filter?.pageSize}&page=${action.payload?.filter?.pageNumber}`);
 
