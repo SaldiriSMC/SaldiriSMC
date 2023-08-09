@@ -1,55 +1,54 @@
 const catchAsync = require('../../utils/catchAsync');
-const { Tenant, Department } = require('../../models/v2/index');
-const { response } = require('../../utils/response');
-const ApiError = require('../../utils/ApiError');
-const { pagination } = require('../../utils/pagination');
 const { sequelize } = require('../../config/mySqlConnection');
+const {response} = require("../../utils/response")
+const { getTemplate } = require("../../TemplateCode/template.model")
+
 const getTables = catchAsync(async (req, res) => {
   const [results, metadata] = await sequelize.query('SHOW TABLES');
-  console.log(results);
   res.send(results);
 });
 
 const createTable = catchAsync(async (req, res) => {
-  let queryField = '';
+  let queryField = 'id int NOT NULL';
+  let constraaintFields = ',PRIMARY KEY (id)';
+  let modelData="{"
+  let querytoSequlize = {
+    'int':'DataTypes.INTEGER',
+    'bool':"DataTypes.BOOLEAN",
+    'VARCHAR(255)':"DataTypes.STRING",
+  }
   req.body.columnArray.map((item) => {
-    queryField += `${item?.columnName} ${item.dataType},`;
-  });
-  queryField = queryField.slice(0, queryField.length - 1);
-  let query = `CREATE TABLE ${req.body.tableName} (${queryField})`;
-  const [results, metadata] = await sequelize.query(query);
-  console.log(results);
-  res.send(results);
-});
-
-const updateDepartment = catchAsync(async (req, res) => {
-  const id = req.params.departmentId;
-  const key = req.get('X-Tenent-Key');
-  const tenant = await Tenant.findOne({ where: { key: key } });
-  if (tenant === null) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'No tenant found');
-  }
-  const department = await Department.update(
-    { departmentName: req.body.departmentName },
-    {
-      where: {
-        id: id,
-        tenantId: tenant.id,
-      },
+    if (item.dataType == 'FOREIGN KEY') {
+      modelData +=`${item?.columnName}:{
+        type:DataTypes.INTEGER,
+        references:{
+          model:"${item.primaryKey}",
+          key:"id"
+        },
+      },`
+      queryField += `,${item?.columnName} int`;
+      constraaintFields += `,FOREIGN KEY (${item.columnName}) REFERENCES ${item.primaryKey}(id)`;
+    } else {
+      modelData +=`${item?.columnName}:{
+        type:${querytoSequlize[item.dataType]}
+      },`
+      queryField += `,${item?.columnName} ${item.dataType}`;
     }
-  );
-  response(res, department, 'Department updated successfully', 200);
-});
-
-const deleteDepartment = catchAsync(async (req, res) => {
-  const id = req.params.departmentId;
-  const key = req.get('X-Tenent-Key');
-  const tenant = await Tenant.findOne({ where: { key: key } });
-  if (tenant === null) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'No tenant found');
+  });
+  modelData +="}"
+  queryField += constraaintFields;
+  let query = `CREATE TABLE ${req.body.tableName} (${queryField})`;
+  console.log('query--------->>>>>>>>', query);
+  const [results] = await sequelize.query(query);
+  console.log("modelData--------->>>>>>>", modelData)
+  if(results){
+    const [columnInfo] = await sequelize.query(`SHOW COLUMNS FROM ${req.body.tableName}`);
+    getTemplate(modelData, req.body.tableName)
+    response(res, {result:results, metadata:columnInfo , modelData  }, 'Table created successfully', 200);
+  }else{
+    response(res,"", 'No Table created', 400);
   }
-  const deparment = await Department.destroy({ where: { id: id, tenantId: tenant.id } });
-  response(res, deparment, 'Deparment deleted successfully', 200);
+
 });
 
-module.exports = { getTables, createTable, updateDepartment, deleteDepartment };
+module.exports = { getTables, createTable };

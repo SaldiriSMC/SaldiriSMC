@@ -83,7 +83,6 @@ const mySqlConnection = async() =>{
   }).catch((err)=>{
     console.log(err)
   })
-
   attendance.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync of attendance is done")
   }).catch((err)=>{
@@ -109,8 +108,7 @@ const mySqlConnection = async() =>{
   }).catch((err)=>{
     console.log("emailTemplate------->>>>>>",err)
   })
-  
- 
+
   sequelize.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync is done")
   }).catch((err)=>{

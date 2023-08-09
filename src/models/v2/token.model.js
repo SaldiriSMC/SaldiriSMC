@@ -35,7 +35,5 @@ const Token = sequelize.define('tokens', {
         timestamps: true,
       }
 );
-/**
- * @typedef Token
- */
+
 module.exports = Token;
