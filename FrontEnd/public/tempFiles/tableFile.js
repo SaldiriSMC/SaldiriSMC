@@ -10,7 +10,7 @@ import { #tableName } from "../configs/tableConfig";
 import AddIcon from '@mui/icons-material/Add';
 import { loderTrue,loderFalse } from "../actions/Auth";
 import { useFormik } from "formik";
-import { getRoll, createRoll,deleteRoll,updateRoll } from "../actions/AddRols";
+import { create#tableName, delete#tableName , update#tableName , get#tableName } from "../actions/#tableName";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
 import MUITextField from "../sharedComponents/textField";
@@ -47,19 +47,16 @@ export default function #tableTitle() {
   const dispatch = useDispatch();
 
   const allRollsList = useSelector(
-    (state) => state?.tenetRolls?.allRollsdata?.data
+    (state) => state?.get#tableName?.get#tableName?.data
   );
 
-  const dataUpdate = useSelector(
-    (state) => state?.tenetRolls?.dataUpdate
-  );
   useEffect(() => {
-    if (dataUpdate){
-      dispatch(getRoll({type:'department',filter:filter}));
-      handleReset()
-    }
 
-  }, [dataUpdate,filter]);
+      dispatch(get#tableName({type:'department',filter:filter}));
+
+    
+
+  }, []);
 
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
     dirty } =
@@ -67,7 +64,7 @@ export default function #tableTitle() {
       initialValues,
       validationSchema: designationScema,
       onSubmit: () => {
-          dispatch(createRoll({data:{departmentName:values.designationIdCreate},type:'department'}));
+          dispatch( create#tableName({data:{departmentName:values.designationIdCreate},type:'department'}));
         
       },
     });
@@ -104,11 +101,11 @@ export default function #tableTitle() {
 
   }
   const handleDeleteModel = () => {
-    dispatch(deleteRoll({type:'department',id:userDeleteId}));
+    dispatch(delete#tableName({type:'department',id:userDeleteId}));
     setShowDeleteModal(false)
   }
   const handleUpdateModel = () => {
-    dispatch(updateRoll({data:{departmentName:values.designationId},type:'department',id:action}));
+    dispatch(update#tableName({data:{departmentName:values.designationId},type:'department',id:action}));
     setShowUpdateModal(false)
   }
   const handlePageChange = (e, newPage) => {
@@ -161,7 +158,7 @@ export default function #tableTitle() {
               handleChange={handleChange}
               onBlur={handleBlur}
               id="designationIdCreate"
-              placeholder='Department Name'
+              placeholder={``}
               errors={errors.designationIdCreate}
               touched={touched.designationIdCreate}
 
@@ -177,14 +174,7 @@ export default function #tableTitle() {
          <MUITable
             
             column={#tableName}
-            list={normalizeTableProgram(allRollsList?.results ? allRollsList?.results : [])}
-            pagination={{
-              totalRecords: allRollsList?.totalResults,
-              pageNumber: filter.pageNumber - 1,
-              pageSize: filter.pageSize,
-              onChangePageNumber: handlePageChange,
-              onChangePageSize: handlePageSizeChange,
-            }}
+            list={normalizeTableProgram(#tableName?.results ? #tableName?.results : [])}       
           />
           <Grid
             item

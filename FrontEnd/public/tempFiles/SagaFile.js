@@ -4,7 +4,7 @@ import {
   GET_#tableTitle,
   UPDATE_#tableTitle,
   DELETE_#tableTitle
-} from "../actions/Email#tableName/actionTypes";
+} from "../actions/#tableName/actionTypes";
 import {
   create#tableNameSuccess,
   create#tableNameFailure,
@@ -14,7 +14,7 @@ import {
   update#tableNameFailure,
   delete#tableNameSuccess,
   delete#tableNameFailure
-} from "../actions/Email#tableName/index";
+} from "../actions/#tableName/index";
 import { pushNotification, } from "../utils/notifications";
 import {
   postRequestWithTenat,
@@ -25,9 +25,9 @@ import {
 import URls from "../constants/urls";
 
 // //course category generator function
-function* createEmail#tableNameCall(action) {
+function* create#tableNameCall(action) {
   try {
-    const response = yield call(postRequestWithTenat, URls.email#tableName, {body:action.payload.body, subject:action.payload.subject});
+    const response = yield call(postRequestWithTenat, URls.#tableName, {body:action.payload.body, subject:action.payload.subject});
 
     if (response?.status === 200) {
       pushNotification(
@@ -37,7 +37,7 @@ function* createEmail#tableNameCall(action) {
         1000
       );
       yield put(create#tableNameSuccess(response.data));
-      action.payload.navigate("/email#tableName")
+      action.payload.navigate("/#tableName")
     } else {
       pushNotification(`${response?.data?.message}`, "");
     }
@@ -46,9 +46,9 @@ function* createEmail#tableNameCall(action) {
   }
 }
 
-function* updateEmail#tableNameCall(action) {
+function* update#tableNameCall(action) {
   try {
-    const response = yield call(patchRequestWithTokenTenant, `${URls.email#tableName}/${action.payload.itemId}`, {body:action.payload.body, subject:action.payload.subject});
+    const response = yield call(patchRequestWithTokenTenant, `${URls.#tableName}/${action.payload.itemId}`, {body:action.payload.body, subject:action.payload.subject});
     if (response?.status === 200) {
       pushNotification(
         `${response?.data.message}`,
@@ -65,9 +65,9 @@ function* updateEmail#tableNameCall(action) {
   }
 }
 
-function* deleteEmail#tableNameCall(action) {
+function* delete#tableNameCall(action) {
   try {
-    const response = yield call(deleteRequestWithTokenTenant, `${URls.email#tableName}/${action.payload.itemId}`);
+    const response = yield call(deleteRequestWithTokenTenant, `${URls.#tableName}/${action.payload.itemId}`);
   
     if (response?.status === 200) {
       pushNotification(
@@ -85,9 +85,9 @@ function* deleteEmail#tableNameCall(action) {
   }
 }
 
-function* getEmail#tableNameCall(action) {
+function* get#tableNameCall(action) {
   try {
-    const response = yield call(getRequestWithTenant, `${URls.email#tableName}?limit=${action.payload.pageSize}&page=${action.payload.pageNumber}`);
+    const response = yield call(getRequestWithTenant, `${URls.#tableName}`);
 
     if (response?.status === 200) {
       yield put(get#tableNameSuccess(response.data));
@@ -99,10 +99,10 @@ function* getEmail#tableNameCall(action) {
 
 
 function* watchGetRequest() {
-  yield takeLatest(CREATE_#tableTitle, createEmail#tableNameCall);
-  yield takeLatest(GET_#tableTitle, getEmail#tableNameCall);
-  yield takeLatest(UPDATE_#tableTitle, updateEmail#tableNameCall);
-  yield takeLatest(DELETE_#tableTitle, deleteEmail#tableNameCall);
+  yield takeLatest(CREATE_#tableTitle, create#tableNameCall);
+  yield takeLatest(GET_#tableTitle, get#tableNameCall);
+  yield takeLatest(UPDATE_#tableTitle, update#tableNameCall);
+  yield takeLatest(DELETE_#tableTitle, delete#tableNameCall);
 }
 export default function* sagas() {
   yield all([watchGetRequest()]);

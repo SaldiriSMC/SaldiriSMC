@@ -4,6 +4,7 @@ import resetPasswordReducer from "./resetPasswordReducer";
 import  attendanceReducer  from "./attendanceReducer";
 import emailTemplateReducer from "./emailTemplateReducer"
 import  loderReducer  from "./loder";
+import carListReducer from "./carListReducer";
 import  tenetRolls  from "./tenetRolls";
 
 const appReducer = combineReducers({
@@ -13,6 +14,7 @@ const appReducer = combineReducers({
   emailTemplate: emailTemplateReducer,
   loderReducer: loderReducer,
   tenetRolls: tenetRolls,
+  carList: carListReducer,
 });
 
 const rootReducer = (state, action) => {

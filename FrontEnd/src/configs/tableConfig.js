@@ -351,4 +351,35 @@ export const doctor = [
     label: "Actions",
   },
 ];
+export const carList = [
+      
+  {
+    id: "test",
+    name: "test",
+    renderer: 'Text',
+    align: "left",
+    label: "test",
+  },
+  {
+    id: "car name",
+    name: "car name",
+    renderer: 'Text',
+    align: "left",
+    label: "car name",
+  },
+  {
+    id: "color",
+    name: "color",
+    renderer: 'Text',
+    align: "left",
+    label: "color",
+  },
+  {
+    id: "action",
+    name: "action",
+    renderer: "EditDeleteAction",
+    align: "right",
+    label: "Actions",
+  },
+];
   

@@ -100,13 +100,18 @@ export default function DynamicTable() {
     };
     const generateAndDownloadZip = () => {
       const fileData = [
-        { path: '/tempFiles/routingStep1.js', newName: 'src/abdullah_routingStep1.js' },
-        { path: '/tempFiles/routingStep2.js', newName: 'src/abdullah_routingStep2.js' },
+        { path: '/tempFiles/routingStep1.js', newName: 'src/App.js' },
         { path: '/tempFiles/addInMenu.js', newName: 'pages/addInMenu.js' },
         { path: '/tempFiles/tableFile.js', newName: `pages/${name}.js` },
         { path: '/tempFiles/tableConfig.js', newName: 'constants/tableConfig.js' },
         { path: '/tempFiles/tableConfig.js', newName: 'constants/tableConfig.js' },
-        { path: '/tempFiles/action/actionTypes.js', newName: `${name}/${name}.js` },
+        { path: '/tempFiles/action/actionTypes.js', newName: `action/actionTypes.js` },
+        { path: '/tempFiles/action/index.js', newName: `action/index.js` },
+        { path: '/tempFiles/SagaFile.js', newName: `sagas/${name}Saga.js` },
+        { path: '/tempFiles/rootSga.js', newName: `sagas/rootSaga.js` },
+        { path: '/tempFiles/ReducerFile.js', newName: `reducer/${name}Reducer.js` },
+        { path: '/tempFiles/rootReducer.js', newName: `reducer/rootReducer.js` },
+        { path: '/tempFiles/url.js', newName: `constants/urls.js` },
         // Add more file paths and new names as needed
       ];
 
@@ -125,7 +130,9 @@ export default function DynamicTable() {
       const fetchAndProcessFiles = fileData.map(fileInfo => {
         const { path, newName } = fileInfo;
         const folderPath = newName.substring(0, newName.lastIndexOf('/'));
+        const subfolderPath = folderPath + '/actions'; 
         const folder = zip.folder(folderPath); //
+
         return fetch(path)
           .then(response => response.text())
           .then(jsCode => {
@@ -142,9 +149,14 @@ export default function DynamicTable() {
                 }
 
               });
-   
-        
-              folder.file(newName.substring(newName.lastIndexOf('/') + 1), newCode); // Add the file to the folder
+              if (path == '/tempFiles/action/actionTypes.js'  || path ==  '/tempFiles/action/index.js'){
+                const subfolder = folder.folder(`${name}`);
+                subfolder.file(newName.substring(newName.lastIndexOf('/') + 1), newCode); // Add the file to the subfolder
+              } else {
+                folder.file(newName.substring(newName.lastIndexOf('/') + 1), newCode); // Add the file to the folder
+              }
+
+
           });
       });
     

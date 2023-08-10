@@ -6,11 +6,11 @@ import "react-calendar/dist/Calendar.css";
 import EditIcon from '@mui/icons-material/Edit';
 import "react-clock/dist/Clock.css";
 import MUITable from "../sharedComponents/MUITable";
-import { doctor } from "../configs/tableConfig";
+import { carList } from "../configs/tableConfig";
 import AddIcon from '@mui/icons-material/Add';
 import { loderTrue,loderFalse } from "../actions/Auth";
 import { useFormik } from "formik";
-import { getRoll, createRoll,deleteRoll,updateRoll } from "../actions/AddRols";
+import { createcarList, deletecarList , updatecarList , getcarList } from "../actions/carList";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
 import MUITextField from "../sharedComponents/textField";
@@ -24,7 +24,7 @@ import SideMenu from '../pages/sideMenu'
 import * as Yup from "yup";
 import DeleteModal from "../sharedComponents/deleteModal";
 import UpdateModel from "../sharedComponents/tenentModel";
-export default function DOCTOR() {
+export default function CARLIST() {
   const theme = useTheme();
 
   const [action, setAction] = React.useState(null);
@@ -47,19 +47,16 @@ export default function DOCTOR() {
   const dispatch = useDispatch();
 
   const allRollsList = useSelector(
-    (state) => state?.tenetRolls?.allRollsdata?.data
+    (state) => state?.getcarList?.getcarList?.data
   );
 
-  const dataUpdate = useSelector(
-    (state) => state?.tenetRolls?.dataUpdate
-  );
   useEffect(() => {
-    if (dataUpdate){
-      dispatch(getRoll({type:'department',filter:filter}));
-      handleReset()
-    }
 
-  }, [dataUpdate,filter]);
+      dispatch(getcarList({type:'department'}));
+
+    
+
+  }, []);
 
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
     dirty } =
@@ -67,7 +64,7 @@ export default function DOCTOR() {
       initialValues,
       validationSchema: designationScema,
       onSubmit: () => {
-          dispatch(createRoll({data:{departmentName:values.designationIdCreate},type:'department'}));
+          dispatch( createcarList({data:{departmentName:values.designationIdCreate},type:'department'}));
         
       },
     });
@@ -104,11 +101,11 @@ export default function DOCTOR() {
 
   }
   const handleDeleteModel = () => {
-    dispatch(deleteRoll({type:'department',id:userDeleteId}));
+    dispatch(deletecarList({type:'department',id:userDeleteId}));
     setShowDeleteModal(false)
   }
   const handleUpdateModel = () => {
-    dispatch(updateRoll({data:{departmentName:values.designationId},type:'department',id:action}));
+    dispatch(updatecarList({data:{departmentName:values.designationId},type:'department',id:action}));
     setShowUpdateModal(false)
   }
   const handlePageChange = (e, newPage) => {
@@ -161,7 +158,7 @@ export default function DOCTOR() {
               handleChange={handleChange}
               onBlur={handleBlur}
               id="designationIdCreate"
-              placeholder='Department Name'
+              placeholder={``}
               errors={errors.designationIdCreate}
               touched={touched.designationIdCreate}
 
@@ -176,15 +173,8 @@ export default function DOCTOR() {
              </form>
          <MUITable
             
-            column={doctor}
-            list={normalizeTableProgram(allRollsList?.results ? allRollsList?.results : [])}
-            pagination={{
-              totalRecords: allRollsList?.totalResults,
-              pageNumber: filter.pageNumber - 1,
-              pageSize: filter.pageSize,
-              onChangePageNumber: handlePageChange,
-              onChangePageSize: handlePageSizeChange,
-            }}
+            column={carList}
+            list={normalizeTableProgram(carList?.results ? carList?.results : [])}       
           />
           <Grid
             item
