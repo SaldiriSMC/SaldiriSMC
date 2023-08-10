@@ -1,39 +1,36 @@
-const fs = require('fs');
-const path = require('path');
-const route = 
-`const express = require('express');
-const auth = require('../../middlewares/auth');
-const tenant = require('../../middlewares/v2/tenant');
-const #_tablenameController = require('../controllers/#_tablename.controller');
-const checkRoles = require('../../middlewares/v2/checkRole');
+const express = require('express');
+const auth = require('../middlewares/auth');
+const tenant = require('../middlewares/v2/tenant');
+const employeeController = require('./employee.controller');
+const checkRoles = require('../middlewares/v2/checkRole');
 const router = express.Router();
 
 router
-  .route('/#_tablename')
-  .post(auth(), tenant(), checkRoles(['admin', 'hr']), #_tablenameController.create)
-  .get(auth(), tenant(), checkRoles(['admin', 'hr']), #_tablenameController.getAll);
+  .route('/employee')
+  .post(auth(), tenant(), checkRoles(['admin', 'hr']), employeeController.create)
+  .get(auth(), tenant(), checkRoles(['admin', 'hr']), employeeController.getAll);
 
 router
-  .route('/#_tablename/:userId')
-  .get(auth(), tenant(), checkRoles(['admin', 'hr']), #_tablenameController.getSingle)
-  .patch(auth(), tenant(), checkRoles(['admin', 'hr']), #_tablenameController.update)
-  .delete(auth(), tenant(), checkRoles(['admin', 'hr']), #_tablenameController.del);
+  .route('/employee/:userId')
+  .get(auth(), tenant(), checkRoles(['admin', 'hr']), employeeController.getSingle)
+  .patch(auth(), tenant(), checkRoles(['admin', 'hr']), employeeController.update)
+  .delete(auth(), tenant(), checkRoles(['admin', 'hr']), employeeController.delete);
 
 module.exports = router;
 
 /**
  * @swagger
  * tags:
- *   name: #_tablename
- *   description: #_tablename management and retrieval
+ *   name: employee
+ *   description: employee management and retrieval
  */
 
 /**
  * @swagger
- * /#_tablename:
+ * /employee:
  *   post:
- *     summary: Create a #_tablename
- *     description: Only admins can create other #_tablename.
+ *     summary: Create a employee
+ *     description: Only admins can create other employee.
  *     parameters:
  *         - name: X-Tenent-Key
  *           in: header
@@ -41,7 +38,7 @@ module.exports = router;
  *           required: true
  *           schema:
  *             type: string
- *     tags: [#_tablename]
+ *     tags: [employee]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -81,7 +78,7 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/#_tablename'
+ *                $ref: '#/components/schemas/employee'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -90,9 +87,9 @@ module.exports = router;
  *         $ref: '#/components/responses/Forbidden'
  *
  *   get:
- *     summary: Get all #_tablename
- *     description: Only admins can retrieve all #_tablename.
- *     tags: [#_tablename]
+ *     summary: Get all employee
+ *     description: Only admins can retrieve all employee.
+ *     tags: [employee]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -142,7 +139,7 @@ module.exports = router;
  *                 results:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/#_tablename'
+ *                     $ref: '#/components/schemas/employee'
  *                 page:
  *                   type: integer
  *                   example: 1
@@ -163,7 +160,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /#_tablename/{id}:
+ * /employee/{id}:
  *   get:
  *     summary: Get a user
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
@@ -282,18 +279,4 @@ module.exports = router;
  *         $ref: '#/components/responses/Forbidden'
  *       "404":
  *         $ref: '#/components/responses/NotFound'
- */`;
-
-const generateRoute = (tableName) => {
-  const replacedRoute = route.replace(/#_tablename/g, tableName);
-  const absolutePath = path.resolve(__dirname, '..');
-  fs.writeFile(`${absolutePath}/GeneratedFiles/routes/${tableName}.route.js`, replacedRoute, 'utf-8', (err, result) => {
-    if (err) {
-      console.log('route err--------->>>>', err);
-    } else {
-      console.log('route result--------->>>>', result);
-    }
-  });
-};
-
-module.exports = { generateRoute };
+ */

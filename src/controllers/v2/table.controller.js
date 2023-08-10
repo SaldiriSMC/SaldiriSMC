@@ -1,8 +1,10 @@
 const catchAsync = require('../../utils/catchAsync');
 const { sequelize } = require('../../config/mySqlConnection');
 const {response} = require("../../utils/response")
-const { getTemplate } = require("../../TemplateCode/template.model")
-
+const { generateModel } = require("../../TemplateCode/template.model")
+const { generateRoute } = require("../../TemplateCode/template.route")
+const { generateService } = require("../../TemplateCode/template.service")
+const { generateController } =  require("../../TemplateCode/template.controller")
 const getTables = catchAsync(async (req, res) => {
   const [results, metadata] = await sequelize.query('SHOW TABLES');
   res.send(results);
@@ -40,15 +42,15 @@ const createTable = catchAsync(async (req, res) => {
   let query = `CREATE TABLE ${req.body.tableName} (${queryField})`;
   console.log('query--------->>>>>>>>', query);
   const [results] = await sequelize.query(query);
-  console.log("modelData--------->>>>>>>", modelData)
   if(results){
-    const [columnInfo] = await sequelize.query(`SHOW COLUMNS FROM ${req.body.tableName}`);
-    getTemplate(modelData, req.body.tableName)
-    response(res, {result:results, metadata:columnInfo , modelData  }, 'Table created successfully', 200);
+    generateModel(modelData, req.body.tableName)
+    generateService(req.body.tableName)
+    generateController(req.body.tableName)
+    generateRoute(req.body.tableName)
+    response(res, {result:results }, 'Table created successfully', 200);
   }else{
     response(res,"", 'No Table created', 400);
   }
-
 });
 
 module.exports = { getTables, createTable };

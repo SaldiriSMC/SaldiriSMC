@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/mySqlConnection')
 
-const test = sequelize.define('test', {name:{
+const employee = sequelize.define('employee', {name:{
         type:DataTypes.STRING
       },age:{
         type:DataTypes.INTEGER
@@ -14,4 +14,4 @@ const test = sequelize.define('test', {name:{
       },},
 );
 
-module.exports = test;
+module.exports = employee;

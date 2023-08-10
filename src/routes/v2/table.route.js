@@ -1,7 +1,6 @@
 const express = require('express');
 const auth = require('../../middlewares/auth');
 const tenant = require("../../middlewares/v2/tenant")
-const noTenant = require("../../middlewares/v2/tenantNotRequired")
 const {tableController} = require('../../controllers/v2/index');
 const checkRoles = require('../../middlewares/v2/checkRole')
 
@@ -11,11 +10,6 @@ router
   .route('/')
   .get(auth(), checkRoles(["admin","hr"]), tableController.getTables)
   .post(auth(), tenant(), checkRoles(["admin","hr"]), tableController.createTable);
-// router
-//   .route('/:departmentId')
-//   .patch(auth(), tenant(), checkRoles(["admin","hr"]), tableController.updateDepartment)
-//   .delete(auth(), tenant(), checkRoles(["admin","hr"]), tableController.deleteDepartment)
-
 
 module.exports = router;
 
