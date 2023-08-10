@@ -35,6 +35,50 @@ export const UserInviteConfig = [
     label: "Actions",
   },
 ];
+export const UserInviteConfig2 = [
+  {
+    id: 'check',
+    name: 'check',
+    renderer: "CheckboxItem",
+    align: 'left',
+     label: "Name",
+  },
+  {
+    id: "invitation",
+    name: "invitation",
+    renderer: "Text",
+    align: 'left',
+    label: "Invitation",
+  },
+  {
+    id: "name",
+    name: "name",
+    renderer: "Text",
+    align: "left",
+    label: "Name",
+  },
+  {
+    id: "department",
+    name: "department",
+    renderer: "Text",
+    align: "left",
+    label: "Department",
+  },
+  {
+    id: "designation",
+    name: "designation",
+    renderer: "Text",
+    align: "left",
+    label: "Designation",
+  },
+  {
+    id: "action",
+    name: "action",
+    renderer: "EditDeleteAction",
+    align: "right",
+    label: "Actions",
+  },
+];
 export const UserStatusConfig = [
   {
     id: "name",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef } from "react";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
 import { styled, useTheme } from "@mui/material/styles";
@@ -32,7 +32,7 @@ export default function DynamicTable() {
   };
   const [progress, setProgress] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(false);
-
+  const progressRef = useRef(0);
   React.useEffect(() => {
     const timer = setInterval(() => {
       // setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
@@ -58,9 +58,9 @@ export default function DynamicTable() {
           tableName:values.name,
           columnArray:inputSets
         }
-        setIsLoading(true)
+        // setIsLoading(true)
         addTable(payload, (progress) => {
-          setProgress(progress);
+          // setProgress(progress);
         })
         .then((response) => {
           if (response.data) {
@@ -151,6 +151,7 @@ console.log("allTableList------------",allTableList)
   
     };
     const generateAndDownloadZip = () => {
+      setIsLoading(true)
       const fileData = [
         { path: '/tempFiles/routingStep1.js', newName: 'src/App.js' },
         { path: '/tempFiles/addInMenu.js', newName: 'pages/addInMenu.js' },
@@ -163,6 +164,7 @@ console.log("allTableList------------",allTableList)
         { path: '/tempFiles/ReducerFile.js', newName: `reducer/${values.name}Reducer.js` },
         { path: '/tempFiles/rootReducer.js', newName: `reducer/rootReducer.js` },
         { path: '/tempFiles/url.js', newName: `constants/urls.js` },
+        { path: '/tempFiles/tableModel.js', newName: `sharedComponents/${values.name}.js` },
 
       ];
 
@@ -173,23 +175,29 @@ console.log("allTableList------------",allTableList)
 
       ];
       const zip = new JSZip();
-      const fetchAndProcessFiles = fileData.map(fileInfo => {
+      const fetchAndProcessFiles = fileData.map((fileInfo,index) => {
         const { path, newName } = fileInfo;
         const folderPath = newName.substring(0, newName.lastIndexOf('/'));
         const subfolderPath = folderPath + '/actions'; 
         const folder = zip.folder(folderPath); 
-
+        setProgress(100)
+        console.log(progress,"index----------->>>>>>>>index",index)
         return fetch(path)
           .then(response => response.text())
           .then(jsCode => {
             let newCode = jsCode;
          
               replacements.forEach(replacement => {
+
+          
                 if (path == '/tempFiles/tableConfig.js'){
                   const jsCodea = convertToJavascript(inputSets, values.name);
                   
                   newCode = newCode.replace('#tableName', jsCodea);
 
+                } else if (path == '/tempFiles/tableModel.js') {
+
+                  newCode = newCode.replace('#list ', ...inputSets);
                 } else {
                   newCode = newCode.replaceAll(replacement.placeholder, replacement.replacement);
                 }
@@ -466,6 +474,7 @@ console.log("allTableList------------",allTableList)
         </div>
         {isLoading && (
              <Grid item sm={12}>      <Box sx={{ width: '50%' }}>
+              All Files Download 
              <LinearProgressWithLabel value={progress} />
            </Box></Grid>
         )}

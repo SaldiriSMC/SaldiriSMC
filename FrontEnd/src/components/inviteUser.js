@@ -9,7 +9,7 @@ import SideMenu from "../pages/sideMenu";
 import NavBar from "../components/navBar";
 import CssBaseline from "@mui/material/CssBaseline";
 import InviteUserModel from "../sharedComponents/inviteUserModel";
-import { UserInviteConfig } from "../configs/tableConfig";
+import { UserInviteConfig2 } from "../configs/tableConfig";
 import "./comaon.css";
 import { IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -109,12 +109,10 @@ const InviteUser = ({ setLoader }) => {
           disabled:
             record.isSignedIn || (!record.isSignedIn && !record.is_token),
         },
-        name: {
-          name: record?.name,
-          isOnline:record.is_online == 0 ? true :false
-        },
+        name: record?.name,
         designation: record?.designationName,
         department: record?.departmentname,
+        invitation: record.isSignedIn || (!record.isSignedIn && !record.is_token) ? 'Send' : 'Pending',
         action: {
           change: (val) => handleDropdownActionsupport(record, val, index),
           hideDelete: record.id == logInUserId,
@@ -231,7 +229,7 @@ const InviteUser = ({ setLoader }) => {
               checkedValue={
                 checkedValue.length >= allUserList.length ? true : false
               }
-              column={UserInviteConfig}
+              column={UserInviteConfig2}
               list={normalizeTableProgram(allUserList)}
               pagination={allUserList?.length > 0 ? (
                 {
