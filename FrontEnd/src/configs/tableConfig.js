@@ -383,3 +383,67 @@ export const carList = [
   },
 ];
   
+
+export const tableConfig = [
+  {
+    id: "name",
+    name: "name",
+    renderer: "Text",
+    align: "left",
+    label: "Table Name",
+  },
+  {
+    id: "columns",
+    name: "columns",
+    renderer: "Text",
+    align: "left",
+    label: "Columns No",
+  },
+  {
+    id: "tableDate",
+    name: "tableDate",
+    renderer: "Text",
+    align: "left",
+    label: "Created Date",
+  },
+  {
+    id: "action",
+    name: "action",
+    renderer: "DownloadAction",
+    align: "right",
+    label: "Actions",
+  },
+
+];
+export const UserList = [
+      
+  {
+    id: "User Name",
+    name: "User Name",
+    renderer: 'Text',
+    align: "left",
+    label: "User Name",
+  },
+  {
+    id: "User Age",
+    name: "User Age",
+    renderer: 'Text',
+    align: "left",
+    label: "User Age",
+  },
+  {
+    id: "User Type",
+    name: "User Type",
+    renderer: 'Text',
+    align: "left",
+    label: "User Type",
+  },
+  {
+    id: "action",
+    name: "action",
+    renderer: "EditDeleteAction",
+    align: "right",
+    label: "Actions",
+  },
+];
+  

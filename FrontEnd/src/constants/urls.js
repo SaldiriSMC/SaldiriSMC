@@ -13,6 +13,7 @@ const URLs = {
   getDesignation:'/designation',
   table_url:'/table',
   carList:'/add_api_url',
+  UserList:'/add_api_url',
   getUserDepartmentDesignation:'/users/by/department-and-designation',
   sandUsersEmails:'/users/send-invite-emails',
   designation: "/designation",

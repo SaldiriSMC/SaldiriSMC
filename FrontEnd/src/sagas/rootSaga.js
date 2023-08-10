@@ -5,6 +5,8 @@ import carList from "./carListSaga";
 import attendanceSaga from "./attendanceSaga"
 import emailTemplateSaga from "./emailTemplateSaga"
 import addRollSaga from "./addRolsSaga"
+import UserList from "./UserListSaga";
+
 export default function* rootSaga() {
-  yield all([authSagas(), resetPasswordSaga(), carList(), attendanceSaga(), emailTemplateSaga(),addRollSaga()]);  
+  yield all([UserList(), authSagas(), resetPasswordSaga(), carList(), attendanceSaga(), emailTemplateSaga(),addRollSaga()]);  
 }

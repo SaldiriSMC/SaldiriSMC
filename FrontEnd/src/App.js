@@ -31,7 +31,7 @@ import ForgetPassword from './components/forgetPassword'
 import {
   checkUserStatus,
 } from "./service/users";
-
+import USERLIST from './pages/UserList';
 import ChnagePassword from './components/chnagePassword'
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../src/theme';
@@ -172,6 +172,9 @@ useEffect(() => {
         </Route>
         <Route exact path='/carList' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
 <Route exact path='/carList' element={< CARLIST  loader={loader} setLoader={setLoader} />}/>
+</Route>
+<Route exact path='/UserList' element={<PrivateRoute loader={loader} setLoader={setLoader} />}>
+<Route exact path='/UserList' element={< USERLIST  loader={loader} setLoader={setLoader} />}/>
 </Route>
       </Routes>
 
