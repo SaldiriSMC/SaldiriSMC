@@ -99,7 +99,7 @@ export default function DynamicTable() {
     // Initial input sets
   ]);
 
-console.log("allTableList------------",allTableList)
+console.log("allTableList------------",inputSets)
 
   useEffect(()=>{
         
@@ -150,28 +150,28 @@ console.log("allTableList------------",allTableList)
 
   
     };
-    const generateAndDownloadZip = () => {
+    const generateAndDownloadZip = (tableName,ColumnsList) => {
       setIsLoading(true)
       const fileData = [
         { path: '/tempFiles/routingStep1.js', newName: 'src/App.js' },
         { path: '/tempFiles/addInMenu.js', newName: 'pages/addInMenu.js' },
-        { path: '/tempFiles/tableFile.js', newName: `pages/${values.name}.js` },
+        { path: '/tempFiles/tableFile.js', newName: `pages/${tableName}.js` },
         { path: '/tempFiles/tableConfig.js', newName: 'configs/tableConfig.js' },
         { path: '/tempFiles/action/actionTypes.js', newName: `action/actionTypes.js` },
         { path: '/tempFiles/action/index.js', newName: `action/index.js` },
-        { path: '/tempFiles/SagaFile.js', newName: `sagas/${values.name}Saga.js` },
+        { path: '/tempFiles/SagaFile.js', newName: `sagas/${tableName}Saga.js` },
         { path: '/tempFiles/rootSga.js', newName: `sagas/rootSaga.js` },
-        { path: '/tempFiles/ReducerFile.js', newName: `reducer/${values.name}Reducer.js` },
+        { path: '/tempFiles/ReducerFile.js', newName: `reducer/${tableName}Reducer.js` },
         { path: '/tempFiles/rootReducer.js', newName: `reducer/rootReducer.js` },
         { path: '/tempFiles/url.js', newName: `constants/urls.js` },
-        { path: '/tempFiles/tableModel.js', newName: `sharedComponents/${values.name}.js` },
+        { path: '/tempFiles/tableModel.js', newName: `sharedComponents/${tableName}Model.js` },
 
       ];
 
       const replacements = [
-        { placeholder: '#tableName', replacement: values.name },
-        { placeholder: '#tableTitle', replacement: values.name.toUpperCase() },
-        { placeholder: '#tableTitle', replacement: values.name.toUpperCase() },
+        { placeholder: '#tableName', replacement: tableName },
+        { placeholder: '#tableTitle', replacement: tableName.toUpperCase() },
+        { placeholder: '#tableTitle', replacement: tableName.toUpperCase() },
 
       ];
       const zip = new JSZip();
@@ -181,7 +181,6 @@ console.log("allTableList------------",allTableList)
         const subfolderPath = folderPath + '/actions'; 
         const folder = zip.folder(folderPath); 
         setProgress(100)
-        console.log(progress,"index----------->>>>>>>>index",index)
         return fetch(path)
           .then(response => response.text())
           .then(jsCode => {
@@ -191,20 +190,21 @@ console.log("allTableList------------",allTableList)
 
           
                 if (path == '/tempFiles/tableConfig.js'){
-                  const jsCodea = convertToJavascript(inputSets, values.name);
+                  const jsCodea = convertToJavascript(ColumnsList, tableName);
                   
                   newCode = newCode.replace('#tableName', jsCodea);
 
                 } else if (path == '/tempFiles/tableModel.js') {
+                  const jsCodea = convertToJavascriptInpits(ColumnsList, tableName);
+                  newCode = newCode.replaceAll('#inputArr', tableName).replace('#list', jsCodea);
 
-                  newCode = newCode.replace('#list ', ...inputSets);
                 } else {
                   newCode = newCode.replaceAll(replacement.placeholder, replacement.replacement);
                 }
 
               });
               if (path == '/tempFiles/action/actionTypes.js'  || path ==  '/tempFiles/action/index.js'){
-                const subfolder = folder.folder(`${values.name}`);
+                const subfolder = folder.folder(`${tableName}`);
                 subfolder.file(newName.substring(newName.lastIndexOf('/') + 1), newCode); 
               } else {
                 folder.file(newName.substring(newName.lastIndexOf('/') + 1), newCode); 
@@ -217,34 +217,16 @@ console.log("allTableList------------",allTableList)
           return zip.generateAsync({ type: 'blob' });
         })
         .then(zipBlob => {
-          saveAs(zipBlob, 'downloaded_files.zip');
+          saveAs(zipBlob, 'frontEnd_files.zip');
         })
         .catch(error => {
           console.error('Error generating and downloading zip archive:', error);
         });
     }; 
-    const normalizeTableProgram= (source) => {
-      const result = [];
-      source.forEach((record,index) => {
-        result.push({
-          name: record?.Tables_in_techteam,
-          columns: '1',
-          tableDate: '-',
-          action: {
-            change: (val) =>
-            handleDropdownActionsupport(record, val,index),
-          },
-        });
-      });
-      return result;
-    };
 
 
-    const handleDropdownActionsupport= (data, val,index) => {
 
-     
-  
-    }
+
     function convertToJavascript(data, tableName) {
       const columnEntries = data.map(item => `
       {
@@ -269,6 +251,45 @@ console.log("allTableList------------",allTableList)
       `;
     
       return jsCode;
+    }
+
+
+    function convertToJavascriptInpits(data, tableName) {
+      const columnEntries = data.map(item => `
+      {
+        columnName: "",
+        columnTitle: "${item.columnName}",
+      }`).join(',');
+    
+      const jsCode = `
+      const [${tableName}, set${tableName}] = useState([
+      ${columnEntries},
+    ]);
+      `;
+    
+      return jsCode;
+    }
+    const normalizeTableProgram= (source) => {
+      const result = [];
+      source.forEach((record,index) => {
+        result.push({
+          name: record?.Tables_in_techteam,
+          columns: '1',
+          tableDate: '-',
+          action: {
+            change: (val) =>
+            handleDropdownActionsupport(record, val,index),
+          },
+        });
+      });
+      return result;
+    };
+
+
+    const handleDropdownActionsupport= (data, val,index) => {
+
+     
+  
     }
 
     const handlePageChange = (e, newPage) => {
@@ -501,7 +522,7 @@ console.log("allTableList------------",allTableList)
                 
       </Grid>
   
-      <button  onClick={generateAndDownloadZip}>files</button>
+      <button  onClick={()=>generateAndDownloadZip(values.name,inputSets)}>files</button>
       </Box>
     </>
   );

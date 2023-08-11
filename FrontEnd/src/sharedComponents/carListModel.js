@@ -2,7 +2,7 @@ import React, { useEffect,useState } from "react";
 import { makeStyles } from 'tss-react/mui';
 import Box from '@mui/material/Box';
 import * as Yup from "yup";
-import { create#inputArr } from "../actions/#inputArr";
+import { createcarList } from "../actions/carList";
 import Modal from '@mui/material/Modal';
 import MUITextField from "../sharedComponents/textField";
 import Button from '@mui/material/Button'
@@ -108,18 +108,38 @@ const InviteUserModel = (props) => {
 
     const dispatch = useDispatch();
      
-    #list    
+    
+      const [carList, setcarList] = useState([
+      
+      {
+        columnName: "",
+        columnTitle: "test",
+      },
+      {
+        columnName: "",
+        columnTitle: "aaa",
+      },
+      {
+        columnName: "",
+        columnTitle: "zzz",
+      },
+      {
+        columnName: "",
+        columnTitle: "nhhh",
+      },
+    ]);
+          
  
       const handleInputChange = (index, event) => {
 
         const { name, value } = event.target;
-        const updatedInputSets = [...#inputArr];
+        const updatedInputSets = [...carList];
         updatedInputSets[index][name] = value;
-        set#inputArr(updatedInputSets);
+        setcarList(updatedInputSets);
       };
       const handleSubmit = (event) => {
 
-        dispatch( create#inputArr({data:#inputArr}));
+        dispatch( createcarList({data:carList}));
       };
 
 
@@ -141,7 +161,7 @@ const InviteUserModel = (props) => {
         <div className={classes.innerContainer}>    
         <form >
         <Grid  container  spacing={2} sx={{p:1}}>
-        {#inputArr.map((inputSet, index) => ( <>
+        {carList.map((inputSet, index) => ( <>
                 <MUITextField          
               sm={6}
               label={`${inputSet.columnTitle}`}

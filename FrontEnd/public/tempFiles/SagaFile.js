@@ -27,7 +27,7 @@ import URls from "../constants/urls";
 // //course category generator function
 function* create#tableNameCall(action) {
   try {
-    const response = yield call(postRequestWithTenat, URls.#tableName, {body:action.payload.body, subject:action.payload.subject});
+    const response = yield call(postRequestWithTenat, URls.#tableName, action.payload);
 
     if (response?.status === 200) {
       pushNotification(
@@ -48,7 +48,7 @@ function* create#tableNameCall(action) {
 
 function* update#tableNameCall(action) {
   try {
-    const response = yield call(patchRequestWithTokenTenant, `${URls.#tableName}/${action.payload.itemId}`, {body:action.payload.body, subject:action.payload.subject});
+    const response = yield call(patchRequestWithTokenTenant, `${URls.#tableName}/${action.payload.itemId}`);
     if (response?.status === 200) {
       pushNotification(
         `${response?.data.message}`,

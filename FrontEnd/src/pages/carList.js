@@ -23,13 +23,13 @@ import Footer from '../components/footer'
 import SideMenu from '../pages/sideMenu'
 import * as Yup from "yup";
 import DeleteModal from "../sharedComponents/deleteModal";
-import UpdateModel from "../sharedComponents/tenentModel";
+import CARLISTModel from "../sharedComponents/carListModel";
 export default function CARLIST() {
   const theme = useTheme();
 
   const [action, setAction] = React.useState(null);
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
-  const [showUpdateModal, setShowUpdateModal] = React.useState(false);
+  const [showModal, setShowModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
   const [filter, setFilter] = useState({
     pageNumber: 1,
@@ -52,7 +52,7 @@ export default function CARLIST() {
 
   useEffect(() => {
 
-      dispatch(getcarList({type:'department'}));
+      dispatch(getcarList({type:'department',filter:filter}));
 
     
 
@@ -74,7 +74,7 @@ export default function CARLIST() {
     const result = [];
     source.forEach((record,index) => {
       result.push({
-        name: record?.departmentName,
+        name: record?.departmentName ?? '-',
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),
@@ -96,7 +96,7 @@ export default function CARLIST() {
       setAction(data?.id)
      setFieldValue('designationId',data.departmentName)
      setAction(data?.id)
-     setShowUpdateModal(true)
+
     }
 
   }
@@ -106,7 +106,7 @@ export default function CARLIST() {
   }
   const handleUpdateModel = () => {
     dispatch(updatecarList({data:{departmentName:values.designationId},type:'department',id:action}));
-    setShowUpdateModal(false)
+   
   }
   const handlePageChange = (e, newPage) => {
     setFilter({
@@ -147,25 +147,12 @@ export default function CARLIST() {
         >
            <form onSubmit={handleSubmit}>
              <div style={{display:"flex",
-          alignItems:"center",  marginBottom:"25px"}}>
+          alignItems:"center",  marginBottom:"25px" ,justifyContent:'flex-end'}}>
 
-             <MUITextField
-               noTitle
-              sm={6}
-              xs={6}
-              name="designationIdCreate"
-              value={values.designationIdCreate}
-              handleChange={handleChange}
-              onBlur={handleBlur}
-              id="designationIdCreate"
-              placeholder={``}
-              errors={errors.designationIdCreate}
-              touched={touched.designationIdCreate}
 
-            /> 
-    <div style={{display:"flex", justifyContent:"flex-end"}}>
+    <div style={{display:"flex",  justifyContent:"flex-end"}}>
 
-   <IconButton sx={{mt:3,ml:1}} type="submit" size="medium" style={{backgroundColor:"#0075FF", color:"white",}}>
+   <IconButton sx={{mt:3,ml:1}} onClick={()=>setShowModal(true)} size="medium" style={{backgroundColor:"#0075FF", color:"white",}}>
             <AddIcon />
           </IconButton>
          </div>
@@ -208,17 +195,11 @@ export default function CARLIST() {
         handleDeleteModel={handleDeleteModel}
 
       />
-       <UpdateModel
-        showUpdateModal={showUpdateModal}
-        setShowUpdateModal={setShowUpdateModal}
-        values={values.designationId}
-        handleChange={handleChange}
-        handleBlur={handleBlur}
-        touched={touched}
-        errors={errors}
-        id={'designationId'}
-        title='Department'
-        handleUpdateModel={handleUpdateModel}
+       <CARLISTModel
+       showModal={showModal}
+        setShowModal={setShowModal}
+        action={action}
+        setAction={setAction}
 
       />
     </>

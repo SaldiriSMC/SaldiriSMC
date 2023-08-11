@@ -12,7 +12,7 @@ const URLs = {
   getDepartment:'/department',
   getDesignation:'/designation',
   table_url:'/table',
-  carList:'/add_api_url',
+  carList:'/carList',
   UserList:'/add_api_url',
   getUserDepartmentDesignation:'/users/by/department-and-designation',
   sandUsersEmails:'/users/send-invite-emails',

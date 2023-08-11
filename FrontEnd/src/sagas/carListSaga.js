@@ -27,7 +27,7 @@ import URls from "../constants/urls";
 // //course category generator function
 function* createcarListCall(action) {
   try {
-    const response = yield call(postRequestWithTenat, URls.carList, {body:action.payload.body, subject:action.payload.subject});
+    const response = yield call(postRequestWithTenat, URls.carList, action.payload);
 
     if (response?.status === 200) {
       pushNotification(
@@ -48,7 +48,7 @@ function* createcarListCall(action) {
 
 function* updatecarListCall(action) {
   try {
-    const response = yield call(patchRequestWithTokenTenant, `${URls.carList}/${action.payload.itemId}`, {body:action.payload.body, subject:action.payload.subject});
+    const response = yield call(patchRequestWithTokenTenant, `${URls.carList}/${action.payload.itemId}`);
     if (response?.status === 200) {
       pushNotification(
         `${response?.data.message}`,
