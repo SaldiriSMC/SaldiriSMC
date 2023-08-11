@@ -74,7 +74,7 @@ export default function CARLIST() {
     const result = [];
     source.forEach((record,index) => {
       result.push({
-        name: record?.departmentName ?? '-',
+        name: record?.departmentName,
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),

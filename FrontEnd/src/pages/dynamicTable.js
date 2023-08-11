@@ -24,11 +24,15 @@ import {
   addTable,
   getAllTableList
 } from "../service/users";
+import { pushNotification, } from "../utils/notifications";
 import IconButton from '@mui/material/IconButton';
 export default function DynamicTable() {
   const theme = useTheme();
   const initialValues = {
-    name: "",
+    name: "", // Initial value for the 'name' field
+    inputSets: [
+      { columnName: "", dataType: "", foreignKey: "" }, // Initial value for the dynamic input sets
+    ],
   };
   const [progress, setProgress] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -41,10 +45,30 @@ export default function DynamicTable() {
       clearInterval(timer);
     };
   }, []);
-
-  const designationScema = Yup.object({
-    name: Yup.string().required("Field is required").matches(/^[a-zA-Z]+$/, 'Table Name can only contain letters with out space'),
-  })
+  function checkArrayValidity(dataArray) {
+    for (const item of dataArray) {
+        if (!item.columnName || !item.dataType) {
+            throw new Error("Array contains objects with missing data");
+        }
+    }
+}
+const designationScema = Yup.object({
+  name: Yup.string().required("Table Name is required").matches(/^[a-zA-Z]+$/, 'Table Name can only contain letters with out space'),
+  inputSets: Yup.array().of(
+    Yup.object().shape({
+      columnName: Yup.string().required("Column Name is required"),
+      dataType: Yup.string().required("Column Type is required"),
+      foreignKey: Yup.string().when('dataType', (dataType, schema) => {
+        if (dataType == 'FOREIGN KEY') {
+            return Yup.string()
+            .required('Field is required')
+        } else {
+            return schema
+        }
+    }),
+    })
+  ),
+});
   const dispatch = useDispatch();
   const [name, setName] = useState('')
   const [isCreate, setIsCreate] = useState(false)
@@ -54,22 +78,24 @@ export default function DynamicTable() {
       initialValues,
       validationSchema: designationScema,
       onSubmit: () => {
-        const payload = {
-          tableName:values.name,
-          columnArray:inputSets
-        }
-        // setIsLoading(true)
-        addTable(payload, (progress) => {
-          // setProgress(progress);
-        })
-        .then((response) => {
-          if (response.data) {
-            // setIsLoading(false)
+        const filteredArray = removeEmptyKeysFromObjects(values.inputSets);
+          const payload = {
+            tableName:values.name,
+            columnArray:filteredArray
           }
-        })
-        .catch((error) => console.log(error.message))
-        .finally(() => {
-      });
+          // setIsLoading(true)
+          addTable(payload, (progress) => {
+            // setProgress(progress);
+          })
+          .then((response) => {
+            if (response.data) {
+              // setIsLoading(false)
+            }
+          })
+          .catch((error) => console.log(error.message))
+          .finally(() => {
+        });
+ 
       },
     });
 
@@ -99,7 +125,7 @@ export default function DynamicTable() {
     // Initial input sets
   ]);
 
-console.log("allTableList------------",inputSets)
+console.log("errors------------",errors)
 
   useEffect(()=>{
         
@@ -126,7 +152,17 @@ console.log("allTableList------------",inputSets)
 
   
   },[])
-
+  function removeEmptyKeysFromObjects(arr) {
+    return arr.map(obj => {
+      const newObj = {};
+      for (const key in obj) {
+        if (obj[key] !== "") {
+          newObj[key] = obj[key];
+        }
+      }
+      return newObj;
+    });
+  }
 
     const handleInputChange = (index, event) => {
 
@@ -138,6 +174,9 @@ console.log("allTableList------------",inputSets)
 
     const handleAddInputSet = () => {
       setInputSets([...inputSets, { columnName: '', dataType: '' }]);
+      const newInputSet = { columnName: '', dataType: '',foreignKey:''};
+
+      setFieldValue('inputSets', [...values.inputSets, newInputSet]);
     };
 
     const handleDeleteInputSet = (index) => {
@@ -234,7 +273,7 @@ console.log("allTableList------------",inputSets)
         name: "${item.columnName}",
         renderer: 'Text',
         align: "left",
-        label: "${item.columnName}",
+        label: "${capitalizeFirstLetter(item.columnName)}",
       }`).join(',');
     
       const jsCode = `
@@ -253,7 +292,9 @@ console.log("allTableList------------",inputSets)
       return jsCode;
     }
 
-
+    function capitalizeFirstLetter(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
     function convertToJavascriptInpits(data, tableName) {
       const columnEntries = data.map(item => `
       {
@@ -321,6 +362,10 @@ console.log("allTableList------------",inputSets)
         </Box>
       );
     }
+
+
+
+    console.log("values--------",values)
   return (
     <>
       <Header />
@@ -418,47 +463,51 @@ console.log("allTableList------------",inputSets)
               <Grid  container  spacing={2} sx={{p:1}}>
 
               {inputSets.map((inputSet, index) => ( <>
-                <MUITextField          
-              sm={3}
-              label='Column Name'
-              xs={6}
-              name="columnName"
-              value={inputSet.columnName}
-              handleChange={(event) => handleInputChange(index, event)}
-              variant='inner'
-              id="columnName"
-              placeholder='Column Name'
-
-            /> 
-              <MUITextField
-              sm={3}
-              xs={12}
-              label='Column Type'
-              name="dataType"
-              value={inputSet.dataType}
-              handleChange={(event) => handleInputChange(index, event)}
-               variant='inner'
-              id="dataType"
-              placeholder='Column Type'
-              type="select"
+                <MUITextField
+      sm={3}
+      label='Column Name'
+      xs={6}
+      name={`inputSets[${index}].columnName`} // Use array notation to target dynamic fields
+      value={values.inputSets[index]?.columnName || ''}
+      handleChange={handleChange}
+      id={`inputSets[${index}].columnName`}
+      placeholder='Column Name'
+      errors={errors.inputSets?.[index]?.columnName}
+      touched={touched.inputSets?.[index]?.columnName}
+    />
+    {console.log("touched.inputSets--------------",errors.inputSets?.[index]?.columnName)}
+                <MUITextField
+      sm={3}
+      label='Column Name'
+      xs={6}
+      name={`inputSets[${index}].dataType`} // Use array notation to target dynamic fields
+      value={values.inputSets[index]?.dataType || ''}
+      handleChange={handleChange}
+      id={`inputSets[${index}].dataType`}
+      placeholder='Column Name'
+      type="select"
               options={columnTypes}
               pass="column"
-            /> 
-            {inputSet.dataType === 'FOREIGN KEY' && (    <MUITextField
-              sm={3}
-              xs={12}
-              label='Foreign Key'
-              name="foreignKey"
-              value={inputSet.foreignKey}
-              handleChange={(event) => handleInputChange(index, event)}
-               variant='inner'
-              id="foreignKey"
-              placeholder='Foreign Key'
-
-              type="select"
-              options={primaryKeys}
-              pass="primaryKeys"
-            />)}
+              errors={errors.inputSets?.[index]?.dataType}
+              touched={touched.inputSets?.[index]?.dataType}
+    />
+         {values.inputSets[index]?.dataType === 'FOREIGN KEY' && (
+      <MUITextField
+        sm={3}
+        xs={12}
+        label='Foreign Key'
+        name={`inputSets[${index}].foreignKey`}
+        value={values.inputSets[index]?.foreignKey || ''}
+        handleChange={handleChange} 
+        id={`inputSets[${index}].foreignKey`}
+        placeholder='Foreign Key'
+        type="select"
+        options={primaryKeys}
+        pass="primaryKeys"
+        errors={errors.inputSets?.[index]?.foreignKey}
+        touched={touched.inputSets?.[index]?.foreignKey}
+      />
+    )}
             
                      <IconButton  onClick={handleAddInputSet} sx={{mt:6,ml:2}}   size="medium" style={{backgroundColor:"#0075FF", color:"white",width:'40px',height:'40px'}} >
             <AddIcon />
@@ -467,7 +516,7 @@ console.log("allTableList------------",inputSets)
             <DeleteIcon />
           </IconButton> ) }
  
- {!(inputSet.dataType === 'FOREIGN KEY') && (
+ {!(values.inputSets[index]?.dataType === 'FOREIGN KEY') && (
   <Grid item sm={4}></Grid>
  )}
               </>))}

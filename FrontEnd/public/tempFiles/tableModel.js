@@ -134,7 +134,7 @@ const InviteUserModel = (props) => {
       >
         <Box className={classes.mainContainer}>
         <div className={classes.crosWrap}>
-        <IconButton  aria-label="upload picture" component="label" onClick={()=> {setShowModal(false);setUserData({}); setAction(null)}}>
+        <IconButton  aria-label="upload picture" component="label" onClick={()=> {setShowModal(false)}}>
               <CancelIcon />      
             </IconButton>
             </div>
@@ -162,7 +162,7 @@ const InviteUserModel = (props) => {
                   className={classes.btn}
                  variant="contained"
                  color="primary"
-                 onClick={()=> {setShowModal(false);setUserData({});setAction(null)}}
+                 onClick={()=> {setShowModal(false)}}
                  style={{ marginTop: '20px' }}
                >
             Cancel
