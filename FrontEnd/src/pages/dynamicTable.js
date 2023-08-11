@@ -571,7 +571,7 @@ console.log("errors------------",errors)
                 
       </Grid>
   
-      <button  onClick={()=>generateAndDownloadZip(values.name,inputSets)}>files</button>
+      {/* <button  onClick={()=>generateAndDownloadZip(values.name,inputSets)}>files</button> */}
       </Box>
     </>
   );
