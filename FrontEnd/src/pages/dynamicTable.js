@@ -181,7 +181,9 @@ console.log("errors------------",errors)
 
     const handleDeleteInputSet = (index) => {
       const updatedInputSets = inputSets.filter((_, i) => i !== index);
+      const updatedInputSetsi = values.inputSets.filter((_, i) => i !== index);
       setInputSets(updatedInputSets);
+      setFieldValue('inputSets', updatedInputSetsi);
     };
 
 
