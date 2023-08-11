@@ -8,6 +8,7 @@ const StatusRoute = require("./status.route")
 const ModuleRoute = require("./module.route")
 const emailTemplateRoute = require("./emailTemplate.route")
 const tableRoute = require("./table.route")
+const clientRoute = require("./Client.route")
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -49,6 +50,10 @@ const defaultRoutes = [
   {
     path: '/table',
     route: tableRoute,
+  },
+  {
+    path: '/clients',
+    route: clientRoute,
   },
 ];
 

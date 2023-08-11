@@ -1,38 +1,36 @@
-const fs = require('fs');
-const path = require('path');
-const route = `const express = require('express');
+const express = require('express');
 const auth = require('../../middlewares/auth');
 const tenant = require('../../middlewares/v2/tenant');
-const #_tablenameController = require('../../GeneratedFiles/controllers/#_tablename.controller');
+const employeeController = require('../../GeneratedFiles/controllers/employee.controller');
 const checkRoles = require('../../middlewares/v2/checkRole');
 const router = express.Router();
 
 router
-  .route('/')
-  .post(auth(), tenant(), checkRoles(['admin', 'hr']), #_tablenameController.create)
-  .get(auth(), tenant(), checkRoles(['admin', 'hr']), #_tablenameController.getAll);
+  .route('/employee')
+  .post(auth(), tenant(), checkRoles(['admin', 'hr']), employeeController.create)
+  .get(auth(), tenant(), checkRoles(['admin', 'hr']), employeeController.getAll);
 
 router
-  .route('/:userId')
-  .get(auth(), tenant(), checkRoles(['admin', 'hr']), #_tablenameController.getSingle)
-  .patch(auth(), tenant(), checkRoles(['admin', 'hr']), #_tablenameController.update)
-  .delete(auth(), tenant(), checkRoles(['admin', 'hr']), #_tablenameController.del);
+  .route('/employee/:userId')
+  .get(auth(), tenant(), checkRoles(['admin', 'hr']), employeeController.getSingle)
+  .patch(auth(), tenant(), checkRoles(['admin', 'hr']), employeeController.update)
+  .delete(auth(), tenant(), checkRoles(['admin', 'hr']), employeeController.del);
 
 module.exports = router;
 
 /**
  * @swagger
  * tags:
- *   name: #_tablename
- *   description: #_tablename management and retrieval
+ *   name: Employee
+ *   description: employee management and retrieval
  */
 
 /**
  * @swagger
- * /#_tablename:
+ * /employee:
  *   post:
- *     summary: Create a #_tablename
- *     description: Only admins can create other #_tablename.
+ *     summary: Create a employee
+ *     description: Only admins can create other employee.
  *     parameters:
  *         - name: X-Tenent-Key
  *           in: header
@@ -40,7 +38,7 @@ module.exports = router;
  *           required: true
  *           schema:
  *             type: string
- *     tags: [#_tablename]
+ *     tags: [Employee]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -50,18 +48,37 @@ module.exports = router;
  *           schema:
  *             type: object
  *             required:
- #_swaggerFields
+ *               - name
+ *               - email
+ *               - password
+ *               - role
  *             properties:
- #swaggerFieldsWithType
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: must be unique
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 minLength: 8
+ *                 description: At least one number and one letter
+ *               role:
+ *                  type: string
+ *                  enum: [user, admin]
  *             example:
- #_swaggerExample
+ *               name: fake name
+ *               email: fake@example.com
+ *               password: password1
+ *               role: user
  *     responses:
  *       "201":
  *         description: Created
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/#_tablename'
+ *                $ref: '#/components/schemas/employee'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -70,9 +87,9 @@ module.exports = router;
  *         $ref: '#/components/responses/Forbidden'
  *
  *   get:
- *     summary: Get all #_tablename
- *     description: Only admins can retrieve all #_tablename.
- *     tags: [#_tablename]
+ *     summary: Get all employee
+ *     description: Only admins can retrieve all employee.
+ *     tags: [employee]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -122,7 +139,7 @@ module.exports = router;
  *                 results:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/#_tablename'
+ *                     $ref: '#/components/schemas/employee'
  *                 page:
  *                   type: integer
  *                   example: 1
@@ -143,11 +160,11 @@ module.exports = router;
 
 /**
  * @swagger
- * /#_tablename/{id}:
+ * /employee/{id}:
  *   get:
- *     summary: Get a #_tablename
- *     description: Logged in users can fetch only their own user information. Only admins can fetch other #_tablename.
- *     tags: [#_tablename]
+ *     summary: Get a user
+ *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
+ *     tags: [Employee]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -169,7 +186,7 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/#_tablename'
+ *                $ref: '#/components/schemas/User'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -178,9 +195,9 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   patch:
- *     summary: Update a #_tablename
- *     description: Logged in users can only update their own information. Only admins can update other #_tablename.
- *     tags: [#_tablename]
+ *     summary: Update a user
+ *     description: Logged in users can only update their own information. Only admins can update other users.
+ *     tags: [Employee]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -203,16 +220,28 @@ module.exports = router;
  *           schema:
  *             type: object
  *             properties:
- #swaggerFieldsWithType
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: must be unique
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 minLength: 8
+ *                 description: At least one number and one letter
  *             example:
- #_swaggerExample
+ *               name: fake name
+ *               email: fake@example.com
+ *               password: password1
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/#_tablename'
+ *                $ref: '#/components/schemas/User'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -223,9 +252,9 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
- *     summary: Delete a #_tablename
- *     description: Logged in users can delete only themselves. Only admins can delete other #_tablename.
- *     tags: [#_tablename]
+ *     summary: Delete a user
+ *     description: Logged in users can delete only themselves. Only admins can delete other users.
+ *     tags: [Employee]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -250,45 +279,4 @@ module.exports = router;
  *         $ref: '#/components/responses/Forbidden'
  *       "404":
  *         $ref: '#/components/responses/NotFound'
- */`;
-
-const generateRoute = async (columnArray, tableName) => {
-  let querytoSequlize = {
-    int: 'int',
-    bool: 'boolean',
-    'VARCHAR(255)': 'string',
-  };
-  let swagger_Fields = '';
-  let swaggerFieldWithType = '';
-  let swaggerExample = '';
-  columnArray.map((item) => {
-    swagger_Fields += `*               - ${item.columnName}\n `;
-    if (item.dataType === 'FOREIGN KEY') {
-      swaggerFieldWithType += `*               ${item.columnName}:\n *                 type: int \n `;
-      swaggerExample += `*               ${item.columnName}: int \n `;
-    } else {
-      swaggerFieldWithType += `*               ${item.columnName}:\n *                 type: ${
-        querytoSequlize[item.dataType]
-      } \n `;
-      swaggerExample += `*               ${item.columnName}: ${querytoSequlize[item.dataType]} \n `;
-    }
-  });
-  swagger_Fields = swagger_Fields.slice(0, swagger_Fields.length - 2);
-  swaggerFieldWithType = swaggerFieldWithType.slice(0, swaggerFieldWithType.length - 2);
-  swaggerExample = swaggerExample.slice(0, swaggerExample.length - 2);
-  const replacedRoute = route
-    .replace(/#_tablename/g, tableName)
-    .replace(/#_swaggerFields/g, swagger_Fields)
-    .replace(/#swaggerFieldsWithType/g, swaggerFieldWithType)
-    .replace(/#_swaggerExample/g, swaggerExample);
-  const absolutePath = path.resolve(__dirname, '..');
-  fs.writeFile(`${absolutePath}/GeneratedFiles/routes/${tableName}.route.js`, replacedRoute, 'utf-8', (err) => {
-    if (err) {
-      console.log('route err--------->>>>', err);
-    } else {
-      console.log('Route file generated successfully');
-    }
-  });
-};
-
-module.exports = { generateRoute };
+ */

@@ -1,10 +1,12 @@
-const fs = require("fs")
-const path = require("path")
+const fs = require('fs');
+const path = require('path');
 const controller = `const httpStatus = require('http-status');
 const Model = require("../models/#_tablename.model.js")
 const ApiError = require('../../utils/ApiError.js');
 const catchAsync = require('../../utils/catchAsync.js');
 const #_tablenameService  = require('../services/#_tablename.service.js');
+const { Tenant } = require("../../models/v2/index.js")
+const { pagination } = require("../../utils/pagination.js")
 const { response } = require('../../utils/response.js');
 
 const create = catchAsync(async (req, res) => {
@@ -29,7 +31,7 @@ const getAll = catchAsync(async (req, res) => {
 
 const getSingle = catchAsync(async (req, res) => {
   const id = req.params.userId;
-  const doc = #_tablenameService.getById(id)
+  const doc = await #_tablenameService.getById(id)
   if (!doc) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
@@ -55,16 +57,21 @@ module.exports = {
 };
 `;
 
-const generateController = (tableName) => {
+const generateController = async (tableName) => {
   const replacedController = controller.replace(/#_tablename/g, tableName);
   const absolutePath = path.resolve(__dirname, '..');
-  fs.writeFile(`${absolutePath}/GeneratedFiles/controllers/${tableName}.controller.js`, replacedController, 'utf-8', (err, result) => {
-    if (err) {
-      console.log('controller err--------->>>>', err);
-    } else {
-      console.log('controller result--------->>>>', result);
+  fs.writeFile(
+    `${absolutePath}/GeneratedFiles/controllers/${tableName}.controller.js`,
+    replacedController,
+    'utf-8',
+    (err) => {
+      if (err) {
+        console.log('controller err--------->>>>', err);
+      } else {
+        console.log('controller file generated successfully');
+      }
     }
-  });
+  );
 };
 
 module.exports = { generateController };
