@@ -24,5 +24,6 @@ export { default as DiagnosisStatus } from './DiagnosisStatus';
 export { default as CheckboxItem } from './CheckBox';
 export { default as TextTemplate } from './TextTemplate';
 export { default as UserStatus } from './UserStatus';
+export { default as DownloadAction } from './DownloadAction';
 
 

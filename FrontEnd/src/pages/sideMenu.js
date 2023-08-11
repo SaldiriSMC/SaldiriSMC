@@ -8,7 +8,6 @@ import { makeStyles } from "tss-react/mui";
 import List from '@mui/material/List';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import TableViewIcon from '@mui/icons-material/TableView';
-import Divider from '@mui/material/Divider';
 import { Link, Outlet } from 'react-router-dom';
 import BadgeIcon from '@mui/icons-material/Badge';
 import CircleIcon from '@mui/icons-material/Circle';
@@ -18,14 +17,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import Header from '../components/navBar'
-import Footer from '../components/footer'
 import WorkIcon from '@mui/icons-material/Work';
-import CoPresentIcon from '@mui/icons-material/CoPresent';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
 import Collapse from '@mui/material/Collapse';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ListAltIcon from '@mui/icons-material/ListAlt';
@@ -166,13 +161,17 @@ export default function PersistentDrawerLeft() {
   {name:'Department',id:1,path:'/tetentDepartment',icon:<WorkIcon/>},
   {name:'Status',id:1,path:'/tenantStatus',icon:<AccountCircleIcon/>},
   {name:'Queues',id:1,path:'/queues',icon:<ChecklistIcon/>},
+  {name:'CARLIST',id:1,path:'/carList',icon:<MailIcon/>},
+  {name:'USERLIST',id:1,path:'/UserList',icon:<MailIcon/>},
 ]
   const sideList = (userRole === 'employee') ? [{name:'Dashboard',id:1,path:'/dashboard',icon:<DashboardIcon/>},
   {name:'Attendance',id:1,path:'/attendance',icon:<ListAltIcon/>},
+  
 ]: [{name:'Dashboard',id:1,path:'/dashboard',icon:<DashboardIcon/>},
 {name:'Attendance',id:1,path:'/attendance',icon:<ListAltIcon/>},
 {name:'Inivte User',id:1,path:'/inviteUser',icon:<PersonAddIcon/>},
 {name:'Template',id:1,path:'/emailTemplate',icon:<MailIcon/>},
+
 ]
 
 

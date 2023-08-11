@@ -47,53 +47,6 @@ import {
       type: ATTENDANCEUPDATE_FAILURE,
     });
 
-//      // Topics action functions
-
-//     export const topics = (data) => ({
-//       type: TOPICS,
-//       payload: data,
-//     });
-    
-//     export const topicsSuccess = (data) => ({
-//       type: TOPICS_SUCCESS,
-//       payload: data,
-//     });
-    
-//     export const topicsFailure = () => ({
-//       type: TOPICS_FAILURE,
-//     });
-
-//     // Course action functions
-
-//     export const videos = (data) => ({
-//       type: VIDEOS,
-//       payload: data,
-//     });
-    
-//     export const videosSuccess = (data) => ({
-//       type: VIDEOS_SUCCESS,
-//       payload: data,
-//     });
-    
-//     export const videoFailure = () => ({
-//       type: VIDEOS_FAILURE,
-// });
-    
-//     // Speakers action functions
-
-//     export const Speakers = (data) => ({
-//       type: SPEAKERS,
-//       payload: data,
-//     });
-    
-//     export const SpeakersSuccess = (data) => ({
-//       type: SPEAKERS_SUCCESS,
-//       payload: data,
-//     });
-    
-//     export const SpeakersFailure = () => ({
-//       type: SPEAKERS_FAILURE,
-//     });
 
 
       // all user action functions

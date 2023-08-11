@@ -35,6 +35,50 @@ export const UserInviteConfig = [
     label: "Actions",
   },
 ];
+export const UserInviteConfig2 = [
+  {
+    id: 'check',
+    name: 'check',
+    renderer: "CheckboxItem",
+    align: 'left',
+     label: "Name",
+  },
+  {
+    id: "invitation",
+    name: "invitation",
+    renderer: "Text",
+    align: 'left',
+    label: "Invitation",
+  },
+  {
+    id: "name",
+    name: "name",
+    renderer: "Text",
+    align: "left",
+    label: "Name",
+  },
+  {
+    id: "department",
+    name: "department",
+    renderer: "Text",
+    align: "left",
+    label: "Department",
+  },
+  {
+    id: "designation",
+    name: "designation",
+    renderer: "Text",
+    align: "left",
+    label: "Designation",
+  },
+  {
+    id: "action",
+    name: "action",
+    renderer: "EditDeleteAction",
+    align: "right",
+    label: "Actions",
+  },
+];
 export const UserStatusConfig = [
   {
     id: "name",
@@ -318,3 +362,139 @@ export const faildQueuesConfig = [
     label: "Processed On",
   },
 ];
+
+
+export const doctor = [
+      
+  {
+    id: "test",
+    name: "test",
+    renderer: 'Text',
+    align: "left",
+    label: "test",
+  },
+  {
+    id: "age",
+    name: "age",
+    renderer: 'Text',
+    align: "left",
+    label: "age",
+  },
+  {
+    id: "desise",
+    name: "desise",
+    renderer: 'Text',
+    align: "left",
+    label: "desise",
+  },
+  {
+    id: "action",
+    name: "action",
+    renderer: "EditDeleteAction",
+    align: "right",
+    label: "Actions",
+  },
+];
+export const carList = [
+      
+  {
+    id: "test",
+    name: "test",
+    renderer: 'Text',
+    align: "left",
+    label: "test",
+  },
+  {
+    id: "aaa",
+    name: "aaa",
+    renderer: 'Text',
+    align: "left",
+    label: "aaa",
+  },
+  {
+    id: "zzz",
+    name: "zzz",
+    renderer: 'Text',
+    align: "left",
+    label: "zzz",
+  },
+  {
+    id: "nhhh",
+    name: "nhhh",
+    renderer: 'Text',
+    align: "left",
+    label: "nhhh",
+  },
+  {
+    id: "action",
+    name: "action",
+    renderer: "EditDeleteAction",
+    align: "right",
+    label: "Actions",
+  },
+];
+  
+
+export const tableConfig = [
+  {
+    id: "name",
+    name: "name",
+    renderer: "Text",
+    align: "left",
+    label: "Table Name",
+  },
+  {
+    id: "columns",
+    name: "columns",
+    renderer: "Text",
+    align: "left",
+    label: "Columns No",
+  },
+  {
+    id: "tableDate",
+    name: "tableDate",
+    renderer: "Text",
+    align: "left",
+    label: "Created Date",
+  },
+  {
+    id: "action",
+    name: "action",
+    renderer: "DownloadAction",
+    align: "right",
+    label: "Actions",
+  },
+
+];
+export const UserList = [
+      
+  {
+    id: "User Name",
+    name: "User Name",
+    renderer: 'Text',
+    align: "left",
+    label: "User Name",
+  },
+  {
+    id: "User Age",
+    name: "User Age",
+    renderer: 'Text',
+    align: "left",
+    label: "User Age",
+  },
+  {
+    id: "User Type",
+    name: "User Type",
+    renderer: 'Text',
+    align: "left",
+    label: "User Type",
+  },
+  {
+    id: "action",
+    name: "action",
+    renderer: "EditDeleteAction",
+    align: "right",
+    label: "Actions",
+  },
+];
+  

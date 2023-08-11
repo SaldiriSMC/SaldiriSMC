@@ -124,11 +124,23 @@ export const getAllPrimaryKey = () => {
         ...headerWithToken
     })
 }
-export const addTable = (payload) => {
+export const addTable = (payload,onProgress) => {
     return instance({
         url: `${URls.table_url}`,
         method: 'post',
         data: payload,
+        onUploadProgress: (progressEvent) => {
+          const percentage = Math.floor((progressEvent.loaded / progressEvent.total) * 100);
+          console.log("percentage----------percentage",percentage)
+          onProgress(percentage);
+        },
+        ...headerWithToken,
+      });
+}
+export const getAllTableList = () => {
+    return instance({
+        url: `${URls.table_url}`,
+        method: 'get',
         ...headerWithToken
     })
 }
