@@ -47,17 +47,7 @@ const useStyles = makeStyles()((theme) => {
         color: theme.error?.main
       }
     },
-    // centerAlign: {
-    //   '& label': {
-    //     width: '100%',
-    //     textAlign: 'center'
-    //   },
-    //   '& > div': {
-    //     '& input': {
-    //       textAlign: 'center'
-    //     }
-    //   }
-    // }
+
   };
 });
 

@@ -107,3 +107,4 @@ function* watchGetRequest() {
 export default function* sagas() {
   yield all([watchGetRequest()]);
 }
+  

@@ -105,14 +105,14 @@ useEffect(() => {
   if (!areAPICallsAlreadySent()) {
     if (user) {
       // Fetch data immediately when the component mounts
-      // fetchData();
+      fetchData();
 
       // Set up the interval to fetch data every 5 seconds (60000 milliseconds)
-      // const interval = setInterval(fetchData, 120000);
+      const interval = setInterval(fetchData, 120000);
 
       // Clean up the interval when the component unmounts
       return () => {
-        // clearInterval(interval);
+       clearInterval(interval);
       };
     }
   }
