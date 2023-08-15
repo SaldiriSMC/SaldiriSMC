@@ -1,22 +1,20 @@
-const fs = require('fs');
-const path = require('path');
-const controller = `
+
 const httpStatus = require('http-status');
-const Model = require("../models/#_tablename.model.js")
+const Model = require("../models/Recorddfdsdssssdss.model.js")
 const ApiError = require('../../utils/ApiError.js');
 const catchAsync = require('../../utils/catchAsync.js');
-const #_tablenameService  = require('../services/#_tablename.service.js');
+const RecorddfdsdssssdssService  = require('../services/Recorddfdsdssssdss.service.js');
 const { Tenant } = require("../../../models/v2/index.js")
 const { pagination } = require("../../../utils/pagination.js")
 const { response } = require('../../../utils/response.js');
 
 const create = catchAsync(async (req, res) => {
   try {
-      const #_tablename = await #_tablenameService.create(req.body);
-      if (#_tablename) {
-        response(res,  #_tablename , '#_tablename created succesfully', httpStatus.CREATED);
+      const Recorddfdsdssssdss = await RecorddfdsdssssdssService.create(req.body);
+      if (Recorddfdsdssssdss) {
+        response(res,  Recorddfdsdssssdss , 'Recorddfdsdssssdss created succesfully', httpStatus.CREATED);
       }else{
-        response(res,  "" , '#_tablename not created succesfully', 400);
+        response(res,  "" , 'Recorddfdsdssssdss not created succesfully', 400);
       }
   } catch (err) {
     console.log(err);
@@ -32,7 +30,7 @@ const getAll = catchAsync(async (req, res) => {
 
 const getSingle = catchAsync(async (req, res) => {
   const id = req.params.userId;
-  const doc = await #_tablenameService.getById(id)
+  const doc = await RecorddfdsdssssdssService.getById(id)
   if (!doc) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
@@ -40,13 +38,13 @@ const getSingle = catchAsync(async (req, res) => {
 }); 
 
 const update = catchAsync(async (req, res) => {
-  await #_tablenameService.updateById(req.body, req.params.userId.toString());
-  response(res, '', '#_tablename updated successfully', 200);
+  await RecorddfdsdssssdssService.updateById(req.body, req.params.userId.toString());
+  response(res, '', 'Recorddfdsdssssdss updated successfully', 200);
 });
 
 const del = catchAsync(async (req, res) => {
-  await #_tablenameService.deleteById(req.params.userId);
-  response(res, '', '#_tablename deleted successfully', 200);
+  await RecorddfdsdssssdssService.deleteById(req.params.userId);
+  response(res, '', 'Recorddfdsdssssdss deleted successfully', 200);
 });
 
 module.exports = {
@@ -56,11 +54,3 @@ module.exports = {
   update,
   del,
 };
-`;
-
-const generateController = async (tableName, zip) => {
-  const replacedController = controller.replace(/#_tablename/g, tableName);
-  zip.folder('controllers').file(`${tableName}.controller.js`, replacedController);
-};
-
-module.exports = { generateController };

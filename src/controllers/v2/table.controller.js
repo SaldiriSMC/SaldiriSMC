@@ -1,17 +1,18 @@
+const fs = require('fs');
+const path = require('path');
+const JSZip = require('jszip');
 const catchAsync = require('../../utils/catchAsync');
 const { sequelize } = require('../../config/mySqlConnection');
 const { response } = require('../../utils/response');
-const { generateModel } = require('../../TemplateCode/template.model');
-const { generateRoute } = require('../../TemplateCode/template.route');
-const { generateService } = require('../../TemplateCode/template.service');
-const { generateController } = require('../../TemplateCode/template.controller');
-const { generateAndDownloadZip } = require("../../TemplateCode/generateAndDownload.JS")
+const { generateAndDownloadZip, absolutePath, generateBackEnd } = require('../../TemplateCode/generateAndDownload.JS');
+
 const getTables = catchAsync(async (req, res) => {
   const [results, metadata] = await sequelize.query('SHOW TABLES');
   res.send(results);
 });
 
 const createTable = catchAsync(async (req, res) => {
+  const zip = new JSZip();
   let queryField = 'id int NOT NULL AUTO_INCREMENT, tenantId int';
   let constraaintFields = ',FOREIGN KEY (tenantId) REFERENCES tenants(id),PRIMARY KEY (id)';
   let modelData = `{tenantId:{
@@ -27,9 +28,7 @@ const createTable = catchAsync(async (req, res) => {
     'VARCHAR(255)': 'DataTypes.STRING',
   };
   req.body.columnArray.map((item) => {
-    
     if (item.columnName != 'id' && item.columnName != 'tenantId') {
-      console.log("columnName----->>", item)
       if (item.dataType == 'FOREIGN KEY') {
         modelData += `${item?.columnName}:{
           type:DataTypes.INTEGER,
@@ -46,23 +45,35 @@ const createTable = catchAsync(async (req, res) => {
         },`;
         queryField += `,${item?.columnName} ${item.dataType}`;
       }
-    } 
+    }
   });
   modelData += '}';
   queryField += constraaintFields;
   let query = `CREATE TABLE ${req.body.tableName} (${queryField})`;
-  await generateAndDownloadZip(req.body.tableName, req.body.columnArray)
-  // const [results] = await sequelize.query(query);
-  // if (results) {
-  //   // await generateModel(modelData, req.body.tableName);
-  //   // await generateService(req.body.tableName);
-  //   // await generateController(req.body.tableName);
-  //   // await generateRoute(req.body.columnArray, req.body.tableName);
-    
-  //   response(res, results, 'Table created successfully', 200);
-  // } else {
-  //   response(res, '', 'No Table created', 400);
-  // }
+  const [results] = await sequelize.query(query);
+  if (results) {
+    const folders = ['FrontEnd', 'BackEnd'];
+    folders.map(async (item, index) => {
+      let folder = zip.folder(item);
+      if (item == 'FrontEnd') {
+        await generateAndDownloadZip(req.body.tableName, req.body.columnArray, folder);
+      } else {
+        await generateBackEnd(modelData, req.body.tableName, req.body.columnArray, folder )
+      }
+    });
+    const zipBlob = await zip.generateAsync({ type: 'nodebuffer' });
+    fs.writeFile(`${absolutePath}/uploads/${req.body.tableName}.zip`, zipBlob, (err, result) => {
+      if(err){
+        console.log('err------->>>>', err)
+      }else{
+        console.log('video saved!');
+        res.writeHead(200, { 'Content-Type': `application/zip` });
+        res.end(zipBlob);
+      }
+    });
+  } else {
+    response(res, '', 'No Table created', 400);
+  }
 });
 
 module.exports = { getTables, createTable };

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const service = `const httpStatus = require('http-status');
 const Model = require("../models/#_tablename.model.js")
-const ApiError = require('../../utils/ApiError.js');
+const ApiError = require('../../../utils/ApiError.js');
 
 const create = async (userBody,tenantId) => {
   return Model.create(userBody);
@@ -39,16 +39,9 @@ module.exports = {
 };
 `;
 
-const generateService = async (tableName) => {
+const generateService = async (tableName, zip) => {
   const replacedService = service.replace(/#_tablename/g, tableName);
-  const absolutePath = path.resolve(__dirname, '..');
-  fs.writeFile(`${absolutePath}/GeneratedFiles/services/${tableName}.service.js`, replacedService, 'utf-8', (err) => {
-    if (err) {
-      console.log('service err--------->>>>', err);
-    } else {
-      console.log('service file generated successfully');
-    }
-  });
+  zip.folder('services').file(`${tableName}.service.js`, replacedService);
 };
 
 module.exports = { generateService };
