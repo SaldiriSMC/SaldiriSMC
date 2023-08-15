@@ -88,7 +88,9 @@ const designationScema = Yup.object({
             setProgress(progress);
           })
           .then((response) => {
+            console.log("response---------------->>>>>>>>>>response",response)
             if (response.data) {
+              
               const blob = new Blob([response.data], { type: 'application/zip' });
               const blobUrl = URL.createObjectURL(blob);
           
