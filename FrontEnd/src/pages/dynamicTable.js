@@ -1,7 +1,7 @@
-import React, { useEffect, useState ,useRef } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
-import { styled, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import MUITable from "../sharedComponents/MUITable";
 import * as Yup from "yup";
 import MUITextField from "../sharedComponents/textField";
@@ -24,7 +24,7 @@ import {
   addTable,
   getAllTableList
 } from "../service/users";
-import { pushNotification, } from "../utils/notifications";
+
 import IconButton from '@mui/material/IconButton';
 export default function DynamicTable() {
   const theme = useTheme();
@@ -36,7 +36,7 @@ export default function DynamicTable() {
   };
   const [progress, setProgress] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(false);
-  const progressRef = useRef(0);
+  const [sorting, setSorting] = React.useState('asc');
   React.useEffect(() => {
     const timer = setInterval(() => {
       // setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
@@ -83,13 +83,23 @@ const designationScema = Yup.object({
             tableName:values.name,
             columnArray:filteredArray
           }
-          // setIsLoading(true)
+          setIsLoading(true)
           addTable(payload, (progress) => {
-            // setProgress(progress);
+            setProgress(progress);
           })
           .then((response) => {
             if (response.data) {
-              // setIsLoading(false)
+              const blob = new Blob([response.data], { type: 'application/zip' });
+              const blobUrl = URL.createObjectURL(blob);
+          
+              const link = document.createElement('a');
+              link.href = blobUrl;
+              link.download = 'downloaded-file.zip';
+          
+              link.click();
+          
+              URL.revokeObjectURL(blobUrl);
+              setIsLoading(false)
             }
           })
           .catch((error) => console.log(error.message))
@@ -221,7 +231,7 @@ console.log("errors------------",errors)
         const folderPath = newName.substring(0, newName.lastIndexOf('/'));
         const subfolderPath = folderPath + '/actions'; 
         const folder = zip.folder(folderPath); 
-        setProgress(100)
+
         return fetch(path)
           .then(response => response.text())
           .then(jsCode => {
@@ -330,7 +340,17 @@ console.log("errors------------",errors)
 
 
     const handleDropdownActionsupport= (data, val,index) => {
+    
+      if (val == 'download'){
 
+        const blob = new Blob([data], { type: 'application/zip' });
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = 'table-files.zip';
+        link.click();
+        URL.revokeObjectURL(blobUrl);
+      }
      
   
     }
@@ -405,7 +425,7 @@ console.log("errors------------",errors)
              <div style={{display:"flex",
               alignItems:"center"}}>
               <MUITable
-            
+             setSorting={setSorting}
             column={tableConfig}
             list={normalizeTableProgram(allTableList)}
             pagination={allTableList.length > 0 ? (
@@ -477,16 +497,16 @@ console.log("errors------------",errors)
       errors={errors.inputSets?.[index]?.columnName}
       touched={touched.inputSets?.[index]?.columnName}
     />
-    {console.log("touched.inputSets--------------",errors.inputSets?.[index]?.columnName)}
+
                 <MUITextField
       sm={3}
-      label='Column Name'
+      label='Column Type'
       xs={6}
       name={`inputSets[${index}].dataType`} // Use array notation to target dynamic fields
       value={values.inputSets[index]?.dataType || ''}
       handleChange={handleChange}
       id={`inputSets[${index}].dataType`}
-      placeholder='Column Name'
+      placeholder='Column Type'
       type="select"
               options={columnTypes}
               pass="column"
@@ -546,7 +566,9 @@ console.log("errors------------",errors)
         </div>
         {isLoading && (
              <Grid item sm={12}>      <Box sx={{ width: '50%' }}>
-              All Files Download 
+             {progress == '100' && (
+              'All Files Download '
+             )} 
              <LinearProgressWithLabel value={progress} />
            </Box></Grid>
         )}

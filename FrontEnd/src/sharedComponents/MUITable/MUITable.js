@@ -1,6 +1,7 @@
-import * as React from 'react';
+
 import { makeStyles } from 'tss-react/mui'
 import Table from '@mui/material/Table';
+import React, {  useRef } from 'react';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -10,8 +11,10 @@ import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import CellRenderer from './CellRenderer';
-import { format } from "date-fns";
+import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
+import { visuallyHidden } from '@mui/utils';
+import TableSortLabel from '@mui/material/TableSortLabel';
 
 const useStyles = makeStyles()((theme) => {
     return {
@@ -68,9 +71,25 @@ const useStyles = makeStyles()((theme) => {
 });
 
 const MUITable = (props) => {
-  const { column, list, isLoading, pagination, onSelect, variant, onCheckAll, checkedValue } = props
+  const { column, list, isLoading, pagination, onSelect, variant, onCheckAll, checkedValue,setSorting } = props
   const { classes } = useStyles();
+  const [order, setOrder] = React.useState('asc');
+  const orderByRef = useRef('');
+  const [orderBy, setOrderBy] = React.useState('');
   const listToRender = isLoading ? [{}, {}, {}, {}, {}] : list;
+  const handleRequestSort = (event, property) => {
+    orderByRef.current = property;
+    setOrderBy(property);
+    console.log(orderBy === property && order === 'asc',"orderByRef-------",orderByRef,'property------',property,'order-------',order)
+    const isAsc =  orderByRef.current === property && order === 'asc';
+    console.log("isAsc---------",isAsc)
+    setOrder(isAsc ? 'desc' : 'asc');
+if (setSorting){
+  setSorting(isAsc ? 'desc' : 'asc');
+}
+ 
+  };
+
   return (
     <div style={{ width: '100%' }}>
       <TableContainer component={Paper}>
@@ -90,7 +109,7 @@ const MUITable = (props) => {
                 </TableCell>
               } */}
               {
-                column.map(item => <TableCell key={item.id} className={item.display === 'none' && classes.hideRow}>
+                column.map(item => <TableCell    sortDirection={orderByRef.current === item.id ? order : false} key={item.id} className={item.display === 'none' && classes.hideRow}>
                   {item.id === 'check' ? (
                     <Checkbox 
                     style={{
@@ -100,7 +119,21 @@ const MUITable = (props) => {
                     onChange={(e) => onCheckAll(e.target.checked)}
                   />
                   ) : (
-                    item.label
+                    <>
+                <TableSortLabel
+              active={orderByRef.current === item.id}
+              direction={orderByRef.current === item.id ? order : 'asc'}
+              onClick={(event) => {handleRequestSort(event, item.id);}}
+            >
+              {item.label}
+              {orderByRef.current === item.id ? (
+                <Box component="span" sx={visuallyHidden}>
+                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                </Box>
+              ) : null}
+            </TableSortLabel>
+                    </>
+                   
                   )}
                 </TableCell>)
               }

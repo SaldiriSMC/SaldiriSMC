@@ -34,6 +34,7 @@ export default function Queues() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[2]);
   const [allUserList, setAllUserList] = useState([]);
+  const [sorting, setSorting] = React.useState('asc');
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
@@ -239,7 +240,9 @@ export default function Queues() {
 </div>
 </div>
 <br></br>
-            <MUITable column={value === "one" ? processingQueuesConfig : value === "four" ? faildQueuesConfig : processedQueuesConfig } list={normalizeTableProgram(queues?.data, value)} 
+            <MUITable
+             setSorting={setSorting}
+            column={value === "one" ? processingQueuesConfig : value === "four" ? faildQueuesConfig : processedQueuesConfig } list={normalizeTableProgram(queues?.data, value)} 
              pagination={{
               totalRecords: totalRecords,
               pageNumber: page,
@@ -275,7 +278,7 @@ export default function Queues() {
                 style={{ marginTop:'5.5rem'}}
               >
                   <MUITable
-            
+             setSorting={setSorting}
               column={UserStatusConfig}
               list={normalizeTableUser(allUserList)}
               pagination={allUserList?.length > 0 ? (

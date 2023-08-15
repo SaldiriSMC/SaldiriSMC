@@ -31,6 +31,7 @@ export default function CARLIST() {
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
+  const [sorting, setSorting] = React.useState('asc');
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
@@ -159,7 +160,7 @@ export default function CARLIST() {
              </div>
              </form>
          <MUITable
-            
+             setSorting={setSorting}
             column={carList}
             list={normalizeTableProgram(carList?.results ? carList?.results : [])}       
           />

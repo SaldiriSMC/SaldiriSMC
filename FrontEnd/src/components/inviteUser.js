@@ -28,6 +28,7 @@ const InviteUser = ({ setLoader }) => {
   const [deleteTimeInOut, setDeleteTimeInOut] = React.useState({ time: [] });
   const [isCreate, setIsCreate] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
+  const [sorting, setSorting] = React.useState('asc');
   const [userData, setUserData] = React.useState({});
   const [allUserList, setAllUserList] = useState([]);
   const [checkedValue, setCheckedValue] = useState([]);
@@ -45,6 +46,9 @@ const InviteUser = ({ setLoader }) => {
   useEffect(() => {
     getAllUser();
   }, [filter]);
+
+
+  console.log("sorting------------>>>>>>>>>>>>",sorting)
 
   const getAllUser = () => {
     dispatch(loderTrue(true));
@@ -225,6 +229,7 @@ const InviteUser = ({ setLoader }) => {
               </IconButton>
             </div>
             <MUITable
+            setSorting={setSorting}
               onCheckAll={(val) => selectedCheckValueHandler(val)}
               checkedValue={
                 checkedValue.length >= allUserList.length ? true : false

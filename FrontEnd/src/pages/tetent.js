@@ -32,6 +32,7 @@ export default function PersistentDrawerLeft() {
    const [showDeleteModal, setShowDeleteModal] = React.useState(false);
    const [showUpdateModal, setShowUpdateModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
+  const [sorting, setSorting] = React.useState('asc');
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5
@@ -191,7 +192,7 @@ const addRollFun =()=>{
              </div>
              </form>
          <MUITable
-            
+             setSorting={setSorting}
             column={designationConfig}
             list={normalizeTableProgram(allRollsList?.results ? allRollsList?.results : [])}
             pagination={{

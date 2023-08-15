@@ -34,6 +34,7 @@ export default function TetentStatus() {
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [showUpdateModal, setShowUpdateModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
+  const [sorting, setSorting] = React.useState('asc');
   const [allmodulesList, setallmodulesList] = useState([])
     const [filter, setFilter] = useState({
     pageNumber: 1,
@@ -233,7 +234,7 @@ export default function TetentStatus() {
 </form>
 
          <MUITable
-            
+             setSorting={setSorting}
             column={statusConfig}
             list={normalizeTableProgram(allRollsList?.results ? allRollsList?.results : [])}
             pagination={allRollsList?.totalResults > 0 ? (

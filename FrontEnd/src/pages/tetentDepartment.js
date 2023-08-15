@@ -31,6 +31,7 @@ export default function TetentDepartment() {
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [showUpdateModal, setShowUpdateModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
+  const [sorting, setSorting] = React.useState('asc');
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
@@ -175,7 +176,7 @@ export default function TetentDepartment() {
              </div>
              </form>
          <MUITable
-            
+             setSorting={setSorting}
             column={departmentConfig}
             list={normalizeTableProgram(allRollsList?.results ? allRollsList?.results : [])}
             pagination={{

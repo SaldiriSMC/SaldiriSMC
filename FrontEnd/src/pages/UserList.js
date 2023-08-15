@@ -31,6 +31,7 @@ export default function USERLIST() {
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [showUpdateModal, setShowUpdateModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
+  const [sorting, setSorting] = React.useState('asc');
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
@@ -172,7 +173,7 @@ export default function USERLIST() {
              </div>
              </form>
          <MUITable
-            
+             setSorting={setSorting}
             column={UserList}
             list={normalizeTableProgram(UserList?.results ? UserList?.results : [])}       
           />

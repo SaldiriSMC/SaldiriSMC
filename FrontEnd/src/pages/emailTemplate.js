@@ -22,7 +22,8 @@ const EmailTemplate = () => {
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [isEdit, setIsEdit] = React.useState(false)
   const [itemId, setItemId] = React.useState(null)
-  const [itemData, setItemData] = React.useState({})
+  const [itemData, setItemData] = React.useState({}) 
+   const [sorting, setSorting] = React.useState('asc');
   const dispatch = useDispatch();
   const emailTemplateData = useSelector(
     (state) => state?.emailTemplate?.data?.data
@@ -123,6 +124,7 @@ const EmailTemplate = () => {
           </IconButton> 
          </div>
          <MUITable
+          setSorting={setSorting}
         column={EmailTemplateConfig}
         list={normalizeTableProgram(emailTemplateData?.results ?? [])}
         pagination={emailTemplateData?.results?.length > 0 ? (

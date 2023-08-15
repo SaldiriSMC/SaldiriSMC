@@ -34,6 +34,7 @@ const AttendanceAdjusment = () => {
   const [noTimeOut, setNoTimeOut] = React.useState(false)
   const [showModal,setShowModal] = React.useState(false)
   const [userData,setUserData] = React.useState({})
+  const [sorting, setSorting] = React.useState('asc');
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
@@ -345,6 +346,7 @@ const AttendanceAdjusment = () => {
           )}
       
          <MUITable
+          setSorting={setSorting}
             column={ userRole === 'employee' ? UserAttendanceeEmpolyeConfig : UserAttendanceeConfig}
             list={normalizeTableProgram(attendanceData?.data?.result ? attendanceData?.data?.result : [])}
             pagination={attendanceData?.data?.result.length > 0 ? (
