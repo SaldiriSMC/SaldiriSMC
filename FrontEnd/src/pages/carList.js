@@ -31,7 +31,7 @@ export default function CARLIST() {
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
-  const [sorting, setSorting] = React.useState('asc');
+  const [userData, setUserData] = React.useState({});
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
@@ -47,18 +47,23 @@ export default function CARLIST() {
   };
   const dispatch = useDispatch();
 
-  const allRollsList = useSelector(
-    (state) => state?.getcarList?.getcarList?.data
+  const List = useSelector(
+    (state) => state?.carList?.data?.results
   );
 
+  console.log("allRollsList-------------------",List)
   useEffect(() => {
-
-      dispatch(getcarList({type:'department',filter:filter}));
+    getAllList()
+  
 
     
 
   }, []);
 
+
+  const getAllList =()=>{
+    dispatch(getcarList({filter:filter}));
+  }
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
     dirty } =
     useFormik({
@@ -75,7 +80,7 @@ export default function CARLIST() {
     const result = [];
     source.forEach((record,index) => {
       result.push({
-        name: record?.departmentName,
+        name: record?.name,
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),
@@ -94,15 +99,15 @@ export default function CARLIST() {
     }  
     
     if (val === 'edit' ) {
-      setAction(data?.id)
-     setFieldValue('designationId',data.departmentName)
-     setAction(data?.id)
+      setAction("update");
+      setUserData(data);
+      setShowModal(true);
 
     }
 
   }
   const handleDeleteModel = () => {
-    dispatch(deletecarList({type:'department',id:userDeleteId}));
+    dispatch(deletecarList({id:userDeleteId}));
     setShowDeleteModal(false)
   }
   const handleUpdateModel = () => {
@@ -160,9 +165,9 @@ export default function CARLIST() {
              </div>
              </form>
          <MUITable
-             setSorting={setSorting}
+            
             column={carList}
-            list={normalizeTableProgram(carList?.results ? carList?.results : [])}       
+            list={normalizeTableProgram(List ? List : [])}       
           />
           <Grid
             item
@@ -200,7 +205,9 @@ export default function CARLIST() {
        showModal={showModal}
         setShowModal={setShowModal}
         action={action}
+        userData={userData}
         setAction={setAction}
+        getAllList={getAllList}
 
       />
     </>

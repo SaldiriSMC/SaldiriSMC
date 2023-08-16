@@ -108,14 +108,16 @@ const InviteUserModel = (props) => {
 
     const dispatch = useDispatch();
      
-    #list    
+
  
-      const handleInputChange = (index, event) => {
+      const handleInputChange = (event) => {
 
         const { name, value } = event.target;
-        const updatedInputSets = [...#inputArr];
-        updatedInputSets[index][name] = value;
-        set#inputArr(updatedInputSets);
+        set#inputArr((prevData) => ({
+          ...prevData,
+          [name]: value
+        }));
+
       };
       const handleSubmit = (event) => {
 
@@ -123,7 +125,7 @@ const InviteUserModel = (props) => {
       };
 
 
-
+      #list    
   return (
     <div>
       <Modal
@@ -141,19 +143,7 @@ const InviteUserModel = (props) => {
         <div className={classes.innerContainer}>    
         <form >
         <Grid  container  spacing={2} sx={{p:1}}>
-        {#inputArr.map((inputSet, index) => ( <>
-                <MUITextField          
-              sm={6}
-              label={`${inputSet.columnTitle}`}
-              xs={6}
-              name="columnName"
-              value={inputSet.columnName}
-              handleChange={(event) => handleInputChange(index, event)}
-              variant='inner'
-              id="columnName"
-              placeholder=''
-            />      
-              </>))}
+        #UI
                  
             </Grid>
        

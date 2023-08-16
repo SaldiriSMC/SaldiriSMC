@@ -99,7 +99,7 @@ const downloadTimeout = 10000; // 10 seconds in milliseconds
           body: JSON.stringify(payload),
           onUploadProgress: (progressEvent) => {
             const percentage = Math.floor((progressEvent.loaded / progressEvent.total) * 100);
-            console.log("percentage----------percentage",percentage)
+
             setProgress(percentage);
           },
         })
@@ -115,7 +115,7 @@ const downloadTimeout = 10000; // 10 seconds in milliseconds
         })
         .then(zipBlob => {
           if (zipBlob.size > 1000){
-            console.log("zipBlob--------->>>>>>>>>>.",zipBlob.size)
+
             // Handle the response blob containing the zip file
             const url = URL.createObjectURL(zipBlob);
             const link = document.createElement('a');
@@ -124,7 +124,7 @@ const downloadTimeout = 10000; // 10 seconds in milliseconds
             link.click();
           }
         })
-        .catch((error) => console.log("ssserror-------------------error",error)).finally(() => {
+        .catch((error) => console.log(error)).finally(() => {
           // setIsLoading(false);
           setProgress(100); // Set progress to 100% after the download is complete
         });
@@ -163,7 +163,7 @@ const downloadTimeout = 10000; // 10 seconds in milliseconds
     // Initial input sets
   ]);
 
-console.log("errors------------",errors)
+console.log("inputSets------------",inputSets)
 
   useEffect(()=>{
         
@@ -275,7 +275,8 @@ console.log("errors------------",errors)
 
                 } else if (path == '/tempFiles/tableModel.js') {
                   const jsCodea = convertToJavascriptInpits(ColumnsList, tableName);
-                  newCode = newCode.replaceAll('#inputArr', tableName).replace('#list', jsCodea);
+                  const jsCodeUI = convertToFormUI(ColumnsList, tableName);
+                  newCode = newCode.replaceAll('#inputArr', tableName).replace('#list', jsCodea).replace('#UI', jsCodeUI);;
 
                 } else {
                   newCode = newCode.replaceAll(replacement.placeholder, replacement.replacement);
@@ -306,6 +307,26 @@ console.log("errors------------",errors)
 
 
 
+    function convertToFormUI(data, tableName) {
+      const columnEntries = data.map(item => `
+      <MUITextField          
+      sm={6}
+      label='${item.columnName}'
+      xs={6}
+      name='${item.columnName}'
+      value={${tableName}.${item.columnName}}
+      handleChange={(event) => handleInputChange(event)}
+      variant='inner'
+      id='${item.columnName}'
+      placeholder=''
+    />  `);
+    
+      const jsCode = `
+ ${columnEntries},
+      `;
+    
+      return jsCode;
+    }
     function convertToJavascript(data, tableName) {
       const columnEntries = data.map(item => `
       {
@@ -337,15 +358,12 @@ console.log("errors------------",errors)
   }
     function convertToJavascriptInpits(data, tableName) {
       const columnEntries = data.map(item => `
-      {
-        columnName: "",
-        columnTitle: "${item.columnName}",
-      }`).join(',');
-    
+        ${item.columnName}: ""
+      `)
       const jsCode = `
-      const [${tableName}, set${tableName}] = useState([
-      ${columnEntries},
-    ]);
+      const [${tableName}, set${tableName}] = useState({
+      ${columnEntries}
+      });
       `;
     
       return jsCode;
@@ -381,7 +399,7 @@ console.log("errors------------",errors)
         })
         .then(zipBlob => {
           if (zipBlob.size > 1000){
-            console.log("zipBlob--------->>>>>>>>>>.",zipBlob.size)
+
             // Handle the response blob containing the zip file
             const url = URL.createObjectURL(zipBlob);
             const link = document.createElement('a');
@@ -432,7 +450,6 @@ console.log("errors------------",errors)
 
 
 
-    console.log("values--------",values)
   return (
     <>
       <Header />
@@ -640,7 +657,7 @@ console.log("errors------------",errors)
                 
       </Grid>
   
-      {/* <button  onClick={()=>generateAndDownloadZip(values.name,inputSets)}>files</button> */}
+      <button  onClick={()=>generateAndDownloadZip(values.name,values.inputSets)}>files</button>
       </Box>
     </>
   );

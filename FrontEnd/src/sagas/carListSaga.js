@@ -67,7 +67,7 @@ function* updatecarListCall(action) {
 
 function* deletecarListCall(action) {
   try {
-    const response = yield call(deleteRequestWithTokenTenant, `${URls.carList}/${action.payload.itemId}`);
+    const response = yield call(deleteRequestWithTokenTenant, `${URls.carList}/${action.payload.id}`);
   
     if (response?.status === 200) {
       pushNotification(
@@ -87,7 +87,7 @@ function* deletecarListCall(action) {
 
 function* getcarListCall(action) {
   try {
-    const response = yield call(getRequestWithTenant, `${URls.carList}`);
+    const response = yield call(getRequestWithTenant, `${URls.carList}?limit=10000&page=1`);
 
     if (response?.status === 200) {
       yield put(getcarListSuccess(response.data));
