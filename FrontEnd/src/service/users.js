@@ -139,7 +139,7 @@ export const addTable = (payload,onProgress) => {
 }
 export const getAllTableList = () => {
     return instance({
-        url: `${URls.table_url}`,
+        url: `${URls.self_table_url}`,
         method: 'get',
         ...headerWithToken
     })

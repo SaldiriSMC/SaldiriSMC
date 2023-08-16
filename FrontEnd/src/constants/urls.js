@@ -12,6 +12,7 @@ const URLs = {
   getDepartment:'/department',
   getDesignation:'/designation',
   table_url:'/table',
+  self_table_url:'/table/self-generated',
   carList:'/carList',
   UserList:'/add_api_url',
   getUserDepartmentDesignation:'/users/by/department-and-designation',

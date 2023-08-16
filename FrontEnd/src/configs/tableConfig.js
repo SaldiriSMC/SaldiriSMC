@@ -396,34 +396,20 @@ export const doctor = [
   },
 ];
 export const carList = [
-      
+    
   {
-    id: "test",
-    name: "test",
+    id: "name",
+    name: "name",
     renderer: 'Text',
     align: "left",
-    label: "test",
+    label: "Name",
   },
   {
-    id: "aaa",
-    name: "aaa",
+    id: "CarColor",
+    name: "CarColor",
     renderer: 'Text',
     align: "left",
-    label: "aaa",
-  },
-  {
-    id: "zzz",
-    name: "zzz",
-    renderer: 'Text',
-    align: "left",
-    label: "zzz",
-  },
-  {
-    id: "nhhh",
-    name: "nhhh",
-    renderer: 'Text',
-    align: "left",
-    label: "nhhh",
+    label: "Carcolor",
   },
   {
     id: "action",
@@ -433,7 +419,6 @@ export const carList = [
     label: "Actions",
   },
 ];
-  
 
 export const tableConfig = [
   {
@@ -442,13 +427,6 @@ export const tableConfig = [
     renderer: "Text",
     align: "left",
     label: "Table Name",
-  },
-  {
-    id: "columns",
-    name: "columns",
-    renderer: "Text",
-    align: "left",
-    label: "Columns No",
   },
   {
     id: "tableDate",

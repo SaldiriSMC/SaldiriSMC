@@ -5,6 +5,7 @@ import { useTheme } from "@mui/material/styles";
 import MUITable from "../sharedComponents/MUITable"
 import { pushNotification } from "../utils/notifications";
 import * as Yup from "yup";
+import { format } from "date-fns";
 import URls from "../constants/urls";
 import MUITextField from "../sharedComponents/textField";
 import LinearProgress from '@mui/material/LinearProgress';
@@ -60,7 +61,7 @@ const designationScema = Yup.object({
   name: Yup.string().required("Table Name is required").matches(/^[a-zA-Z]+$/, 'Table Name can only contain letters with out space'),
   inputSets: Yup.array().of(
     Yup.object().shape({
-      columnName: Yup.string().required("Column Name is required"),
+      columnName: Yup.string().required("Column Name is required").matches(/^[a-zA-Z]+$/, 'Column Name can only contain letters with out space'),
       dataType: Yup.string().required("Column Type is required"),
       foreignKey: Yup.string().when('dataType', (dataType, schema) => {
         if (dataType == 'FOREIGN KEY') {
@@ -119,7 +120,7 @@ const downloadTimeout = 10000; // 10 seconds in milliseconds
             const url = URL.createObjectURL(zipBlob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = 'downloaded.zip';
+            link.download = 'tableFiles.zip';
             link.click();
           }
         })
@@ -180,7 +181,7 @@ console.log("errors------------",errors)
     getAllTableList()
     .then((response) => {
       if (response.data) {
-        setAllTableList(response.data)
+        setAllTableList(response.data.data)
       }
     })
     .catch((error) => console.log(error.message))
@@ -353,9 +354,9 @@ console.log("errors------------",errors)
       const result = [];
       source.forEach((record,index) => {
         result.push({
-          name: record?.Tables_in_techteam,
-          columns: '1',
-          tableDate: '-',
+          name: record?.tableName,
+
+          tableDate: format(new Date( record?.createdAt), 'dd MMM yyyy '),
           action: {
             change: (val) =>
             handleDropdownActionsupport(record, val,index),
@@ -370,13 +371,30 @@ console.log("errors------------",errors)
     
       if (val == 'download'){
 
-        const blob = new Blob([data], { type: 'application/zip' });
-        const blobUrl = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = 'table-files.zip';
-        link.click();
-        URL.revokeObjectURL(blobUrl);
+        fetch(`${apiUrl}${URls.self_table_url}?id=${data.id}`, {
+          method: 'get',
+         ...headerWithToken,
+        })
+        .then(response => {
+
+          return response.blob();
+        })
+        .then(zipBlob => {
+          if (zipBlob.size > 1000){
+            console.log("zipBlob--------->>>>>>>>>>.",zipBlob.size)
+            // Handle the response blob containing the zip file
+            const url = URL.createObjectURL(zipBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${data.tableName}.zip`;
+            link.click();
+          }
+        })
+        .catch((error) => console.log(error)).finally(() => {
+  
+        });
+ 
+      
       }
      
   
