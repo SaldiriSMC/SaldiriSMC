@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
-import MUITable from "../sharedComponents/MUITable";
+import MUITable from "../sharedComponents/MUITable"
+import { pushNotification } from "../utils/notifications";
 import * as Yup from "yup";
+import URls from "../constants/urls";
 import MUITextField from "../sharedComponents/textField";
 import LinearProgress from '@mui/material/LinearProgress';
+import {headerWithToken} from "../service/apiWithTokenLookUp";
 import Typography from '@mui/material/Typography';
 import { tableConfig } from "../configs/tableConfig";
 import Box from "@mui/material/Box";
@@ -28,6 +31,7 @@ import {
 import IconButton from '@mui/material/IconButton';
 export default function DynamicTable() {
   const theme = useTheme();
+  const apiUrl = process.env.REACT_APP_API_URL;
   const initialValues = {
     name: "", // Initial value for the 'name' field
     inputSets: [
@@ -83,33 +87,52 @@ const designationScema = Yup.object({
             tableName:values.name,
             columnArray:filteredArray
           }
-          setIsLoading(true)
-          addTable(payload, (progress) => {
-            setProgress(progress);
-          })
-          .then((response) => {
-            console.log("response---------------->>>>>>>>>>response",response)
-            if (response.data) {
-              
-              const blob = new Blob([response.data], { type: 'application/zip' });
-              const blobUrl = URL.createObjectURL(blob);
-          
-              const link = document.createElement('a');
-              link.href = blobUrl;
-              link.download = 'downloaded-file.zip';
-          
-              link.click();
-          
-              URL.revokeObjectURL(blobUrl);
-              setIsLoading(false)
-            }
-          })
-          .catch((error) => console.log(error.message))
-          .finally(() => {
+          setIsLoading(true);
+setProgress(0);
+          const downloadStartTime = Date.now(); // Record the start time
+
+const downloadTimeout = 10000; // 10 seconds in milliseconds
+       fetch(`${apiUrl}${URls.table_url}`, {
+          method: 'POST',
+         ...headerWithToken,
+          body: JSON.stringify(payload),
+          onUploadProgress: (progressEvent) => {
+            const percentage = Math.floor((progressEvent.loaded / progressEvent.total) * 100);
+            console.log("percentage----------percentage",percentage)
+            setProgress(percentage);
+          },
+        })
+        .then(response => response.blob())
+        .then(zipBlob => {
+          if (zipBlob.size > 1000){
+            console.log("zipBlob--------->>>>>>>>>>.",zipBlob.size)
+            // Handle the response blob containing the zip file
+            const url = URL.createObjectURL(zipBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'downloaded.zip';
+            link.click();
+          }
+      
+        })
+        .catch(response => {
+          // console.log("error----------",response)
+          // // pushNotification(
+          // //   `${error?.data.message}`,
+          // //   "error",
+          // // );
+        }).finally(() => {
+          // setIsLoading(false);
+          setProgress(100); // Set progress to 100% after the download is complete
         });
- 
+        setTimeout(() => {
+          setProgress(100);
+        }, downloadTimeout);
       },
+      
     });
+
+    // / Set a timeout to stop updating progress after 10 seconds
 
   const [inputSets, setInputSets] = useState([
     { columnName: '', dataType: '' },
