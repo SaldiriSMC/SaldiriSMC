@@ -102,7 +102,16 @@ const downloadTimeout = 10000; // 10 seconds in milliseconds
             setProgress(percentage);
           },
         })
-        .then(response => response.blob())
+        .then(response => {
+          if (response.status == 500) {
+            setIsLoading(false);
+            pushNotification(
+              `Table with this name already exists`,
+              "warning",
+            );
+          }
+          return response.blob();
+        })
         .then(zipBlob => {
           if (zipBlob.size > 1000){
             console.log("zipBlob--------->>>>>>>>>>.",zipBlob.size)
@@ -113,15 +122,8 @@ const downloadTimeout = 10000; // 10 seconds in milliseconds
             link.download = 'downloaded.zip';
             link.click();
           }
-      
         })
-        .catch(response => {
-          // console.log("error----------",response)
-          // // pushNotification(
-          // //   `${error?.data.message}`,
-          // //   "error",
-          // // );
-        }).finally(() => {
+        .catch((error) => console.log("ssserror-------------------error",error)).finally(() => {
           // setIsLoading(false);
           setProgress(100); // Set progress to 100% after the download is complete
         });
