@@ -1,17 +1,22 @@
+
 const httpStatus = require('http-status');
-const Model = require("../../models/v2/Clients.model")
+const Model = require("../../models/v2/carList.model")
 const ApiError = require('../../utils/ApiError.js');
 const catchAsync = require('../../utils/catchAsync.js');
-const ClientsService  = require('../services/Clients.service.js');
+const carListService  = require('../../services/v2/carList.service.js');
+const { Tenant } = require("../../models/v2/index.js")
+const { pagination } = require("../../utils/pagination.js")
 const { response } = require('../../utils/response.js');
 
 const create = catchAsync(async (req, res) => {
   try {
-      const Clients = await ClientsService.create(req.body);
-      if (Clients) {
-        response(res,  Clients , 'Clients created succesfully', httpStatus.CREATED);
+      const key = req.get('X-Tenent-Key');
+      const tenant = await Tenant.findOne({where:{key:key}})
+      const carList = await carListService.create(req.body, tenant.id);
+      if (carList) {
+        response(res,  carList , 'carList created succesfully', httpStatus.CREATED);
       }else{
-        response(res,  "" , 'Clients not created succesfully', 400);
+        response(res,  "" , 'carList not created succesfully', 400);
       }
   } catch (err) {
     console.log(err);
@@ -27,7 +32,7 @@ const getAll = catchAsync(async (req, res) => {
 
 const getSingle = catchAsync(async (req, res) => {
   const id = req.params.userId;
-  const doc = ClientsService.getById(id)
+  const doc = await carListService.getById(id)
   if (!doc) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
@@ -35,13 +40,13 @@ const getSingle = catchAsync(async (req, res) => {
 }); 
 
 const update = catchAsync(async (req, res) => {
-  await ClientsService.updateById(req.body, req.params.userId.toString());
-  response(res, '', 'Clients updated successfully', 200);
+  await carListService.updateById(req.body, req.params.userId.toString());
+  response(res, '', 'carList updated successfully', 200);
 });
 
 const del = catchAsync(async (req, res) => {
-  await ClientsService.deleteById(req.params.userId);
-  response(res, '', 'Clients deleted successfully', 200);
+  await carListService.deleteById(req.params.userId);
+  response(res, '', 'carList deleted successfully', 200);
 });
 
 module.exports = {

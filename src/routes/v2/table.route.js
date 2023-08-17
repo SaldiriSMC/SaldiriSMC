@@ -8,8 +8,14 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(auth(), checkRoles(["admin","hr"]), tableController.getTables)
+  .get(auth(), tenant(),checkRoles(["admin","hr"]), tableController.getTables)
   .post(auth(), tenant(), checkRoles(["admin","hr"]), tableController.createTable);
+router
+  .route("/self-generated")
+  .get(auth(), tenant(), checkRoles(["admin","hr"]), tableController.getSelfGeneratedTables)
+router
+  .route("/self-generated")
+  .get(auth(), tenant(), checkRoles(["admin","hr"]), tableController.getSelfGeneratedTables)
 
 module.exports = router;
 
@@ -19,6 +25,7 @@ module.exports = router;
  *   name: Table
  *   description: Table management and retrieval
  */  
+
 /**
  * @swagger
  * /table:
@@ -26,6 +33,8 @@ module.exports = router;
  *     summary: Get all tables
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
  *     tags: [Table]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - name: X-Tenent-Key
  *         in: header
@@ -83,81 +92,34 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  */
 
-//  /**
-//  * @swagger
-//  * /department/{id}:
-//  *   patch:
-//  *     summary: Update a department
-//  *     description: Logged in users can only update their own information. Only admins can update other users.
-//  *     tags: [Departments]
-//  *     security:
-//  *       - bearerAuth: []
-//  *     parameters:
-//  *       - name: X-Tenent-Key
-//  *         in: header
-//  *         description: X-Tenent-Key
-//  *         required: true
-//  *         schema:
-//  *           type: string
-//  *       - in: path
-//  *         name: id
-//  *         required: true
-//  *         schema:
-//  *           type: string
-//  *         description: Department id
-//  *     requestBody:
-//  *       required: true
-//  *       content:
-//  *         application/json:
-//  *           schema:
-//  *             type: object
-//  *             properties:
-//  *               departmentName:
-//  *                 type: string
-//  *             example:
-//  *               departmentName: Admin
-//  *     responses:
-//  *       "200":
-//  *         description: OK
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *                $ref: '#/components/schemas/User'
-//  *       "400":
-//  *         $ref: '#/components/responses/DuplicateEmail'
-//  *       "401":
-//  *         $ref: '#/components/responses/Unauthorized'
-//  *       "403":
-//  *         $ref: '#/components/responses/Forbidden'
-//  *       "404":
-//  *         $ref: '#/components/responses/NotFound'
-//  *
-//  *   delete:
-//  *     summary: Delete a department
-//  *     description: Logged in users can delete only themselves. Only admins can delete other users.
-//  *     tags: [Departments]
-//  *     security:
-//  *       - bearerAuth: []
-//  *     parameters:
-//  *       - name: X-Tenent-Key
-//  *         in: header
-//  *         description: X-Tenent-Key
-//  *         required: true
-//  *         schema:
-//  *           type: string
-//  *       - in: path
-//  *         name: id
-//  *         required: true
-//  *         schema:
-//  *           type: string
-//  *         description: Department id
-//  *     responses:
-//  *       "200":
-//  *         description: No content
-//  *       "401":
-//  *         $ref: '#/components/responses/Unauthorized'
-//  *       "403":
-//  *         $ref: '#/components/responses/Forbidden'
-//  *       "404":
-//  *         $ref: '#/components/responses/NotFound'
-//  */
+/**
+ * @swagger
+ * /table/self-generated:
+ *   get:
+ *     summary: Get all self generated tables
+ *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
+ *     tags: [Table]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: X-Tenent-Key
+ *         in: header
+ *         description: X-Tenent-Key
+ *       - in: query
+ *         name: id
+ *         schema:
+ *           type: string
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Table'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */

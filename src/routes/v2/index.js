@@ -8,12 +8,10 @@ const StatusRoute = require("./status.route")
 const ModuleRoute = require("./module.route")
 const emailTemplateRoute = require("./emailTemplate.route")
 const tableRoute = require("./table.route")
-// const clientRoute = require("./Client.route")
+const carList = require("./carList.route")
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
-
 const router = express.Router();
-
 const defaultRoutes = [
   {
     path: '/auth',
@@ -51,10 +49,11 @@ const defaultRoutes = [
     path: '/table',
     route: tableRoute,
   },
-  // {
-  //   path: '/clients',
-  //   route: clientRoute,
-  // },
+  {
+    path: "/carList",
+    route: carList,
+  }
+  
 ];
 
 const devRoutes = [

@@ -1,9 +1,7 @@
-const fs = require('fs');
-const path = require('path');
 const route = `const express = require('express');
 const auth = require('../../middlewares/auth');
 const tenant = require('../../middlewares/v2/tenant');
-const #_tablenameController = require('../../GeneratedFiles/BackEnd/controllers/Client.controller');
+const #_tablenameController = require('../../controllers/v2/#_tablename.controller');
 const checkRoles = require('../../middlewares/v2/checkRole');
 const router = express.Router();
 
@@ -82,16 +80,6 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
- *       - in: query
- *         name: name
- *         schema:
- *           type: string
- *         description: User name
- *       - in: query
- *         name: role
- *         schema:
- *           type: string
- *         description: User role
  *       - in: query
  *         name: sortBy
  *         schema:

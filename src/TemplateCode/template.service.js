@@ -1,11 +1,9 @@
-const fs = require('fs');
-const path = require('path');
 const service = `const httpStatus = require('http-status');
-const Model = require("../models/#_tablename.model.js")
-const ApiError = require('../../../utils/ApiError.js');
+const Model = require("../../models/v2/#_tablename.model")
+const ApiError = require('../../utils/ApiError');
 
 const create = async (userBody,tenantId) => {
-  return Model.create(userBody);
+  return Model.create({...userBody, tenantId:tenantId});  
 };
 
 const getById= async (id) => {
@@ -25,8 +23,8 @@ const updateById = async (updateBody,id) => {
 
 const deleteById = async (id) => {
   const #_tablename  = await Model.findByPk(id);
-  if (!#_tablename ) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  if (!#_tablename) {
+    throw new ApiError(httpStatus.NOT_FOUND, '#_tablename not found');
   }
   await #_tablename.destroy();
 };

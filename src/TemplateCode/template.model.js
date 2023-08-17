@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const model = `const { DataTypes } = require('sequelize');
-const { sequelize } = require('../../../config/mySqlConnection')
+const { sequelize } = require('../../config/mySqlConnection')
 
 const #_name = sequelize.define('#_tablename', #_modelData,
 );

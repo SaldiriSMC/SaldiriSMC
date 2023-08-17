@@ -48,7 +48,7 @@ function* create#tableNameCall(action) {
 
 function* update#tableNameCall(action) {
   try {
-    const response = yield call(patchRequestWithTokenTenant, `${URls.#tableName}/${action.payload.itemId}`);
+    const response = yield call(patchRequestWithTokenTenant, `${URls.#tableName}/${action.payload.id}`,action.payload.data);
     if (response?.status === 200) {
       pushNotification(
         `${response?.data.message}`,
@@ -67,7 +67,7 @@ function* update#tableNameCall(action) {
 
 function* delete#tableNameCall(action) {
   try {
-    const response = yield call(deleteRequestWithTokenTenant, `${URls.#tableName}/${action.payload.itemId}`);
+    const response = yield call(deleteRequestWithTokenTenant, `${URls.#tableName}/${action.payload.id}`);
   
     if (response?.status === 200) {
       pushNotification(

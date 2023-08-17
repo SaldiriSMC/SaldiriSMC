@@ -1,18 +1,18 @@
-const fs = require('fs');
-const path = require('path');
 const controller = `
 const httpStatus = require('http-status');
-const Model = require("../models/#_tablename.model.js")
+const Model = require("../../models/v2/#_tablename.model")
 const ApiError = require('../../utils/ApiError.js');
 const catchAsync = require('../../utils/catchAsync.js');
-const #_tablenameService  = require('../services/#_tablename.service.js');
-const { Tenant } = require("../../../models/v2/index.js")
-const { pagination } = require("../../../utils/pagination.js")
-const { response } = require('../../../utils/response.js');
+const #_tablenameService  = require('../../services/v2/#_tablename.service.js');
+const { Tenant } = require("../../models/v2/index.js")
+const { pagination } = require("../../utils/pagination.js")
+const { response } = require('../../utils/response.js');
 
 const create = catchAsync(async (req, res) => {
   try {
-      const #_tablename = await #_tablenameService.create(req.body);
+      const key = req.get('X-Tenent-Key');
+      const tenant = await Tenant.findOne({where:{key:key}})
+      const #_tablename = await #_tablenameService.create(req.body, tenant.id);
       if (#_tablename) {
         response(res,  #_tablename , '#_tablename created succesfully', httpStatus.CREATED);
       }else{

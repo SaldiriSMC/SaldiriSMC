@@ -1,36 +1,36 @@
 const express = require('express');
 const auth = require('../../middlewares/auth');
 const tenant = require('../../middlewares/v2/tenant');
-const carListlllController = require('../../GeneratedFiles/BackEnd/controllers/Client.controller');
+const carListController = require('../../controllers/v2/carList.controller');
 const checkRoles = require('../../middlewares/v2/checkRole');
 const router = express.Router();
 
 router
   .route('/')
-  .post(auth(), tenant(), checkRoles(['admin', 'hr']), carListlllController.create)
-  .get(auth(), tenant(), checkRoles(['admin', 'hr']), carListlllController.getAll);
+  .post(auth(), tenant(), checkRoles(['admin', 'hr']), carListController.create)
+  .get(auth(), tenant(), checkRoles(['admin', 'hr']), carListController.getAll);
 
 router
   .route('/:userId')
-  .get(auth(), tenant(), checkRoles(['admin', 'hr']), carListlllController.getSingle)
-  .patch(auth(), tenant(), checkRoles(['admin', 'hr']), carListlllController.update)
-  .delete(auth(), tenant(), checkRoles(['admin', 'hr']), carListlllController.del);
+  .get(auth(), tenant(), checkRoles(['admin', 'hr']), carListController.getSingle)
+  .patch(auth(), tenant(), checkRoles(['admin', 'hr']), carListController.update)
+  .delete(auth(), tenant(), checkRoles(['admin', 'hr']), carListController.del);
 
 module.exports = router;
 
 /**
  * @swagger
  * tags:
- *   name: carListlll
- *   description: carListlll management and retrieval
+ *   name: carList
+ *   description: carList management and retrieval
  */
 
 /**
  * @swagger
- * /carListlll:
+ * /carList:
  *   post:
- *     summary: Create a carListlll
- *     description: Only admins can create other carListlll.
+ *     summary: Create a carList
+ *     description: Only admins can create other carList.
  *     parameters:
  *         - name: X-Tenent-Key
  *           in: header
@@ -38,7 +38,7 @@ module.exports = router;
  *           required: true
  *           schema:
  *             type: string
- *     tags: [carListlll]
+ *     tags: [carList]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -48,19 +48,23 @@ module.exports = router;
  *           schema:
  *             type: object
  *             required:
- *               - ssss
+ *               - name
+ *               - CarColor
  *             properties:
- *               ssss:
+ *               name:
  *                 type: string 
+ *               CarColor:
+ *                 type: int 
  *             example:
- *               ssss: string 
+ *               name: string 
+ *               CarColor: int 
  *     responses:
  *       "201":
  *         description: Created
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/carListlll'
+ *                $ref: '#/components/schemas/carList'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -69,9 +73,9 @@ module.exports = router;
  *         $ref: '#/components/responses/Forbidden'
  *
  *   get:
- *     summary: Get all carListlll
- *     description: Only admins can retrieve all carListlll.
- *     tags: [carListlll]
+ *     summary: Get all carList
+ *     description: Only admins can retrieve all carList.
+ *     tags: [carList]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -121,7 +125,7 @@ module.exports = router;
  *                 results:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/carListlll'
+ *                     $ref: '#/components/schemas/carList'
  *                 page:
  *                   type: integer
  *                   example: 1
@@ -142,11 +146,11 @@ module.exports = router;
 
 /**
  * @swagger
- * /carListlll/{id}:
+ * /carList/{id}:
  *   get:
- *     summary: Get a carListlll
- *     description: Logged in users can fetch only their own user information. Only admins can fetch other carListlll.
- *     tags: [carListlll]
+ *     summary: Get a carList
+ *     description: Logged in users can fetch only their own user information. Only admins can fetch other carList.
+ *     tags: [carList]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -168,7 +172,7 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/carListlll'
+ *                $ref: '#/components/schemas/carList'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -177,9 +181,9 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   patch:
- *     summary: Update a carListlll
- *     description: Logged in users can only update their own information. Only admins can update other carListlll.
- *     tags: [carListlll]
+ *     summary: Update a carList
+ *     description: Logged in users can only update their own information. Only admins can update other carList.
+ *     tags: [carList]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -202,17 +206,20 @@ module.exports = router;
  *           schema:
  *             type: object
  *             properties:
- *               ssss:
+ *               name:
  *                 type: string 
+ *               CarColor:
+ *                 type: int 
  *             example:
- *               ssss: string 
+ *               name: string 
+ *               CarColor: int 
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/carListlll'
+ *                $ref: '#/components/schemas/carList'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -223,9 +230,9 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
- *     summary: Delete a carListlll
- *     description: Logged in users can delete only themselves. Only admins can delete other carListlll.
- *     tags: [carListlll]
+ *     summary: Delete a carList
+ *     description: Logged in users can delete only themselves. Only admins can delete other carList.
+ *     tags: [carList]
  *     security:
  *       - bearerAuth: []
  *     parameters:

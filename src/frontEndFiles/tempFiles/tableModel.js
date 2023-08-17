@@ -1,11 +1,13 @@
 import React, { useEffect,useState } from "react";
 import { makeStyles } from 'tss-react/mui';
 import Box from '@mui/material/Box';
+import axios from 'axios';
 import * as Yup from "yup";
-import { create#inputArr } from "../actions/#inputArr";
+import { create#inputArr ,update#inputArr } from "../actions/#inputArr";
 import Modal from '@mui/material/Modal';
 import MUITextField from "../sharedComponents/textField";
 import Button from '@mui/material/Button'
+import {headerWithToken} from "../service/apiWithTokenLookUp";
 import { useFormik } from "formik";
 import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
@@ -107,23 +109,68 @@ const InviteUserModel = (props) => {
     const { classes } = useStyles();
 
     const dispatch = useDispatch();
+    const apiUrl = process.env.REACT_APP_API_URL;
+    useEffect(()=>{
+      
+      #keyCallFun
+    
+    },[])
      
-    #list    
+    #keyState
  
-      const handleInputChange = (index, event) => {
+      const handleInputChange = (event) => {
 
         const { name, value } = event.target;
-        const updatedInputSets = [...#inputArr];
-        updatedInputSets[index][name] = value;
-        set#inputArr(updatedInputSets);
-      };
-      const handleSubmit = (event) => {
+        set#inputArr((prevData) => ({
+          ...prevData,
+          [name]: value
+        }));
 
-        dispatch( create#inputArr({data:#inputArr}));
       };
 
+      useEffect(()=>{
+        if (action === 'update'){
+          set#inputArr( )
+        } else{
+            // handleReset()
+        }
+      },[action])
 
 
+      function fetchDataAndSetState(url, setStateFunction) {
+        return axios.get(`${apiUrl}${url}?limit=10000&page=1`, { ...headerWithToken })
+          .then((response) => {
+            if (response.data) {
+              console.log('response.data----------',response.data)
+              setStateFunction(response.data);
+            }
+          })
+          .catch((error) => console.log(error.message));
+      }
+
+
+    const handleSubmit = (event) => {
+
+        if (action === 'update'){
+          dispatch( update#inputArr({data:#inputArr,id:userData?.id}));
+        } else{
+          dispatch( create#inputArr(#inputArr));
+
+        }
+      setTimeout(() => {
+        setShowModal(false)
+        getAllUser()
+        }, 2000);
+
+
+      };
+
+
+
+
+
+
+      #list    
   return (
     <div>
       <Modal
@@ -141,19 +188,7 @@ const InviteUserModel = (props) => {
         <div className={classes.innerContainer}>    
         <form >
         <Grid  container  spacing={2} sx={{p:1}}>
-        {#inputArr.map((inputSet, index) => ( <>
-                <MUITextField          
-              sm={6}
-              label={`${inputSet.columnTitle}`}
-              xs={6}
-              name="columnName"
-              value={inputSet.columnName}
-              handleChange={(event) => handleInputChange(index, event)}
-              variant='inner'
-              id="columnName"
-              placeholder=''
-            />      
-              </>))}
+        #UI
                  
             </Grid>
        

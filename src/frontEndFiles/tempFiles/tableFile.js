@@ -26,7 +26,7 @@ import DeleteModal from "../sharedComponents/deleteModal";
 import #tableTitleModel from "../sharedComponents/#tableNameModel";
 export default function #tableTitle() {
   const theme = useTheme();
-
+  const [userData, setUserData] = React.useState({});
   const [action, setAction] = React.useState(null);
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
@@ -46,17 +46,23 @@ export default function #tableTitle() {
   };
   const dispatch = useDispatch();
 
-  const allRollsList = useSelector(
-    (state) => state?.get#tableName?.get#tableName?.data
+  const list = useSelector(
+    (state) => state?.#tableName?.data
   );
 
   useEffect(() => {
 
-      dispatch(get#tableName({type:'department',filter:filter}));
-
+     
+  
+    getAllUser()
     
 
   }, []);
+
+
+  const getAllUser=()=>{
+    dispatch(get#tableName({filter:filter}));
+  }
 
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
     dirty } =
@@ -74,11 +80,11 @@ export default function #tableTitle() {
     const result = [];
     source.forEach((record,index) => {
       result.push({
-        name: record?.departmentName,
+      #mapList
+      ,
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),
-          hideDelteEdit:record?.tenantId == null ? true : false,
         },
       });
     });
@@ -93,21 +99,22 @@ export default function #tableTitle() {
     }  
     
     if (val === 'edit' ) {
-      setAction(data?.id)
-     setFieldValue('designationId',data.departmentName)
-     setAction(data?.id)
+      setAction("update");
+      setUserData(data);
+      setShowModal(true);
 
     }
 
   }
   const handleDeleteModel = () => {
-    dispatch(delete#tableName({type:'department',id:userDeleteId}));
-    setShowDeleteModal(false)
+    dispatch(delete#tableName({id:userDeleteId}));
+
+    setTimeout(() => {
+      setShowDeleteModal(false)
+      getAllUser()
+      }, 2000);
   }
-  const handleUpdateModel = () => {
-    dispatch(update#tableName({data:{departmentName:values.designationId},type:'department',id:action}));
-   
-  }
+
   const handlePageChange = (e, newPage) => {
     setFilter({
       ...filter,
@@ -161,7 +168,7 @@ export default function #tableTitle() {
          <MUITable
             
             column={#tableName}
-            list={normalizeTableProgram(#tableName?.results ? #tableName?.results : [])}       
+            list={normalizeTableProgram(list?.results ? list?.results : [])}       
           />
           <Grid
             item
@@ -198,9 +205,11 @@ export default function #tableTitle() {
        <#tableTitleModel
        showModal={showModal}
         setShowModal={setShowModal}
+        setUserData={setUserData}
+        userData={userData}
         action={action}
         setAction={setAction}
-
+        getAllUser={getAllUser}
       />
     </>
   );

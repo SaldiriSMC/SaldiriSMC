@@ -1,17 +1,36 @@
 const fs = require('fs');
-const path = require('path');
 const JSZip = require('jszip');
 const catchAsync = require('../../utils/catchAsync');
 const { sequelize } = require('../../config/mySqlConnection');
 const { response } = require('../../utils/response');
-const { generateAndDownloadZip, absolutePath, generateBackEnd } = require('../../TemplateCode/generateAndDownload.JS');
+const { generateFrontEnd, absolutePath, generateBackEnd } = require('../../TemplateCode/generateAndDownload.JS');
+const { Table, Tenant } = require('../../models/v2/index');
 
 const getTables = catchAsync(async (req, res) => {
   const [results, metadata] = await sequelize.query('SHOW TABLES');
   res.send(results);
 });
 
+const getSelfGeneratedTables = catchAsync(async (req, res) => {
+  const key = req.get('X-Tenent-Key');
+  const id = req.query.id;
+  const tenant = await Tenant.findOne({ where: { key: key } });
+  if (tenant) {
+    if (id) {
+      const table = await Table.findOne({ where: { id: id } });
+      res.download(table.tableUrl);
+    } else {
+      const table = await Table.findAll({ where: { tenantId: tenant.id } });
+      response(res, table, 'Get table data successfully', 200);
+    }
+  } else {
+    response(res, '', 'No data found against this tenant', 200);
+  }
+});
+
 const createTable = catchAsync(async (req, res) => {
+  const key = req.get('X-Tenent-Key');
+  const tenant = await Tenant.findOne({ where: { key: key } });
   const zip = new JSZip();
   let queryField = 'id int NOT NULL AUTO_INCREMENT, tenantId int';
   let constraaintFields = ',FOREIGN KEY (tenantId) REFERENCES tenants(id),PRIMARY KEY (id)';
@@ -24,7 +43,7 @@ const createTable = catchAsync(async (req, res) => {
   },`;
   let querytoSequlize = {
     int: 'DataTypes.INTEGER',
-    bool: 'DataTypes.BOOLEAN',
+    boolean: 'DataTypes.BOOLEAN',
     'VARCHAR(255)': 'DataTypes.STRING',
   };
   req.body.columnArray.map((item) => {
@@ -33,12 +52,12 @@ const createTable = catchAsync(async (req, res) => {
         modelData += `${item?.columnName}:{
           type:DataTypes.INTEGER,
           references:{
-            model:"${item.primaryKey}",
+            model:"${item.foreignKey}",
             key:"id"
           },
         },`;
         queryField += `,${item?.columnName} int`;
-        constraaintFields += `,FOREIGN KEY (${item.columnName}) REFERENCES ${item.primaryKey}(id)`;
+        constraaintFields += `,FOREIGN KEY (${item.columnName}) REFERENCES ${item.foreignKey}(id)`;
       } else {
         modelData += `${item?.columnName}:{
           type:${querytoSequlize[item.dataType]}
@@ -47,7 +66,7 @@ const createTable = catchAsync(async (req, res) => {
       }
     }
   });
-  modelData += '}';
+  modelData += `},{tableName:'${req.body.tableName}'}`;
   queryField += constraaintFields;
   let query = `CREATE TABLE ${req.body.tableName} (${queryField})`;
   const [results] = await sequelize.query(query);
@@ -56,17 +75,21 @@ const createTable = catchAsync(async (req, res) => {
     folders.map(async (item, index) => {
       let folder = zip.folder(item);
       if (item == 'FrontEnd') {
-        await generateAndDownloadZip(req.body.tableName, req.body.columnArray, folder);
+        await generateFrontEnd(req.body.tableName, req.body.columnArray, folder);
       } else {
-        await generateBackEnd(modelData, req.body.tableName, req.body.columnArray, folder )
+        await generateBackEnd(modelData, req.body.tableName, req.body.columnArray, folder);
       }
     });
     const zipBlob = await zip.generateAsync({ type: 'nodebuffer' });
-    fs.writeFile(`${absolutePath}/uploads/${req.body.tableName}.zip`, zipBlob, (err, result) => {
-      if(err){
-        console.log('err------->>>>', err)
-      }else{
-        console.log('video saved!');
+    fs.writeFile(`${absolutePath}/uploads/${req.body.tableName}.zip`, zipBlob, async (err, result) => {
+      if (err) {
+        console.log('err------->>>>', err);
+      } else {
+        await Table.create({
+          tableName: req.body.tableName,
+          tenantId: tenant.id,
+          tableUrl: `${absolutePath}/uploads/${req.body.tableName}.zip`,
+        });
         res.writeHead(200, { 'Content-Type': `application/zip` });
         res.end(zipBlob);
       }
@@ -76,4 +99,6 @@ const createTable = catchAsync(async (req, res) => {
   }
 });
 
-module.exports = { getTables, createTable };
+
+
+module.exports = { getTables, createTable, getSelfGeneratedTables };

@@ -15,6 +15,7 @@ const designation = require("./models/v2/designation.model")
 const contact = require("./models/v2/contact.model")
 const emailTemplate = require("./models/v2/emailTemplates.module")
 const type = require("./models/v2/type.model")
+const table = require("./models/v2/table.model")
 const {queue} = require("./config/queue")
 let server;
 
@@ -106,7 +107,12 @@ const mySqlConnection = async() =>{
   type.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re of type is done")
   }).catch((err)=>{
-    console.log("emailTemplate------->>>>>>",err)
+    console.log("type------->>>>>>",err)
+  })
+  table.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re of table is done")
+  }).catch((err)=>{
+    console.log("table------->>>>>>",err)
   })
 
   sequelize.sync({ alter: { drop: false } }).then(()=>{

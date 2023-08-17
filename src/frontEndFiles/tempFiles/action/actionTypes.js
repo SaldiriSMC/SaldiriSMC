@@ -1,6 +1,6 @@
 export const CREATE_#tableTitle = "CREATE_#tableTitle";
 export const CREATE_#tableTitle_SUCCESS = "CREATE_#tableTitle_SUCCESS";
-export const CREATE_#tableTitle_FAILURE = "CREATE_#tableTitleLOGIN_FAILURE";
+export const CREATE_#tableTitle_FAILURE = "CREATE_#tableTitle_FAILURE";
 
 export const GET_#tableTitle = "GET_#tableTitle";
 export const GET_#tableTitle_SUCCESS = "GET_#tableTitle_SUCCESS";
