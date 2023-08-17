@@ -128,9 +128,7 @@ const InviteUserModel = (props) => {
       
       const [carList, setcarList] = useState({
       
-        name: ""
-      ,
-        age: ""
+        ssss: ""
       
       });
           
@@ -155,26 +153,15 @@ const InviteUserModel = (props) => {
  
       <MUITextField          
       sm={6}
-      label='name'
+      label='ssss'
       xs={6}
-      name='name'
-      value={carList.name}
+      name='ssss'
+      value={carList.ssss}
       handleChange={(event) => handleInputChange(event)}
       variant='inner'
-      id='name'
+      id='ssss'
       placeholder=''
-    />  
-      <MUITextField          
-      sm={6}
-      label='age'
-      xs={6}
-      name='age'
-      value={carList.age}
-      handleChange={(event) => handleInputChange(event)}
-      variant='inner'
-      id='age'
-      placeholder=''
-    />  
+    />  ,
       
                  
             </Grid>

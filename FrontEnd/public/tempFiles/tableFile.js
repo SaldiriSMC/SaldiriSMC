@@ -46,8 +46,8 @@ export default function #tableTitle() {
   };
   const dispatch = useDispatch();
 
-  const allRollsList = useSelector(
-    (state) => state?.get#tableName?.get#tableName?.data
+  const list = useSelector(
+    (state) => state?.get#tableName?.data
   );
 
   useEffect(() => {
@@ -74,11 +74,11 @@ export default function #tableTitle() {
     const result = [];
     source.forEach((record,index) => {
       result.push({
-        name: record?.departmentName,
+      #mapList
+      ,
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),
-          hideDelteEdit:record?.tenantId == null ? true : false,
         },
       });
     });
@@ -101,13 +101,10 @@ export default function #tableTitle() {
 
   }
   const handleDeleteModel = () => {
-    dispatch(delete#tableName({type:'department',id:userDeleteId}));
+    dispatch(delete#tableName({id:userDeleteId}));
     setShowDeleteModal(false)
   }
-  const handleUpdateModel = () => {
-    dispatch(update#tableName({data:{departmentName:values.designationId},type:'department',id:action}));
-   
-  }
+
   const handlePageChange = (e, newPage) => {
     setFilter({
       ...filter,
@@ -161,7 +158,7 @@ export default function #tableTitle() {
          <MUITable
             
             column={#tableName}
-            list={normalizeTableProgram(#tableName?.results ? #tableName?.results : [])}       
+            list={normalizeTableProgram(list ?? [])}       
           />
           <Grid
             item

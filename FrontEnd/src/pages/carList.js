@@ -31,7 +31,6 @@ export default function CARLIST() {
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
-  const [userData, setUserData] = React.useState({});
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
@@ -47,23 +46,18 @@ export default function CARLIST() {
   };
   const dispatch = useDispatch();
 
-  const List = useSelector(
-    (state) => state?.carList?.data?.results
+  const list = useSelector(
+    (state) => state?.getcarList?.data
   );
 
-  console.log("allRollsList-------------------",List)
   useEffect(() => {
-    getAllList()
-  
+
+      dispatch(getcarList({type:'department',filter:filter}));
 
     
 
   }, []);
 
-
-  const getAllList =()=>{
-    dispatch(getcarList({filter:filter}));
-  }
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
     dirty } =
     useFormik({
@@ -80,11 +74,15 @@ export default function CARLIST() {
     const result = [];
     source.forEach((record,index) => {
       result.push({
-        name: record?.name,
+      
+      
+        ssss: record?.ssss
+      
+      
+      ,
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),
-          hideDelteEdit:record?.tenantId == null ? true : false,
         },
       });
     });
@@ -99,9 +97,9 @@ export default function CARLIST() {
     }  
     
     if (val === 'edit' ) {
-      setAction("update");
-      setUserData(data);
-      setShowModal(true);
+      setAction(data?.id)
+     setFieldValue('designationId',data.departmentName)
+     setAction(data?.id)
 
     }
 
@@ -110,10 +108,7 @@ export default function CARLIST() {
     dispatch(deletecarList({id:userDeleteId}));
     setShowDeleteModal(false)
   }
-  const handleUpdateModel = () => {
-    dispatch(updatecarList({data:{departmentName:values.designationId},type:'department',id:action}));
-   
-  }
+
   const handlePageChange = (e, newPage) => {
     setFilter({
       ...filter,
@@ -167,7 +162,7 @@ export default function CARLIST() {
          <MUITable
             
             column={carList}
-            list={normalizeTableProgram(List ? List : [])}       
+            list={normalizeTableProgram(list ?? [])}       
           />
           <Grid
             item
@@ -205,9 +200,7 @@ export default function CARLIST() {
        showModal={showModal}
         setShowModal={setShowModal}
         action={action}
-        userData={userData}
         setAction={setAction}
-        getAllList={getAllList}
 
       />
     </>

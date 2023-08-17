@@ -278,6 +278,11 @@ console.log("inputSets------------",inputSets)
                   const jsCodeUI = convertToFormUI(ColumnsList, tableName);
                   newCode = newCode.replaceAll('#inputArr', tableName).replace('#list', jsCodea).replace('#UI', jsCodeUI);;
 
+                } else if (path == '/tempFiles/tableFile.js') {
+                  const mapList = convertToJavascriptMapData(ColumnsList, tableName);
+                  newCode = newCode.replaceAll('#tableName', tableName).replace('#tableTitle', tableName.toUpperCase()).replace('#mapList', mapList);
+                  
+
                 } else {
                   newCode = newCode.replaceAll(replacement.placeholder, replacement.replacement);
                 }
@@ -322,7 +327,7 @@ console.log("inputSets------------",inputSets)
     />  `);
     
       const jsCode = `
- ${columnEntries},
+ ${columnEntries}
       `;
     
       return jsCode;
@@ -364,6 +369,16 @@ console.log("inputSets------------",inputSets)
       const [${tableName}, set${tableName}] = useState({
       ${columnEntries}
       });
+      `;
+    
+      return jsCode;
+    }
+    function convertToJavascriptMapData(data, tableName) {
+      const columnEntries = data.map(item => `
+        ${item.columnName}: record?.${item.columnName}
+      `)
+      const jsCode = `
+      ${columnEntries}
       `;
     
       return jsCode;
