@@ -47,7 +47,7 @@ export default function #tableTitle() {
   const dispatch = useDispatch();
 
   const list = useSelector(
-    (state) => state?.get#tableName?.data
+    (state) => state?.#tableName?.data
   );
 
   useEffect(() => {
@@ -158,7 +158,7 @@ export default function #tableTitle() {
          <MUITable
             
             column={#tableName}
-            list={normalizeTableProgram(list ?? [])}       
+            list={normalizeTableProgram(list?.results ? list?.results : [])}       
           />
           <Grid
             item

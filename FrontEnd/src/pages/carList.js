@@ -47,7 +47,7 @@ export default function CARLIST() {
   const dispatch = useDispatch();
 
   const list = useSelector(
-    (state) => state?.getcarList?.data
+    (state) => state?.carList?.data
   );
 
   useEffect(() => {
@@ -76,8 +76,11 @@ export default function CARLIST() {
       result.push({
       
       
-        ssss: record?.ssss
-      
+        carName: record?.carName
+      ,
+        carClour: record?.carClour
+      ,
+        carPrice: record?.carPrice
       
       ,
         action: {
@@ -162,7 +165,7 @@ export default function CARLIST() {
          <MUITable
             
             column={carList}
-            list={normalizeTableProgram(list ?? [])}       
+            list={normalizeTableProgram(list?.results ? list?.results : [])}    
           />
           <Grid
             item
