@@ -1,3 +1,17 @@
+export const allTableConfig = 
+  {
+    carlists: '/carlists',
+    attendances: '/attendance',
+    clients: '/clients',
+    departments: '/department',
+    designations: '/designation',
+    emailtemplates: '/email-templates',
+    modules: '/modules',
+    statuses: '/status',
+    users: '/table',
+  }
+
+
 
 export const UserInviteConfig = [
   {

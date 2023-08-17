@@ -1,6 +1,7 @@
 import React, { useEffect,useState } from "react";
 import { makeStyles } from 'tss-react/mui';
 import Box from '@mui/material/Box';
+import axios from 'axios';
 import * as Yup from "yup";
 import { createcarList ,updatecarList } from "../actions/carList";
 import Modal from '@mui/material/Modal';
@@ -11,6 +12,7 @@ import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Grid'
+import {headerWithToken} from "../service/apiWithTokenLookUp";
 import CancelIcon from '@mui/icons-material/Cancel';
 const useStyles = makeStyles()((theme) => {
     return {
@@ -105,10 +107,28 @@ const InviteUserModel = (props) => {
       setUserData
     } = props
     const { classes } = useStyles();
-
+    const apiUrl = process.env.REACT_APP_API_URL;
     const dispatch = useDispatch();
-     
 
+    useEffect(()=>{
+      
+      
+            fetchDataAndSetState('/attendance', setnameKey);
+          
+            fetchDataAndSetState('/carlists', setCarColorKey);
+          
+            fetchDataAndSetState('/table', setcarPriceKey);
+          
+    
+    },[])
+     
+    
+      const [nameKey, setnameKey] = useState([]);
+      
+      const [CarColorKey, setCarColorKey] = useState([]);
+      
+      const [carPriceKey, setcarPriceKey] = useState([]);
+      
  
       const handleInputChange = (event) => {
 
@@ -119,6 +139,20 @@ const InviteUserModel = (props) => {
         }));
 
       };
+
+
+
+
+      function fetchDataAndSetState(url, setStateFunction) {
+        return axios.get(`${apiUrl}${url}?limit=10000&page=1`, { ...headerWithToken })
+          .then((response) => {
+            if (response.data) {
+              console.log('response.data----------',response.data)
+              setStateFunction(response.data);
+            }
+          })
+          .catch((error) => console.log(error.message));
+      }
 
 
     const handleSubmit = (event) => {
@@ -143,16 +177,16 @@ const InviteUserModel = (props) => {
 
 
       
-  const [carList, setcarList] = useState({
-  
-    name: ""
-  ,
-    CarColor: ""
-  ,
-    carPrice: ""
-  
-  });
+      const [carList, setcarList] = useState({
       
+        name: ""
+      ,
+        CarColor: ""
+      ,
+        carPrice: ""
+      
+      });
+          
   return (
     <div>
       <Modal
@@ -171,41 +205,48 @@ const InviteUserModel = (props) => {
         <form >
         <Grid  container  spacing={2} sx={{p:1}}>
         
-
-  <MUITextField          
-  sm={6}
-  label='name'
-  xs={6}
-  name='name'
-  value={carList.name}
-  handleChange={(event) => handleInputChange(event)}
-  variant='inner'
-  id='name'
-  placeholder=''
-/>  ,
-  <MUITextField          
-  sm={6}
-  label='CarColor'
-  xs={6}
-  name='CarColor'
-  value={carList.CarColor}
-  handleChange={(event) => handleInputChange(event)}
-  variant='inner'
-  id='CarColor'
-  placeholder=''
-/>  ,
-  <MUITextField          
-  sm={6}
-  label='carPrice'
-  xs={6}
-  name='carPrice'
-  value={carList.carPrice}
-  handleChange={(event) => handleInputChange(event)}
-  variant='inner'
-  id='carPrice'
-  placeholder=''
-/>  
-  
+            <MUITextField
+              sm={6}
+              label='name'
+              xs={6}
+              name='name'
+              value={carList.name}
+              handleChange={(event) => handleInputChange(event)}
+              variant='inner'
+              id='name'
+              placeholder=''
+              type="select"
+              options={nameKey}
+              pass="primaryKeys"
+            />
+            <MUITextField
+              sm={6}
+              label='CarColor'
+              xs={6}
+              name='CarColor'
+              value={carList.CarColor}
+              handleChange={(event) => handleInputChange(event)}
+              variant='inner'
+              id='CarColor'
+              placeholder=''
+              type="select"
+              options={CarColorKey}
+              pass="primaryKeys"
+            />
+            <MUITextField
+              sm={6}
+              label='carPrice'
+              xs={6}
+              name='carPrice'
+              value={carList.carPrice}
+              handleChange={(event) => handleInputChange(event)}
+              variant='inner'
+              id='carPrice'
+              placeholder=''
+              type="select"
+              options={carPriceKey}
+              pass="primaryKeys"
+            />
                  
             </Grid>
        

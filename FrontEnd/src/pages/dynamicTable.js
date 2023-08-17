@@ -11,7 +11,7 @@ import MUITextField from "../sharedComponents/textField";
 import LinearProgress from '@mui/material/LinearProgress';
 import {headerWithToken} from "../service/apiWithTokenLookUp";
 import Typography from '@mui/material/Typography';
-import { tableConfig } from "../configs/tableConfig";
+import { tableConfig,allTableConfig } from "../configs/tableConfig";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Header from "../components/navBar";
@@ -149,7 +149,7 @@ const downloadTimeout = 10000; // 10 seconds in milliseconds
   const [columnTypes, setColumnTypes] = useState([
     { name: 'Int', value: 'int' },
     { name: 'VARCHAR', value: 'VARCHAR(255)' },
-    { name: 'Boolean', value: 'boolean' },
+    // { name: 'Boolean', value: 'boolean' },
     { name: 'FOREIGN KEY', value: 'FOREIGN KEY' },
     // Initial input sets
   ]);
@@ -170,7 +170,13 @@ console.log("inputSets------------",inputSets)
     getAllPrimaryKey()
     .then((response) => {
       if (response.data) {
-        setprimaryKeys(response.data)
+        const excludedTableNames = ['types', 'tokens', 'times', 'tenants', 'tables', 'retest', 'contacts'];
+
+        const filteredData = response.data.filter(item => {
+          return !excludedTableNames.includes(item.Tables_in_techteam);
+        });
+      
+        setprimaryKeys(filteredData);
       }
     })
     .catch((error) => console.log(error.message))
@@ -275,8 +281,10 @@ console.log("inputSets------------",inputSets)
 
                 } else if (path == '/tempFiles/tableModel.js') {
                   const jsCodea = convertToJavascriptInpits(ColumnsList, tableName);
+                  const apiCall = ApiCallData(ColumnsList, tableName);
                   const jsCodeUI = convertToFormUI(ColumnsList, tableName);
-                  newCode = newCode.replaceAll('#inputArr', tableName).replace('#list', jsCodea).replace('#UI', jsCodeUI);;
+                  const fornKeyCall = fornKeyCallFun(ColumnsList, tableName);
+                  newCode = newCode.replaceAll('#inputArr', tableName).replace('#list', jsCodea).replace('#UI', jsCodeUI).replace('#keyCallFun', fornKeyCall).replace('#keyState', apiCall);;
 
                 } else if (path == '/tempFiles/tableFile.js') {
                   const mapList = convertToJavascriptMapData(ColumnsList, tableName);
@@ -313,18 +321,41 @@ console.log("inputSets------------",inputSets)
 
 
     function convertToFormUI(data, tableName) {
-      const columnEntries = data.map(item => `
-      <MUITextField          
-      sm={6}
-      label='${item.columnName}'
-      xs={6}
-      name='${item.columnName}'
-      value={${tableName}.${item.columnName}}
-      handleChange={(event) => handleInputChange(event)}
-      variant='inner'
-      id='${item.columnName}'
-      placeholder=''
-    />`);
+      const columnEntries = data.map(item => {
+        if (item.dataType === 'FOREIGN KEY') {
+          return `
+            <MUITextField
+              sm={6}
+              label='${item.columnName}'
+              xs={6}
+              name='${item.columnName}'
+              value={${tableName}.${item.columnName}}
+              handleChange={(event) => handleInputChange(event)}
+              variant='inner'
+              id='${item.columnName}'
+              disabled
+              placeholder=''
+              type="select"
+              options={[]}
+              pass="primaryKeys"
+            />`;
+        } else {
+          return `
+          <MUITextField
+          sm={6}
+          label='${item.columnName}'
+          xs={6}
+          name='${item.columnName}'
+          type={'${item.dataType === 'int' ?  'number' :'text' }'}
+          value={${tableName}.${item.columnName}}
+          handleChange={(event) => handleInputChange(event)}
+          variant='inner'
+          id='${item.columnName}'
+          placeholder=''
+        />`;
+        } 
+      });
+    
     
     const jsCode = columnEntries.join('');
     
@@ -368,6 +399,35 @@ console.log("inputSets------------",inputSets)
       ${columnEntries}
       });
       `;
+    
+      return jsCode;
+    }
+    function fornKeyCallFun(data, tableName) {
+      const columnEntries = data.map(item => {
+        if (item.dataType === 'FOREIGN KEY') {
+          console.log("allTableConfig[item.foreignKey---------->>>>",item.foreignKey)
+          const foreignKeyUrl = allTableConfig[item.foreignKey] || `/${item.foreignKey}`;
+          return `
+            fetchDataAndSetState('${foreignKeyUrl}', set${item.columnName}Key);
+          `;
+        }
+        
+      })
+      const jsCode = columnEntries.join('');
+    
+      return jsCode;
+    }
+
+
+
+
+    function ApiCallData(data, tableName) {
+      const columnEntries = data.map(item =>{
+        if (item.dataType === 'FOREIGN KEY') {
+        return `
+      const [${item.columnName}Key, set${item.columnName}Key] = useState([]);
+      `}})
+      const jsCode = columnEntries.join('');
     
       return jsCode;
     }
@@ -430,6 +490,10 @@ console.log("inputSets------------",inputSets)
      
   
     }
+
+
+
+    console.log("values.inputSets---------------->>>>>>>>",values.inputSets)
 
     const handlePageChange = (e, newPage) => {
       setFilter({
