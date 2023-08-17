@@ -419,11 +419,11 @@ export const carList = [
     label: "Name",
   },
   {
-    id: "carClour",
-    name: "carClour",
+    id: "CarColor",
+    name: "CarColor",
     renderer: 'Text',
     align: "left",
-    label: "Carclour",
+    label: "Carcolor",
   },
   {
     id: "carPrice",

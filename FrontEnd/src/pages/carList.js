@@ -26,12 +26,11 @@ import DeleteModal from "../sharedComponents/deleteModal";
 import CARLISTModel from "../sharedComponents/carListModel";
 export default function CARLIST() {
   const theme = useTheme();
-
+  const [userData, setUserData] = React.useState({});
   const [action, setAction] = React.useState(null);
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
-  const [userData, setUserData] = React.useState({});
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
@@ -216,10 +215,9 @@ export default function CARLIST() {
         setShowModal={setShowModal}
         setUserData={setUserData}
         userData={userData}
-        getAllUser={getAllUser}
         action={action}
         setAction={setAction}
-
+        getAllUser={getAllUser}
       />
     </>
   );
