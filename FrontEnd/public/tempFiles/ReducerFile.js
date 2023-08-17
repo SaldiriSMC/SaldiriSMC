@@ -89,7 +89,6 @@ import {
     return {
       ...state,
       getListLoading: false,
-      data: action.payload,
     };
   };  
   const delete#tableNameFailed = (state, action) => ({

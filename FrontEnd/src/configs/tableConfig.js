@@ -396,7 +396,7 @@ export const doctor = [
   },
 ];
 export const carList = [
-    
+  
   {
     id: "name",
     name: "name",
@@ -405,11 +405,18 @@ export const carList = [
     label: "Name",
   },
   {
-    id: "CarColor",
-    name: "CarColor",
+    id: "carClour",
+    name: "carClour",
     renderer: 'Text',
     align: "left",
-    label: "Carcolor",
+    label: "Carclour",
+  },
+  {
+    id: "carPrice",
+    name: "carPrice",
+    renderer: 'Text',
+    align: "left",
+    label: "Carprice",
   },
   {
     id: "action",
@@ -419,6 +426,7 @@ export const carList = [
     label: "Actions",
   },
 ];
+  
 
 export const tableConfig = [
   {

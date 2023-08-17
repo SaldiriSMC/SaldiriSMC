@@ -31,6 +31,7 @@ export default function CARLIST() {
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
+  const [userData, setUserData] = React.useState({});
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
@@ -52,11 +53,17 @@ export default function CARLIST() {
 
   useEffect(() => {
 
-      dispatch(getcarList({type:'department',filter:filter}));
-
+     
+    getAllUser()
     
 
   }, []);
+
+const getAllUser=()=>{
+  dispatch(getcarList({filter:filter}))
+}
+
+
 
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
     dirty } =
@@ -74,14 +81,13 @@ export default function CARLIST() {
     const result = [];
     source.forEach((record,index) => {
       result.push({
-      
-      
-        carName: record?.carName
-      ,
-        carClour: record?.carClour
-      ,
-        carPrice: record?.carPrice
-      
+    name: record?.name
+  ,
+    carClour: record?.carClour
+  ,
+    carPrice: record?.carPrice
+  
+  
       ,
         action: {
           change: (val) =>
@@ -100,16 +106,18 @@ export default function CARLIST() {
     }  
     
     if (val === 'edit' ) {
-      setAction(data?.id)
-     setFieldValue('designationId',data.departmentName)
-     setAction(data?.id)
-
+      setAction("update");
+      setUserData(data);
+      setShowModal(true);
     }
 
   }
   const handleDeleteModel = () => {
     dispatch(deletecarList({id:userDeleteId}));
     setShowDeleteModal(false)
+    setTimeout(() => {
+      getAllUser()
+      }, 2000);
   }
 
   const handlePageChange = (e, newPage) => {
@@ -165,7 +173,7 @@ export default function CARLIST() {
          <MUITable
             
             column={carList}
-            list={normalizeTableProgram(list?.results ? list?.results : [])}    
+            list={normalizeTableProgram(list?.results ? list?.results : [])}       
           />
           <Grid
             item
@@ -203,6 +211,9 @@ export default function CARLIST() {
        showModal={showModal}
         setShowModal={setShowModal}
         action={action}
+        setUserData={setUserData}
+        userData={userData}
+        getAllUser={getAllUser}
         setAction={setAction}
 
       />

@@ -672,7 +672,7 @@ console.log("inputSets------------",inputSets)
                 
       </Grid>
   
-      <button  onClick={()=>generateAndDownloadZip(values.name,values.inputSets)}>files</button>
+      {/* <button  onClick={()=>generateAndDownloadZip(values.name,values.inputSets)}>files</button> */}
       </Box>
     </>
   );

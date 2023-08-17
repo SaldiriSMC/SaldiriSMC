@@ -52,11 +52,17 @@ export default function #tableTitle() {
 
   useEffect(() => {
 
-      dispatch(get#tableName({type:'department',filter:filter}));
-
+     
+  
+    getAllUser()
     
 
   }, []);
+
+
+  const getAllUser=()=>{
+    dispatch(get#tableName({filter:filter}));
+  }
 
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
     dirty } =
@@ -93,16 +99,20 @@ export default function #tableTitle() {
     }  
     
     if (val === 'edit' ) {
-      setAction(data?.id)
-     setFieldValue('designationId',data.departmentName)
-     setAction(data?.id)
+      setAction("update");
+      setUserData(data);
+      setShowModal(true);
 
     }
 
   }
   const handleDeleteModel = () => {
     dispatch(delete#tableName({id:userDeleteId}));
-    setShowDeleteModal(false)
+
+    setTimeout(() => {
+      setShowDeleteModal(false)
+      getAllUser()
+      }, 2000);
   }
 
   const handlePageChange = (e, newPage) => {
@@ -195,6 +205,8 @@ export default function #tableTitle() {
        <#tableTitleModel
        showModal={showModal}
         setShowModal={setShowModal}
+        setUserData={setUserData}
+        userData={userData}
         action={action}
         setAction={setAction}
 

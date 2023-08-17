@@ -89,7 +89,6 @@ const deletecarListSuccess = (state, action) => {
   return {
     ...state,
     getListLoading: false,
-    data: action.payload,
   };
 };  
 const deletecarListFailed = (state, action) => ({

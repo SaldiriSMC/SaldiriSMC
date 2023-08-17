@@ -2,7 +2,7 @@ import React, { useEffect,useState } from "react";
 import { makeStyles } from 'tss-react/mui';
 import Box from '@mui/material/Box';
 import * as Yup from "yup";
-import { create#inputArr } from "../actions/#inputArr";
+import { create#inputArr ,update#inputArr } from "../actions/#inputArr";
 import Modal from '@mui/material/Modal';
 import MUITextField from "../sharedComponents/textField";
 import Button from '@mui/material/Button'
@@ -119,10 +119,27 @@ const InviteUserModel = (props) => {
         }));
 
       };
-      const handleSubmit = (event) => {
 
-        dispatch( create#inputArr({data:#inputArr}));
+
+    const handleSubmit = (event) => {
+
+        if (action === 'update'){
+          dispatch( update#inputArr({data:#inputArr,id:userData?.id}));
+        } else{
+          dispatch( create#inputArr(#inputArr));
+
+        }
+      setTimeout(() => {
+        setShowModal(false)
+        getAllUser()
+        }, 2000);
+
+
       };
+
+
+
+
 
 
       #list    

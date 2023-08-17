@@ -48,7 +48,7 @@ function* createcarListCall(action) {
 
 function* updatecarListCall(action) {
   try {
-    const response = yield call(patchRequestWithTokenTenant, `${URls.carList}/${action.payload.itemId}`);
+    const response = yield call(patchRequestWithTokenTenant, `${URls.carList}/${action.payload.id}`,action.payload.data);
     if (response?.status === 200) {
       pushNotification(
         `${response?.data.message}`,

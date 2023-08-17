@@ -2,7 +2,7 @@ import React, { useEffect,useState } from "react";
 import { makeStyles } from 'tss-react/mui';
 import Box from '@mui/material/Box';
 import * as Yup from "yup";
-import { createcarList } from "../actions/carList";
+import { createcarList ,updatecarList } from "../actions/carList";
 import Modal from '@mui/material/Modal';
 import MUITextField from "../sharedComponents/textField";
 import Button from '@mui/material/Button'
@@ -121,17 +121,44 @@ const InviteUserModel = (props) => {
       };
       const handleSubmit = (event) => {
 
-        dispatch( createcarList({data:carList}));
+        if (action === 'update'){
+          dispatch( updatecarList({data:carList,id:userData?.id}));
+        } else{
+          dispatch( createcarList(carList));
+
+        }
+      setTimeout(() => {
+        setShowModal(false)
+        getAllUser()
+        }, 2000);
+
+
       };
 
 
       
-      const [carList, setcarList] = useState({
+  const [carList, setcarList] = useState({
+  
+    name: ""
+  ,
+    carClour: ""
+  ,
+    carPrice: ""
+  
+  });
+
+
+console.log(carList,"userData---------------->>>>>>>.",userData,'action---------',action)
+  useEffect(()=>{
+    if (action === 'update'){
+      setcarList({...userData})
+      console.log(carList,"userData---------------->>>>>>>.",userData)
+    } else{
+        // handleReset()
+    }
+
+  },[action])
       
-        ssss: ""
-      
-      });
-          
   return (
     <div>
       <Modal
@@ -142,7 +169,7 @@ const InviteUserModel = (props) => {
       >
         <Box className={classes.mainContainer}>
         <div className={classes.crosWrap}>
-        <IconButton  aria-label="upload picture" component="label" onClick={()=> {setShowModal(false)}}>
+        <IconButton  aria-label="upload picture" component="label" onClick={()=> {setShowModal(false);setUserData({});setAction(null)}}>
               <CancelIcon />      
             </IconButton>
             </div>
@@ -150,19 +177,41 @@ const InviteUserModel = (props) => {
         <form >
         <Grid  container  spacing={2} sx={{p:1}}>
         
- 
-      <MUITextField          
-      sm={6}
-      label='ssss'
-      xs={6}
-      name='ssss'
-      value={carList.ssss}
-      handleChange={(event) => handleInputChange(event)}
-      variant='inner'
-      id='ssss'
-      placeholder=''
-    />  ,
-      
+
+  <MUITextField          
+  sm={6}
+  label='name'
+  xs={6}
+  name='name'
+  value={carList.name}
+  handleChange={(event) => handleInputChange(event)}
+  variant='inner'
+  id='name'
+  placeholder=''
+/>  
+  <MUITextField          
+  sm={6}
+  label='carClour'
+  xs={6}
+  name='carClour'
+  value={carList.carClour}
+  handleChange={(event) => handleInputChange(event)}
+  variant='inner'
+  id='carClour'
+  placeholder=''
+/>  
+  <MUITextField          
+  sm={6}
+  label='carPrice'
+  xs={6}
+  name='carPrice'
+  value={carList.carPrice}
+  handleChange={(event) => handleInputChange(event)}
+  variant='inner'
+  id='carPrice'
+  placeholder=''
+/>  
+  
                  
             </Grid>
        
@@ -171,7 +220,7 @@ const InviteUserModel = (props) => {
                   className={classes.btn}
                  variant="contained"
                  color="primary"
-                 onClick={()=> {setShowModal(false)}}
+                 onClick={()=> {setShowModal(false);setUserData({});setAction(null)}}
                  style={{ marginTop: '20px' }}
                >
             Cancel
