@@ -119,7 +119,9 @@ const InviteUserModel = (props) => {
         }));
 
       };
-      const handleSubmit = (event) => {
+
+
+    const handleSubmit = (event) => {
 
         if (action === 'update'){
           dispatch( updatecarList({data:carList,id:userData?.id}));
@@ -136,28 +138,20 @@ const InviteUserModel = (props) => {
       };
 
 
+
+
+
+
       
   const [carList, setcarList] = useState({
   
     name: ""
   ,
-    carClour: ""
+    CarColor: ""
   ,
     carPrice: ""
   
   });
-
-
-console.log(carList,"userData---------------->>>>>>>.",userData,'action---------',action)
-  useEffect(()=>{
-    if (action === 'update'){
-      setcarList({...userData})
-      console.log(carList,"userData---------------->>>>>>>.",userData)
-    } else{
-        // handleReset()
-    }
-
-  },[action])
       
   return (
     <div>
@@ -169,7 +163,7 @@ console.log(carList,"userData---------------->>>>>>>.",userData,'action---------
       >
         <Box className={classes.mainContainer}>
         <div className={classes.crosWrap}>
-        <IconButton  aria-label="upload picture" component="label" onClick={()=> {setShowModal(false);setUserData({});setAction(null)}}>
+        <IconButton  aria-label="upload picture" component="label" onClick={()=> {setShowModal(false)}}>
               <CancelIcon />      
             </IconButton>
             </div>
@@ -188,18 +182,18 @@ console.log(carList,"userData---------------->>>>>>>.",userData,'action---------
   variant='inner'
   id='name'
   placeholder=''
-/>  
+/>  ,
   <MUITextField          
   sm={6}
-  label='carClour'
+  label='CarColor'
   xs={6}
-  name='carClour'
-  value={carList.carClour}
+  name='CarColor'
+  value={carList.CarColor}
   handleChange={(event) => handleInputChange(event)}
   variant='inner'
-  id='carClour'
+  id='CarColor'
   placeholder=''
-/>  
+/>  ,
   <MUITextField          
   sm={6}
   label='carPrice'
@@ -220,7 +214,7 @@ console.log(carList,"userData---------------->>>>>>>.",userData,'action---------
                   className={classes.btn}
                  variant="contained"
                  color="primary"
-                 onClick={()=> {setShowModal(false);setUserData({});setAction(null)}}
+                 onClick={()=> {setShowModal(false)}}
                  style={{ marginTop: '20px' }}
                >
             Cancel

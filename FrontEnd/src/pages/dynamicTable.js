@@ -324,11 +324,9 @@ console.log("inputSets------------",inputSets)
       variant='inner'
       id='${item.columnName}'
       placeholder=''
-    />  `);
+    />`);
     
-      const jsCode = `
- ${columnEntries}
-      `;
+    const jsCode = columnEntries.join('');
     
       return jsCode;
     }
@@ -672,7 +670,7 @@ console.log("inputSets------------",inputSets)
                 
       </Grid>
   
-      {/* <button  onClick={()=>generateAndDownloadZip(values.name,values.inputSets)}>files</button> */}
+      <button  onClick={()=>generateAndDownloadZip(values.name,values.inputSets)}>files</button>
       </Box>
     </>
   );

@@ -54,16 +54,16 @@ export default function CARLIST() {
   useEffect(() => {
 
      
+  
     getAllUser()
     
 
   }, []);
 
-const getAllUser=()=>{
-  dispatch(getcarList({filter:filter}))
-}
 
-
+  const getAllUser=()=>{
+    dispatch(getcarList({filter:filter}));
+  }
 
   const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
     dirty } =
@@ -81,9 +81,11 @@ const getAllUser=()=>{
     const result = [];
     source.forEach((record,index) => {
       result.push({
+      
+  
     name: record?.name
   ,
-    carClour: record?.carClour
+    CarColor: record?.CarColor
   ,
     carPrice: record?.carPrice
   
@@ -109,13 +111,15 @@ const getAllUser=()=>{
       setAction("update");
       setUserData(data);
       setShowModal(true);
+
     }
 
   }
   const handleDeleteModel = () => {
     dispatch(deletecarList({id:userDeleteId}));
-    setShowDeleteModal(false)
+
     setTimeout(() => {
+      setShowDeleteModal(false)
       getAllUser()
       }, 2000);
   }
@@ -210,10 +214,10 @@ const getAllUser=()=>{
        <CARLISTModel
        showModal={showModal}
         setShowModal={setShowModal}
-        action={action}
         setUserData={setUserData}
         userData={userData}
         getAllUser={getAllUser}
+        action={action}
         setAction={setAction}
 
       />
