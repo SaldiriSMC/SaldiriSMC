@@ -7,6 +7,7 @@ const { Attendance, Time } = require('../../models/v2');
 const { callDBRoutine } = require('../../config/helperMethods');
 const { currentDate } = require('../../utils/currentDate');
 const ApiError = require('../../utils/ApiError');
+const { query } = require('express');
 const todayDate = currentDate();
 const getAttendance = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['employeeName']);
@@ -63,21 +64,33 @@ const updateWorkedHours = async (id) => {
   }
 };
 const getAttendanceByHours = catchAsync(async (req, res) => {
-  const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  const options = await pick(req.query, ['sortBy', 'limit', 'page', 'columnName']);
   const limit = parseInt(options.limit);
   const page = parseInt(options.page);
   const offset = (page - 1) * limit;
+  const sortBy = options.sortBy ? options.sortBy : 'desc';
+  const columnName = options.columnName ? options.columnName : 'createdAt';
   const id = req.params.userId;
-  const result = await callDBRoutine(
-    'get_AttendanceByHours',
-    { id: id, date: new Date(), limit: limit, offset: offset });
+  const result = await callDBRoutine('get_AttendanceByHours', {
+    id: id,
+    date: new Date(),
+    limit: limit,
+    offset: offset,
+    sortBy: sortBy,
+    columnName: columnName,
+  });
   let totalResults = 0;
   let totalPages = 0;
-  if(result.length > 0){
-  totalResults = result[0].TotalCount
-  totalPages = Math.ceil(totalResults / limit);
+  if (result.length > 0) {
+    totalResults = result[0].TotalCount;
+    totalPages = Math.ceil(totalResults / limit);
   }
-  response(res, {result, page: page, limit: limit, totalPages: totalPages, totalResults: totalResults}, 'Record found succesfully', 200);
+  response(
+    res,
+    { result, page: page, limit: limit, totalPages: totalPages, totalResults: totalResults },
+    'Record found succesfully',
+    200
+  );
 });
 
 const getAttendanceWithWorkedHours = catchAsync(async (req, res) => {

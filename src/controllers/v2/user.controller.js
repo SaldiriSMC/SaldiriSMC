@@ -59,16 +59,20 @@ const getUsers = catchAsync(async (req, res) => {
 });
 const getUsersByDeprtmentAndDesigntion = catchAsync(async (req, res) => {
   try {
-    const options = pick(req.query, ['sortBy', 'limit', 'page']);
-    const limit = options?.limit? parseInt(options.limit) : null;
+    const options = pick(req.query, ['sortBy', 'limit', 'page', 'columnName']);
+    const limit = options?.limit? parseInt(options.limit) : 10;
     const page =  parseInt(options.page);
-    const offset = page? (page - 1) * limit : null;
+    const sortBy = options?.sortBy ? options.sortBy : "DESC"
+    const columnName = options.columnName ? options.columnName : "createdAt"
+    const offset = page? (page - 1) * limit : 1;
     const key = req.get('X-Tenent-Key');
     const tenant = await Tenant.findOne({ where: { key: key } });
     const result = await callDBRoutine('getUsersByDepartmentAndDesignation', {
       id: tenant.id,
       limit: limit,
       offset: offset,
+      sortBy:sortBy,
+      columnName:columnName
     });
     var totalResults = 0
     var totalPages = 0
