@@ -1,12 +1,13 @@
-import * as React from 'react';
+import React, { useEffect, useState } from "react";
 import { makeStyles } from 'tss-react/mui'
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField'
 import MenuItem from '@mui/material/MenuItem'
 import IconButton from '@mui/material/IconButton'
+import Checkbox from '@mui/material/Checkbox';
 import InputAdornment from '@mui/material/InputAdornment'
 import SearchIcon from '@mui/icons-material/Search';
-
+import FormControlLabel from '@mui/material/FormControlLabel';
 const useStyles = makeStyles()((theme) => {
   return {
     textAreaContainer: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles()((theme) => {
       '& > div': {
         border: 'none',
         textAlign: 'left',
-        height: 20,
+        // height: 20,
         '& input': {
           padding: '0px 5px',
         }
@@ -82,19 +83,24 @@ const MUISearchField = (props) => {
   } = props
   const { classes } = useStyles();
 
+  const [checked, setChecked] = useState(false);
+
+  const handleChangeChk = (event) => {
+    setChecked(event.target.checked);
+  };
+
 
   return (
     <Grid
       container
       direction="row"
-      justifyContent="center"
+      justifyContent="flex-start"
       alignItems="center"
       item
-      sm={sm}
-      xs={xs}
+      sm={12}
+      xs={12}
     >
-    
-          <TextField
+    <Grid item sm={8} >  <TextField
             className={`${ noTitle ? classes.textFieldContainerNoMargin :classes.textFieldContainer  } ${multiline ?  classes.textAreaContainer : ''} ${withOutBorder ?  classes.removeBorder : ''} ${alignCenter ? classes.centerAlign : ''}`}
             disabled={disabled}
             id={id}
@@ -115,8 +121,7 @@ const MUISearchField = (props) => {
                 touched &&
                 Boolean(errors)
             }
-            placeholder={placeholder}
-            fullWidth
+            placeholder='search..'
             margin="normal"
             InputProps={{
               endAdornment: (
@@ -131,8 +136,47 @@ const MUISearchField = (props) => {
                 shrink: true,
             }}
           />
-
+    
+          <Checkbox
+            checked={checked}
+            onChange={handleChangeChk}
+            color="primary" // You can customize the color
+          />
       
+    
+          </Grid>
+    <Grid item sm={4} > 
+    <FormControlLabel
+        control={
+          <Checkbox
+            checked={checked}
+            onChange={handleChangeChk}
+            color="primary" // You can customize the color
+          />
+        }
+        label="Advance Search"
+      /></Grid>
+        
+    {checked && (
+<>
+<TextField
+        id="birthday"
+        label="Start Date"
+        type="date"
+        variant="outlined"
+        sx={{ m: 1, width: 250 }} // Applying styles using sx prop
+      />
+           <TextField
+        id="birthday"
+        label="End Date"
+        type="date"
+        variant="outlined"
+        sx={{ m: 1, width: 250 }} // Applying styles using sx prop
+      />
+</>
+    )}
+       
+
 
    
     </Grid>

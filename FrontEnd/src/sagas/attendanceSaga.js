@@ -39,7 +39,7 @@ function* getUserList(action) {
  //course generator function
  function* getAttendanceCall(action) {
  try {
-   const response = yield call(getRequestWithTenant, `${URls.attendanceAdjustment}?limit=${action.payload.pageSize}&page=${action.payload.pageNumber}`);
+   const response = yield call(getRequestWithTenant, `${URls.attendanceAdjustment}?limit=${action.payload.pageSize}&page=${action.payload.pageNumber}&sortBy=${action.payload?.sortBy}&columnName=${action.payload?.columnName}`);
 
    if (response?.status === 200) {     
      
