@@ -8,6 +8,7 @@ import { UserAttendanceeConfig, UserAttendanceeEmpolyeConfig } from "../configs/
 import MUITable from "../sharedComponents/MUITable";
 import "./comaon.css";
 import { IconButton } from '@mui/material';
+import MUISearchField from "../sharedComponents/searchField";
 import EditModal from "../sharedComponents/editModal";
 import DeleteModal from "../sharedComponents/deleteModal";
 import AddIcon from '@mui/icons-material/Add';
@@ -34,10 +35,11 @@ const AttendanceAdjusment = () => {
   const [noTimeOut, setNoTimeOut] = React.useState(false)
   const [showModal,setShowModal] = React.useState(false)
   const [userData,setUserData] = React.useState({})
-  const [sorting, setSorting] = React.useState('asc');
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
+    sortBy:'desc',
+    columnName:'createdAt'
   });
   const [totalRecords, setTotalRecords] = useState(0);
   const user = JSON.parse(localStorage.getItem("accessToken"))
@@ -150,7 +152,7 @@ const AttendanceAdjusment = () => {
             timeOut: record.timeOut
             ? format(new Date(record.timeOut), "h:mm:ss a")
             : "-",
-          hours: record.Difference ? record.Difference : "-",
+            Difference: record.Difference ? record.Difference : "-",
           action: {
             change: (val) =>
             handleDropdownActionsupport(record, val,index)
@@ -344,9 +346,17 @@ const AttendanceAdjusment = () => {
     </IconButton> 
    </div>
           )}
-      
+           <MUISearchField
+              sm={12}
+              xs={12}
+              name="fullName"
+              value={values.fullName}
+              handleChange={handleChange}
+              id="fullName"
+              placeholder='Full Name'
+            /> 
          <MUITable
-          setSorting={setSorting}
+               setFilter={setFilter}
             column={ userRole === 'employee' ? UserAttendanceeEmpolyeConfig : UserAttendanceeConfig}
             list={normalizeTableProgram(attendanceData?.data?.result ? attendanceData?.data?.result : [])}
             pagination={attendanceData?.data?.result.length > 0 ? (

@@ -31,11 +31,11 @@ export default function TetentDepartment() {
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [showUpdateModal, setShowUpdateModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
-  const [sorting, setSorting] = React.useState('asc');
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
-    descending: true,
+    sortBy:'desc',
+    columnName:'createdAt'
   });
   const [totalRecords, setTotalRecords] = useState(0);
   const designationScema = Yup.object({
@@ -78,7 +78,7 @@ export default function TetentDepartment() {
     const result = [];
     source.forEach((record,index) => {
       result.push({
-        name: record?.departmentName,
+        departmentName: record?.departmentName,
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),
@@ -176,7 +176,7 @@ export default function TetentDepartment() {
              </div>
              </form>
          <MUITable
-             setSorting={setSorting}
+           setFilter={setFilter}
             column={departmentConfig}
             list={normalizeTableProgram(allRollsList?.results ? allRollsList?.results : [])}
             pagination={{

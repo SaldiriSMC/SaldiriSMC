@@ -177,8 +177,8 @@ export default function Queues() {
           name: record?.name,
           isOnline:record.is_online == 0 ? true :false
         },
-        designation: record?.designationName,
-        department: record?.departmentname,
+        designationName: record?.designationName,
+        departmentname: record?.departmentname,
       });
     });
     return result;

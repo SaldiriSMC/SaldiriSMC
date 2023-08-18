@@ -32,10 +32,11 @@ export default function PersistentDrawerLeft() {
    const [showDeleteModal, setShowDeleteModal] = React.useState(false);
    const [showUpdateModal, setShowUpdateModal] = React.useState(false);
   const [userDeleteId, setUserDeleteId] = React.useState(null);
-  const [sorting, setSorting] = React.useState('asc');
   const [filter, setFilter] = useState({
     pageNumber: 1,
-    pageSize: 5
+    pageSize: 5,
+    sortBy:'desc',
+    columnName:'createdAt'
   });
   const [totalRecords, setTotalRecords] = useState(0);
   const designationScema = Yup.object({
@@ -90,7 +91,7 @@ const addRollFun =()=>{
     const result = [];
     source.forEach((record,index) => {
       result.push({
-        name: record?.designationName,
+        designationName: record?.designationName,
         action: {
           change: (val) =>
           handleDropdownActionsupport(record, val,index),
@@ -192,7 +193,7 @@ const addRollFun =()=>{
              </div>
              </form>
          <MUITable
-             setSorting={setSorting}
+              setFilter={setFilter}
             column={designationConfig}
             list={normalizeTableProgram(allRollsList?.results ? allRollsList?.results : [])}
             pagination={{

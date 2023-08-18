@@ -31,6 +31,8 @@ const EmailTemplate = () => {
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
+    sortBy:'desc',
+    columnName:'createdAt'
   });
   const [totalRecords, setTotalRecords] = useState(0);
   const isLoading = useSelector((state) => state?.emailTemplate?.getListLoading)
@@ -124,7 +126,7 @@ const EmailTemplate = () => {
           </IconButton> 
          </div>
          <MUITable
-          setSorting={setSorting}
+         setFilter={setFilter}
         column={EmailTemplateConfig}
         list={normalizeTableProgram(emailTemplateData?.results ?? [])}
         pagination={emailTemplateData?.results?.length > 0 ? (

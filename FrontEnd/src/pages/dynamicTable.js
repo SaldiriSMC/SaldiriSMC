@@ -445,9 +445,9 @@ console.log("inputSets------------",inputSets)
       const result = [];
       source.forEach((record,index) => {
         result.push({
-          name: record?.tableName,
+          tableName: record?.tableName,
 
-          tableDate: format(new Date( record?.createdAt), 'dd MMM yyyy '),
+          createdAt: format(new Date( record?.createdAt), 'dd MMM yyyy '),
           action: {
             change: (val) =>
             handleDropdownActionsupport(record, val,index),

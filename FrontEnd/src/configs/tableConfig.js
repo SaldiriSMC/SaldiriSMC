@@ -72,15 +72,15 @@ export const UserInviteConfig2 = [
     label: "Name",
   },
   {
-    id: "department",
-    name: "department",
+    id: "departmentname",
+    name: "departmentname",
     renderer: "Text",
     align: "left",
     label: "Department",
   },
   {
-    id: "designation",
-    name: "designation",
+    id: "designationName",
+    name: "designationName",
     renderer: "Text",
     align: "left",
     label: "Designation",
@@ -102,15 +102,15 @@ export const UserStatusConfig = [
     label: "Name",
   },
   {
-    id: "department",
-    name: "department",
+    id: "departmentname",
+    name: "departmentname",
     renderer: "Text",
     align: "left",
     label: "Department",
   },
   {
-    id: "designation",
-    name: "designation",
+    id: "designationName",
+    name: "designationName",
     renderer: "Text",
     align: "left",
     label: "Designation",
@@ -132,8 +132,8 @@ export const UserAttendanceeConfig = [
     label: "Time Out",
   },
   {
-    id: "hours",
-    name: "hours",
+    id: "Difference",
+    name: "Difference",
     renderer: "Text",
     align: "left",
     label: "Hours",
@@ -162,8 +162,8 @@ export const UserAttendanceeEmpolyeConfig = [
     label: "Time Out",
   },
   {
-    id: "hours",
-    name: "hours",
+    id: "Difference",
+    name: "Difference",
     renderer: "Text",
     align: "left",
     label: "Hours",
@@ -201,8 +201,8 @@ export const EmailTemplateConfig = [
 ];
 export const designationConfig = [
   {
-    id: "name",
-    name: "name",
+    id: "designationName",
+    name: "designationName",
     renderer: "Text",
     align: "left",
     label: "Designation Name",
@@ -217,8 +217,8 @@ export const designationConfig = [
 ];
 export const departmentConfig = [
   {
-    id: "name",
-    name: "name",
+    id: "departmentName",
+    name: "departmentName",
     renderer: "Text",
     align: "left",
     label: "Department Name",
@@ -233,8 +233,8 @@ export const departmentConfig = [
 ];
 export const statusConfig = [
   {
-    id: "name",
-    name: "name",
+    id: "statusName",
+    name: "statusName",
     renderer: "Text",
     align: "left",
     label: "Status Name",
@@ -444,15 +444,15 @@ export const carList = [
 
 export const tableConfig = [
   {
-    id: "name",
-    name: "name",
+    id: "tableName",
+    name: "tableName",
     renderer: "Text",
     align: "left",
     label: "Table Name",
   },
   {
-    id: "tableDate",
-    name: "tableDate",
+    id: "createdAt",
+    name: "createdAt",
     renderer: "Text",
     align: "left",
     label: "Created Date",

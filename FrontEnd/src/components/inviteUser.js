@@ -16,6 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { loderTrue, loderFalse } from "../actions/Auth";
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
+import MUISearchField from "../sharedComponents/searchField";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteModal from "../sharedComponents/deleteModal";
 import EmailIcon from "@mui/icons-material/Email";
@@ -28,7 +29,6 @@ const InviteUser = ({ setLoader }) => {
   const [deleteTimeInOut, setDeleteTimeInOut] = React.useState({ time: [] });
   const [isCreate, setIsCreate] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
-  const [sorting, setSorting] = React.useState('asc');
   const [userData, setUserData] = React.useState({});
   const [allUserList, setAllUserList] = useState([]);
   const [checkedValue, setCheckedValue] = useState([]);
@@ -41,6 +41,8 @@ const InviteUser = ({ setLoader }) => {
   const [filter, setFilter] = useState({
     pageNumber: 1,
     pageSize: 5,
+    sortBy:'desc',
+    columnName:'createdAt'
   });
   const [totalRecords, setTotalRecords] = useState(0);
   useEffect(() => {
@@ -48,7 +50,7 @@ const InviteUser = ({ setLoader }) => {
   }, [filter]);
 
 
-  console.log("sorting------------>>>>>>>>>>>>",sorting)
+  console.log("filter------------>>>>>>>>>>>>",filter)
 
   const getAllUser = () => {
     dispatch(loderTrue(true));
@@ -114,8 +116,8 @@ const InviteUser = ({ setLoader }) => {
             record.isSignedIn || (!record.isSignedIn && !record.is_token),
         },
         name: record?.name,
-        designation: record?.designationName,
-        department: record?.departmentname,
+        designationName: record?.designationName,
+        departmentname: record?.departmentname,
         invitation: record.isSignedIn || (!record.isSignedIn && !record.is_token) ? 'Send' : 'Pending',
         action: {
           change: (val) => handleDropdownActionsupport(record, val, index),
@@ -228,8 +230,17 @@ const InviteUser = ({ setLoader }) => {
                 <AddIcon />
               </IconButton>
             </div>
+            <MUISearchField
+              sm={12}
+              xs={12}
+              name="fullName"
+              // value={values.fullName}
+              // handleChange={=>{}}
+              id="fullName"
+              placeholder='Full Name'
+            />
             <MUITable
-            setSorting={setSorting}
+            setFilter={setFilter}
               onCheckAll={(val) => selectedCheckValueHandler(val)}
               checkedValue={
                 checkedValue.length >= allUserList.length ? true : false

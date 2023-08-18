@@ -71,21 +71,27 @@ const useStyles = makeStyles()((theme) => {
 });
 
 const MUITable = (props) => {
-  const { column, list, isLoading, pagination, onSelect, variant, onCheckAll, checkedValue,setSorting } = props
+  const { column, list, isLoading, pagination, onSelect, variant, onCheckAll, checkedValue,setFilter } = props
   const { classes } = useStyles();
   const [order, setOrder] = React.useState('asc');
   const orderByRef = useRef('');
   const [orderBy, setOrderBy] = React.useState('');
   const listToRender = isLoading ? [{}, {}, {}, {}, {}] : list;
-  const handleRequestSort = (event, property) => {
-    orderByRef.current = property;
-    setOrderBy(property);
-    console.log(orderBy === property && order === 'asc',"orderByRef-------",orderByRef,'property------',property,'order-------',order)
-    const isAsc =  orderByRef.current === property && order === 'asc';
-    console.log("isAsc---------",isAsc)
-    setOrder(isAsc ? 'desc' : 'asc');
-if (setSorting){
-  setSorting(isAsc ? 'desc' : 'asc');
+  const handleRequestSort = (event, property,item) => {
+
+if ( !(item.id === 'invitation' || item.id === 'action') ){
+      
+  orderByRef.current = property;
+  setOrderBy(property);
+  const isAsc =  orderByRef.current === property && order === 'asc';
+  setOrder(isAsc ? 'desc' : 'asc');
+if (setFilter){
+setFilter(prevObject => ({
+  ...prevObject,
+  sortBy: isAsc ? 'desc' : 'asc',  
+  columnName: item.name,  
+}));
+}
 }
  
   };
@@ -123,9 +129,10 @@ if (setSorting){
                 <TableSortLabel
               active={orderByRef.current === item.id}
               direction={orderByRef.current === item.id ? order : 'asc'}
-              onClick={(event) => {handleRequestSort(event, item.id);}}
+              onClick={(event) => {handleRequestSort(event, item.id,item);}}
             >
               {item.label}
+  
               {orderByRef.current === item.id ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
