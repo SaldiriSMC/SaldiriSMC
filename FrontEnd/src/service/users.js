@@ -17,9 +17,9 @@ export const getAllDesignation = () => {
         ...headerWithToken
     })
 }
-export const getAllUserByDeptDes = (payload) => {
+export const getAllUserByDeptDes = (payload,values) => {
     return instance({
-        url:  `${URls.getUserDepartmentDesignation}?limit=${payload?.pageSize}&page=${payload?.pageNumber}&sortBy=${payload?.sortBy}&columnName=${payload?.columnName}`,
+        url:  `${URls.getUserDepartmentDesignation}?limit=${payload?.pageSize}&page=${payload?.pageNumber}&sortBy=${payload?.sortBy}&columnName=${payload?.columnName}&srchtxt=${values.search}&dtstart=${values.valueStartDate}&dtend=${values.valueEndDate}`,
         method: 'get',
         ...headerWithToken
     })

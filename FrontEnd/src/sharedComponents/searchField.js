@@ -8,6 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 import InputAdornment from '@mui/material/InputAdornment'
 import SearchIcon from '@mui/icons-material/Search';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { display } from "@mui/system";
 const useStyles = makeStyles()((theme) => {
   return {
     textAreaContainer: {
@@ -73,7 +74,8 @@ const MUISearchField = (props) => {
     multiline,
     rows,
     variant,
-    pass,
+    valueStartDate,
+    valueEndDate,
     disabled,
     readOnly,
     withOutBorder,
@@ -111,6 +113,7 @@ const MUISearchField = (props) => {
             onChange={handleChange}
             onBlur={handleBlur}
             type='text'
+            fullWidth 
             rows={multiline && rows}
             helperText={
                 touched
@@ -135,16 +138,7 @@ const MUISearchField = (props) => {
             InputLabelProps={{
                 shrink: true,
             }}
-          />
-    
-          <Checkbox
-            checked={checked}
-            onChange={handleChangeChk}
-            color="primary" // You can customize the color
-          />
-      
-    
-          </Grid>
+          /></Grid>
     <Grid item sm={4} > 
     <FormControlLabel
         control={
@@ -159,20 +153,33 @@ const MUISearchField = (props) => {
         
     {checked && (
 <>
-<TextField
-        id="birthday"
+<Grid container item sm={12}  >
+  <div style={{display:'flex'}}>
+
+  <TextField
+        id="valueStartDate"
         label="Start Date"
         type="date"
+        value={valueStartDate}
+        name='valueStartDate'
+        onChange={handleChange}
         variant="outlined"
         sx={{ m: 1, width: 250 }} // Applying styles using sx prop
       />
            <TextField
-        id="birthday"
+        id="valueEndDate"
         label="End Date"
+        value={valueEndDate}
+        name='valueEndDate'
+        onChange={handleChange}
         type="date"
         variant="outlined"
         sx={{ m: 1, width: 250 }} // Applying styles using sx prop
       />
+  </div>
+
+</Grid>
+
 </>
     )}
        

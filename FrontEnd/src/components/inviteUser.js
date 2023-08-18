@@ -44,17 +44,43 @@ const InviteUser = ({ setLoader }) => {
     sortBy:'desc',
     columnName:'createdAt'
   });
+  const initialValues = {
+    search: '',
+    valueStartDate: '',
+    valueEndDate: '',
+  };
+  
+
+  const { handleChange, handleSubmit, handleBlur,setFieldValue, handleReset, errors, values, touched,   setValues,
+    dirty } =
+    useFormik({
+      initialValues,
+      onSubmit: () => {
+
+        
+      },
+    });
   const [totalRecords, setTotalRecords] = useState(0);
   useEffect(() => {
     getAllUser();
   }, [filter]);
 
 
-  console.log("filter------------>>>>>>>>>>>>",filter)
+  useEffect(() => {
+    if (values.search.length >= 3 ){
+      getAllUser();
+    }
+   
+  }, [values.search]);
+
+
+
+
+  console.log("filter------------>>>>>>>>>>>>",values)
 
   const getAllUser = () => {
     dispatch(loderTrue(true));
-    getAllUserByDeptDes(filter)
+    getAllUserByDeptDes(filter,values)
       .then((response) => {
         if (response.data) {
           setAllUserList(response?.data?.data?.result);
@@ -192,7 +218,7 @@ const InviteUser = ({ setLoader }) => {
         >
           <Grid
             sx={{ pl: 3 }}
-            justifyContent="flex-end"
+            // justifyContent="flex-end"
             alignItems="center"
             item
             sm={12}
@@ -201,15 +227,29 @@ const InviteUser = ({ setLoader }) => {
             <div
               style={{
                 display: "flex",
-                justifyContent: "flex-end",
-                marginBottom: "15px",
+                // justifyContent: "flex-end",
+                // alignItems:'center'
+                // marginBottom: "15px",
               }}
             >
+                <MUISearchField
+              sm={12}
+              xs={12}
+              name="search"
+              value={values.search}
+              valueEndDate={values.endDate}
+              valueStartDate={values.startDate}
+              handleChange={handleChange}
+              id="search"
+
+            />
               <IconButton
                 disabled={checkedValue.length < 1}
                 sx={{ mr: 1 }}
                 size="medium"
                 style={{
+                  height:40,
+                  marginTop:20,
                   backgroundColor:
                     checkedValue.length < 1 ? "gray" : "#0075FF ",
                   color: "white",
@@ -222,7 +262,7 @@ const InviteUser = ({ setLoader }) => {
               </IconButton>
               <IconButton
                 size="medium"
-                style={{ backgroundColor: "#0075FF", color: "white" }}
+                style={{ backgroundColor: "#0075FF", color: "white",height:40 ,marginTop:20 }}
                 onClick={() => {
                   setShowModal(true);
                 }}
@@ -230,15 +270,7 @@ const InviteUser = ({ setLoader }) => {
                 <AddIcon />
               </IconButton>
             </div>
-            <MUISearchField
-              sm={12}
-              xs={12}
-              name="fullName"
-              // value={values.fullName}
-              // handleChange={=>{}}
-              id="fullName"
-              placeholder='Full Name'
-            />
+          
             <MUITable
             setFilter={setFilter}
               onCheckAll={(val) => selectedCheckValueHandler(val)}
