@@ -2,6 +2,12 @@ const pick = require('./pick');
 const { Op } = require('sequelize');
 const pagination = async (req, tenantId, Modal, from) => {
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  if(!options?.limit){
+    options.limit = 10
+  }
+  if(!options?.page){
+    options.page = 1;
+  }
   let data;
   if (from === 'statuses') {
     if (req.query.Module_Id) {
