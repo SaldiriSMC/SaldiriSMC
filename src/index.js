@@ -15,8 +15,10 @@ const designation = require("./models/v2/designation.model")
 const contact = require("./models/v2/contact.model")
 const emailTemplate = require("./models/v2/emailTemplates.module")
 const type = require("./models/v2/type.model")
+const expenses = require("./models/v2/expenses.model")
 const table = require("./models/v2/table.model")
-const {queue} = require("./config/queue")
+const {queue} = require("./config/queue");
+const expenses = require('./models/v2/expenses.model');
 let server;
 
 
@@ -40,7 +42,7 @@ mongoose.connect(config.mongoose.url, config.mongoose.options).then(async () => 
   });
 });
 const mySqlConnection = async() =>{
-  
+
   try {
     await sequelize.authenticate();
     console.log('Connection has been established successfully with mysql.');
@@ -114,6 +116,11 @@ const mySqlConnection = async() =>{
   }).catch((err)=>{
     console.log("table------->>>>>>",err)
   })
+  expenses.sync({ alter: { drop: false } }).then(()=>{
+    console.log("yes re of table is done")
+  }).catch((err)=>{
+    console.log("table------->>>>>>",err)
+  })
 
   sequelize.sync({ alter: { drop: false } }).then(()=>{
     console.log("yes re sync is done")
@@ -121,7 +128,7 @@ const mySqlConnection = async() =>{
     console.log(err)
   })
   return true
-} 
+}
 mySqlConnection()
 queue()
 const exitHandler = () => {

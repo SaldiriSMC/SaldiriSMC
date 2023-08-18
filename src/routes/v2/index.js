@@ -10,6 +10,7 @@ const emailTemplateRoute = require("./emailTemplate.route")
 const tableRoute = require("./table.route")
 const carList = require("./carList.route")
 const docsRoute = require('./docs.route');
+const expenses = require('./expenses.route');
 const config = require('../../config/config');
 const router = express.Router();
 const defaultRoutes = [
@@ -52,8 +53,12 @@ const defaultRoutes = [
   {
     path: "/carList",
     route: carList,
+  },
+  {
+    path: "/expenses",
+    route: expenses,
   }
-  
+
 ];
 
 const devRoutes = [
@@ -64,7 +69,7 @@ const devRoutes = [
   },
 ];
 
-defaultRoutes.forEach((route) => {  
+defaultRoutes.forEach((route) => {
   router.use(route.path, route.route);
 });
 
