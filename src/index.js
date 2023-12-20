@@ -18,7 +18,6 @@ const type = require("./models/v2/type.model")
 const expenses = require("./models/v2/expenses.model")
 const table = require("./models/v2/table.model")
 const {queue} = require("./config/queue");
-const expenses = require('./models/v2/expenses.model');
 let server;
 
 
