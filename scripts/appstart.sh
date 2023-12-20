@@ -1,5 +1,4 @@
 #!/bin/bash
-cd /home/ubuntu/saldiriGit/backendupdate/saldirismc
+cd /home/ubuntu/saldirismc
 git pull
-docker-compose down
-docker-compose up -d --build
+pm2 start "npm run dev"
