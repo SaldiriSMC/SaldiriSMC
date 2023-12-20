@@ -1,4 +1,5 @@
 #!/bin/bash
 cd /home/ubuntu/saldirismc
-npm i
-npm run dev
+sudo npm i
+sudo npm install bull
+sudo npm run dev
