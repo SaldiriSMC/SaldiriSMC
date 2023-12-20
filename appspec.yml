@@ -6,6 +6,6 @@ files:
 hooks:
   ApplicationStart:
     - location: scripts/appstart.sh
-      timeout: 300
+      timeout: 1000
 
 
