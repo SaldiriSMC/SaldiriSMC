@@ -1,5 +1,5 @@
 #!/bin/bash
-
+export HOME=/home/ubuntu
 # Navigate to the project directory
 cd /home/ubuntu/saldirismc
 
