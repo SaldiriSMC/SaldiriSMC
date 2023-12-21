@@ -16,6 +16,8 @@ pm2 start "npm run dev"
 
 # Display the list of PM2 processes
 pm2 list
+which pm2
+who | awk '$1 !~ /(:|pts|tty)/ {print $1}'
 
 # Sleep for 2 minutes
 sleep 2m
